@@ -6,6 +6,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -37,7 +38,8 @@ public class Lector {
     }
 
     public Inmueble leer(String nombre) throws Exception {
-        XSSFWorkbook libro = new XSSFWorkbook(new FileInputStream(new File(PATH + nombre + ".xlsx")));
+        InputStream inputStream = Lector.class.getResourceAsStream("/"+nombre+".xlsx");
+        XSSFWorkbook libro = new XSSFWorkbook(inputStream);
 
         Iterator<Row> filas = libro.getSheet(HOJA_NOMBRE).iterator();
 
