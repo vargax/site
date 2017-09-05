@@ -4,17 +4,15 @@ import co.com.tecni.site.lógica.inmueble.Inmueble;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
 public class Lector {
-
-    private final static String PATH = "data/";
-
+    // -----------------------------------------------
+    // Constantes
+    // -----------------------------------------------
     private final static String HOJA_NOMBRE = "Cuadro de Areas";
 
     private final static char COL_NOMBRE = 'A';
@@ -23,12 +21,18 @@ public class Lector {
     private final static char COL_COMUNES_CONSTRUIDO = 'N';
     private final static char COL_COMUNES_LIBRES = 'O';
 
+    // -----------------------------------------------
+    // Atributos
+    // -----------------------------------------------
     private int colNombre;
     private int colPrivadoConstruido;
     private int colPrivadoLibre;
     private int colComunConstruido;
     private int colComunLibre;
 
+    // -----------------------------------------------
+    // Constructor
+    // -----------------------------------------------
     public Lector() {
         colNombre = (int)COL_NOMBRE - 65;
         colPrivadoConstruido = (int)COL_PRIVADO_CONSTRUIDOS - 65;
@@ -37,6 +41,9 @@ public class Lector {
         colComunLibre = (int)COL_COMUNES_LIBRES - 65;
     }
 
+    // -----------------------------------------------
+    // Métodos
+    // -----------------------------------------------
     public Inmueble leer(String nombre) throws Exception {
         InputStream inputStream = Lector.class.getResourceAsStream("/"+nombre+".xlsx");
         XSSFWorkbook libro = new XSSFWorkbook(inputStream);
@@ -52,6 +59,7 @@ public class Lector {
             if (fila.getCell(colNombre) == null ) continue;
 
             String nombreInmueble = fila.getCell(colNombre).getStringCellValue();
+            System.out.println(nombreInmueble);
 
             if (nombreInmueble.startsWith("Total ")) {
                 niveles.add(Inmueble.englobar(nombreInmueble.replace("Total ",""), inmueblesxNivel));
@@ -68,6 +76,9 @@ public class Lector {
             inmueblesxNivel.add(new Inmueble(nombreInmueble, metros));
         }
         Inmueble inmueble = Inmueble.englobar(nombre, niveles);
+
+        inputStream.close();
+
         System.out.println(inmueble);
         return inmueble;
     }
