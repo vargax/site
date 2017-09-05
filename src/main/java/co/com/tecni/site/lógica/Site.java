@@ -12,16 +12,16 @@ public class Site implements ISite {
     // Atributos
     // -----------------------------------------------
     private Lector lector;
-    private ArrayList<Inmueble> raices;
+    private Inmueble raiz;
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
     public Site() throws Exception {
         lector = new Lector();
-        raices = new ArrayList();
+        //raiz = new ArrayList();
 
-        raices.add(lector.leer("ecotower93"));
+        raiz = lector.leer("ecotower93");
     }
     // -----------------------------------------------
     // Método MAIN
@@ -34,7 +34,7 @@ public class Site implements ISite {
     // Métodos Interfaz
     // -----------------------------------------------
     public Object getRoot() {
-        return raices;
+        return raiz;
     }
 
     public Object getChild(Object o, int i) {
