@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
@@ -18,17 +19,29 @@ public class TestInmueble {
     @Before
     public void setUp() throws Exception {
 
-        niveles = new ArrayList<>();
+        HashMap<String, Double> m2nivel = new HashMap<String, Double>();
+        m2nivel.put(Inmueble.PRIV_CONSTRUIDOS, 643.87);
+        m2nivel.put(Inmueble.PRIV_LIBRES, 0.0);
+        m2nivel.put(Inmueble.COM_CONSTRUIDOS, 204.57);
+        m2nivel.put(Inmueble.COM_LIBRES, 50.39);
+
+        HashMap<String, Double> m2oficina = new HashMap<String, Double>();
+        m2oficina.put(Inmueble.PRIV_CONSTRUIDOS, 160.9675);
+        m2oficina.put(Inmueble.PRIV_LIBRES, 0.0);
+        m2oficina.put(Inmueble.COM_CONSTRUIDOS, 51.1425);
+        m2oficina.put(Inmueble.COM_LIBRES, 12.5975);
+
+        niveles = new ArrayList<Inmueble>();
         for (int i = 1; i <= 8; i++) {
-            niveles.add(new Inmueble("Nivel "+i ));
+            niveles.add(new Inmueble("Nivel "+i, m2nivel));
         }
 
         // Cada nivel se desengloba en 4 oficinas
         for (Inmueble nivel : niveles) {
-            ArrayList<Inmueble> oficinas = new ArrayList<>();
+            ArrayList<Inmueble> oficinas = new ArrayList<Inmueble>();
 
             for (int i = 1; i <= OFICINASxPISO; i++) {
-                oficinas.add(new Inmueble("Oficina "+i));
+                oficinas.add(new Inmueble("Oficina "+i, m2oficina));
             }
 
             nivel.desenglobar(oficinas);

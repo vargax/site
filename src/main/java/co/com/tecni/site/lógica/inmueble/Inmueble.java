@@ -1,6 +1,7 @@
 package co.com.tecni.site.lógica.inmueble;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Los inmuebles son la entidad principal de SAIT
@@ -8,10 +9,19 @@ import java.util.ArrayList;
 public class Inmueble {
 
     // -----------------------------------------------
+    // Constantes
+    // -----------------------------------------------
+    public final static String PRIV_CONSTRUIDOS = "PC";
+    public final static String PRIV_LIBRES = "PL";
+    public final static String COM_CONSTRUIDOS = "CC";
+    public final static String COM_LIBRES = "CL";
+
+    // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
     private String nombre;
-    private double m2;
+
+    private HashMap<String , Double> m2;
 
     private Inmueble padre;
     private ArrayList<Inmueble> hijos;
@@ -21,12 +31,12 @@ public class Inmueble {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public Inmueble(String nombre) {
+    public Inmueble(String nombre, HashMap<String, Double> m2) {
         this.nombre = nombre;
         this.m2 = m2;
 
         this.padre = null;
-        this.hijos = new ArrayList<>();
+        this.hijos = new ArrayList();
     }
 
     private Inmueble(String nombre, ArrayList<Inmueble> hijos) {
@@ -64,5 +74,17 @@ public class Inmueble {
 
     public ArrayList<Inmueble> getHijos() {
         return hijos;
+    }
+
+    public String toString() {
+        String nombre = this.nombre+" ("+hijos.size()+") "+m2;
+
+        if (hijos.size() != 0)
+            for (Inmueble hijo : hijos)
+                nombre += ("\n "+hijo.toString());
+        else
+            nombre = " "+nombre;
+
+        return nombre;
     }
 }
