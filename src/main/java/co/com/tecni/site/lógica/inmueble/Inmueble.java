@@ -51,7 +51,20 @@ public class Inmueble {
     // -----------------------------------------------
     public static Inmueble englobar(String nombre, ArrayList<Inmueble> inmuebles) {
         Inmueble englobe = new Inmueble(nombre, inmuebles);
+        englobe.m2 = new HashMap<String, Double>();
+
+        englobe.m2.put(PRIV_CONSTRUIDOS,0.0);
+        englobe.m2.put(PRIV_LIBRES,0.0);
+        englobe.m2.put(COM_CONSTRUIDOS,0.0);
+        englobe.m2.put(COM_LIBRES,0.0);
+
         for (Inmueble inmueble : inmuebles) {
+
+            englobe.m2.put(PRIV_CONSTRUIDOS,englobe.m2.get(PRIV_CONSTRUIDOS)+inmueble.m2.get(PRIV_CONSTRUIDOS));
+            englobe.m2.put(PRIV_LIBRES,englobe.m2.get(PRIV_LIBRES)+inmueble.m2.get(PRIV_LIBRES));
+            englobe.m2.put(COM_CONSTRUIDOS,englobe.m2.get(COM_CONSTRUIDOS)+inmueble.m2.get(COM_CONSTRUIDOS));
+            englobe.m2.put(COM_LIBRES,englobe.m2.get(COM_LIBRES)+inmueble.m2.get(COM_LIBRES));
+
             inmueble.padre = englobe;
         }
         return englobe;
@@ -67,7 +80,6 @@ public class Inmueble {
     // -----------------------------------------------
     // Getters and Setters
     // -----------------------------------------------
-
     public String getNombre() {
         return padre == null ? nombre : padre.getNombre() + ' ' + nombre;
     }
@@ -76,6 +88,9 @@ public class Inmueble {
         return hijos;
     }
 
+    // -----------------------------------------------
+    // Métodos Object
+    // -----------------------------------------------
     public String toString() {
         String nombre = this.nombre+" ("+hijos.size()+") "+m2;
 
