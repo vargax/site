@@ -2,6 +2,7 @@ package co.com.tecni.site.ui;
 
 import co.com.tecni.site.lógica.ISite;
 import co.com.tecni.site.lógica.Site;
+import co.com.tecni.site.lógica.inmueble.Inmueble;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -26,55 +27,6 @@ public class Gui extends JFrame {
     private JLabel info;
 
     public Gui() throws Exception {
-        //Raíz - TECNI
-        DefaultMutableTreeNode tecni = new DefaultMutableTreeNode("TECNI");
-        //Inmueble Ecotower 93
-        DefaultMutableTreeNode inmueble1 = new DefaultMutableTreeNode("Ecotower 93");
-        //Inmueble Ecotower 93 - Piso 1
-        DefaultMutableTreeNode piso1 = new DefaultMutableTreeNode("Piso 1");
-        piso1.add(new DefaultMutableTreeNode("Oficina 1"));
-        piso1.add(new DefaultMutableTreeNode("Oficina 2"));
-        piso1.add(new DefaultMutableTreeNode("Oficina 3"));
-        piso1.add(new DefaultMutableTreeNode("Oficina 4"));
-        inmueble1.add(piso1);
-        //Inmueble Ecotower 93 - Piso 2
-        DefaultMutableTreeNode piso2 = new DefaultMutableTreeNode("Piso 2");
-        piso2.add(new DefaultMutableTreeNode("Oficina 1"));
-        piso2.add(new DefaultMutableTreeNode("Oficina 2"));
-        piso2.add(new DefaultMutableTreeNode("Oficina 3"));
-        piso2.add(new DefaultMutableTreeNode("Oficina 4"));
-        inmueble1.add(piso2);
-        inmueble1.add(new DefaultMutableTreeNode("Piso 3"));
-        inmueble1.add(new DefaultMutableTreeNode("Piso 4"));
-        inmueble1.add(new DefaultMutableTreeNode("Piso 5"));
-        inmueble1.add(new DefaultMutableTreeNode("Piso 6"));
-
-        //Inmueble Hotel Terra
-        DefaultMutableTreeNode inmueble2 = new DefaultMutableTreeNode("Hotel Terra");
-        inmueble2.add(new DefaultMutableTreeNode("Piso 1"));
-        inmueble2.add(new DefaultMutableTreeNode("Piso 2"));
-        inmueble2.add(new DefaultMutableTreeNode("Piso 3"));
-        inmueble2.add(new DefaultMutableTreeNode("Piso 4"));
-        inmueble2.add(new DefaultMutableTreeNode("Piso 5"));
-        //Inmueble Hotel Terra - Piso 6
-        DefaultMutableTreeNode piso6 = new DefaultMutableTreeNode("Piso 6");
-        piso6.add(new DefaultMutableTreeNode("Habitación 1"));
-        piso6.add(new DefaultMutableTreeNode("Habitación 2"));
-        piso6.add(new DefaultMutableTreeNode("Habitación 3"));
-        piso6.add(new DefaultMutableTreeNode("Habitación 4"));
-        piso6.add(new DefaultMutableTreeNode("Habitación 5"));
-        inmueble1.add(piso6);
-        //Inmueble Hotel Terra - Piso 7
-        DefaultMutableTreeNode piso7 = new DefaultMutableTreeNode("Piso 7");
-        piso7.add(new DefaultMutableTreeNode("Habitación 1"));
-        piso7.add(new DefaultMutableTreeNode("Habitación 2"));
-        piso7.add(new DefaultMutableTreeNode("Habitación 3"));
-        piso7.add(new DefaultMutableTreeNode("Habitación 4"));
-        piso7.add(new DefaultMutableTreeNode("Habitación 5"));
-        inmueble1.add(piso7);
-
-        tecni.add(inmueble1);
-        tecni.add(inmueble2);
 
         Site site = new Site();
 
@@ -105,8 +57,8 @@ public class Gui extends JFrame {
         tree.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {
             //@Override
             public void valueChanged(TreeSelectionEvent e) {
-                DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
-                info.setText(selectedNode.getUserObject().toString());
+                Inmueble inmueble = (Inmueble) tree.getLastSelectedPathComponent();
+                info.setText(inmueble.getNombre());
             }
         });
 
