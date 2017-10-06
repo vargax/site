@@ -1,12 +1,15 @@
 package co.com.tecni.site.lógica.inmueble;
 
+import co.com.tecni.site.lógica.Agrupación;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Los inmuebles son la entidad principal de SAIT
  */
-public class Inmueble {
+public class Inmueble extends Agrupación {
 
     // -----------------------------------------------
     // Constantes
@@ -19,39 +22,40 @@ public class Inmueble {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    private String nombre;
-
     private HashMap<String , Double> m2;
+    private ArrayList<Ficha> fichas;
 
     private Inmueble padre;
-    private ArrayList<Inmueble> hijos;
-
-    private ArrayList<Ficha> fichas;
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
     public Inmueble(String nombre, HashMap<String, Double> m2) {
-        this.nombre = nombre;
-        this.m2 = m2;
+        super(nombre);
 
-        this.padre = null;
-        this.hijos = new ArrayList();
+        this.m2 = m2;
+        this.fichas = new ArrayList<>();
     }
 
     private Inmueble(String nombre, ArrayList<Inmueble> hijos) {
-        this.nombre = nombre;
+        super(nombre);
 
         this.padre = null;
-        this.hijos = hijos;
+        this.inmuebles = hijos;
+
+        this.fichas = new ArrayList<>();
     }
+
+    // -----------------------------------------------
+    // Métodos privados
+    // -----------------------------------------------
 
     // -----------------------------------------------
     // Métodos públicos
     // -----------------------------------------------
     public static Inmueble englobar(String nombre, ArrayList<Inmueble> inmuebles) {
         Inmueble englobe = new Inmueble(nombre, inmuebles);
-        englobe.m2 = new HashMap<String, Double>();
+        englobe.m2 = new HashMap<>();
 
         englobe.m2.put(PRIV_CONSTRUIDOS,0.0);
         englobe.m2.put(PRIV_LIBRES,0.0);
@@ -73,18 +77,20 @@ public class Inmueble {
     public void desenglobar(ArrayList<Inmueble> hijos) {
         for (Inmueble inmueble : hijos) {
             inmueble.padre = this;
-            this.hijos.add(inmueble);
+            this.inmuebles.add(inmueble);
         }
+    }
+
+    public void asociarFicha(Ficha ficha) {
+        fichas.add(ficha);
     }
 
     // -----------------------------------------------
     // Getters and Setters
     // -----------------------------------------------
-    public String getNombre() {
-        return padre == null ? nombre : padre.getNombre() + ' ' + nombre;
-    }
-
-    public ArrayList<Inmueble> getHijos() {
+    public ArrayList<Object> getHijos() {
+        ArrayList<Object> hijos = super.getHijos();
+        hijos.addAll(fichas);
         return hijos;
     }
 
@@ -92,14 +98,12 @@ public class Inmueble {
     // Métodos Object
     // -----------------------------------------------
     public String toString() {
-        String nombre = this.nombre+" ("+hijos.size()+") "+m2;
+        String nombre = this.nombre + " (";
 
-        if (hijos.size() != 0)
-            for (Inmueble hijo : hijos)
-                nombre += ("\n "+hijo.toString());
-        else
-            nombre = " "+nombre;
+        for (Map.Entry<String, Double> entry : m2.entrySet()) {
+            nombre += entry.getKey() + ": "+String.format("%.2f", entry.getValue())+" ";
+        }
 
-        return nombre;
+        return nombre.substring(0, nombre.length()-1)+")";
     }
 }
