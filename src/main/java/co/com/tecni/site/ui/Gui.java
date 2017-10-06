@@ -4,22 +4,11 @@ import co.com.tecni.site.lógica.ISite;
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.inmueble.Inmueble;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTree;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
-
-import javax.swing.*;
+import java.awt.*;
 
 public class Gui extends JFrame {
 
@@ -28,7 +17,7 @@ public class Gui extends JFrame {
 
     public Gui() throws Exception {
 
-        Site site = new Site();
+        ISite site = new Site();
 
         //tree = new JTree(tecni);
         tree = new JTree(site);
@@ -58,7 +47,7 @@ public class Gui extends JFrame {
             //@Override
             public void valueChanged(TreeSelectionEvent e) {
                 Inmueble inmueble = (Inmueble) tree.getLastSelectedPathComponent();
-                info.setText(inmueble.getNombre());
+                info.setText(inmueble.genNombre());
             }
         });
 

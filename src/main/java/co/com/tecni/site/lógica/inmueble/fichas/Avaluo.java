@@ -7,10 +7,16 @@ import java.util.Date;
 /**
  * Created by cvargasc on 22/08/17.
  */
-public class Avaluo implements Ficha {
+public class Avaluo extends Ficha {
+
+    private final static String TIPO = "Avaluo";
 
     private int piso;
     private int calificacion;
+
+    public Avaluo() {
+        super(TIPO);
+    }
 
     private class AvaluoTecnico {
         private Date fecha;

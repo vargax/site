@@ -7,7 +7,15 @@ import java.util.ArrayList;
 /**
  * Created by cvargasc on 17/08/17.
  */
-public class Catastral implements Ficha {
+public class Catastral extends Ficha {
+    // -----------------------------------------------
+    // Constantes
+    // -----------------------------------------------
+    private final static String TIPO = "Catastral";
+
+    // -----------------------------------------------
+    // Atributos
+    // -----------------------------------------------
     private int chip;
     private String cedulaCatastral;
     private String nomenclatura;
@@ -17,6 +25,17 @@ public class Catastral implements Ficha {
 
     private ArrayList<ImpuestoPredial> impuestosPrediales;
 
+    // -----------------------------------------------
+    // Constructor
+    // -----------------------------------------------
+    public Catastral() {
+        super(TIPO);
+
+    }
+
+    // -----------------------------------------------
+    // Subclases
+    // -----------------------------------------------
     private class ImpuestoPredial {
         private int añoFiscal;
         private float avaluoCatastral;

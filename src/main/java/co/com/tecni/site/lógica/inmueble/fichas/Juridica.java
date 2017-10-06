@@ -7,7 +7,15 @@ import java.util.Date;
 /**
  * Created by cvargasc on 22/08/17.
  */
-public class Juridica implements Ficha {
+public class Juridica extends Ficha {
+    // -----------------------------------------------
+    // Constantes
+    // -----------------------------------------------
+    private final static String TIPO = "Jurídica";
+
+    // -----------------------------------------------
+    // Atributos
+    // -----------------------------------------------
     private String matriculaInmobiliaria;
     private float porcentajeCopropiedad;
 
@@ -18,4 +26,12 @@ public class Juridica implements Ficha {
     private String bancoHipoteca;
 
     private String propietario;
+
+    // -----------------------------------------------
+    // Constructor
+    // -----------------------------------------------
+    public Juridica() {
+        super(TIPO);
+
+    }
 }
