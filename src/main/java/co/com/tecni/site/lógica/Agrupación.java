@@ -32,6 +32,10 @@ public class Agrupación {
         inmuebles.add(inmueble);
     }
 
+    public void agregarAgrupación(Agrupación agrupación) {
+        agrupaciones.add(agrupación);
+    }
+
     public String genNombre() {
         return padre == null ? nombre : padre.genNombre() + ' ' + nombre;
     }
@@ -46,5 +50,12 @@ public class Agrupación {
         hijos.addAll(inmuebles);
 
         return hijos;
+    }
+
+    // -----------------------------------------------
+    // Métodos Object
+    // -----------------------------------------------
+    public String toString() {
+        return nombre+" (A: "+agrupaciones.size()+" I:"+inmuebles.size()+")";
     }
 }

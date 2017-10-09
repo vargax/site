@@ -29,10 +29,19 @@ public class Site implements ISite {
 
         raiz = new Agrupación(NOMBRE_RAIZ);
 
+        Agrupación bodegas = new Agrupación("Bodegas");
+        Agrupación grandesBodegas = new Agrupación("Grandes Bodegas");
+        Agrupación pequeñasBodegas = new Agrupación("Pequeñas Bodegas");
+        bodegas.agregarAgrupación(grandesBodegas);
+        bodegas.agregarAgrupación(pequeñasBodegas);
+
+        Agrupación edificiosOficinas = new Agrupación("Edificios de oficinas");
         Inmueble ecotower93 = lector.leer("ecotower93");
         ecotower93.asociarFicha(new Contable());
+        edificiosOficinas.agregarInmueble(ecotower93);
 
-        raiz.agregarInmueble(ecotower93);
+        raiz.agregarAgrupación(bodegas);
+        raiz.agregarAgrupación(edificiosOficinas);
     }
     // -----------------------------------------------
     // Método MAIN
