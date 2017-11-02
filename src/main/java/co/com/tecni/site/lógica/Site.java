@@ -43,12 +43,6 @@ public class Site implements ISite {
         raiz.agregarAgrupación(bodegas);
         raiz.agregarAgrupación(edificiosOficinas);
     }
-    // -----------------------------------------------
-    // Método MAIN
-    // -----------------------------------------------
-    public static void main(String args[]) throws Exception {
-        new Site();
-    }
 
     // -----------------------------------------------
     // Métodos Interfaz
