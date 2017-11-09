@@ -3,7 +3,7 @@ package co.com.tecni.site.lógica;
 import co.com.tecni.site.datos.Lector;
 import co.com.tecni.site.lógica.nodos.Agrupación;
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.inmueble.Ficha;
+import co.com.tecni.site.lógica.nodos.inmueble.fichas._Ficha;
 
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreePath;
@@ -56,7 +56,7 @@ public class Site implements ISite {
     }
 
     public boolean isLeaf(Object o) {
-        return o instanceof Ficha;
+        return o instanceof _Ficha;
     }
 
     public void valueForPathChanged(TreePath treePath, Object o) {

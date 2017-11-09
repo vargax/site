@@ -1,6 +1,7 @@
-package co.com.tecni.site.lógica.nodos.inmueble;
+package co.com.tecni.site.lógica.nodos.inmueble.tipos;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
+import co.com.tecni.site.lógica.nodos.inmueble.fichas._Ficha;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +10,7 @@ import java.util.Map;
 /**
  * Los inmuebles son la entidad principal de SAIT
  */
-public class Inmueble extends Nodo {
+public abstract class _Inmueble extends Nodo {
 
     // -----------------------------------------------
     // Constantes
@@ -23,27 +24,15 @@ public class Inmueble extends Nodo {
     // Atributos
     // -----------------------------------------------
     private HashMap<String , Double> m2;
-    private ArrayList<Ficha> fichas;
+    private ArrayList<_Ficha> fichas;
 
-    private Inmueble padre;
-    private ArrayList<Inmueble> hijos;
+    private _Inmueble padre;
+    private ArrayList<_Inmueble> hijos;
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public Inmueble(String nombre, HashMap<String, Double> m2) {
-        super(nombre);
-
-        this.m2 = m2;
-        this.fichas = new ArrayList<>();
-    }
-
-    private Inmueble(String nombre, ArrayList<Inmueble> hijos) {
-        super(nombre);
-
-        this.padre = null;
-        this.hijos = hijos;
-
+    public _Inmueble() {
         this.fichas = new ArrayList<>();
     }
 
@@ -54,8 +43,11 @@ public class Inmueble extends Nodo {
     // -----------------------------------------------
     // Métodos públicos
     // -----------------------------------------------
-    public static Inmueble englobar(String nombre, ArrayList<Inmueble> inmuebles) {
-        Inmueble englobe = new Inmueble(nombre, inmuebles);
+    public static _Inmueble englobar(String tipo, String nombre, ArrayList<_Inmueble> inmuebles) throws Exception {
+        _Inmueble englobe = (_Inmueble) Class.forName(tipo).newInstance();
+        englobe.nombre = nombre;
+        englobe.hijos =inmuebles;
+
         englobe.m2 = new HashMap<>();
 
         englobe.m2.put(PRIV_CONSTRUIDOS,0.0);
@@ -63,7 +55,7 @@ public class Inmueble extends Nodo {
         englobe.m2.put(COM_CONSTRUIDOS,0.0);
         englobe.m2.put(COM_LIBRES,0.0);
 
-        for (Inmueble inmueble : inmuebles) {
+        for (_Inmueble inmueble : inmuebles) {
 
             englobe.m2.put(PRIV_CONSTRUIDOS,englobe.m2.get(PRIV_CONSTRUIDOS)+inmueble.m2.get(PRIV_CONSTRUIDOS));
             englobe.m2.put(PRIV_LIBRES,englobe.m2.get(PRIV_LIBRES)+inmueble.m2.get(PRIV_LIBRES));
@@ -75,14 +67,22 @@ public class Inmueble extends Nodo {
         return englobe;
     }
 
-    public void desenglobar(ArrayList<Inmueble> hijos) {
-        for (Inmueble inmueble : hijos) {
+    public static _Inmueble hoja(String tipo, String nombre, HashMap<String, Double> m2) throws Exception {
+        _Inmueble hoja = (_Inmueble) Class.forName(tipo).newInstance();
+        hoja.nombre = nombre;
+        hoja.m2 = m2;
+
+        return hoja;
+    }
+
+    public void desenglobar(ArrayList<_Inmueble> hijos) {
+        for (_Inmueble inmueble : hijos) {
             inmueble.padre = this;
             this.hijos.add(inmueble);
         }
     }
 
-    public void asociarFicha(Ficha ficha) {
+    public void asociarFicha(_Ficha ficha) {
         fichas.add(ficha);
     }
 

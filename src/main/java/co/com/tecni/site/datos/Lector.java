@@ -1,6 +1,6 @@
 package co.com.tecni.site.datos;
 
-import co.com.tecni.site.lógica.nodos.inmueble.Inmueble;
+import co.com.tecni.site.lógica.nodos.inmueble.tipos._Inmueble;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -30,6 +30,8 @@ public class Lector {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
+    private String paqueteTipos;
+
     private int colHijos;
     private int colTipo;
     private int colNombre;
@@ -45,6 +47,8 @@ public class Lector {
     // Constructor
     // -----------------------------------------------
     public Lector() {
+        paqueteTipos = _Inmueble.class.getPackage().toString().substring(8)+'.';
+
         colHijos = (int)COL_HIJOS - 65;
         colTipo = (int)COL_TIPO - 65;
         colNombre = (int)COL_NOMBRE - 65;
@@ -57,7 +61,7 @@ public class Lector {
     // -----------------------------------------------
     // Métodos
     // -----------------------------------------------
-    public Inmueble leer(String nombreArchivo) throws Exception {
+    public _Inmueble leer(String nombreArchivo) throws Exception {
         InputStream inputStream = Lector.class.getResourceAsStream("/archivos/" + nombreArchivo + ".xlsx");
         XSSFWorkbook libro = new XSSFWorkbook(inputStream);
 
@@ -67,16 +71,19 @@ public class Lector {
         while (!inicioInmueble())
             filaActual = filas.next();
 
-        Inmueble inmueble = recursión();
+        _Inmueble inmueble = recursión();
 
         inputStream.close();
         System.out.println(inmueble);
         return inmueble;
     }
 
-    private Inmueble recursión() {
+    private _Inmueble recursión() throws Exception {
+
+        String tipo = paqueteTipos+filaActual.getCell(colTipo).getStringCellValue();
         String nombre = filaActual.getCell(colNombre).getStringCellValue();
-        ArrayList<Inmueble> hijos = new ArrayList<>();
+
+        ArrayList<_Inmueble> hijos = new ArrayList<>();
 
         System.out.println("r "+nombre);
 
@@ -89,22 +96,23 @@ public class Lector {
             filaActual = filas.next();
         }
 
-        return Inmueble.englobar(nombre, hijos);
+        return _Inmueble.englobar(tipo, nombre, hijos);
     }
 
-    private Inmueble hoja() {
+    private _Inmueble hoja() throws Exception {
 
+        String tipo = paqueteTipos+filaActual.getCell(colTipo).getStringCellValue();
         String nombre = filaActual.getCell(colNombre).getStringCellValue();
 
         System.out.println("h "+nombre);
 
         HashMap<String, Double> metros = new HashMap<>();
-        metros.put(Inmueble.PRIV_CONSTRUIDOS, filaActual.getCell(colPrivadoConstruido).getNumericCellValue());
-        metros.put(Inmueble.PRIV_LIBRES, filaActual.getCell(colPrivadoLibre).getNumericCellValue());
-        metros.put(Inmueble.COM_CONSTRUIDOS, filaActual.getCell(colComunConstruido).getNumericCellValue());
-        metros.put(Inmueble.COM_LIBRES, filaActual.getCell(colComunLibre).getNumericCellValue());
+        metros.put(_Inmueble.PRIV_CONSTRUIDOS, filaActual.getCell(colPrivadoConstruido).getNumericCellValue());
+        metros.put(_Inmueble.PRIV_LIBRES, filaActual.getCell(colPrivadoLibre).getNumericCellValue());
+        metros.put(_Inmueble.COM_CONSTRUIDOS, filaActual.getCell(colComunConstruido).getNumericCellValue());
+        metros.put(_Inmueble.COM_LIBRES, filaActual.getCell(colComunLibre).getNumericCellValue());
 
-        return new Inmueble(nombre, metros);
+        return _Inmueble.hoja(tipo,nombre, metros);
     }
 
     private boolean inicioInmueble() {

@@ -1,6 +1,6 @@
 package co.com.tecni.site.lógica.nodos;
 
-import co.com.tecni.site.lógica.nodos.inmueble.Inmueble;
+import co.com.tecni.site.lógica.nodos.inmueble.tipos._Inmueble;
 
 import java.util.ArrayList;
 
@@ -11,14 +11,13 @@ public class Agrupación extends Nodo {
     // -----------------------------------------------
     private Agrupación padre;
     private ArrayList<Agrupación> agrupaciones;
-    protected ArrayList<Inmueble> inmuebles;
+    protected ArrayList<_Inmueble> inmuebles;
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
     public Agrupación(String nombre) {
-        super(nombre);
-
+        this.nombre = nombre;
         this.agrupaciones = new ArrayList<>();
         this.inmuebles = new ArrayList<>();
     }
@@ -26,11 +25,12 @@ public class Agrupación extends Nodo {
     // -----------------------------------------------
     // Métodos públicos
     // -----------------------------------------------
-    public void agregarInmueble(Inmueble inmueble) {
+    public void agregarInmueble(_Inmueble inmueble) {
         inmuebles.add(inmueble);
     }
 
     public void agregarAgrupación(Agrupación agrupación) {
+        agrupación.padre = this;
         agrupaciones.add(agrupación);
     }
 
