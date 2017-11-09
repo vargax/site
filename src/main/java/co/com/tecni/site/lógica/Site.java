@@ -1,9 +1,9 @@
 package co.com.tecni.site.lógica;
 
 import co.com.tecni.site.datos.Lector;
-import co.com.tecni.site.lógica.inmueble.Ficha;
-import co.com.tecni.site.lógica.inmueble.Inmueble;
-import co.com.tecni.site.lógica.inmueble.fichas.Contable;
+import co.com.tecni.site.lógica.nodos.Agrupación;
+import co.com.tecni.site.lógica.nodos.Nodo;
+import co.com.tecni.site.lógica.nodos.inmueble.Ficha;
 
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreePath;
@@ -30,15 +30,10 @@ public class Site implements ISite {
         raiz = new Agrupación(NOMBRE_RAIZ);
 
         Agrupación bodegas = new Agrupación("Bodegas");
-        Agrupación grandesBodegas = new Agrupación("Grandes Bodegas");
-        Agrupación pequeñasBodegas = new Agrupación("Pequeñas Bodegas");
-        bodegas.agregarAgrupación(grandesBodegas);
-        bodegas.agregarAgrupación(pequeñasBodegas);
+        bodegas.agregarInmueble(lector.leer("LaEstancia"));
 
         Agrupación edificiosOficinas = new Agrupación("Edificios de oficinas");
-        Inmueble ecotower93 = lector.leer("ecotower93");
-        ecotower93.asociarFicha(new Contable());
-        edificiosOficinas.agregarInmueble(ecotower93);
+        edificiosOficinas.agregarInmueble(lector.leer("Ecotower93"));
 
         raiz.agregarAgrupación(bodegas);
         raiz.agregarAgrupación(edificiosOficinas);
@@ -52,11 +47,12 @@ public class Site implements ISite {
     }
 
     public Object getChild(Object o, int i) {
-        return ((Agrupación) o).getHijos().get(i);
+
+        return ((Nodo) o).getHijos().get(i);
     }
 
     public int getChildCount(Object o) {
-        return ((Agrupación) o).getHijos().size();
+        return ((Nodo) o).getHijos().size();
     }
 
     public boolean isLeaf(Object o) {
@@ -68,7 +64,7 @@ public class Site implements ISite {
     }
 
     public int getIndexOfChild(Object o, Object o1) {
-        ArrayList<Object> hijos = ((Agrupación) o).getHijos();
+        ArrayList<Object> hijos = ((Nodo) o).getHijos();
 
         for (int i = 0; i < hijos.size(); i++)
             if (hijos.get(i) == o1) return i;

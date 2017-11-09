@@ -1,15 +1,15 @@
-package co.com.tecni.site.lógica.inmueble.fichas;
+package co.com.tecni.site.lógica.nodos.inmueble.fichas;
 
-import co.com.tecni.site.lógica.inmueble.Ficha;
+import co.com.tecni.site.lógica.nodos.inmueble.Ficha;
 
 /**
- * Created by cvargasc on 22/08/17.
+ * Created by cvargasc on 17/08/17.
  */
-public class Contable extends Ficha {
+public class Fiscal extends Ficha {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
-    private final static String TIPO = "Contable";
+    private final static String TIPO = "Fiscal";
 
     // -----------------------------------------------
     // Atributos
@@ -18,7 +18,7 @@ public class Contable extends Ficha {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public Contable() {
+    public Fiscal() {
         super(TIPO);
 
     }

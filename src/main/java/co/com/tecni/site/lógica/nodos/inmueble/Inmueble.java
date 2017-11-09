@@ -1,6 +1,6 @@
-package co.com.tecni.site.lógica.inmueble;
+package co.com.tecni.site.lógica.nodos.inmueble;
 
-import co.com.tecni.site.lógica.Agrupación;
+import co.com.tecni.site.lógica.nodos.Nodo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Los inmuebles son la entidad principal de SAIT
  */
-public class Inmueble extends Agrupación {
+public class Inmueble extends Nodo {
 
     // -----------------------------------------------
     // Constantes
@@ -26,6 +26,7 @@ public class Inmueble extends Agrupación {
     private ArrayList<Ficha> fichas;
 
     private Inmueble padre;
+    private ArrayList<Inmueble> hijos;
 
     // -----------------------------------------------
     // Constructor
@@ -41,7 +42,7 @@ public class Inmueble extends Agrupación {
         super(nombre);
 
         this.padre = null;
-        this.inmuebles = hijos;
+        this.hijos = hijos;
 
         this.fichas = new ArrayList<>();
     }
@@ -77,7 +78,7 @@ public class Inmueble extends Agrupación {
     public void desenglobar(ArrayList<Inmueble> hijos) {
         for (Inmueble inmueble : hijos) {
             inmueble.padre = this;
-            this.inmuebles.add(inmueble);
+            this.hijos.add(inmueble);
         }
     }
 
@@ -89,8 +90,10 @@ public class Inmueble extends Agrupación {
     // Getters and Setters
     // -----------------------------------------------
     public ArrayList<Object> getHijos() {
-        ArrayList<Object> hijos = super.getHijos();
-        hijos.addAll(fichas);
+        ArrayList<Object> hijos = new ArrayList<>();
+        if (this.hijos != null)
+            hijos.addAll(this.hijos);
+        hijos.addAll(this.fichas);
         return hijos;
     }
 
@@ -98,7 +101,7 @@ public class Inmueble extends Agrupación {
     // Métodos Object
     // -----------------------------------------------
     public String toString() {
-        String nombre = this.nombre + " (";
+        String nombre = super.nombre + " (";
 
         for (Map.Entry<String, Double> entry : m2.entrySet()) {
             nombre += entry.getKey() + ": "+String.format("%.2f", entry.getValue())+" ";

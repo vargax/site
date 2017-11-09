@@ -1,4 +1,4 @@
-package co.com.tecni.site.lógica.inmueble;
+package co.com.tecni.site.lógica.nodos.inmueble;
 
 /**
  * Created by cvargasc on 17/08/17.

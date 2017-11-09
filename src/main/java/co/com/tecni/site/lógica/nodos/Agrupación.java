@@ -1,16 +1,14 @@
-package co.com.tecni.site.lógica;
+package co.com.tecni.site.lógica.nodos;
 
-import co.com.tecni.site.lógica.inmueble.Inmueble;
+import co.com.tecni.site.lógica.nodos.inmueble.Inmueble;
 
 import java.util.ArrayList;
 
-public class Agrupación {
+public class Agrupación extends Nodo {
 
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    protected String nombre;
-
     private Agrupación padre;
     private ArrayList<Agrupación> agrupaciones;
     protected ArrayList<Inmueble> inmuebles;
@@ -19,7 +17,7 @@ public class Agrupación {
     // Constructor
     // -----------------------------------------------
     public Agrupación(String nombre) {
-        this.nombre = nombre;
+        super(nombre);
 
         this.agrupaciones = new ArrayList<>();
         this.inmuebles = new ArrayList<>();
@@ -56,6 +54,6 @@ public class Agrupación {
     // Métodos Object
     // -----------------------------------------------
     public String toString() {
-        return nombre+" (A: "+agrupaciones.size()+" I:"+inmuebles.size()+")";
+        return super.nombre+" (A: "+agrupaciones.size()+" I:"+inmuebles.size()+")";
     }
 }
