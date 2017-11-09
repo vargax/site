@@ -76,15 +76,15 @@ public class Gui extends JFrame {
         public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded,
                                                       boolean leaf, int row, boolean hasFocus) {
             if (value instanceof _Inmueble) {
-                label.setIcon(new ImageIcon(Gui.class.getResource("/inmueble.png")));
+                label.setIcon(new ImageIcon(Gui.class.getResource("/static/íconos/inmueble.png")));
                 label.setText(((_Inmueble)value).getNombre());
             }
             else if (value instanceof _Ficha) {
-                label.setIcon(new ImageIcon(Gui.class.getResource("/ficha.png")));
+                label.setIcon(new ImageIcon(Gui.class.getResource("/static/íconos/ficha.png")));
                 label.setText(value+"");
             }
             else if (value instanceof Agrupación) {
-                label.setIcon(new ImageIcon(Gui.class.getResource("/agrupacion.png")));
+                label.setIcon(new ImageIcon(Gui.class.getResource("/static/íconos/agrupacion.png")));
                 label.setText(((Agrupación)value).getNombre());
             }
             return label;

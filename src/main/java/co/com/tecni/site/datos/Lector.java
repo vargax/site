@@ -62,7 +62,7 @@ public class Lector {
     // Métodos
     // -----------------------------------------------
     public _Inmueble leer(String nombreArchivo) throws Exception {
-        InputStream inputStream = Lector.class.getResourceAsStream("/archivos/" + nombreArchivo + ".xlsx");
+        InputStream inputStream = Lector.class.getResourceAsStream("/static/archivos/" + nombreArchivo + ".xlsx");
         XSSFWorkbook libro = new XSSFWorkbook(inputStream);
 
         filas = libro.getSheet(HOJA_NOMBRE).iterator();
