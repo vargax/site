@@ -1,4 +1,4 @@
-package co.com.tecni.site.lógica.inmueble.excepciones;
+package co.com.tecni.site.lógica.nodos.inmueble.excepciones;
 
 /**
  * Created by cvargasc on 28/08/17.

@@ -1,6 +1,6 @@
 package co.com.tecni.site.datos;
 
-import co.com.tecni.site.lógica.inmueble.Inmueble;
+import co.com.tecni.site.lógica.nodos.inmueble.Inmueble;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -25,6 +25,7 @@ public class Lector {
 
     private final static String HIJOS_INICIO = "inicio";
     private final static String HIJOS_FIN = "fin";
+    private final static String SALTAR = "saltar";
 
     // -----------------------------------------------
     // Atributos
@@ -57,7 +58,7 @@ public class Lector {
     // Métodos
     // -----------------------------------------------
     public Inmueble leer(String nombreArchivo) throws Exception {
-        InputStream inputStream = Lector.class.getResourceAsStream("/" + nombreArchivo + ".xlsx");
+        InputStream inputStream = Lector.class.getResourceAsStream("/archivos/" + nombreArchivo + ".xlsx");
         XSSFWorkbook libro = new XSSFWorkbook(inputStream);
 
         filas = libro.getSheet(HOJA_NOMBRE).iterator();
@@ -83,7 +84,7 @@ public class Lector {
         while (!finInmueble()) {
             if (inicioInmueble())
                 hijos.add(recursión());
-            else
+            else if (!saltar())
                 hijos.add(hoja());
             filaActual = filas.next();
         }
@@ -112,5 +113,9 @@ public class Lector {
 
     private boolean finInmueble() {
         return filaActual.getCell(colHijos) != null && HIJOS_FIN.equals(filaActual.getCell(colHijos).getStringCellValue());
+    }
+
+    private boolean saltar() {
+        return filaActual.getCell(colHijos) != null && SALTAR.equals(filaActual.getCell(colHijos).getStringCellValue());
     }
 }

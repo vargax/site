@@ -1,15 +1,14 @@
 package co.com.tecni.site.ui;
 
-import co.com.tecni.site.lógica.Agrupación;
 import co.com.tecni.site.lógica.ISite;
 import co.com.tecni.site.lógica.Site;
-import co.com.tecni.site.lógica.inmueble.Ficha;
-import co.com.tecni.site.lógica.inmueble.Inmueble;
+import co.com.tecni.site.lógica.nodos.Agrupación;
+import co.com.tecni.site.lógica.nodos.inmueble.Ficha;
+import co.com.tecni.site.lógica.nodos.inmueble.Inmueble;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
 import java.awt.*;
 
@@ -78,7 +77,7 @@ public class Gui extends JFrame {
                                                       boolean leaf, int row, boolean hasFocus) {
             if (value instanceof Inmueble) {
                 label.setIcon(new ImageIcon(Gui.class.getResource("/inmueble.png")));
-                label.setText(((Inmueble)value).genNombre());
+                label.setText(((Inmueble)value).getNombre());
             }
             else if (value instanceof Ficha) {
                 label.setIcon(new ImageIcon(Gui.class.getResource("/ficha.png")));
@@ -86,7 +85,7 @@ public class Gui extends JFrame {
             }
             else if (value instanceof Agrupación) {
                 label.setIcon(new ImageIcon(Gui.class.getResource("/agrupacion.png")));
-                label.setText(((Agrupación)value).genNombre());
+                label.setText(((Agrupación)value).getNombre());
             }
             return label;
         }
