@@ -1,9 +1,9 @@
-package co.com.tecni.site.lógica.nodos.inmueble;
+package co.com.tecni.site.lógica.nodos.inmueble.fichas;
 
 /**
  * Created by cvargasc on 17/08/17.
  */
-public abstract class Ficha {
+public abstract class _Ficha {
 
     // -----------------------------------------------
     // Atributos
@@ -13,7 +13,7 @@ public abstract class Ficha {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    protected Ficha(String tipo) {
+    protected _Ficha(String tipo) {
         this.tipo = tipo;
     }
 

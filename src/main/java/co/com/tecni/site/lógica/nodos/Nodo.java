@@ -12,9 +12,6 @@ public abstract class Nodo {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public Nodo (String nombre) {
-        this.nombre = nombre;
-    }
 
     // -----------------------------------------------
     // Getters and Setters

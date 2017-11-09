@@ -1,13 +1,11 @@
 package co.com.tecni.site.lógica.nodos.inmueble.fichas;
 
-import co.com.tecni.site.lógica.nodos.inmueble.Ficha;
-
 import java.util.Date;
 
 /**
  * Created by cvargasc on 22/08/17.
  */
-public class Avaluo extends Ficha {
+public class Avaluo extends _Ficha {
 
     private final static String TIPO = "Avaluo";
 

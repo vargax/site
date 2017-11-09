@@ -3,8 +3,8 @@ package co.com.tecni.site.ui;
 import co.com.tecni.site.lógica.ISite;
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Agrupación;
-import co.com.tecni.site.lógica.nodos.inmueble.Ficha;
-import co.com.tecni.site.lógica.nodos.inmueble.Inmueble;
+import co.com.tecni.site.lógica.nodos.inmueble.fichas._Ficha;
+import co.com.tecni.site.lógica.nodos.inmueble.tipos._Inmueble;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
@@ -46,12 +46,12 @@ public class Gui extends JFrame {
             //@Override
             public void valueChanged(TreeSelectionEvent e) {
                 Object o = tree.getLastSelectedPathComponent();
-                if (o instanceof Inmueble) {
-                    Inmueble i = (Inmueble)o;
+                if (o instanceof _Inmueble) {
+                    _Inmueble i = (_Inmueble)o;
                     info.setText(i.toString());
                 }
-                else if (o instanceof Ficha) {
-                    Ficha f = (Ficha)o;
+                else if (o instanceof _Ficha) {
+                    _Ficha f = (_Ficha)o;
                     info.setText(f.toString());
                 }
                 else if (o instanceof Agrupación) {
@@ -75,11 +75,11 @@ public class Gui extends JFrame {
 
         public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded,
                                                       boolean leaf, int row, boolean hasFocus) {
-            if (value instanceof Inmueble) {
+            if (value instanceof _Inmueble) {
                 label.setIcon(new ImageIcon(Gui.class.getResource("/inmueble.png")));
-                label.setText(((Inmueble)value).getNombre());
+                label.setText(((_Inmueble)value).getNombre());
             }
-            else if (value instanceof Ficha) {
+            else if (value instanceof _Ficha) {
                 label.setIcon(new ImageIcon(Gui.class.getResource("/ficha.png")));
                 label.setText(value+"");
             }
