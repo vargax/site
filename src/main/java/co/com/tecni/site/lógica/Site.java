@@ -48,11 +48,11 @@ public class Site implements ISite {
 
     public Object getChild(Object o, int i) {
 
-        return ((Nodo) o).getHijos().get(i);
+        return ((Nodo) o).guiÁrbolHijos().get(i);
     }
 
     public int getChildCount(Object o) {
-        return ((Nodo) o).getHijos().size();
+        return ((Nodo) o).guiÁrbolHijos().size();
     }
 
     public boolean isLeaf(Object o) {
@@ -64,7 +64,7 @@ public class Site implements ISite {
     }
 
     public int getIndexOfChild(Object o, Object o1) {
-        ArrayList<Object> hijos = ((Nodo) o).getHijos();
+        ArrayList<Object> hijos = ((Nodo) o).guiÁrbolHijos();
 
         for (int i = 0; i < hijos.size(); i++)
             if (hijos.get(i) == o1) return i;

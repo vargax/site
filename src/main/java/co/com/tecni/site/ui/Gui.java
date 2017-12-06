@@ -66,6 +66,7 @@ public class Gui extends JFrame {
         this.setSize(800, 600);
         this.setVisible(true);
     }
+
     class NewTreeCellRenderer implements TreeCellRenderer {
         private JLabel label;
 
@@ -77,7 +78,7 @@ public class Gui extends JFrame {
                                                       boolean leaf, int row, boolean hasFocus) {
             if (value instanceof _Inmueble) {
                 label.setIcon(new ImageIcon(Gui.class.getResource("/static/íconos/inmueble.png")));
-                label.setText(((_Inmueble)value).getNombre());
+                label.setText(((_Inmueble)value).guiÁrbolNombre());
             }
             else if (value instanceof _Ficha) {
                 label.setIcon(new ImageIcon(Gui.class.getResource("/static/íconos/ficha.png")));
@@ -85,7 +86,7 @@ public class Gui extends JFrame {
             }
             else if (value instanceof Agrupación) {
                 label.setIcon(new ImageIcon(Gui.class.getResource("/static/íconos/agrupacion.png")));
-                label.setText(((Agrupación)value).getNombre());
+                label.setText(((Agrupación)value).guiÁrbolNombre());
             }
             return label;
         }
