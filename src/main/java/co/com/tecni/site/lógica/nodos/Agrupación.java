@@ -41,7 +41,15 @@ public class Agrupación extends Nodo {
     // -----------------------------------------------
     // Getters and Setters
     // -----------------------------------------------
-    public ArrayList<Object> getHijos() {
+
+    // -----------------------------------------------
+    // GUI / Árbol
+    // -----------------------------------------------
+    public String guiÁrbolNombre() {
+        return nombre;
+    }
+
+    public ArrayList<Object> guiÁrbolHijos() {
         ArrayList<Object> hijos = new ArrayList<>();
 
         hijos.addAll(agrupaciones);

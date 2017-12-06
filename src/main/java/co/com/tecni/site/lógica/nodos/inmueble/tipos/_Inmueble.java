@@ -29,24 +29,18 @@ public abstract class _Inmueble extends Nodo {
     private _Inmueble padre;
     private ArrayList<_Inmueble> hijos;
 
+    protected String sigla;
     // -----------------------------------------------
-    // Constructor
+    // Constructores
     // -----------------------------------------------
     public _Inmueble() {
         this.fichas = new ArrayList<>();
     }
 
-    // -----------------------------------------------
-    // Métodos privados
-    // -----------------------------------------------
-
-    // -----------------------------------------------
-    // Métodos públicos
-    // -----------------------------------------------
     public static _Inmueble englobar(String tipo, String nombre, ArrayList<_Inmueble> inmuebles) throws Exception {
         _Inmueble englobe = (_Inmueble) Class.forName(tipo).newInstance();
         englobe.nombre = nombre;
-        englobe.hijos =inmuebles;
+        englobe.hijos = inmuebles;
 
         englobe.m2 = new HashMap<>();
 
@@ -75,27 +69,21 @@ public abstract class _Inmueble extends Nodo {
         return hoja;
     }
 
-    public void desenglobar(ArrayList<_Inmueble> hijos) {
-        for (_Inmueble inmueble : hijos) {
-            inmueble.padre = this;
-            this.hijos.add(inmueble);
-        }
-    }
+    // -----------------------------------------------
+    // Métodos privados
+    // -----------------------------------------------
 
-    public void asociarFicha(_Ficha ficha) {
-        fichas.add(ficha);
-    }
+
+    // -----------------------------------------------
+    // Métodos públicos
+    // -----------------------------------------------
+    public String genId() {
+        return padre == null ? sigla + " " + nombre : padre.genId() + " " + sigla + " " + nombre;
+    };
 
     // -----------------------------------------------
     // Getters and Setters
     // -----------------------------------------------
-    public ArrayList<Object> getHijos() {
-        ArrayList<Object> hijos = new ArrayList<>();
-        if (this.hijos != null)
-            hijos.addAll(this.hijos);
-        hijos.addAll(this.fichas);
-        return hijos;
-    }
 
     // -----------------------------------------------
     // Métodos Object
@@ -108,5 +96,31 @@ public abstract class _Inmueble extends Nodo {
         }
 
         return nombre.substring(0, nombre.length()-1)+")";
+    }
+
+    // -----------------------------------------------
+    // GUI / Árbol
+    // -----------------------------------------------
+    public String guiÁrbolNombre() {
+        return genId();
+    }
+
+    public ArrayList<Object> guiÁrbolHijos() {
+        ArrayList<Object> hijos = new ArrayList<>();
+        if (this.hijos != null)
+            hijos.addAll(this.hijos);
+        hijos.addAll(this.fichas);
+        return hijos;
+    }
+
+    // -----------------------------------------------
+    // GUI / Detalle / Introspección
+    // -----------------------------------------------
+    public HashMap<String, Double> guiDetalleM2() {
+        return m2;
+    }
+
+    public String guiDetalleID() {
+        return genId();
     }
 }

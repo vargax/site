@@ -48,20 +48,20 @@ public class TestInmueble {
 
     @Test
     public void englobar() throws Exception {
-        assertEquals(niveles.size(), ecotower93.getHijos().size());
+        assertEquals(niveles.size(), ecotower93.guiÁrbolHijos().size());
     }
 
     @Test
     public void desenglobar() throws Exception {
-        for(Agrupación nivel : ecotower93.getHijos())
-            assertEquals(OFICINASxPISO, nivel.getHijos().size());
+        for(Agrupación nivel : ecotower93.guiÁrbolHijos())
+            assertEquals(OFICINASxPISO, nivel.guiÁrbolHijos().size());
     }
 
     @Test
-    public void getNombre() throws Exception {
+    public void guiÁrbolNombre() throws Exception {
 
         for (Agrupación nivel : niveles)
-            for (Agrupación oficina : nivel.getHijos()) {
+            for (Agrupación oficina : nivel.guiÁrbolHijos()) {
                 System.out.println(oficina.genNombre());
                 assertEquals(29, oficina.genNombre().length());
             }

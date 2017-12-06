@@ -14,12 +14,10 @@ public abstract class Nodo {
     // -----------------------------------------------
 
     // -----------------------------------------------
-    // Getters and Setters
+    // GUI / Árbol
     // -----------------------------------------------
-    public String getNombre() {
-        return nombre;
-    }
+    public abstract String guiÁrbolNombre();
 
-    public abstract ArrayList<Object> getHijos();
+    public abstract ArrayList<Object> guiÁrbolHijos();
 
 }
