@@ -1,13 +1,15 @@
 package co.com.tecni.site.lógica;
 
-import co.com.tecni.site.datos.Lector;
+import co.com.tecni.site.datos.LectorInmuebles;
 import co.com.tecni.site.lógica.nodos.Agrupación;
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmueble.fichas._Ficha;
+import co.com.tecni.site.lógica.nodos.inmueble.tipos._Inmueble;
 
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreePath;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Site implements ISite {
     // -----------------------------------------------
@@ -18,25 +20,40 @@ public class Site implements ISite {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    private Lector lector;
     private Agrupación raiz;
+    private HashMap<String, _Inmueble> identificadores;
+
+    private LectorInmuebles lectorInmuebles;
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
     public Site() throws Exception {
-        lector = new Lector();
-
         raiz = new Agrupación(NOMBRE_RAIZ);
 
         Agrupación bodegas = new Agrupación("Bodegas");
-        bodegas.agregarInmueble(lector.leer("LaEstancia"));
+        raiz.agregarAgrupación(bodegas);
 
         Agrupación edificiosOficinas = new Agrupación("Edificios de oficinas");
-        edificiosOficinas.agregarInmueble(lector.leer("Ecotower93"));
-
-        raiz.agregarAgrupación(bodegas);
         raiz.agregarAgrupación(edificiosOficinas);
+
+        lectorInmuebles = new LectorInmuebles();
+        bodegas.agregarInmueble(lectorInmuebles.leer("LaEstancia"));
+        edificiosOficinas.agregarInmueble(lectorInmuebles.leer("Ecotower93"));
+
+        identificadores = new HashMap<>();
+        recursiónIdentificadores(raiz);
+    }
+
+    // -----------------------------------------------
+    // Métodos Privados
+    // -----------------------------------------------
+    private void recursiónIdentificadores(Nodo nodo) {
+        for (Object hijo : nodo.guiÁrbolHijos()) {
+            if (hijo instanceof _Inmueble)
+                identificadores.put(((_Inmueble) hijo).genId(), (_Inmueble)hijo);
+            recursiónIdentificadores((Nodo) hijo);
+        }
     }
 
     // -----------------------------------------------

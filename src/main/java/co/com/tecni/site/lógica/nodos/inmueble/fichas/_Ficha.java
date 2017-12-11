@@ -13,14 +13,12 @@ public abstract class _Ficha {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    protected _Ficha(String tipo) {
+    protected _Ficha() {
         this.tipo = tipo;
     }
 
     // -----------------------------------------------
     // Métodos Object
     // -----------------------------------------------
-    public String toString() {
-        return tipo;
-    }
+
 }
