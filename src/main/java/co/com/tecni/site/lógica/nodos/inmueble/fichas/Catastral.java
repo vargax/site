@@ -14,8 +14,11 @@ public class Catastral extends _Ficha {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    private int chip;
+    private String descripcion;
+
+    private String chip;
     private String cedulaCatastral;
+
     private String nomenclatura;
 
     private float m2construccion;
@@ -27,7 +30,6 @@ public class Catastral extends _Ficha {
     // Constructor
     // -----------------------------------------------
     public Catastral() {
-        super(TIPO);
 
     }
 
