@@ -1,9 +1,9 @@
 package co.com.tecni.site.lógica;
 
-import co.com.tecni.site.datos.LectorInmuebles;
+import co.com.tecni.site.datos.LectorCatastral;
+import co.com.tecni.site.datos.LectorInmueble;
 import co.com.tecni.site.lógica.nodos.Agrupación;
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.inmueble.fichas._Ficha;
 import co.com.tecni.site.lógica.nodos.inmueble.tipos._Inmueble;
 
 import javax.swing.event.TreeModelListener;
@@ -21,37 +21,48 @@ public class Site implements ISite {
     // Atributos
     // -----------------------------------------------
     private Agrupación raiz;
-    private HashMap<String, _Inmueble> identificadores;
+    private HashMap<String, _Inmueble> inmueblesxId;
 
-    private LectorInmuebles lectorInmuebles;
+    private LectorInmueble lectorInmuebles;
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
     public Site() throws Exception {
         raiz = new Agrupación(NOMBRE_RAIZ);
+        inmueblesxId = new HashMap<>();
 
+        importarInmuebles();
+        recursiónIdentificadores(raiz);
+
+        importarFichas();
+    }
+
+    // -----------------------------------------------
+    // Métodos Privados
+    // -----------------------------------------------
+    private void importarInmuebles() throws Exception {
         Agrupación bodegas = new Agrupación("Bodegas");
         raiz.agregarAgrupación(bodegas);
 
         Agrupación edificiosOficinas = new Agrupación("Edificios de oficinas");
         raiz.agregarAgrupación(edificiosOficinas);
 
-        lectorInmuebles = new LectorInmuebles();
-        bodegas.agregarInmueble(lectorInmuebles.leer("LaEstancia"));
+        lectorInmuebles = new LectorInmueble();
+        //bodegas.agregarInmueble(lectorInmuebles.leer("LaEstancia"));
         edificiosOficinas.agregarInmueble(lectorInmuebles.leer("Ecotower93"));
-
-        identificadores = new HashMap<>();
-        recursiónIdentificadores(raiz);
     }
 
-    // -----------------------------------------------
-    // Métodos Privados
-    // -----------------------------------------------
+    private void importarFichas() throws Exception {
+        LectorCatastral lectorCatastral = new LectorCatastral(inmueblesxId);
+
+        lectorCatastral.leer("Ecotower93");
+    }
+
     private void recursiónIdentificadores(Nodo nodo) {
-        for (Object hijo : nodo.guiÁrbolHijos()) {
+        for (Object hijo : nodo.hijosNodo()) {
             if (hijo instanceof _Inmueble)
-                identificadores.put(((_Inmueble) hijo).genId(), (_Inmueble)hijo);
+                inmueblesxId.put(((_Inmueble) hijo).genId(), (_Inmueble) hijo);
             recursiónIdentificadores((Nodo) hijo);
         }
     }
@@ -65,15 +76,16 @@ public class Site implements ISite {
 
     public Object getChild(Object o, int i) {
 
-        return ((Nodo) o).guiÁrbolHijos().get(i);
+        return ((Nodo) o).hijosNodo().get(i);
     }
 
     public int getChildCount(Object o) {
-        return ((Nodo) o).guiÁrbolHijos().size();
+        return ((Nodo) o).hijosNodo().size();
     }
 
     public boolean isLeaf(Object o) {
-        return o instanceof _Ficha;
+        ArrayList<Object> hijos = ((Nodo) o).hijosNodo();
+        return hijos == null || hijos.size() == 0;
     }
 
     public void valueForPathChanged(TreePath treePath, Object o) {
@@ -81,7 +93,7 @@ public class Site implements ISite {
     }
 
     public int getIndexOfChild(Object o, Object o1) {
-        ArrayList<Object> hijos = ((Nodo) o).guiÁrbolHijos();
+        ArrayList<Object> hijos = ((Nodo) o).hijosNodo();
 
         for (int i = 0; i < hijos.size(); i++)
             if (hijos.get(i) == o1) return i;

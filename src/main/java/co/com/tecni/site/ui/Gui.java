@@ -3,6 +3,7 @@ package co.com.tecni.site.ui;
 import co.com.tecni.site.lógica.ISite;
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Agrupación;
+import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmueble.fichas._Ficha;
 import co.com.tecni.site.lógica.nodos.inmueble.tipos._Inmueble;
 
@@ -76,18 +77,18 @@ public class Gui extends JFrame {
 
         public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded,
                                                       boolean leaf, int row, boolean hasFocus) {
-            if (value instanceof _Inmueble) {
+            if (value instanceof _Inmueble)
                 label.setIcon(new ImageIcon(Gui.class.getResource("/static/íconos/inmueble.png")));
-                label.setText(((_Inmueble)value).guiÁrbolNombre());
-            }
-            else if (value instanceof _Ficha) {
+
+            else if (value instanceof _Ficha)
                 label.setIcon(new ImageIcon(Gui.class.getResource("/static/íconos/ficha.png")));
-                label.setText(value+"");
-            }
-            else if (value instanceof Agrupación) {
+
+            else if (value instanceof Agrupación)
                 label.setIcon(new ImageIcon(Gui.class.getResource("/static/íconos/agrupacion.png")));
-                label.setText(((Agrupación)value).guiÁrbolNombre());
-            }
+
+            else label.setIcon(new ImageIcon(Gui.class.getResource("/static/íconos/nodo.png")));
+
+            label.setText(((Nodo)value).nombreNodo());
             return label;
         }
     }

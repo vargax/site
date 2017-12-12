@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class LectorInmuebles {
+public class LectorInmueble {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
@@ -46,7 +46,7 @@ public class LectorInmuebles {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public LectorInmuebles() {
+    public LectorInmueble() {
         paqueteTipos = _Inmueble.class.getPackage().toString().substring(8)+'.';
 
         colHijos = (int)COL_HIJOS - 65;
@@ -62,7 +62,7 @@ public class LectorInmuebles {
     // Métodos
     // -----------------------------------------------
     public _Inmueble leer(String nombreArchivo) throws Exception {
-        InputStream inputStream = LectorInmuebles.class.getResourceAsStream("/static/archivos/" + nombreArchivo + ".xlsx");
+        InputStream inputStream = LectorInmueble.class.getResourceAsStream("/static/archivos/inmueble " + nombreArchivo + ".xlsx");
         XSSFWorkbook libro = new XSSFWorkbook(inputStream);
 
         filas = libro.getSheet(HOJA_NOMBRE).iterator();
@@ -112,7 +112,7 @@ public class LectorInmuebles {
         metros.put(_Inmueble.COM_CONSTRUIDOS, filaActual.getCell(colComunConstruido).getNumericCellValue());
         metros.put(_Inmueble.COM_LIBRES, filaActual.getCell(colComunLibre).getNumericCellValue());
 
-        return _Inmueble.hoja(tipo,nombre, metros);
+        return _Inmueble.hoja(tipo, nombre, metros);
     }
 
     private boolean inicioInmueble() {

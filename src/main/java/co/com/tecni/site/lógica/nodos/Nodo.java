@@ -16,8 +16,8 @@ public abstract class Nodo {
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
-    public abstract String guiÁrbolNombre();
+    public abstract String nombreNodo();
 
-    public abstract ArrayList<Object> guiÁrbolHijos();
+    public abstract ArrayList<Object> hijosNodo();
 
 }

@@ -45,11 +45,11 @@ public class Agrupación extends Nodo {
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
-    public String guiÁrbolNombre() {
+    public String nombreNodo() {
         return nombre;
     }
 
-    public ArrayList<Object> guiÁrbolHijos() {
+    public ArrayList<Object> hijosNodo() {
         ArrayList<Object> hijos = new ArrayList<>();
 
         hijos.addAll(agrupaciones);
