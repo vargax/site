@@ -1,9 +1,8 @@
 package co.com.tecni.site.lógica.nodos.inmueble.fichas;
 
-/**
- * Created by cvargasc on 17/08/17.
- */
-public abstract class _Ficha {
+import co.com.tecni.site.lógica.nodos.Nodo;
+
+public abstract class _Ficha extends Nodo {
 
     // -----------------------------------------------
     // Atributos

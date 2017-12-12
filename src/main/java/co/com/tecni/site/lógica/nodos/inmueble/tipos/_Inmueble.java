@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Los inmuebles son la entidad principal de SAIT
- */
 public abstract class _Inmueble extends Nodo {
 
     // -----------------------------------------------
@@ -81,6 +78,9 @@ public abstract class _Inmueble extends Nodo {
         return padre == null ? sigla + " " + nombre : padre.genId() + " " + sigla + " " + nombre;
     };
 
+    public void registrarFicha(_Ficha ficha) {
+        fichas.add(ficha);
+    }
     // -----------------------------------------------
     // Getters and Setters
     // -----------------------------------------------
@@ -101,11 +101,11 @@ public abstract class _Inmueble extends Nodo {
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
-    public String guiÁrbolNombre() {
+    public String nombreNodo() {
         return genId();
     }
 
-    public ArrayList<Object> guiÁrbolHijos() {
+    public ArrayList<Object> hijosNodo() {
         ArrayList<Object> hijos = new ArrayList<>();
         if (this.hijos != null)
             hijos.addAll(this.hijos);
