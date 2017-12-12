@@ -16,8 +16,6 @@ public class Catastral extends _Ficha {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    private String descripcion;
-
     private String chip;
     private String cedulaCatastral;
 
@@ -31,8 +29,7 @@ public class Catastral extends _Ficha {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public Catastral(String descripcion, String chip, String cedulaCatastral, String nomenclatura, double m2construccion, double m2terreno) {
-        this.descripcion = descripcion;
+    public Catastral(String chip, String cedulaCatastral, String nomenclatura, double m2construccion, double m2terreno) {
         this.chip = chip;
         this.cedulaCatastral = cedulaCatastral;
         this.nomenclatura = nomenclatura;
@@ -61,8 +58,7 @@ public class Catastral extends _Ficha {
 
     public String toString() {
         return "Catastral{" +
-                "descripcion='" + descripcion + '\'' +
-                ", chip='" + chip + '\'' +
+                "chip='" + chip + '\'' +
                 ", cedulaCatastral='" + cedulaCatastral + '\'' +
                 ", nomenclatura='" + nomenclatura + '\'' +
                 ", m2construccion=" + m2construccion +

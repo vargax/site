@@ -49,14 +49,8 @@ public class Site implements ISite {
         raiz.agregarAgrupación(edificiosOficinas);
 
         lectorInmuebles = new LectorInmueble();
-        //bodegas.agregarInmueble(lectorInmuebles.leer("LaEstancia"));
+        bodegas.agregarInmueble(lectorInmuebles.leer("LaEstancia"));
         edificiosOficinas.agregarInmueble(lectorInmuebles.leer("Ecotower93"));
-    }
-
-    private void importarFichas() throws Exception {
-        LectorCatastral lectorCatastral = new LectorCatastral(inmueblesxId);
-
-        lectorCatastral.leer("Ecotower93");
     }
 
     private void recursiónIdentificadores(Nodo nodo) {
@@ -65,6 +59,12 @@ public class Site implements ISite {
                 inmueblesxId.put(((_Inmueble) hijo).genId(), (_Inmueble) hijo);
             recursiónIdentificadores((Nodo) hijo);
         }
+    }
+
+    private void importarFichas() throws Exception {
+        LectorCatastral lectorCatastral = new LectorCatastral(inmueblesxId);
+        lectorCatastral.leer("Ecotower93");
+        lectorCatastral.leer("LaEstancia");
     }
 
     // -----------------------------------------------

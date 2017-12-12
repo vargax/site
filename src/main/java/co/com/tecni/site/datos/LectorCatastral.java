@@ -18,15 +18,14 @@ public class LectorCatastral {
     private final static String HOJA_NOMBRE = "importar";
 
     private final static char COL_ID = 'A';
-    private final static char COL_DESCRIPCIÓN = 'B';
-    private final static char COL_CHIP = 'C';
-    private final static char COL_CÉDULA_CATASTRAL = 'D';
-    private final static char COL_NOMENCLATURA = 'E';
-    private final static char COL_M2_CONSTRUCCION = 'F';
-    private final static char COL_M2_TERRENO = 'G';
+    private final static char COL_CHIP = 'B';
+    private final static char COL_CÉDULA_CATASTRAL = 'C';
+    private final static char COL_NOMENCLATURA = 'D';
+    private final static char COL_M2_CONSTRUCCION = 'E';
+    private final static char COL_M2_TERRENO = 'F';
 
-    private final static char COL_PRIMER_PREDIAL = 'H';
-    private final static char COL_ÚLTIMO_PREDIAL = 'J';
+    private final static char COL_PRIMER_PREDIAL = 'G';
+    private final static char COL_ÚLTIMO_PREDIAL = 'I';
 
     // -----------------------------------------------
     // Atributos
@@ -34,7 +33,6 @@ public class LectorCatastral {
     private HashMap<String, _Inmueble> inmuebles;
 
     private int colId;
-    private int colDescripcion;
     private int colChip;
     private int colCédulaCatastral;
     private int colNomenclatura;
@@ -51,7 +49,6 @@ public class LectorCatastral {
     public LectorCatastral(HashMap<String, _Inmueble> inmuebles) {
 
         colId = (int)COL_ID - 65;
-        colDescripcion = (int)COL_DESCRIPCIÓN - 65;
         colChip = (int)COL_CHIP - 65;
         colCédulaCatastral = (int)COL_CÉDULA_CATASTRAL - 65;
         colNomenclatura = (int)COL_NOMENCLATURA - 65;
@@ -84,14 +81,13 @@ public class LectorCatastral {
 
             if (inmueble == null) throw new Exception("Inmueble "+id+" no encontrado");
 
-            String descripcion = filaActual.getCell(colDescripcion).getStringCellValue();
             String chip = filaActual.getCell(colChip).getStringCellValue();
             String cedulaCatastral = filaActual.getCell(colCédulaCatastral).getStringCellValue();
             String nomenclatura = filaActual.getCell(colNomenclatura).getStringCellValue();
             double m2construccion = filaActual.getCell(colM2Construccion).getNumericCellValue();
             double m2terreno = filaActual.getCell(colM2Terreno).getNumericCellValue();
 
-            Catastral catastral = new Catastral(descripcion, chip, cedulaCatastral, nomenclatura, m2construccion, m2terreno);
+            Catastral catastral = new Catastral(chip, cedulaCatastral, nomenclatura, m2construccion, m2terreno);
 
             int año = añoPrimerPredial;
 
