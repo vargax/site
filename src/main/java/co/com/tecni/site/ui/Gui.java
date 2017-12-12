@@ -22,7 +22,6 @@ public class Gui extends JFrame {
 
         ISite site = new Site();
 
-        //tree = new JTree(tecni);
         tree = new JTree(site);
         NewTreeCellRenderer renderer = new NewTreeCellRenderer();
 
@@ -44,21 +43,9 @@ public class Gui extends JFrame {
         add(splitPane);
 
         tree.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {
-            //@Override
             public void valueChanged(TreeSelectionEvent e) {
                 Object o = tree.getLastSelectedPathComponent();
-                if (o instanceof _Inmueble) {
-                    _Inmueble i = (_Inmueble)o;
-                    info.setText(i.toString());
-                }
-                else if (o instanceof _Ficha) {
-                    _Ficha f = (_Ficha)o;
-                    info.setText(f.toString());
-                }
-                else if (o instanceof Agrupación) {
-                    Agrupación a = (Agrupación)o;
-                    info.setText(a.toString());
-                }
+                info.setText(o.toString());
             }
         });
 
