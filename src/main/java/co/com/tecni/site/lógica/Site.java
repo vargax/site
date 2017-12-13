@@ -2,6 +2,7 @@ package co.com.tecni.site.lógica;
 
 import co.com.tecni.site.datos.LectorCatastral;
 import co.com.tecni.site.datos.LectorInmueble;
+import co.com.tecni.site.datos.LectorJurídica;
 import co.com.tecni.site.lógica.nodos.Agrupación;
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmueble.tipos._Inmueble;
@@ -16,6 +17,7 @@ public class Site implements ISite {
     // Constantes
     // -----------------------------------------------
     private final static String NOMBRE_RAIZ = "TECNI";
+    private final static String[] INMUEBLES_IMPORTAR = {"LaEstancia", "Ecotower93"};
 
     // -----------------------------------------------
     // Atributos
@@ -49,8 +51,8 @@ public class Site implements ISite {
         raiz.agregarAgrupación(edificiosOficinas);
 
         lectorInmuebles = new LectorInmueble();
-        bodegas.agregarInmueble(lectorInmuebles.leer("LaEstancia"));
-        edificiosOficinas.agregarInmueble(lectorInmuebles.leer("Ecotower93"));
+        bodegas.agregarInmueble(lectorInmuebles.leer(INMUEBLES_IMPORTAR[0]));
+        edificiosOficinas.agregarInmueble(lectorInmuebles.leer(INMUEBLES_IMPORTAR[1]));
     }
 
     private void recursiónIdentificadores(Nodo nodo) {
@@ -63,8 +65,12 @@ public class Site implements ISite {
 
     private void importarFichas() throws Exception {
         LectorCatastral lectorCatastral = new LectorCatastral(inmueblesxId);
-        lectorCatastral.leer("Ecotower93");
-        lectorCatastral.leer("LaEstancia");
+        LectorJurídica lectorJurídica = new LectorJurídica(inmueblesxId);
+
+        for (String inmueble : INMUEBLES_IMPORTAR) {
+            lectorCatastral.leer(inmueble);
+            lectorJurídica.leer(inmueble);
+        }
     }
 
     // -----------------------------------------------

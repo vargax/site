@@ -4,14 +4,10 @@ import co.com.tecni.site.lógica.nodos.inmueble.fichas._Ficha;
 
 import java.util.ArrayList;
 
-/**
- * Created by cvargasc on 17/08/17.
- */
 public class Catastral extends _Ficha {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
-    private final static String TIPO = "Catastral";
 
     // -----------------------------------------------
     // Atributos
@@ -40,14 +36,17 @@ public class Catastral extends _Ficha {
     }
 
     // -----------------------------------------------
-    // Métodos
+    // Métodos públicos
     // -----------------------------------------------
     public void registrarPredial(ImpuestoPredial impuestoPredial) {
         impuestosPrediales.add(impuestoPredial);
     }
 
+    // -----------------------------------------------
+    // Métodos nodo
+    // -----------------------------------------------
     public String nombreNodo() {
-        return chip;
+        return "Cédula catastral: " + cedulaCatastral;
     }
 
     public ArrayList<Object> hijosNodo() {
@@ -56,6 +55,9 @@ public class Catastral extends _Ficha {
         return hijos;
     }
 
+    // -----------------------------------------------
+    // Métodos object
+    // -----------------------------------------------
     public String toString() {
         return "Catastral{" +
                 "chip='" + chip + '\'' +
