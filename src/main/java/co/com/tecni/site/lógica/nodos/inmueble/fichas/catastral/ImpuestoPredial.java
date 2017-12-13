@@ -17,7 +17,7 @@ public class ImpuestoPredial extends Nodo {
     }
 
     public String nombreNodo() {
-        return añoFiscal+"";
+        return "Impuesto predial "+añoFiscal;
     }
 
     public ArrayList<Object> hijosNodo() {

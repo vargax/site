@@ -106,8 +106,8 @@ public class LectorCatastral {
                 catastral.registrarPredial(new ImpuestoPredial(año, avaluo, impuesto));
                 año++;
             }
-
             inmueble.registrarFicha(catastral);
         }
+        inputStream.close();
     }
 }
