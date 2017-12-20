@@ -20,4 +20,10 @@ public abstract class Nodo {
 
     public abstract ArrayList<Object> hijosNodo();
 
+    @Override
+    public String toString() {
+        return "Nodo{" +
+                "nombre='" + nombre + '\'' +
+                '}';
+    }
 }

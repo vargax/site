@@ -12,10 +12,10 @@ public abstract class _Inmueble extends Nodo {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
-    public final static String PRIV_CONSTRUIDOS = "PC";
-    public final static String PRIV_LIBRES = "PL";
-    public final static String COM_CONSTRUIDOS = "CC";
-    public final static String COM_LIBRES = "CL";
+    public final static String PRIV_CONSTRUIDOS = "Privados Construidos";
+    public final static String PRIV_LIBRES = "Privados Libres";
+    public final static String COM_CONSTRUIDOS = "Comunes Construidos";
+    public final static String COM_LIBRES = "Comunes Libres";
 
     // -----------------------------------------------
     // Atributos
@@ -78,6 +78,10 @@ public abstract class _Inmueble extends Nodo {
         return padre == null ? sigla + " " + nombre : padre.genId() + " " + sigla + " " + nombre;
     };
 
+    public double getMetrosPrivadosConstruidos() {
+        return m2.get (PRIV_CONSTRUIDOS);
+    }
+
     public void registrarFicha(_Ficha ficha) {
         fichas.add(ficha);
     }
@@ -88,14 +92,16 @@ public abstract class _Inmueble extends Nodo {
     // -----------------------------------------------
     // Métodos Object
     // -----------------------------------------------
+    @Override
     public String toString() {
-        String nombre = super.nombre + " (";
-
+        String nombre = this.getClass().getSimpleName() + "{" +
+                "Id='" + genId() + "\' " ;
         for (Map.Entry<String, Double> entry : m2.entrySet()) {
-            nombre += entry.getKey() + ": "+String.format("%.2f", entry.getValue())+" ";
+            nombre += entry.getKey() + ": "+String.format("%.2f", entry.getValue())+"| ";
         }
-
-        return nombre.substring(0, nombre.length()-1)+")";
+        nombre =  nombre.substring(0, nombre.length()-2) + '}';
+//        nombre += "\nMetros cuadrados privados construídos =" + String.format("%.2f",getMetrosPrivadosConstruidos());
+        return nombre;
     }
 
     // -----------------------------------------------

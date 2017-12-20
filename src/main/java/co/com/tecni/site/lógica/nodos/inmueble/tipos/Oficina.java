@@ -3,7 +3,7 @@ package co.com.tecni.site.lógica.nodos.inmueble.tipos;
 public class Oficina extends _Inmueble {
 
     public final static String SIGLA = "OF";
-    private int altura = 0 ;
+    private double altura = 0 ;
     private int numBaños = 0;
     private String acabadoPisos = "";
 
@@ -12,7 +12,7 @@ public class Oficina extends _Inmueble {
         super.sigla = SIGLA;
     }
 
-    public void setAltura(int altura) {
+    public void setAltura(double altura) {
         this.altura = altura;
     }
 
@@ -24,15 +24,19 @@ public class Oficina extends _Inmueble {
         this.acabadoPisos = acabadoPisos;
     }
 
-    public int getAltura () {
+    public double getAltura () {
         return altura;
-    }
-
-    public int getNumBaños() {
-        return numBaños;
     }
 
     public String getAcabadoPisos() {
         return acabadoPisos;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                "{ altura=" + altura +
+                ", acabadoPisos='" + acabadoPisos + '\'' +
+                " }";
     }
 }

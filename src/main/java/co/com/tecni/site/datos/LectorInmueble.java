@@ -1,5 +1,7 @@
 package co.com.tecni.site.datos;
 
+import co.com.tecni.site.lógica.nodos.inmueble.tipos.Bodega;
+import co.com.tecni.site.lógica.nodos.inmueble.tipos.Oficina;
 import co.com.tecni.site.lógica.nodos.inmueble.tipos._Inmueble;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -22,6 +24,8 @@ public class LectorInmueble {
     private final static char COL_PRIVADO_LIBRES = 'M';
     private final static char COL_COMUNES_CONSTRUIDO = 'N';
     private final static char COL_COMUNES_LIBRES = 'O';
+    private final static char COL_ALTURA = 'S';
+    private final static char COL_ACABADO_PISOS = 'T';
 
     private final static String HIJOS_INICIO = "inicio";
     private final static String HIJOS_FIN = "fin";
@@ -39,6 +43,8 @@ public class LectorInmueble {
     private int colPrivadoLibre;
     private int colComunConstruido;
     private int colComunLibre;
+    private int colAltura;
+    private int colAcabadoPisos;
 
     private Iterator<Row> filas;
     private Row filaActual;
@@ -56,6 +62,8 @@ public class LectorInmueble {
         colPrivadoLibre = (int)COL_PRIVADO_LIBRES - 65;
         colComunConstruido = (int)COL_COMUNES_CONSTRUIDO - 65;
         colComunLibre = (int)COL_COMUNES_LIBRES - 65;
+        colAltura = (int)COL_ALTURA - 65;
+        colAcabadoPisos = (int)COL_ACABADO_PISOS - 65;
     }
 
     // -----------------------------------------------
@@ -112,7 +120,15 @@ public class LectorInmueble {
         metros.put(_Inmueble.COM_CONSTRUIDOS, filaActual.getCell(colComunConstruido).getNumericCellValue());
         metros.put(_Inmueble.COM_LIBRES, filaActual.getCell(colComunLibre).getNumericCellValue());
 
-        return _Inmueble.hoja(tipo, nombre, metros);
+        _Inmueble inm = _Inmueble.hoja(tipo, nombre, metros);
+        if (inm instanceof Oficina) {
+            ((Oficina) inm).setAltura(filaActual.getCell(colAltura).getNumericCellValue());
+            ((Oficina) inm).setAcabadoPisos(filaActual.getCell(colAcabadoPisos).getStringCellValue());
+        }  else  if (inm instanceof Bodega) {
+            ((Bodega) inm).setAltura(filaActual.getCell(colAltura).getNumericCellValue());
+            ((Bodega) inm).setAcabadoPisos(filaActual.getCell(colAcabadoPisos).getStringCellValue());
+        }
+        return inm;
     }
 
     private boolean inicioInmueble() {
