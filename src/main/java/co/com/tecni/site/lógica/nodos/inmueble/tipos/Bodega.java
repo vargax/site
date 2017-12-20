@@ -4,12 +4,17 @@ public class Bodega extends _Inmueble {
 
     public final static String SIGLA = "BG";
 
-    private float altura;
+    private double altura;
     private String acabadoPisos = "";
-    private float distanciaColumnas = 0.0f;
+    private double distanciaColumnas = 0.0f;
     private int capacidadElectrica;
 
-    public void setAltura(float altura) {
+    public Bodega() {
+        super();
+        super.sigla = SIGLA;
+    }
+
+    public void setAltura(double altura) {
         this.altura = altura;
     }
 
@@ -17,7 +22,7 @@ public class Bodega extends _Inmueble {
         this.acabadoPisos = acabadoPisos;
     }
 
-    public void setDistanciaColumnas(float distanciaColumnas) {
+    public void setDistanciaColumnas(double distanciaColumnas) {
         this.distanciaColumnas = distanciaColumnas;
     }
 
@@ -25,24 +30,29 @@ public class Bodega extends _Inmueble {
         this.capacidadElectrica = capacidadElectrica;
     }
 
-    public float getAltura() {
+    public double getAltura() {
         return altura;
+    }
+
+    public double getDistanciaColumnas() {
+        return distanciaColumnas;
     }
 
     public String getAcabadoPisos() {
         return acabadoPisos;
     }
 
-    public float getDistanciaColumnas() {
-        return distanciaColumnas;
-    }
-
     public int getCapacidadElectrica() {
         return capacidadElectrica;
     }
 
-    public Bodega() {
-        super();
-        super.sigla = SIGLA;
+    @Override
+    public String toString() {
+        return super.toString() +
+                "{ altura=" + altura +
+                ", acabadoPisos='" + acabadoPisos + '\'' +
+                ", distanciaColumnas=" + distanciaColumnas +
+                ", capacidadElectrica=" + capacidadElectrica +
+                " }";
     }
 }
