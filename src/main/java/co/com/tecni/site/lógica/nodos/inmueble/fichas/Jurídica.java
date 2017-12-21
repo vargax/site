@@ -41,11 +41,11 @@ public class Jurídica extends _Ficha {
     // Métodos object
     // -----------------------------------------------
     public String toString() {
-        return "Jurídica{" +
-                "oficinaRegistro='" + oficinaRegistro + '\'' +
-                ", matrículaInmobiliaria='" + matrículaInmobiliaria + '\'' +
-                ", fechaRegistroCompra='" + fechaRegistroCompra + '\'' +
-                ", coefCopropiedad=" + coefCopropiedad +
-                '}';
+        return "{ID:'Jurídica'" +
+                ",oficinaRegistro:'" + oficinaRegistro + "'" +
+                ",matrículaInmobiliaria:'" + matrículaInmobiliaria + "'" +
+                ",fechaRegistroCompra:'" + fechaRegistroCompra + "'" +
+                ",coefCopropiedad:" + coefCopropiedad +
+                "}";
     }
 }
