@@ -25,10 +25,10 @@ public class ImpuestoPredial extends Nodo {
     }
 
     public String toString() {
-        return "ImpuestoPredial{" +
-                "añoFiscal=" + añoFiscal +
-                ", avaluoCatastral=" + avaluoCatastral +
-                ", impuestoACargo=" + impuestoACargo +
-                '}';
+        return "{ID:'ImpuestoPredial" +
+                ",añoFiscal:" + añoFiscal +
+                ",avaluoCatastral:" + avaluoCatastral +
+                ",impuestoACargo:" + impuestoACargo +
+                "}";
     }
 }
