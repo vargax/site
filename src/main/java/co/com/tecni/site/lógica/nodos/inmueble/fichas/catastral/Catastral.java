@@ -59,13 +59,13 @@ public class Catastral extends _Ficha {
     // Métodos object
     // -----------------------------------------------
     public String toString() {
-        return "Catastral{" +
-                "chip='" + chip + '\'' +
-                ", cedulaCatastral='" + cedulaCatastral + '\'' +
-                ", nomenclatura='" + nomenclatura + '\'' +
-                ", m2construccion=" + m2construccion +
-                ", m2terreno=" + m2terreno +
-                ", impuestosPrediales=" + impuestosPrediales +
+        return "{ID:'Catastral'" +
+                ",chip:'" + chip + "'" +
+                ",cedulaCatastral:'" + cedulaCatastral + "'" +
+                ",nomenclatura:'" + nomenclatura + "'" +
+                ",m2construccion:" + m2construccion +
+                ",m2terreno:" + m2terreno +
+                ",impuestosPrediales:" + impuestosPrediales +
                 '}';
     }
 }

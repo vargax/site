@@ -6,16 +6,17 @@ import co.com.tecni.site.lógica.nodos.inmueble.fichas._Ficha;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Locale;
 
 public abstract class _Inmueble extends Nodo {
 
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
-    public final static String PRIV_CONSTRUIDOS = "Privados Construidos";
-    public final static String PRIV_LIBRES = "Privados Libres";
-    public final static String COM_CONSTRUIDOS = "Comunes Construidos";
-    public final static String COM_LIBRES = "Comunes Libres";
+    public final static String PRIV_CONSTRUIDOS = "PC"; //"Privados Construidos";
+    public final static String PRIV_LIBRES = "PL"; //"Privados Libres";
+    public final static String COM_CONSTRUIDOS = "CC"; //"Comunes Construidos";
+    public final static String COM_LIBRES = "CL"; //"Comunes Libres";
 
     // -----------------------------------------------
     // Atributos
@@ -94,10 +95,10 @@ public abstract class _Inmueble extends Nodo {
     // -----------------------------------------------
     @Override
     public String toString() {
-        String nombre = this.getClass().getSimpleName() + "{" +
-                "Id='" + genId() + "\' " ;
+        String nombre = /*this.getClass().getSimpleName() +*/ "{" +
+                "ID:'" + genId() + "\', " ;
         for (Map.Entry<String, Double> entry : m2.entrySet()) {
-            nombre += entry.getKey() + ": "+String.format("%.2f", entry.getValue())+"| ";
+            nombre += entry.getKey() + ": "+String.format(Locale.US, "%.2f", entry.getValue())+", ";
         }
         nombre =  nombre.substring(0, nombre.length()-2) + '}';
 //        nombre += "\nMetros cuadrados privados construídos =" + String.format("%.2f",getMetrosPrivadosConstruidos());

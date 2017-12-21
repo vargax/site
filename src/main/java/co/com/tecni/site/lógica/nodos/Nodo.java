@@ -22,8 +22,8 @@ public abstract class Nodo {
 
     @Override
     public String toString() {
-        return "Nodo{" +
-                "nombre='" + nombre + '\'' +
+        return "{ID:'Nodo'" +
+                "nombre:'" + nombre + '\'' +
                 '}';
     }
 }
