@@ -62,6 +62,6 @@ public class Agrupación extends Nodo {
     // Métodos Object
     // -----------------------------------------------
     public String toString() {
-        return super.nombre+" (A: "+agrupaciones.size()+" I:"+inmuebles.size()+")";
+        return "{ID:'"+super.nombre+"',A: "+agrupaciones.size()+",I:"+inmuebles.size()+"}";
     }
 }

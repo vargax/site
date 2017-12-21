@@ -48,11 +48,11 @@ public class Bodega extends _Inmueble {
 
     @Override
     public String toString() {
-        return super.toString() +
-                "{ altura=" + altura +
-                ", acabadoPisos='" + acabadoPisos + '\'' +
-                ", distanciaColumnas=" + distanciaColumnas +
-                ", capacidadElectrica=" + capacidadElectrica +
+        return super.toString().substring(0, super.toString().length()-2) +
+                ",altura:" + altura +
+                ",acabadoPisos:'" + acabadoPisos + '\'' +
+                ",distanciaColumnas:" + distanciaColumnas +
+                ",capacidadElectrica:" + capacidadElectrica +
                 " }";
     }
 }

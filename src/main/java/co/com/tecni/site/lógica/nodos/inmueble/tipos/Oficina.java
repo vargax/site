@@ -34,9 +34,9 @@ public class Oficina extends _Inmueble {
 
     @Override
     public String toString() {
-        return super.toString() +
-                "{ altura=" + altura +
-                ", acabadoPisos='" + acabadoPisos + '\'' +
+        return super.toString().substring(0, super.toString().length()-2) +
+                ",altura:" + altura +
+                ",acabadoPisos:'" + acabadoPisos + "'" +
                 " }";
     }
 }

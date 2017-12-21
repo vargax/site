@@ -121,6 +121,8 @@ public class LectorInmueble {
         metros.put(_Inmueble.COM_LIBRES, filaActual.getCell(colComunLibre).getNumericCellValue());
 
         _Inmueble inm = _Inmueble.hoja(tipo, nombre, metros);
+
+       if(filaActual.getCell(colAltura) != null){
         if (inm instanceof Oficina) {
             ((Oficina) inm).setAltura(filaActual.getCell(colAltura).getNumericCellValue());
             ((Oficina) inm).setAcabadoPisos(filaActual.getCell(colAcabadoPisos).getStringCellValue());
@@ -128,6 +130,7 @@ public class LectorInmueble {
             ((Bodega) inm).setAltura(filaActual.getCell(colAltura).getNumericCellValue());
             ((Bodega) inm).setAcabadoPisos(filaActual.getCell(colAcabadoPisos).getStringCellValue());
         }
+       }
         return inm;
     }
 
