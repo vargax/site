@@ -4,7 +4,7 @@ public class Oficina extends _Inmueble {
 
     public final static String SIGLA = "OF";
     private double altura = 0 ;
-    private int numBaños = 0;
+    private int numeroBaños = 0;
     private String acabadoPisos = "";
 
     public Oficina() {
@@ -16,8 +16,8 @@ public class Oficina extends _Inmueble {
         this.altura = altura;
     }
 
-    public void setNumBaños(int numBaños) {
-        this.numBaños = numBaños;
+    public void setNumeroBaños(int numBaños) {
+        this.numeroBaños = numBaños;
     }
 
     public void setAcabadoPisos(String acabadoPisos) {
