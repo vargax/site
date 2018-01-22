@@ -4,10 +4,12 @@ public class Bodega extends _Inmueble {
 
     public final static String SIGLA = "BG";
 
-    private double altura;
+    private double altura = 0.0;
     private String acabadoPisos = "";
     private double distanciaColumnas = 0.0f;
-    private int capacidadElectrica;
+    private int capacidadElectricaKVA = 0;
+    private int numeroBaños = 0;
+    private int capacidadCargaKgsM2=0;
 
     public Bodega() {
         super();
@@ -26,8 +28,8 @@ public class Bodega extends _Inmueble {
         this.distanciaColumnas = distanciaColumnas;
     }
 
-    public void setCapacidadElectrica(int capacidadElectrica) {
-        this.capacidadElectrica = capacidadElectrica;
+    public void setCapacidadElectricaKVA(int capacidadElectricaKVA) {
+        this.capacidadElectricaKVA = capacidadElectricaKVA;
     }
 
     public double getAltura() {
@@ -42,8 +44,24 @@ public class Bodega extends _Inmueble {
         return acabadoPisos;
     }
 
-    public int getCapacidadElectrica() {
-        return capacidadElectrica;
+    public int getCapacidadElectricaKVA() {
+        return capacidadElectricaKVA;
+    }
+
+    public int getNumeroBaños() {
+        return numeroBaños;
+    }
+
+    public void setNumeroBaños(int numeroBaños) {
+        this.numeroBaños = numeroBaños;
+    }
+
+    public int getCapacidadCargaKgsM2() {
+        return capacidadCargaKgsM2;
+    }
+
+    public void setCapacidadCargaKgsM2(int capacidadCargaKgsM2) {
+        this.capacidadCargaKgsM2 = capacidadCargaKgsM2;
     }
 
     @Override
@@ -52,7 +70,9 @@ public class Bodega extends _Inmueble {
                 ",altura:" + altura +
                 ",acabadoPisos:'" + acabadoPisos + '\'' +
                 ",distanciaColumnas:" + distanciaColumnas +
-                ",capacidadElectrica:" + capacidadElectrica +
+                ",capacidadElectricaKVA:" + capacidadElectricaKVA +
+                ",capacidadCargaKgsM2:" + capacidadCargaKgsM2 +
+                ",numeroBaños:" + numeroBaños +
                 " }";
     }
 }
