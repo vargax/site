@@ -37,6 +37,7 @@ public class Oficina extends _Inmueble {
         return super.toString().substring(0, super.toString().length()-2) +
                 ",altura:" + altura +
                 ",acabadoPisos:'" + acabadoPisos + "'" +
+                ",numeroBaños:" + numeroBaños +
                 " }";
     }
 }
