@@ -2,6 +2,7 @@ package co.com.tecni.site.lógica.nodos.inmueble.tipos;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmueble.fichas._Ficha;
+import com.github.cliftonlabs.json_simple.JsonObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +29,8 @@ public abstract class _Inmueble extends Nodo {
     private ArrayList<_Inmueble> hijos;
 
     protected String sigla;
+    protected JsonObject características;
+
     // -----------------------------------------------
     // Constructores
     // -----------------------------------------------
@@ -77,7 +80,7 @@ public abstract class _Inmueble extends Nodo {
     // -----------------------------------------------
     public String genId() {
         return padre == null ? sigla + " " + nombre : padre.genId() + " " + sigla + " " + nombre;
-    };
+    }
 
     public double getMetrosPrivadosConstruidos() {
         return m2.get (PRIV_CONSTRUIDOS);
@@ -93,7 +96,6 @@ public abstract class _Inmueble extends Nodo {
     // -----------------------------------------------
     // Métodos Object
     // -----------------------------------------------
-    @Override
     public String toString() {
         String nombre = /*this.getClass().getSimpleName() +*/ "{" +
                 "ID:'" + genId() + "\', " ;
@@ -121,13 +123,7 @@ public abstract class _Inmueble extends Nodo {
     }
 
     // -----------------------------------------------
-    // GUI / Detalle / Introspección
+    // GUI / Detalle
     // -----------------------------------------------
-    public HashMap<String, Double> guiDetalleM2() {
-        return m2;
-    }
 
-    public String guiDetalleID() {
-        return genId();
-    }
 }
