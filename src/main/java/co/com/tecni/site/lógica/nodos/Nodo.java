@@ -1,5 +1,7 @@
 package co.com.tecni.site.lógica.nodos;
 
+import com.github.cliftonlabs.json_simple.JsonObject;
+
 import java.util.ArrayList;
 
 public abstract class Nodo {
@@ -17,10 +19,15 @@ public abstract class Nodo {
     // GUI / Árbol
     // -----------------------------------------------
     public abstract String nombreNodo();
-
     public abstract ArrayList<Object> hijosNodo();
 
-    @Override
+    // -----------------------------------------------
+    // GUI / Detalle
+    // -----------------------------------------------
+    public JsonObject darCaracterísticas() {
+        return null;
+    }
+
     public String toString() {
         return "{ID:'Nodo'" +
                 "nombre:'" + nombre + '\'' +

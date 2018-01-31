@@ -1,18 +1,18 @@
 package co.com.tecni.site.ui;
 
-import co.com.tecni.site.lógica.ISite;
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Agrupación;
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmueble.fichas._Ficha;
 import co.com.tecni.site.lógica.nodos.inmueble.tipos._Inmueble;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreeCellRenderer;
 import java.awt.*;
-import javax.script.*;
 
 public class Gui extends JFrame {
 
@@ -21,7 +21,7 @@ public class Gui extends JFrame {
 
     public Gui() throws Exception {
 
-        ISite site = new Site();
+        Site site = new Site();
 
         tree = new JTree(site);
         NewTreeCellRenderer renderer = new NewTreeCellRenderer();
