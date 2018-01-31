@@ -6,8 +6,8 @@ import com.github.cliftonlabs.json_simple.JsonObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Locale;
+import java.util.Map;
 
 public abstract class _Inmueble extends Nodo {
 
@@ -82,16 +82,9 @@ public abstract class _Inmueble extends Nodo {
         return padre == null ? sigla + " " + nombre : padre.genId() + " " + sigla + " " + nombre;
     }
 
-    public double getMetrosPrivadosConstruidos() {
-        return m2.get (PRIV_CONSTRUIDOS);
-    }
-
     public void registrarFicha(_Ficha ficha) {
         fichas.add(ficha);
     }
-    // -----------------------------------------------
-    // Getters and Setters
-    // -----------------------------------------------
 
     // -----------------------------------------------
     // Métodos Object
@@ -125,5 +118,8 @@ public abstract class _Inmueble extends Nodo {
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
-
+    @Override
+    public JsonObject darCaracterísticas() {
+        return características;
+    }
 }

@@ -1,8 +1,7 @@
 package co.com.tecni.site.datos;
 
-import co.com.tecni.site.lógica.nodos.inmueble.tipos.Bodega;
-import co.com.tecni.site.lógica.nodos.inmueble.tipos.Oficina;
 import co.com.tecni.site.lógica.nodos.inmueble.tipos._Inmueble;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -24,8 +23,8 @@ public class LectorInmueble {
     private final static char COL_PRIVADO_LIBRES = 'M';
     private final static char COL_COMUNES_CONSTRUIDO = 'N';
     private final static char COL_COMUNES_LIBRES = 'O';
-    private final static char COL_ALTURA = 'S';
-    private final static char COL_ACABADO_PISOS = 'T';
+
+    private final static char COL_INICIO_CARACTERÍSTICAS = 'S';
 
     private final static String HIJOS_INICIO = "inicio";
     private final static String HIJOS_FIN = "fin";
@@ -39,12 +38,14 @@ public class LectorInmueble {
     private int colHijos;
     private int colTipo;
     private int colNombre;
+
     private int colPrivadoConstruido;
     private int colPrivadoLibre;
     private int colComunConstruido;
     private int colComunLibre;
-    private int colAltura;
-    private int colAcabadoPisos;
+
+    private int colInicioCaracterísticas;
+    private ArrayList<String> atributosxImportar;
 
     private Iterator<Row> filas;
     private Row filaActual;
@@ -62,12 +63,14 @@ public class LectorInmueble {
         colPrivadoLibre = (int)COL_PRIVADO_LIBRES - 65;
         colComunConstruido = (int)COL_COMUNES_CONSTRUIDO - 65;
         colComunLibre = (int)COL_COMUNES_LIBRES - 65;
-        colAltura = (int)COL_ALTURA - 65;
-        colAcabadoPisos = (int)COL_ACABADO_PISOS - 65;
+
+        colInicioCaracterísticas = (int) COL_INICIO_CARACTERÍSTICAS - 65;
+        atributosxImportar = new ArrayList<>();
+
     }
 
     // -----------------------------------------------
-    // Métodos
+    // Métodos principales
     // -----------------------------------------------
     public _Inmueble leer(String nombreArchivo) throws Exception {
         InputStream inputStream = LectorInmueble.class.getResourceAsStream("/static/archivos/inmueble " + nombreArchivo + ".xlsx");
@@ -75,6 +78,12 @@ public class LectorInmueble {
 
         filas = libro.getSheet(HOJA_NOMBRE).iterator();
         filaActual = filas.next();
+
+
+        Iterator<Cell> atributos = inicioCaracterísticas();
+        Cell atributoActual = atributos.next();
+        while (atributos.hasNext())
+            atributosxImportar.add(atributoActual.getStringCellValue());
 
         while (!inicioInmueble())
             filaActual = filas.next();
@@ -87,6 +96,8 @@ public class LectorInmueble {
     }
 
     private _Inmueble recursión() throws Exception {
+
+        System.out.println("recursión");
 
         String tipo = paqueteTipos+filaActual.getCell(colTipo).getStringCellValue();
         String nombre = filaActual.getCell(colNombre).getStringCellValue();
@@ -120,18 +131,28 @@ public class LectorInmueble {
         metros.put(_Inmueble.COM_CONSTRUIDOS, filaActual.getCell(colComunConstruido).getNumericCellValue());
         metros.put(_Inmueble.COM_LIBRES, filaActual.getCell(colComunLibre).getNumericCellValue());
 
-        _Inmueble inm = _Inmueble.hoja(tipo, nombre, metros);
+        return _Inmueble.hoja(tipo, nombre, metros);
+    }
 
-       if(filaActual.getCell(colAltura) != null){
-        if (inm instanceof Oficina) {
-            ((Oficina) inm).setAltura(filaActual.getCell(colAltura).getNumericCellValue());
-            ((Oficina) inm).setAcabadoPisos(filaActual.getCell(colAcabadoPisos).getStringCellValue());
-        }  else  if (inm instanceof Bodega) {
-            ((Bodega) inm).setAltura(filaActual.getCell(colAltura).getNumericCellValue());
-            ((Bodega) inm).setAcabadoPisos(filaActual.getCell(colAcabadoPisos).getStringCellValue());
+    private void leerAtributos(_Inmueble inmueble) {
+        Iterator<Cell> atributos = inicioCaracterísticas();
+        Cell atributoActual = atributos.next();
+        for (String atributo : atributosxImportar) {
+            
         }
-       }
-        return inm;
+    }
+
+    // -----------------------------------------------
+    // Métodos soporte
+    // -----------------------------------------------
+    private Iterator<Cell> inicioCaracterísticas() {
+        Iterator<Cell> nombresAtributos = filaActual.iterator();
+        Cell atributoActual = nombresAtributos.next();
+
+        while (atributoActual.getColumnIndex() < colInicioCaracterísticas)
+            atributoActual = nombresAtributos.next();
+
+        return nombresAtributos;
     }
 
     private boolean inicioInmueble() {

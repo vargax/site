@@ -8,11 +8,12 @@ import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmueble.tipos._Inmueble;
 
 import javax.swing.event.TreeModelListener;
+import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Site implements ISite {
+public class Site implements TreeModel {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
@@ -74,7 +75,11 @@ public class Site implements ISite {
     }
 
     // -----------------------------------------------
-    // Métodos Interfaz
+    // Métodos Públicos
+    // -----------------------------------------------
+
+    // -----------------------------------------------
+    // Métodos Interfaz TreeModel
     // -----------------------------------------------
     public Object getRoot() {
         return raiz;
