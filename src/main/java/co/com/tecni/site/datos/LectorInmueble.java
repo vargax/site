@@ -80,10 +80,10 @@ public class LectorInmueble {
         filaActual = filas.next();
 
 
-        Iterator<Cell> atributos = inicioCaracterísticas();
-        Cell atributoActual = atributos.next();
-        while (atributos.hasNext())
-            atributosxImportar.add(atributoActual.getStringCellValue());
+        //Iterator<Cell> características = inicioCaracterísticas();
+        //Cell atributoActual = características.next();
+        //while (características.hasNext())
+        // atributosxImportar.add(atributoActual.getStringCellValue());
 
         while (!inicioInmueble())
             filaActual = filas.next();
@@ -96,9 +96,6 @@ public class LectorInmueble {
     }
 
     private _Inmueble recursión() throws Exception {
-
-        System.out.println("recursión");
-
         String tipo = paqueteTipos+filaActual.getCell(colTipo).getStringCellValue();
         String nombre = filaActual.getCell(colNombre).getStringCellValue();
 
