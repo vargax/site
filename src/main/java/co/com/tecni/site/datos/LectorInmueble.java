@@ -4,11 +4,10 @@ import co.com.tecni.site.lógica.nodos.inmueble.tipos._Inmueble;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.simple.JSONObject;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 public class LectorInmueble {
     // -----------------------------------------------
@@ -24,11 +23,14 @@ public class LectorInmueble {
     private final static char COL_COMUNES_CONSTRUIDO = 'N';
     private final static char COL_COMUNES_LIBRES = 'O';
 
+    private final static int FILA_TIPOS_CARACTERÍSTICAS = 2;
     private final static char COL_INICIO_CARACTERÍSTICAS = 'S';
 
     private final static String HIJOS_INICIO = "inicio";
     private final static String HIJOS_FIN = "fin";
     private final static String SALTAR = "saltar";
+
+    private final static String[] TIPOS_CARACTERÍSTICAS = {"double", "String", "int"};
 
     // -----------------------------------------------
     // Atributos
@@ -45,10 +47,13 @@ public class LectorInmueble {
     private int colComunLibre;
 
     private int colInicioCaracterísticas;
-    private ArrayList<String> atributosxImportar;
+    private HashMap<String, String> característicasxImportar;
 
     private Iterator<Row> filas;
     private Row filaActual;
+
+    private Iterator<Cell> columnas;
+    private Cell columnaActual;
 
     // -----------------------------------------------
     // Constructor
@@ -65,8 +70,6 @@ public class LectorInmueble {
         colComunLibre = (int)COL_COMUNES_LIBRES - 65;
 
         colInicioCaracterísticas = (int) COL_INICIO_CARACTERÍSTICAS - 65;
-        atributosxImportar = new ArrayList<>();
-
     }
 
     // -----------------------------------------------
@@ -77,13 +80,8 @@ public class LectorInmueble {
         XSSFWorkbook libro = new XSSFWorkbook(inputStream);
 
         filas = libro.getSheet(HOJA_NOMBRE).iterator();
-        filaActual = filas.next();
 
-
-        //Iterator<Cell> características = inicioCaracterísticas();
-        //Cell atributoActual = características.next();
-        //while (características.hasNext())
-        // atributosxImportar.add(atributoActual.getStringCellValue());
+        cargarCaracterísticas();
 
         while (!inicioInmueble())
             filaActual = filas.next();
@@ -98,10 +96,9 @@ public class LectorInmueble {
     private _Inmueble recursión() throws Exception {
         String tipo = paqueteTipos+filaActual.getCell(colTipo).getStringCellValue();
         String nombre = filaActual.getCell(colNombre).getStringCellValue();
+        JSONObject características = leerCaracterísticas();
 
         ArrayList<_Inmueble> hijos = new ArrayList<>();
-
-        System.out.println("r "+nombre);
 
         filaActual = filas.next();
         while (!finInmueble()) {
@@ -112,13 +109,15 @@ public class LectorInmueble {
             filaActual = filas.next();
         }
 
-        return _Inmueble.englobar(tipo, nombre, hijos);
+        _Inmueble inmueble = _Inmueble.englobar(tipo, nombre, características, hijos);
+        System.out.println("r "+inmueble);
+        return inmueble;
     }
 
     private _Inmueble hoja() throws Exception {
-
         String tipo = paqueteTipos+filaActual.getCell(colTipo).getStringCellValue();
         String nombre = filaActual.getCell(colNombre).getStringCellValue();
+        JSONObject características = leerCaracterísticas();
 
         System.out.println("h "+nombre);
 
@@ -128,28 +127,95 @@ public class LectorInmueble {
         metros.put(_Inmueble.COM_CONSTRUIDOS, filaActual.getCell(colComunConstruido).getNumericCellValue());
         metros.put(_Inmueble.COM_LIBRES, filaActual.getCell(colComunLibre).getNumericCellValue());
 
-        return _Inmueble.hoja(tipo, nombre, metros);
-    }
-
-    private void leerAtributos(_Inmueble inmueble) {
-        Iterator<Cell> atributos = inicioCaracterísticas();
-        Cell atributoActual = atributos.next();
-        for (String atributo : atributosxImportar) {
-            
-        }
+        _Inmueble inmueble = _Inmueble.hoja(tipo, nombre, características, metros);
+        System.out.println("h "+inmueble);
+        return inmueble;
     }
 
     // -----------------------------------------------
     // Métodos soporte
     // -----------------------------------------------
-    private Iterator<Cell> inicioCaracterísticas() {
-        Iterator<Cell> nombresAtributos = filaActual.iterator();
-        Cell atributoActual = nombresAtributos.next();
 
-        while (atributoActual.getColumnIndex() < colInicioCaracterísticas)
-            atributoActual = nombresAtributos.next();
+    private JSONObject leerCaracterísticas() {
+        JSONObject características = new JSONObject();
 
-        return nombresAtributos;
+        inicioCaracterísticas();
+
+        for (Map.Entry<String, String> característica : característicasxImportar.entrySet()) {
+
+            try {
+                columnaActual = columnas.next();
+            } catch (NoSuchElementException e) {
+                break;
+            }
+
+            if (característica.getValue().equals(TIPOS_CARACTERÍSTICAS[0])) {
+                Double valor = columnaActual.getNumericCellValue();
+                if (valor != 0) características.put(característica.getKey(), valor);
+            } else if (característica.getValue().equals(TIPOS_CARACTERÍSTICAS[1])) {
+                String valor = columnaActual.getStringCellValue();
+                if (valor.length() != 0) características.put(característica.getKey(), valor);
+            } else if (característica.getValue().equals(TIPOS_CARACTERÍSTICAS[2])) {
+                int valor = ((Double) columnaActual.getNumericCellValue()).intValue();
+                if (valor != 0) características.put(característica.getKey(), valor);
+            }
+        }
+
+        return características;
+    }
+
+    private void cargarCaracterísticas() throws Exception {
+        for (int i = 0; i < FILA_TIPOS_CARACTERÍSTICAS; i++ )
+            filaActual = filas.next();
+
+        ArrayList<String> tipos = new ArrayList<>();
+        ArrayList<String> nombres = new ArrayList<>();
+
+        inicioCaracterísticas();
+        while (columnas.hasNext()) {
+            String tipoCaracterística = columnaActual.getStringCellValue();
+            if (tipoCaracterística.length() == 0)
+                break;
+            if (!Arrays.asList(TIPOS_CARACTERÍSTICAS).contains(tipoCaracterística))
+                throw new Exception("Tipo característica "+ tipoCaracterística + " no admitido");
+
+            tipos.add(columnaActual.getStringCellValue());
+
+            columnaActual = columnas.next();
+        }
+
+        filaActual = filas.next();
+        inicioCaracterísticas();
+        while (columnas.hasNext()) {
+            nombres.add(columnaActual.getStringCellValue());
+            columnaActual = columnas.next();
+        }
+        nombres.add(columnaActual.getStringCellValue());
+
+        if (tipos.size() != nombres.size()) {
+            System.err.println("ADVERTENCIA: Se identificaron "+tipos.size()+" tipos y "+nombres.size()+ " nombres.");
+            System.err.println("  TIPOS: "+tipos);
+            System.err.println("  NOMBRES: "+nombres);
+        }
+
+        característicasxImportar = new HashMap<>();
+        for (int i = 0; i < tipos.size(); i++)
+            característicasxImportar.put(nombres.get(i), tipos.get(i));
+
+        System.err.println("Características: "+ característicasxImportar);
+    }
+
+    private void inicioCaracterísticas() {
+        Cell columnaObjetivo = filaActual.getCell(colInicioCaracterísticas);
+
+        columnas = filaActual.cellIterator();
+
+        while (columnaActual != columnaObjetivo)
+            try {
+                columnaActual = columnas.next();
+            } catch (NoSuchElementException e) {
+                break;
+            }
     }
 
     private boolean inicioInmueble() {
