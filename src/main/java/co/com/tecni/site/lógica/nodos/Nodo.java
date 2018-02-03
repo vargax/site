@@ -1,6 +1,6 @@
 package co.com.tecni.site.lógica.nodos;
 
-import com.github.cliftonlabs.json_simple.JsonObject;
+import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ public abstract class Nodo {
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
-    public JsonObject darCaracterísticas() {
+    public JSONObject darCaracterísticas() {
         return null;
     }
 

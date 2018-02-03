@@ -2,7 +2,7 @@ package co.com.tecni.site.lógica.nodos.inmueble.tipos;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmueble.fichas._Ficha;
-import com.github.cliftonlabs.json_simple.JsonObject;
+import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +29,7 @@ public abstract class _Inmueble extends Nodo {
     private ArrayList<_Inmueble> hijos;
 
     protected String sigla;
-    protected JsonObject características;
+    protected JSONObject características;
 
     // -----------------------------------------------
     // Constructores
@@ -38,12 +38,13 @@ public abstract class _Inmueble extends Nodo {
         this.fichas = new ArrayList<>();
     }
 
-    public static _Inmueble englobar(String tipo, String nombre, ArrayList<_Inmueble> inmuebles) throws Exception {
+    public static _Inmueble englobar(String tipo, String nombre, JSONObject características, ArrayList<_Inmueble> inmuebles) throws Exception {
         _Inmueble englobe = (_Inmueble) Class.forName(tipo).newInstance();
         englobe.nombre = nombre;
         englobe.hijos = inmuebles;
 
         englobe.m2 = new HashMap<>();
+        englobe.características = características;
 
         englobe.m2.put(PRIV_CONSTRUIDOS,0.0);
         englobe.m2.put(PRIV_LIBRES,0.0);
@@ -59,13 +60,15 @@ public abstract class _Inmueble extends Nodo {
 
             inmueble.padre = englobe;
         }
+
         return englobe;
     }
 
-    public static _Inmueble hoja(String tipo, String nombre, HashMap<String, Double> m2) throws Exception {
+    public static _Inmueble hoja(String tipo, String nombre, JSONObject características, HashMap<String, Double> m2) throws Exception {
         _Inmueble hoja = (_Inmueble) Class.forName(tipo).newInstance();
         hoja.nombre = nombre;
         hoja.m2 = m2;
+        hoja.características = características;
 
         return hoja;
     }
@@ -90,14 +93,14 @@ public abstract class _Inmueble extends Nodo {
     // Métodos Object
     // -----------------------------------------------
     public String toString() {
-        String nombre = /*this.getClass().getSimpleName() +*/ "{" +
+        String nombre = this.getClass().getSimpleName() + "{" +
                 "ID:'" + genId() + "\', " ;
         for (Map.Entry<String, Double> entry : m2.entrySet()) {
             nombre += entry.getKey() + ": "+String.format(Locale.US, "%.2f", entry.getValue())+", ";
         }
         nombre =  nombre.substring(0, nombre.length()-2) + '}';
 //        nombre += "\nMetros cuadrados privados construídos =" + String.format("%.2f",getMetrosPrivadosConstruidos());
-        return nombre;
+        return genId()+" :: "+características;
     }
 
     // -----------------------------------------------
@@ -119,7 +122,7 @@ public abstract class _Inmueble extends Nodo {
     // GUI / Detalle
     // -----------------------------------------------
     @Override
-    public JsonObject darCaracterísticas() {
+    public JSONObject darCaracterísticas() {
         return características;
     }
 }
