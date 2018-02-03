@@ -24,7 +24,7 @@ public class LectorInmueble {
     private final static char COL_COMUNES_LIBRES = 'O';
 
     private final static int FILA_TIPOS_CARACTERÍSTICAS = 2;
-    private final static char COL_INICIO_CARACTERÍSTICAS = 'S';
+    private final static char COL_CARACTERÍSTICAS = 'S';
 
     private final static String HIJOS_INICIO = "inicio";
     private final static String HIJOS_FIN = "fin";
@@ -46,8 +46,8 @@ public class LectorInmueble {
     private int colComunConstruido;
     private int colComunLibre;
 
-    private int colInicioCaracterísticas;
-    private HashMap<String, String> característicasxImportar;
+    private int colCaracterísticas;
+    private ArrayList<String[]> característicasxImportar;
 
     private Iterator<Row> filas;
     private Row filaActual;
@@ -69,7 +69,7 @@ public class LectorInmueble {
         colComunConstruido = (int)COL_COMUNES_CONSTRUIDO - 65;
         colComunLibre = (int)COL_COMUNES_LIBRES - 65;
 
-        colInicioCaracterísticas = (int) COL_INICIO_CARACTERÍSTICAS - 65;
+        colCaracterísticas = (int) COL_CARACTERÍSTICAS - 65;
     }
 
     // -----------------------------------------------
@@ -119,8 +119,6 @@ public class LectorInmueble {
         String nombre = filaActual.getCell(colNombre).getStringCellValue();
         JSONObject características = leerCaracterísticas();
 
-        System.out.println("h "+nombre);
-
         HashMap<String, Double> metros = new HashMap<>();
         metros.put(_Inmueble.PRIV_CONSTRUIDOS, filaActual.getCell(colPrivadoConstruido).getNumericCellValue());
         metros.put(_Inmueble.PRIV_LIBRES, filaActual.getCell(colPrivadoLibre).getNumericCellValue());
@@ -140,8 +138,7 @@ public class LectorInmueble {
         JSONObject características = new JSONObject();
 
         inicioCaracterísticas();
-
-        for (Map.Entry<String, String> característica : característicasxImportar.entrySet()) {
+        for (String[] característica : característicasxImportar) {
 
             try {
                 columnaActual = columnas.next();
@@ -149,15 +146,15 @@ public class LectorInmueble {
                 break;
             }
 
-            if (característica.getValue().equals(TIPOS_CARACTERÍSTICAS[0])) {
+            if (característica[0].equals(TIPOS_CARACTERÍSTICAS[0])) {
                 Double valor = columnaActual.getNumericCellValue();
-                if (valor != 0) características.put(característica.getKey(), valor);
-            } else if (característica.getValue().equals(TIPOS_CARACTERÍSTICAS[1])) {
+                if (valor != 0) características.put(característica[1], valor);
+            } else if (característica[0].equals(TIPOS_CARACTERÍSTICAS[1])) {
                 String valor = columnaActual.getStringCellValue();
-                if (valor.length() != 0) características.put(característica.getKey(), valor);
-            } else if (característica.getValue().equals(TIPOS_CARACTERÍSTICAS[2])) {
+                if (valor.length() != 0) características.put(característica[1], valor);
+            } else if (característica[0].equals(TIPOS_CARACTERÍSTICAS[2])) {
                 int valor = ((Double) columnaActual.getNumericCellValue()).intValue();
-                if (valor != 0) características.put(característica.getKey(), valor);
+                if (valor != 0) características.put(característica[1], valor);
             }
         }
 
@@ -168,29 +165,27 @@ public class LectorInmueble {
         for (int i = 0; i < FILA_TIPOS_CARACTERÍSTICAS; i++ )
             filaActual = filas.next();
 
-        ArrayList<String> tipos = new ArrayList<>();
-        ArrayList<String> nombres = new ArrayList<>();
-
         inicioCaracterísticas();
+        ArrayList<String> tipos = new ArrayList<>();
         while (columnas.hasNext()) {
+            columnaActual = columnas.next();
             String tipoCaracterística = columnaActual.getStringCellValue();
             if (tipoCaracterística.length() == 0)
                 break;
             if (!Arrays.asList(TIPOS_CARACTERÍSTICAS).contains(tipoCaracterística))
                 throw new Exception("Tipo característica "+ tipoCaracterística + " no admitido");
 
-            tipos.add(columnaActual.getStringCellValue());
-
-            columnaActual = columnas.next();
+            tipos.add(tipoCaracterística);
         }
 
         filaActual = filas.next();
+
         inicioCaracterísticas();
+        ArrayList<String> nombres = new ArrayList<>();
         while (columnas.hasNext()) {
-            nombres.add(columnaActual.getStringCellValue());
             columnaActual = columnas.next();
+            nombres.add(columnaActual.getStringCellValue());
         }
-        nombres.add(columnaActual.getStringCellValue());
 
         if (tipos.size() != nombres.size()) {
             System.err.println("ADVERTENCIA: Se identificaron "+tipos.size()+" tipos y "+nombres.size()+ " nombres.");
@@ -198,18 +193,25 @@ public class LectorInmueble {
             System.err.println("  NOMBRES: "+nombres);
         }
 
-        característicasxImportar = new HashMap<>();
-        for (int i = 0; i < tipos.size(); i++)
-            característicasxImportar.put(nombres.get(i), tipos.get(i));
+        característicasxImportar = new ArrayList<>();
+        for (int i = 0; i < tipos.size(); i++) {
+            String[] tipoNombre = new String[2];
+            tipoNombre[0] = tipos.get(i);
+            tipoNombre[1] = nombres.get(i);
+            característicasxImportar.add(tipoNombre);
+        }
 
-        System.err.println("Características: "+ característicasxImportar);
+        String cadena = "Características: ";
+        for (String[] tipoNombre : característicasxImportar) {
+            cadena += tipoNombre[1]+":"+tipoNombre[0]+" / ";
+        }
+        System.err.println(cadena);
     }
 
     private void inicioCaracterísticas() {
-        Cell columnaObjetivo = filaActual.getCell(colInicioCaracterísticas);
+        Cell columnaObjetivo = filaActual.getCell(colCaracterísticas);
 
         columnas = filaActual.cellIterator();
-
         while (columnaActual != columnaObjetivo)
             try {
                 columnaActual = columnas.next();
