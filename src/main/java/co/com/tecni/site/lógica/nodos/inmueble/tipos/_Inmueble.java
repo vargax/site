@@ -6,8 +6,6 @@ import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 public abstract class _Inmueble extends Nodo {
 
@@ -19,6 +17,7 @@ public abstract class _Inmueble extends Nodo {
     public final static String COM_CONSTRUIDOS = "CC"; //"Comunes Construidos";
     public final static String COM_LIBRES = "CL"; //"Comunes Libres";
 
+    public final static String[] JSON_KEYS = {"Nombre", "M2", "Características"};
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
@@ -41,11 +40,11 @@ public abstract class _Inmueble extends Nodo {
     public static _Inmueble englobar(String tipo, String nombre, JSONObject características, ArrayList<_Inmueble> inmuebles) throws Exception {
         _Inmueble englobe = (_Inmueble) Class.forName(tipo).newInstance();
         englobe.nombre = nombre;
+        englobe.características = características;
+
         englobe.hijos = inmuebles;
 
         englobe.m2 = new HashMap<>();
-        englobe.características = características;
-
         englobe.m2.put(PRIV_CONSTRUIDOS,0.0);
         englobe.m2.put(PRIV_LIBRES,0.0);
         englobe.m2.put(COM_CONSTRUIDOS,0.0);
@@ -61,14 +60,23 @@ public abstract class _Inmueble extends Nodo {
             inmueble.padre = englobe;
         }
 
+        englobe.infoNodo.put(JSON_KEYS[0], englobe.genId());
+        englobe.infoNodo.put(JSON_KEYS[1], englobe.m2);
+        englobe.infoNodo.put(JSON_KEYS[2], características);
+
         return englobe;
     }
 
     public static _Inmueble hoja(String tipo, String nombre, JSONObject características, HashMap<String, Double> m2) throws Exception {
         _Inmueble hoja = (_Inmueble) Class.forName(tipo).newInstance();
+
         hoja.nombre = nombre;
         hoja.m2 = m2;
         hoja.características = características;
+
+        hoja.infoNodo.put(JSON_KEYS[0], hoja.genId());
+        hoja.infoNodo.put(JSON_KEYS[1], m2);
+        hoja.infoNodo.put(JSON_KEYS[2], características);
 
         return hoja;
     }
@@ -92,6 +100,7 @@ public abstract class _Inmueble extends Nodo {
     // -----------------------------------------------
     // Métodos Object
     // -----------------------------------------------
+    /*
     public String toString() {
         String nombre = this.getClass().getSimpleName() + "{" +
                 "ID:'" + genId() + "\', " ;
@@ -99,9 +108,10 @@ public abstract class _Inmueble extends Nodo {
             nombre += entry.getKey() + ": "+String.format(Locale.US, "%.2f", entry.getValue())+", ";
         }
         nombre =  nombre.substring(0, nombre.length()-2) + '}';
-//        nombre += "\nMetros cuadrados privados construídos =" + String.format("%.2f",getMetrosPrivadosConstruidos());
+        nombre += "\nMetros cuadrados privados construídos =" + String.format("%.2f",getMetrosPrivadosConstruidos());
         return genId()+" :: "+características;
     }
+    */
 
     // -----------------------------------------------
     // GUI / Árbol
@@ -121,8 +131,9 @@ public abstract class _Inmueble extends Nodo {
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
-    @Override
-    public JSONObject darCaracterísticas() {
-        return características;
+    /*
+    public JSONObject infoNodo() {
+        return infoNodo;
     }
+    */
 }

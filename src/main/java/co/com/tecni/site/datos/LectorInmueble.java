@@ -89,7 +89,6 @@ public class LectorInmueble {
         _Inmueble inmueble = recursión();
 
         inputStream.close();
-        System.out.println(inmueble);
         return inmueble;
     }
 
@@ -110,7 +109,7 @@ public class LectorInmueble {
         }
 
         _Inmueble inmueble = _Inmueble.englobar(tipo, nombre, características, hijos);
-        System.out.println("r "+inmueble);
+        System.out.println("r "+inmueble.infoNodo().toJSONString());
         return inmueble;
     }
 
@@ -126,7 +125,7 @@ public class LectorInmueble {
         metros.put(_Inmueble.COM_LIBRES, filaActual.getCell(colComunLibre).getNumericCellValue());
 
         _Inmueble inmueble = _Inmueble.hoja(tipo, nombre, características, metros);
-        System.out.println("h "+inmueble);
+        System.out.println("h "+inmueble.infoNodo().toJSONString());
         return inmueble;
     }
 

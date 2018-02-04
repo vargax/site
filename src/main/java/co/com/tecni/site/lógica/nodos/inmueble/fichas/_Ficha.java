@@ -15,9 +15,4 @@ public abstract class _Ficha extends Nodo {
     protected _Ficha() {
         this.tipo = tipo;
     }
-
-    // -----------------------------------------------
-    // Métodos Object
-    // -----------------------------------------------
-
 }
