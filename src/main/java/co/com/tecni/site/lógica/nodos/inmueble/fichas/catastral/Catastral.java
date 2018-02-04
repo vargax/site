@@ -10,6 +10,7 @@ public class Catastral extends _Ficha {
     // -----------------------------------------------
     private final static String[] JSON_KEYS = {"Chip", "Cédula Catastral",
             "Nomenclatura", "M2 construcción", "M2 terreno"};
+
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
