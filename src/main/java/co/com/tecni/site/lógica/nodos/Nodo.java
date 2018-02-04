@@ -28,7 +28,7 @@ public abstract class Nodo {
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
-    public JSONObject infoNodo() {
-        return infoNodo;
-    };
+    public String infoNodo() {
+        return infoNodo.toJSONString();
+    }
 }
