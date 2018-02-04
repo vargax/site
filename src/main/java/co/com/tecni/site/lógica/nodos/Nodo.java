@@ -10,10 +10,14 @@ public abstract class Nodo {
     // Atributos
     // -----------------------------------------------
     protected String nombre;
+    protected JSONObject infoNodo;
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
+    public Nodo() {
+        infoNodo = new JSONObject();
+    }
 
     // -----------------------------------------------
     // GUI / Árbol
@@ -24,13 +28,7 @@ public abstract class Nodo {
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
-    public JSONObject darCaracterísticas() {
-        return null;
-    }
-
-    public String toString() {
-        return "{ID:'Nodo'" +
-                "nombre:'" + nombre + '\'' +
-                '}';
-    }
+    public JSONObject infoNodo() {
+        return infoNodo;
+    };
 }

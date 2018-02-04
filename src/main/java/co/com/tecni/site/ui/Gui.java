@@ -6,8 +6,6 @@ import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmueble.fichas._Ficha;
 import co.com.tecni.site.lógica.nodos.inmueble.tipos._Inmueble;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -45,7 +43,8 @@ public class Gui extends JFrame {
 
         tree.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent e) {
-                Object o =  tree.getLastSelectedPathComponent();
+                Nodo o = (Nodo) tree.getLastSelectedPathComponent();
+                /*
                 ScriptEngineManager factory = new ScriptEngineManager();
                 ScriptEngine engine = factory.getEngineByName("JavaScript");
                 try{
@@ -91,6 +90,8 @@ public class Gui extends JFrame {
                         "</table><br><h5>"+o.toString()+"</h5></html>"
 
                         );
+                        */
+                info.setText(o.infoNodo().toJSONString());
             }
         });
 

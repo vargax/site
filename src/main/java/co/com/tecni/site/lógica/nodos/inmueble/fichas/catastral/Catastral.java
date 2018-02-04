@@ -8,7 +8,8 @@ public class Catastral extends _Ficha {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
-
+    private final static String[] JSON_KEYS = {"Chip", "Cédula Catastral",
+            "Nomenclatura", "M2 construcción", "M2 terreno"};
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
@@ -17,7 +18,7 @@ public class Catastral extends _Ficha {
 
     private String nomenclatura;
 
-    private double m2construccion;
+    private double m2construcción;
     private double m2terreno;
 
     private ArrayList<ImpuestoPredial> impuestosPrediales;
@@ -25,12 +26,21 @@ public class Catastral extends _Ficha {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public Catastral(String chip, String cedulaCatastral, String nomenclatura, double m2construccion, double m2terreno) {
+    public Catastral(String chip, String cedulaCatastral, String nomenclatura, double m2construcción, double m2terreno) {
         this.chip = chip;
+        infoNodo.put(JSON_KEYS[0], chip);
+
         this.cedulaCatastral = cedulaCatastral;
+        infoNodo.put(JSON_KEYS[1], cedulaCatastral);
+
         this.nomenclatura = nomenclatura;
-        this.m2construccion = m2construccion;
+        infoNodo.put(JSON_KEYS[2], nomenclatura);
+
+        this.m2construcción = m2construcción;
+        infoNodo.put(JSON_KEYS[3], m2construcción);
+
         this.m2terreno = m2terreno;
+        infoNodo.put(JSON_KEYS[4], m2terreno);
 
         this.impuestosPrediales = new ArrayList<>();
     }
@@ -43,7 +53,7 @@ public class Catastral extends _Ficha {
     }
 
     // -----------------------------------------------
-    // Métodos nodo
+    // GUI / Árbol
     // -----------------------------------------------
     public String nombreNodo() {
         return "Cédula catastral: " + cedulaCatastral;
@@ -53,19 +63,5 @@ public class Catastral extends _Ficha {
         ArrayList<Object> hijos = new ArrayList<>();
         hijos.addAll(this.impuestosPrediales);
         return hijos;
-    }
-
-    // -----------------------------------------------
-    // Métodos object
-    // -----------------------------------------------
-    public String toString() {
-        return "{ID:'Catastral'" +
-                ",chip:'" + chip + "'" +
-                ",cedulaCatastral:'" + cedulaCatastral + "'" +
-                ",nomenclatura:'" + nomenclatura + "'" +
-                ",m2construccion:" + m2construccion +
-                ",m2terreno:" + m2terreno +
-                ",impuestosPrediales:" + impuestosPrediales +
-                '}';
     }
 }
