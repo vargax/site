@@ -10,6 +10,7 @@ public class ImpuestoPredial extends Nodo {
     // -----------------------------------------------
     private final static String[] JSON_KEYS = {"Año Fiscal", "Avaluo Catastral",
             "Impuesto a Cargo"};
+
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------

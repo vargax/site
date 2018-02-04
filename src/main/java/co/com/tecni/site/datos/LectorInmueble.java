@@ -132,7 +132,6 @@ public class LectorInmueble {
     // -----------------------------------------------
     // Métodos soporte
     // -----------------------------------------------
-
     private JSONObject leerCaracterísticas() {
         JSONObject características = new JSONObject();
 

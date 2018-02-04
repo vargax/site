@@ -17,7 +17,8 @@ public abstract class _Inmueble extends Nodo {
     public final static String COM_CONSTRUIDOS = "CC"; //"Comunes Construidos";
     public final static String COM_LIBRES = "CL"; //"Comunes Libres";
 
-    public final static String[] JSON_KEYS = {"Nombre", "M2", "Características"};
+    private final static String[] JSON_KEYS = {"Nombre", "M2", "Características"};
+
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
@@ -85,7 +86,6 @@ public abstract class _Inmueble extends Nodo {
     // Métodos privados
     // -----------------------------------------------
 
-
     // -----------------------------------------------
     // Métodos públicos
     // -----------------------------------------------
@@ -96,22 +96,6 @@ public abstract class _Inmueble extends Nodo {
     public void registrarFicha(_Ficha ficha) {
         fichas.add(ficha);
     }
-
-    // -----------------------------------------------
-    // Métodos Object
-    // -----------------------------------------------
-    /*
-    public String toString() {
-        String nombre = this.getClass().getSimpleName() + "{" +
-                "ID:'" + genId() + "\', " ;
-        for (Map.Entry<String, Double> entry : m2.entrySet()) {
-            nombre += entry.getKey() + ": "+String.format(Locale.US, "%.2f", entry.getValue())+", ";
-        }
-        nombre =  nombre.substring(0, nombre.length()-2) + '}';
-        nombre += "\nMetros cuadrados privados construídos =" + String.format("%.2f",getMetrosPrivadosConstruidos());
-        return genId()+" :: "+características;
-    }
-    */
 
     // -----------------------------------------------
     // GUI / Árbol
@@ -127,13 +111,4 @@ public abstract class _Inmueble extends Nodo {
         hijos.addAll(this.fichas);
         return hijos;
     }
-
-    // -----------------------------------------------
-    // GUI / Detalle
-    // -----------------------------------------------
-    /*
-    public JSONObject infoNodo() {
-        return infoNodo;
-    }
-    */
 }
