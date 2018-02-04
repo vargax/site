@@ -91,7 +91,7 @@ public class Gui extends JFrame {
 
                         );
                         */
-                info.setText(o.infoNodo().toJSONString());
+                info.setText(o.infoNodo());
             }
         });
 
