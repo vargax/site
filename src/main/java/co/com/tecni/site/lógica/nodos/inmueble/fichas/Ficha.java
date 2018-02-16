@@ -2,7 +2,7 @@ package co.com.tecni.site.lógica.nodos.inmueble.fichas;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
 
-public abstract class _Ficha extends Nodo {
+public abstract class Ficha extends Nodo {
 
     // -----------------------------------------------
     // Atributos
@@ -12,7 +12,7 @@ public abstract class _Ficha extends Nodo {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    protected _Ficha() {
+    protected Ficha() {
         this.tipo = tipo;
     }
 }

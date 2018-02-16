@@ -2,7 +2,7 @@ package co.com.tecni.site.datos;
 
 import co.com.tecni.site.lógica.nodos.inmueble.fichas.catastral.Catastral;
 import co.com.tecni.site.lógica.nodos.inmueble.fichas.catastral.ImpuestoPredial;
-import co.com.tecni.site.lógica.nodos.inmueble.tipos._Inmueble;
+import co.com.tecni.site.lógica.nodos.inmueble.tipos.Inmueble;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -30,7 +30,7 @@ public class LectorCatastral {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    private HashMap<String, _Inmueble> inmuebles;
+    private HashMap<String, Inmueble> inmuebles;
 
     private int colId;
     private int colChip;
@@ -46,7 +46,7 @@ public class LectorCatastral {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public LectorCatastral(HashMap<String, _Inmueble> inmuebles) {
+    public LectorCatastral(HashMap<String, Inmueble> inmuebles) {
 
         colId = (int)COL_ID - 65;
         colChip = (int)COL_CHIP - 65;
@@ -77,7 +77,7 @@ public class LectorCatastral {
             filaActual = filas.next();
 
             String id = filaActual.getCell(colId).getStringCellValue();
-            _Inmueble inmueble = inmuebles.get(id);
+            Inmueble inmueble = inmuebles.get(id);
 
             if (inmueble == null) throw new Exception("Inmueble "+id+" no encontrado");
 

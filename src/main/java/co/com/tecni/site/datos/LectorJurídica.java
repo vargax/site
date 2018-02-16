@@ -1,7 +1,7 @@
 package co.com.tecni.site.datos;
 
 import co.com.tecni.site.lógica.nodos.inmueble.fichas.Jurídica;
-import co.com.tecni.site.lógica.nodos.inmueble.tipos._Inmueble;
+import co.com.tecni.site.lógica.nodos.inmueble.tipos.Inmueble;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -25,7 +25,7 @@ public class LectorJurídica {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    private HashMap<String, _Inmueble> inmuebles;
+    private HashMap<String, Inmueble> inmuebles;
 
     private int colId;
     private int colOficinaRegistro;
@@ -36,7 +36,7 @@ public class LectorJurídica {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public LectorJurídica(HashMap<String, _Inmueble> inmuebles) {
+    public LectorJurídica(HashMap<String, Inmueble> inmuebles) {
         colId = (int)COL_ID - 65;
         colOficinaRegistro = (int) COL_OFICINA_REGISTRO - 65;
         colMatículaInmobiliaria = (int) COL_MATRÍCULA_INMOBILIARIA - 65;
@@ -60,7 +60,7 @@ public class LectorJurídica {
             filaActual = filas.next();
 
             String id = filaActual.getCell(colId).getStringCellValue();
-            _Inmueble inmueble = inmuebles.get(id);
+            Inmueble inmueble = inmuebles.get(id);
 
             if (inmueble == null) throw new Exception("Inmueble "+id+" no encontrado");
 

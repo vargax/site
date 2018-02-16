@@ -3,7 +3,7 @@ package co.com.tecni.site.lógica.nodos.inmueble.fichas;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Jurídica extends _Ficha {
+public class Jurídica extends Ficha {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------

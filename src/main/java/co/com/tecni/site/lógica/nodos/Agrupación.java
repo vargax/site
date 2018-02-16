@@ -1,6 +1,6 @@
 package co.com.tecni.site.lógica.nodos;
 
-import co.com.tecni.site.lógica.nodos.inmueble.tipos._Inmueble;
+import co.com.tecni.site.lógica.nodos.inmueble.tipos.Inmueble;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,7 @@ public class Agrupación extends Nodo {
     // -----------------------------------------------
     private Agrupación padre;
     private ArrayList<Agrupación> agrupaciones;
-    protected ArrayList<_Inmueble> inmuebles;
+    protected ArrayList<Inmueble> inmuebles;
 
     // -----------------------------------------------
     // Constructor
@@ -25,7 +25,7 @@ public class Agrupación extends Nodo {
     // -----------------------------------------------
     // Métodos públicos
     // -----------------------------------------------
-    public void agregarInmueble(_Inmueble inmueble) {
+    public void agregarInmueble(Inmueble inmueble) {
         inmuebles.add(inmueble);
     }
 

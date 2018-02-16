@@ -1,6 +1,6 @@
 package co.com.tecni.site.lógica.nodos.inmueble.tipos;
 
-public class Piso extends _Inmueble  {
+public class Piso extends Inmueble {
 
     public final static String SIGLA = "PI";
 
