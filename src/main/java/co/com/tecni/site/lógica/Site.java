@@ -1,11 +1,12 @@
 package co.com.tecni.site.lógica;
 
 import co.com.tecni.site.datos.LectorCatastral;
+import co.com.tecni.site.datos.LectorContrato;
 import co.com.tecni.site.datos.LectorInmueble;
 import co.com.tecni.site.datos.LectorJurídica;
 import co.com.tecni.site.lógica.nodos.Agrupación;
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.inmueble.tipos._Inmueble;
+import co.com.tecni.site.lógica.nodos.inmueble.tipos.Inmueble;
 
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
@@ -24,7 +25,7 @@ public class Site implements TreeModel {
     // Atributos
     // -----------------------------------------------
     private Agrupación raiz;
-    private HashMap<String, _Inmueble> inmueblesxId;
+    private HashMap<String, Inmueble> inmueblesxId;
 
     private LectorInmueble lectorInmuebles;
 
@@ -39,6 +40,7 @@ public class Site implements TreeModel {
         recursiónIdentificadores(raiz);
 
         importarFichas();
+        importarContratos();
     }
 
     // -----------------------------------------------
@@ -58,8 +60,8 @@ public class Site implements TreeModel {
 
     private void recursiónIdentificadores(Nodo nodo) {
         for (Object hijo : nodo.hijosNodo()) {
-            if (hijo instanceof _Inmueble)
-                inmueblesxId.put(((_Inmueble) hijo).genId(), (_Inmueble) hijo);
+            if (hijo instanceof Inmueble)
+                inmueblesxId.put(((Inmueble) hijo).genId(), (Inmueble) hijo);
             recursiónIdentificadores((Nodo) hijo);
         }
     }
@@ -72,6 +74,11 @@ public class Site implements TreeModel {
             lectorCatastral.leer(inmueble);
             lectorJurídica.leer(inmueble);
         }
+    }
+
+    private void importarContratos() throws Exception {
+        LectorContrato lectorContrato = new LectorContrato(inmueblesxId);
+        lectorContrato.leer();
     }
 
     // -----------------------------------------------

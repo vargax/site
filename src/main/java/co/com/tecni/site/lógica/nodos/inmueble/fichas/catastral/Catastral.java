@@ -1,10 +1,10 @@
 package co.com.tecni.site.lógica.nodos.inmueble.fichas.catastral;
 
-import co.com.tecni.site.lógica.nodos.inmueble.fichas._Ficha;
+import co.com.tecni.site.lógica.nodos.inmueble.fichas.Ficha;
 
 import java.util.ArrayList;
 
-public class Catastral extends _Ficha {
+public class Catastral extends Ficha {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------

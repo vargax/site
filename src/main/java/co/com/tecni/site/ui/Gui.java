@@ -3,8 +3,8 @@ package co.com.tecni.site.ui;
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Agrupación;
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.inmueble.fichas._Ficha;
-import co.com.tecni.site.lógica.nodos.inmueble.tipos._Inmueble;
+import co.com.tecni.site.lógica.nodos.inmueble.fichas.Ficha;
+import co.com.tecni.site.lógica.nodos.inmueble.tipos.Inmueble;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
@@ -110,10 +110,10 @@ public class Gui extends JFrame {
 
         public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded,
                                                       boolean leaf, int row, boolean hasFocus) {
-            if (value instanceof _Inmueble)
+            if (value instanceof Inmueble)
                 label.setIcon(new ImageIcon(Gui.class.getResource("/static/íconos/inmueble.png")));
 
-            else if (value instanceof _Ficha)
+            else if (value instanceof Ficha)
                 label.setIcon(new ImageIcon(Gui.class.getResource("/static/íconos/ficha.png")));
 
             else if (value instanceof Agrupación)

@@ -1,13 +1,13 @@
 package co.com.tecni.site.lógica.nodos.inmueble.tipos;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.inmueble.fichas._Ficha;
+import co.com.tecni.site.lógica.nodos.inmueble.fichas.Ficha;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class _Inmueble extends Nodo {
+public abstract class Inmueble extends Nodo {
 
     // -----------------------------------------------
     // Constantes
@@ -23,10 +23,10 @@ public abstract class _Inmueble extends Nodo {
     // Atributos
     // -----------------------------------------------
     private HashMap<String , Double> m2;
-    private ArrayList<_Ficha> fichas;
+    private ArrayList<Ficha> fichas;
 
-    private _Inmueble padre;
-    private ArrayList<_Inmueble> hijos;
+    private Inmueble padre;
+    private ArrayList<Inmueble> hijos;
 
     protected String sigla;
     protected JSONObject características;
@@ -34,12 +34,12 @@ public abstract class _Inmueble extends Nodo {
     // -----------------------------------------------
     // Constructores
     // -----------------------------------------------
-    public _Inmueble() {
+    public Inmueble() {
         this.fichas = new ArrayList<>();
     }
 
-    public static _Inmueble englobar(String tipo, String nombre, JSONObject características, ArrayList<_Inmueble> inmuebles) throws Exception {
-        _Inmueble englobe = (_Inmueble) Class.forName(tipo).newInstance();
+    public static Inmueble englobar(String tipo, String nombre, JSONObject características, ArrayList<Inmueble> inmuebles) throws Exception {
+        Inmueble englobe = (Inmueble) Class.forName(tipo).newInstance();
         englobe.nombre = nombre;
         englobe.características = características;
 
@@ -51,7 +51,7 @@ public abstract class _Inmueble extends Nodo {
         englobe.m2.put(COM_CONSTRUIDOS,0.0);
         englobe.m2.put(COM_LIBRES,0.0);
 
-        for (_Inmueble inmueble : inmuebles) {
+        for (Inmueble inmueble : inmuebles) {
 
             englobe.m2.put(PRIV_CONSTRUIDOS,englobe.m2.get(PRIV_CONSTRUIDOS)+inmueble.m2.get(PRIV_CONSTRUIDOS));
             englobe.m2.put(PRIV_LIBRES,englobe.m2.get(PRIV_LIBRES)+inmueble.m2.get(PRIV_LIBRES));
@@ -68,8 +68,8 @@ public abstract class _Inmueble extends Nodo {
         return englobe;
     }
 
-    public static _Inmueble hoja(String tipo, String nombre, JSONObject características, HashMap<String, Double> m2) throws Exception {
-        _Inmueble hoja = (_Inmueble) Class.forName(tipo).newInstance();
+    public static Inmueble hoja(String tipo, String nombre, JSONObject características, HashMap<String, Double> m2) throws Exception {
+        Inmueble hoja = (Inmueble) Class.forName(tipo).newInstance();
 
         hoja.nombre = nombre;
         hoja.m2 = m2;
@@ -93,7 +93,7 @@ public abstract class _Inmueble extends Nodo {
         return padre == null ? sigla + " " + nombre : padre.genId() + " " + sigla + " " + nombre;
     }
 
-    public void registrarFicha(_Ficha ficha) {
+    public void registrarFicha(Ficha ficha) {
         fichas.add(ficha);
     }
 
