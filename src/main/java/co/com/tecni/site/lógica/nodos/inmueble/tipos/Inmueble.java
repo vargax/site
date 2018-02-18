@@ -1,5 +1,6 @@
 package co.com.tecni.site.lógica.nodos.inmueble.tipos;
 
+import co.com.tecni.site.lógica.contrato.Contrato;
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmueble.fichas.Ficha;
 import org.json.simple.JSONObject;
@@ -30,6 +31,8 @@ public abstract class Inmueble extends Nodo {
 
     protected String sigla;
     protected JSONObject características;
+
+    private Contrato contrato;
 
     // -----------------------------------------------
     // Constructores
@@ -95,6 +98,10 @@ public abstract class Inmueble extends Nodo {
 
     public void registrarFicha(Ficha ficha) {
         fichas.add(ficha);
+    }
+
+    public void asociarContrato(Contrato contrato) {
+        this.contrato = contrato;
     }
 
     // -----------------------------------------------

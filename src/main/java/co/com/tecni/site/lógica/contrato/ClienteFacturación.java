@@ -1,6 +1,6 @@
 package co.com.tecni.site.lógica.contrato;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ClienteFacturación {
 
@@ -11,7 +11,7 @@ public class ClienteFacturación {
     private String nombre;
 
     private ClienteComercial clienteComercial;
-    private ArrayList<Contrato> contratos;
+    private HashMap<Integer, Contrato> contratos;
 
     // -----------------------------------------------
     // Constructor
@@ -21,6 +21,15 @@ public class ClienteFacturación {
         this.nit = nit;
         this.nombre = nombre;
 
-        contratos = new ArrayList<>();
+        contratos = new HashMap<>();
+        this.clienteComercial.registrarClienteFacturación(this);
+    }
+
+    protected void registrarContrato(Contrato contrato) {
+        contratos.put(contrato.getNumContrato(), contrato);
+    }
+
+    public int getNit() {
+        return nit;
     }
 }
