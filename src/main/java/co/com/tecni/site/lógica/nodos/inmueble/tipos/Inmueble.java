@@ -18,7 +18,7 @@ public abstract class Inmueble extends Nodo {
     public final static String COM_CONSTRUIDOS = "CC"; //"Comunes Construidos";
     public final static String COM_LIBRES = "CL"; //"Comunes Libres";
 
-    private final static String[] JSON_KEYS = {"Nombre", "M2", "Características"};
+    private final static String[] JSON_KEYS = {"Nombre", "M2", "Características", "Contrato"};
 
     // -----------------------------------------------
     // Atributos
@@ -102,6 +102,7 @@ public abstract class Inmueble extends Nodo {
 
     public void asociarContrato(Contrato contrato) {
         this.contrato = contrato;
+        this.infoNodo.put(JSON_KEYS[3], contrato.getNumContrato());
     }
 
     // -----------------------------------------------
