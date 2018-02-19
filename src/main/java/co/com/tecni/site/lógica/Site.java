@@ -4,6 +4,9 @@ import co.com.tecni.site.datos.LectorCatastral;
 import co.com.tecni.site.datos.LectorContrato;
 import co.com.tecni.site.datos.LectorInmueble;
 import co.com.tecni.site.datos.LectorJurídica;
+import co.com.tecni.site.lógica.contrato.ClienteComercial;
+import co.com.tecni.site.lógica.contrato.ClienteFacturación;
+import co.com.tecni.site.lógica.contrato.Contrato;
 import co.com.tecni.site.lógica.nodos.Agrupación;
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmueble.tipos.Inmueble;
@@ -25,6 +28,10 @@ public class Site implements TreeModel {
     // Atributos
     // -----------------------------------------------
     private Agrupación raiz;
+    private HashMap<Integer, ClienteComercial> clientesComerciales;
+    private HashMap<Integer, ClienteFacturación> clientesFacturación;
+    private HashMap<Integer, Contrato> contratos;
+
     private HashMap<String, Inmueble> inmueblesxId;
 
     private LectorInmueble lectorInmuebles;
@@ -79,6 +86,10 @@ public class Site implements TreeModel {
     private void importarContratos() throws Exception {
         LectorContrato lectorContrato = new LectorContrato(inmueblesxId);
         lectorContrato.leer();
+
+        clientesComerciales = lectorContrato.getClientesComerciales();
+        clientesFacturación = lectorContrato.getClientesFacturación();
+        contratos = lectorContrato.getContratos();
     }
 
     // -----------------------------------------------

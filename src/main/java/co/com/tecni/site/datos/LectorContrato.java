@@ -100,6 +100,21 @@ public class LectorContrato {
         inputStream.close();
     }
 
+    public HashMap<Integer, ClienteComercial> getClientesComerciales() {
+        return clientesComerciales;
+    }
+
+    public HashMap<Integer, ClienteFacturación> getClientesFacturación() {
+        return clientesFacturación;
+    }
+
+    public HashMap<Integer, Contrato> getContratos() {
+        return contratos;
+    }
+
+    // -----------------------------------------------
+    // Métodos de soporte
+    // -----------------------------------------------
     private void leerClientes() {
         Iterator<Row> filas = libro.getSheet(HC).iterator();
         Row filaActual = filas.next();
@@ -149,7 +164,7 @@ public class LectorContrato {
             contrato.agregarClienteFacturación(clienteFacturación, subtotal);
         }
 
-        System.err.println("Recuperados "+ contratos.size() + " Contratos");
+        System.err.println("Recuperados " + contratos.size() + " Contratos");
     }
 
     private void leerContratosInmuebles() {

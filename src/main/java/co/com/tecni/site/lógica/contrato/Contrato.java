@@ -1,6 +1,7 @@
 package co.com.tecni.site.lógica.contrato;
 
 import co.com.tecni.site.lógica.nodos.inmueble.tipos.Inmueble;
+import org.json.simple.JSONObject;
 
 import java.util.HashMap;
 
@@ -11,6 +12,8 @@ public class Contrato {
 
     private HashMap<Integer, Double> clientesFacturación;
     private HashMap<String, Double> inmuebles;
+
+    private JSONObject json;
 
     public Contrato(int numContrato, ClienteComercial clienteComercial) {
         this.numContrato = numContrato;
