@@ -1,8 +1,8 @@
 package co.com.tecni.site.ui;
 
 import co.com.tecni.site.lógica.Site;
-import co.com.tecni.site.lógica.nodos.Agrupación;
 import co.com.tecni.site.lógica.nodos.Nodo;
+import co.com.tecni.site.lógica.nodos.inmueble.Agrupación;
 import co.com.tecni.site.lógica.nodos.inmueble.fichas.Ficha;
 import co.com.tecni.site.lógica.nodos.inmueble.tipos.Inmueble;
 
@@ -14,36 +14,42 @@ import java.awt.*;
 
 public class Gui extends JFrame {
 
-    private JTree tree;
+    private Site site;
+
+    private JTree inmuebles;
+    private JTree clientes;
+
     private JLabel info;
 
     public Gui() throws Exception {
 
-        Site site = new Site();
+        site = new Site();
 
-        tree = new JTree(site);
+        inmuebles = new JTree(site.getÁrbolInmuebles());
+        clientes = new JTree(site.getÁrbolClientes());
+
         NewTreeCellRenderer renderer = new NewTreeCellRenderer();
 
-        tree.setCellRenderer(renderer);
-        tree.setShowsRootHandles(true);
-        tree.setRootVisible(false);
+        inmuebles.setCellRenderer(renderer);
+        inmuebles.setShowsRootHandles(true);
+        inmuebles.setRootVisible(true);
 
         info = new JLabel();
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        splitPane.setLeftComponent(new JScrollPane(tree));
+        splitPane.setLeftComponent(new JScrollPane(inmuebles));
         splitPane.setRightComponent(new JScrollPane(info));
         Dimension minimumSize = new Dimension(100, 50);
-        tree.setMinimumSize(minimumSize);
+        inmuebles.setMinimumSize(minimumSize);
         info.setMinimumSize(minimumSize);
         splitPane.setDividerLocation(400);
         splitPane.setPreferredSize(new Dimension(1200, 600));
 
         add(splitPane);
 
-        tree.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {
+        inmuebles.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent e) {
-                Nodo o = (Nodo) tree.getLastSelectedPathComponent();
+                Nodo o = (Nodo) inmuebles.getLastSelectedPathComponent();
                 /*
                 ScriptEngineManager factory = new ScriptEngineManager();
                 ScriptEngine engine = factory.getEngineByName("JavaScript");
@@ -91,7 +97,7 @@ public class Gui extends JFrame {
 
                         );
                         */
-                info.setText(o.infoNodo());
+                info.setText(o.infoNodo().replaceAll(",",",\n"));
             }
         });
 

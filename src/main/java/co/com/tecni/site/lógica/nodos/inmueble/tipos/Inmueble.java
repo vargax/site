@@ -1,7 +1,7 @@
 package co.com.tecni.site.lógica.nodos.inmueble.tipos;
 
-import co.com.tecni.site.lógica.contrato.Contrato;
 import co.com.tecni.site.lógica.nodos.Nodo;
+import co.com.tecni.site.lógica.nodos.contrato.Contrato;
 import co.com.tecni.site.lógica.nodos.inmueble.fichas.Ficha;
 import org.json.simple.JSONObject;
 
@@ -13,10 +13,10 @@ public abstract class Inmueble extends Nodo {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
-    public final static String PRIV_CONSTRUIDOS = "PC"; //"Privados Construidos";
-    public final static String PRIV_LIBRES = "PL"; //"Privados Libres";
-    public final static String COM_CONSTRUIDOS = "CC"; //"Comunes Construidos";
-    public final static String COM_LIBRES = "CL"; //"Comunes Libres";
+    public final static String PRIV_CONSTRUIDOS = "Privados Construidos";
+    public final static String PRIV_LIBRES = "Privados Libres";
+    public final static String COM_CONSTRUIDOS = "Comunes Construidos";
+    public final static String COM_LIBRES = "Comunes Libres";
 
     private final static String[] JSON_KEYS = {"Nombre", "M2", "Características", "Contrato"};
 
