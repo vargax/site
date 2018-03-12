@@ -1,8 +1,11 @@
-package co.com.tecni.site.lógica.contrato;
+package co.com.tecni.site.lógica.nodos.contrato;
 
+import co.com.tecni.site.lógica.nodos.Nodo;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ClienteComercial {
+public class ClienteComercial extends Nodo {
 
     // -----------------------------------------------
     // Atributos
@@ -32,4 +35,14 @@ public class ClienteComercial {
         contratos.put(contrato.getNumContrato(), contrato);
     }
 
+    // -----------------------------------------------
+    // GUI / Árbol
+    // -----------------------------------------------
+    public String nombreNodo() {
+        return nombre;
+    }
+
+    public ArrayList<Object> hijosNodo() {
+        return new ArrayList<>(contratos.values());
+    }
 }

@@ -1,17 +1,21 @@
-package co.com.tecni.site.lógica.contrato;
+package co.com.tecni.site.lógica.nodos.contrato;
 
+import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmueble.tipos.Inmueble;
 import org.json.simple.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Contrato {
+public class Contrato extends Nodo {
 
     private int numContrato;
     private ClienteComercial clienteComercial;
 
     private HashMap<Integer, Double> clientesFacturación;
-    private HashMap<String, Double> inmuebles;
+    private HashMap<String, Double> participaciónInmuebles;
+    private ArrayList<Inmueble> inmuebles;
+
 
     private JSONObject json;
 
@@ -20,7 +24,7 @@ public class Contrato {
         this.clienteComercial = clienteComercial;
 
         clientesFacturación = new HashMap<>();
-        inmuebles = new HashMap<>();
+        participaciónInmuebles = new HashMap<>();
 
         clienteComercial.registrarContrato(this);
     }
@@ -32,13 +36,14 @@ public class Contrato {
 
     public void agregarInmueble(Inmueble inmueble, double participación) {
         inmueble.asociarContrato(this);
-        inmuebles.put(inmueble.genId(), participación);
+        participaciónInmuebles.put(inmueble.genId(), participación);
+        
     }
 
     public double sumaParicipaciones() {
         double total = 0;
 
-        for (Double participación : inmuebles.values())
+        for (Double participación : participaciónInmuebles.values())
             total += participación;
 
         return total;
@@ -46,5 +51,16 @@ public class Contrato {
 
     public int getNumContrato() {
         return numContrato;
+    }
+
+    // -----------------------------------------------
+    // GUI / Árbol
+    // -----------------------------------------------
+    public String nombreNodo() {
+        return ""+numContrato;
+    }
+
+    public ArrayList<Object> hijosNodo() {
+        return new ArrayList<>(clientesFacturación.values());
     }
 }

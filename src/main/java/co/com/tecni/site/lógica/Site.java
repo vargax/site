@@ -4,34 +4,30 @@ import co.com.tecni.site.datos.LectorCatastral;
 import co.com.tecni.site.datos.LectorContrato;
 import co.com.tecni.site.datos.LectorInmueble;
 import co.com.tecni.site.datos.LectorJurídica;
-import co.com.tecni.site.lógica.contrato.ClienteComercial;
-import co.com.tecni.site.lógica.contrato.ClienteFacturación;
-import co.com.tecni.site.lógica.contrato.Contrato;
-import co.com.tecni.site.lógica.nodos.Agrupación;
 import co.com.tecni.site.lógica.nodos.Nodo;
+import co.com.tecni.site.lógica.nodos.contrato.ClienteComercial;
+import co.com.tecni.site.lógica.nodos.contrato.ClienteFacturación;
+import co.com.tecni.site.lógica.nodos.contrato.Contrato;
+import co.com.tecni.site.lógica.nodos.inmueble.Agrupación;
 import co.com.tecni.site.lógica.nodos.inmueble.tipos.Inmueble;
 
-import javax.swing.event.TreeModelListener;
-import javax.swing.tree.TreeModel;
-import javax.swing.tree.TreePath;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Site implements TreeModel {
+public class Site {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
-    private final static String NOMBRE_RAIZ = "TECNI";
     private final static String[] INMUEBLES_IMPORTAR = {"LaEstancia", "Ecotower93"};
 
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    private Agrupación raiz;
+    private ÁrbolInmuebles árbolInmuebles;
+    private ÁrbolClientes árbolClientes;
+
     private HashMap<Integer, ClienteComercial> clientesComerciales;
     private HashMap<Integer, ClienteFacturación> clientesFacturación;
     private HashMap<Integer, Contrato> contratos;
-
     private HashMap<String, Inmueble> inmueblesxId;
 
     private LectorInmueble lectorInmuebles;
@@ -40,11 +36,13 @@ public class Site implements TreeModel {
     // Constructor
     // -----------------------------------------------
     public Site() throws Exception {
-        raiz = new Agrupación(NOMBRE_RAIZ);
+        árbolInmuebles = new ÁrbolInmuebles();
+        árbolClientes = new ÁrbolClientes();
+
         inmueblesxId = new HashMap<>();
 
         importarInmuebles();
-        recursiónIdentificadores(raiz);
+        recursiónIdentificadores((Nodo) árbolInmuebles.getRoot());
 
         importarFichas();
         importarContratos();
@@ -54,6 +52,8 @@ public class Site implements TreeModel {
     // Métodos Privados
     // -----------------------------------------------
     private void importarInmuebles() throws Exception {
+        Agrupación raiz = (Agrupación) árbolInmuebles.getRoot();
+
         Agrupación bodegas = new Agrupación("Bodegas");
         raiz.agregarAgrupación(bodegas);
 
@@ -96,45 +96,11 @@ public class Site implements TreeModel {
     // Métodos Públicos
     // -----------------------------------------------
 
-    // -----------------------------------------------
-    // Métodos Interfaz TreeModel
-    // -----------------------------------------------
-    public Object getRoot() {
-        return raiz;
+    public ÁrbolInmuebles getÁrbolInmuebles() {
+        return árbolInmuebles;
     }
 
-    public Object getChild(Object o, int i) {
-
-        return ((Nodo) o).hijosNodo().get(i);
-    }
-
-    public int getChildCount(Object o) {
-        return ((Nodo) o).hijosNodo().size();
-    }
-
-    public boolean isLeaf(Object o) {
-        ArrayList<Object> hijos = ((Nodo) o).hijosNodo();
-        return hijos == null || hijos.size() == 0;
-    }
-
-    public void valueForPathChanged(TreePath treePath, Object o) {
-
-    }
-
-    public int getIndexOfChild(Object o, Object o1) {
-        ArrayList<Object> hijos = ((Nodo) o).hijosNodo();
-
-        for (int i = 0; i < hijos.size(); i++)
-            if (hijos.get(i) == o1) return i;
-
-        return -1;
-    }
-
-    public void addTreeModelListener(TreeModelListener treeModelListener) {
-
-    }
-
-    public void removeTreeModelListener(TreeModelListener treeModelListener) {
-
+    public ÁrbolClientes getÁrbolClientes() {
+        return árbolClientes;
     }
 }

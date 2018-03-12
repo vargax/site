@@ -1,5 +1,6 @@
-package co.com.tecni.site.lógica.nodos;
+package co.com.tecni.site.lógica.nodos.inmueble;
 
+import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmueble.tipos.Inmueble;
 
 import java.util.ArrayList;

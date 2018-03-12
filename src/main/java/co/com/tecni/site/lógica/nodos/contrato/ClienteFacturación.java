@@ -1,8 +1,11 @@
-package co.com.tecni.site.lógica.contrato;
+package co.com.tecni.site.lógica.nodos.contrato;
 
+import co.com.tecni.site.lógica.nodos.Nodo;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ClienteFacturación {
+public class ClienteFacturación extends Nodo {
 
     // -----------------------------------------------
     // Atributos
@@ -31,5 +34,16 @@ public class ClienteFacturación {
 
     public int getNit() {
         return nit;
+    }
+
+    // -----------------------------------------------
+    // GUI / Árbol
+    // -----------------------------------------------
+    public String nombreNodo() {
+        return nombre;
+    }
+
+    public ArrayList<Object> hijosNodo() {
+        return null;
     }
 }
