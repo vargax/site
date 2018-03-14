@@ -14,6 +14,8 @@ import java.awt.*;
 
 public class Gui extends JFrame {
 
+    private NewTreeCellRenderer renderer;
+
     private Site site;
 
     private JTree inmuebles;
@@ -21,23 +23,33 @@ public class Gui extends JFrame {
 
     private JLabel info;
 
+    private void configurarJTree(JTree jTree) {
+        jTree.setCellRenderer(renderer);
+        jTree.setShowsRootHandles(true);
+        jTree.setRootVisible(true);
+    }
+
     public Gui() throws Exception {
 
+        renderer = new NewTreeCellRenderer();
         site = new Site();
 
-        //inmuebles = new JTree(site.getÁrbolInmuebles());
-        inmuebles = new JTree(site.getÁrbolClientes());
+        inmuebles = new JTree(site.getÁrbolInmuebles());
+        configurarJTree(inmuebles);
+        JScrollPane panelInmuebles = new JScrollPane(inmuebles);
 
-        NewTreeCellRenderer renderer = new NewTreeCellRenderer();
-
-        inmuebles.setCellRenderer(renderer);
-        inmuebles.setShowsRootHandles(true);
-        inmuebles.setRootVisible(true);
+        clientes = new JTree(site.getÁrbolClientes());
+        configurarJTree(clientes);
+        JScrollPane panelClientes = new JScrollPane(clientes);
 
         info = new JLabel();
 
+        JTabbedPane jTabbedPane = new JTabbedPane();
+        jTabbedPane.addTab("Inmuebles", panelInmuebles);
+        jTabbedPane.addTab("Clientes", panelClientes);
+
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        splitPane.setLeftComponent(new JScrollPane(inmuebles));
+        splitPane.setLeftComponent(jTabbedPane);
         splitPane.setRightComponent(new JScrollPane(info));
         Dimension minimumSize = new Dimension(100, 50);
         inmuebles.setMinimumSize(minimumSize);
