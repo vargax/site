@@ -19,7 +19,7 @@ public class ClienteComercial extends Nodo {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public ClienteComercial(int id, String Nombre) {
+    public ClienteComercial(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
 

@@ -1,10 +1,15 @@
 package co.com.tecni.site.lógica;
 
-import javax.swing.event.TreeModelListener;
-import javax.swing.tree.TreeModel;
-import javax.swing.tree.TreePath;
+import co.com.tecni.site.lógica.nodos.Nodo;
+import co.com.tecni.site.lógica.nodos.contrato.ClienteComercial;
+import co.com.tecni.site.lógica.nodos.contrato.ClienteFacturación;
+import co.com.tecni.site.lógica.nodos.contrato.Contrato;
 
-public class ÁrbolClientes implements TreeModel {
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+
+public class ÁrbolClientes extends Árbol {
 
     // -----------------------------------------------
     // Constantes
@@ -14,46 +19,64 @@ public class ÁrbolClientes implements TreeModel {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
+    private RaizClientes raiz;
 
+    private HashMap<Integer, ClienteComercial> clientesComerciales;
+    private HashMap<Integer, ClienteFacturación> clientesFacturación;
+    private HashMap<Integer, Contrato> contratos;
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
     public ÁrbolClientes() {
+
+        clientesComerciales = new HashMap<>();
+        clientesFacturación = new HashMap<>();
+        contratos = new HashMap<>();
+
+        raiz = new RaizClientes(clientesComerciales.values());
     }
 
     // -----------------------------------------------
-    // Métodos Interfaz TreeModel
+    // Métodos Públicos
+    // -----------------------------------------------
+    public HashMap<Integer, ClienteComercial> getClientesComerciales() {
+        return clientesComerciales;
+    }
+
+    public HashMap<Integer, ClienteFacturación> getClientesFacturación() {
+        return clientesFacturación;
+    }
+
+    public HashMap<Integer, Contrato> getContratos() {
+        return contratos;
+    }
+
+    // -----------------------------------------------
+    // Métodos Árbol
     // -----------------------------------------------
     public Object getRoot() {
-        return null;
+        return raiz;
+    }
+}
+
+class RaizClientes extends Nodo {
+
+    private final static String NOMBRE_RAIZ = "CLIENTES";
+
+    private Collection<ClienteComercial> clientesComerciales;
+
+    public RaizClientes(Collection<ClienteComercial> clientesComerciales) {
+        this.clientesComerciales = clientesComerciales;
     }
 
-    public Object getChild(Object o, int i) {
-        return null;
+    public String nombreNodo() {
+        return NOMBRE_RAIZ;
     }
 
-    public int getChildCount(Object o) {
-        return 0;
-    }
-
-    public boolean isLeaf(Object o) {
-        return false;
-    }
-
-    public void valueForPathChanged(TreePath treePath, Object o) {
-
-    }
-
-    public int getIndexOfChild(Object o, Object o1) {
-        return 0;
-    }
-
-    public void addTreeModelListener(TreeModelListener treeModelListener) {
-
-    }
-
-    public void removeTreeModelListener(TreeModelListener treeModelListener) {
-
+    public ArrayList<Object> hijosNodo() {
+        ArrayList<Object> hijos = new ArrayList<>();
+        hijos.addAll(clientesComerciales);
+        return hijos;
     }
 }

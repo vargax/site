@@ -4,12 +4,7 @@ import co.com.tecni.site.datos.LectorCatastral;
 import co.com.tecni.site.datos.LectorContrato;
 import co.com.tecni.site.datos.LectorInmueble;
 import co.com.tecni.site.datos.LectorJurídica;
-import co.com.tecni.site.lógica.nodos.contrato.ClienteComercial;
-import co.com.tecni.site.lógica.nodos.contrato.ClienteFacturación;
-import co.com.tecni.site.lógica.nodos.contrato.Contrato;
 import co.com.tecni.site.lógica.nodos.inmueble.Agrupación;
-
-import java.util.HashMap;
 
 public class Site {
     // -----------------------------------------------
@@ -23,12 +18,6 @@ public class Site {
     private ÁrbolInmuebles árbolInmuebles;
     private ÁrbolClientes árbolClientes;
 
-    private HashMap<Integer, ClienteComercial> clientesComerciales;
-    private HashMap<Integer, ClienteFacturación> clientesFacturación;
-    private HashMap<Integer, Contrato> contratos;
-
-    private LectorInmueble lectorInmuebles;
-
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
@@ -37,7 +26,6 @@ public class Site {
         árbolClientes = new ÁrbolClientes();
 
         importarInmuebles();
-
         importarFichas();
         importarContratos();
     }
@@ -54,7 +42,7 @@ public class Site {
         Agrupación edificiosOficinas = new Agrupación("Edificios de oficinas");
         raiz.agregarAgrupación(edificiosOficinas);
 
-        lectorInmuebles = new LectorInmueble();
+        LectorInmueble lectorInmuebles = new LectorInmueble();
         bodegas.agregarInmueble(lectorInmuebles.leer(INMUEBLES_IMPORTAR[0]));
         edificiosOficinas.agregarInmueble(lectorInmuebles.leer(INMUEBLES_IMPORTAR[1]));
 
@@ -73,11 +61,12 @@ public class Site {
 
     private void importarContratos() throws Exception {
         LectorContrato lectorContrato = new LectorContrato(árbolInmuebles.getInmueblesxId());
-        lectorContrato.leer();
 
-        clientesComerciales = lectorContrato.getClientesComerciales();
-        clientesFacturación = lectorContrato.getClientesFacturación();
-        contratos = lectorContrato.getContratos();
+        lectorContrato.setClientesComerciales(árbolClientes.getClientesComerciales());
+        lectorContrato.setClientesFacturación(árbolClientes.getClientesFacturación());
+        lectorContrato.setContratos(árbolClientes.getContratos());
+
+        lectorContrato.leer();
     }
 
     // -----------------------------------------------

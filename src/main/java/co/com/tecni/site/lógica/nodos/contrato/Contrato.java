@@ -9,35 +9,49 @@ import java.util.HashMap;
 
 public class Contrato extends Nodo {
 
+    // -----------------------------------------------
+    // Atributos
+    // -----------------------------------------------
     private int numContrato;
-    private ClienteComercial clienteComercial;
 
-    private HashMap<Integer, Double> clientesFacturación;
-    private HashMap<String, Double> participaciónInmuebles;
+    private ClienteComercial clienteComercial;
+    private ArrayList<ClienteFacturación> clientesFacturación;
     private ArrayList<Inmueble> inmuebles;
 
+    private HashMap<Integer, Double> participaciónClientesFacturación;
+    private HashMap<String, Double> participaciónInmuebles;
 
     private JSONObject json;
 
+    // -----------------------------------------------
+    // Constructor
+    // -----------------------------------------------
     public Contrato(int numContrato, ClienteComercial clienteComercial) {
         this.numContrato = numContrato;
         this.clienteComercial = clienteComercial;
 
-        clientesFacturación = new HashMap<>();
+        clientesFacturación = new ArrayList<>();
+        inmuebles = new ArrayList<>();
+
+        participaciónClientesFacturación = new HashMap<>();
         participaciónInmuebles = new HashMap<>();
 
         clienteComercial.registrarContrato(this);
     }
 
+    // -----------------------------------------------
+    // Métodos Públicos
+    // -----------------------------------------------
     public void agregarClienteFacturación(ClienteFacturación clienteFacturación, double subtotal) {
-        clientesFacturación.put(clienteFacturación.getNit(), subtotal);
+        clientesFacturación.add(clienteFacturación);
+        participaciónClientesFacturación.put(clienteFacturación.getNit(), subtotal);
         clienteFacturación.registrarContrato(this);
     }
 
     public void agregarInmueble(Inmueble inmueble, double participación) {
-        inmueble.asociarContrato(this);
+        inmuebles.add(inmueble);
         participaciónInmuebles.put(inmueble.genId(), participación);
-        
+        inmueble.asociarContrato(this);
     }
 
     public double sumaParicipaciones() {
@@ -61,6 +75,8 @@ public class Contrato extends Nodo {
     }
 
     public ArrayList<Object> hijosNodo() {
-        return new ArrayList<>(clientesFacturación.values());
+        ArrayList<Object> hijos = new ArrayList<>();
+        hijos.addAll(clientesFacturación);
+        return hijos;
     }
 }

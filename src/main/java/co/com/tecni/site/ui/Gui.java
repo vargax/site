@@ -25,8 +25,8 @@ public class Gui extends JFrame {
 
         site = new Site();
 
-        inmuebles = new JTree(site.getÁrbolInmuebles());
-        clientes = new JTree(site.getÁrbolClientes());
+        //inmuebles = new JTree(site.getÁrbolInmuebles());
+        inmuebles = new JTree(site.getÁrbolClientes());
 
         NewTreeCellRenderer renderer = new NewTreeCellRenderer();
 

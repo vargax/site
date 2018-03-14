@@ -65,8 +65,8 @@ public class LectorContrato {
     // Constructor
     // -----------------------------------------------
     public LectorContrato(HashMap<String, Inmueble> inmuebles) {
-        colHcCcId = (int)COL_HC_CC_ID - 65;
-        colHcCcNombre = (int)COL_HC_CC_NOMBRE - 65;
+        colHcCcId = (int) COL_HC_CC_ID - 65;
+        colHcCcNombre = (int) COL_HC_CC_NOMBRE - 65;
         colHcCfNit = (int) COL_HC_CF_NIT - 65;
         colHcCfRs = (int) COL_HC_CF_RS - 65;
 
@@ -89,10 +89,6 @@ public class LectorContrato {
         InputStream inputStream = LectorContrato.class.getResourceAsStream("/static/archivos/clientes y contratos.xlsx");
         libro = new XSSFWorkbook(inputStream);
 
-        clientesComerciales = new HashMap<>();
-        clientesFacturación = new HashMap<>();
-        contratos = new HashMap<>();
-
         leerClientes();
         leerContratosClientes();
         leerContratosInmuebles();
@@ -100,16 +96,16 @@ public class LectorContrato {
         inputStream.close();
     }
 
-    public HashMap<Integer, ClienteComercial> getClientesComerciales() {
-        return clientesComerciales;
+    public void setClientesComerciales(HashMap<Integer, ClienteComercial> clientesComerciales) {
+        this.clientesComerciales = clientesComerciales;
     }
 
-    public HashMap<Integer, ClienteFacturación> getClientesFacturación() {
-        return clientesFacturación;
+    public void setClientesFacturación(HashMap<Integer, ClienteFacturación> clientesFacturación) {
+        this.clientesFacturación = clientesFacturación;
     }
 
-    public HashMap<Integer, Contrato> getContratos() {
-        return contratos;
+    public void setContratos(HashMap<Integer, Contrato> contratos) {
+        this.contratos = contratos;
     }
 
     // -----------------------------------------------
