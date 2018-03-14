@@ -71,7 +71,7 @@ public class Contrato extends Nodo {
     // GUI / Árbol
     // -----------------------------------------------
     public String nombreNodo() {
-        return ""+numContrato;
+        return "Contrato "+numContrato;
     }
 
     public ArrayList<Object> hijosNodo() {
