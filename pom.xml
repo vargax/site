@@ -17,6 +17,20 @@
 
     <dependencies>
         <dependency>
+            <groupId>local-libs</groupId>
+            <artifactId>JSONSwing</artifactId>
+            <version>0.1-b3</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/JSONSwing-0.1-b3.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
