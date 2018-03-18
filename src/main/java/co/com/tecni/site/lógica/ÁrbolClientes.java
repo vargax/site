@@ -14,6 +14,7 @@ public class ÁrbolClientes extends Árbol {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
+    public final static String NOMBRE_RAIZ = "CLIENTES";
 
     // -----------------------------------------------
     // Atributos
@@ -61,11 +62,6 @@ public class ÁrbolClientes extends Árbol {
 
 class RaizClientes extends Nodo {
     // -----------------------------------------------
-    // Constantes
-    // -----------------------------------------------
-    private final static String NOMBRE_RAIZ = "CLIENTES";
-
-    // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
     private Collection<ClienteComercial> clientesComerciales;
@@ -81,7 +77,7 @@ class RaizClientes extends Nodo {
     // GUI / Árbol
     // -----------------------------------------------
     public String nombreNodo() {
-        return NOMBRE_RAIZ;
+        return ÁrbolClientes.NOMBRE_RAIZ;
     }
 
     public ArrayList<Object> hijosNodo() {

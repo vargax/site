@@ -11,7 +11,7 @@ public class ÁrbolInmuebles extends Árbol {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
-    private final static String NOMBRE_RAIZ = "INMUEBLES";
+    public final static String NOMBRE_RAIZ = "INMUEBLES";
 
     // -----------------------------------------------
     // Atributos
