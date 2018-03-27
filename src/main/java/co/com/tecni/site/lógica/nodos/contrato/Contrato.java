@@ -67,6 +67,10 @@ public class Contrato extends Nodo {
         return numContrato;
     }
 
+    public ClienteComercial getClienteComercial() {
+        return clienteComercial;
+    }
+
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
@@ -79,4 +83,8 @@ public class Contrato extends Nodo {
         hijos.addAll(clientesFacturación);
         return hijos;
     }
+
+    // -----------------------------------------------
+    // GUI / Detalle
+    // -----------------------------------------------
 }

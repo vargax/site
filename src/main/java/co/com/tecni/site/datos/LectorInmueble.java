@@ -119,10 +119,10 @@ public class LectorInmueble {
         JSONObject características = leerCaracterísticas();
 
         HashMap<String, Double> metros = new HashMap<>();
-        metros.put(Inmueble.PRIV_CONSTRUIDOS, filaActual.getCell(colPrivadoConstruido).getNumericCellValue());
-        metros.put(Inmueble.PRIV_LIBRES, filaActual.getCell(colPrivadoLibre).getNumericCellValue());
-        metros.put(Inmueble.COM_CONSTRUIDOS, filaActual.getCell(colComunConstruido).getNumericCellValue());
-        metros.put(Inmueble.COM_LIBRES, filaActual.getCell(colComunLibre).getNumericCellValue());
+        metros.put(Inmueble.A_PRIV_CONSTRUIDOS, filaActual.getCell(colPrivadoConstruido).getNumericCellValue());
+        metros.put(Inmueble.A_PRIV_LIBRES, filaActual.getCell(colPrivadoLibre).getNumericCellValue());
+        metros.put(Inmueble.A_COM_CONSTRUIDOS, filaActual.getCell(colComunConstruido).getNumericCellValue());
+        metros.put(Inmueble.A_COM_LIBRES, filaActual.getCell(colComunLibre).getNumericCellValue());
 
         Inmueble inmueble = Inmueble.hoja(tipo, nombre, características, metros);
         System.out.println("h "+inmueble.infoNodo());
