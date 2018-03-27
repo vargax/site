@@ -36,6 +36,15 @@ public class ClienteComercial extends Nodo {
     }
 
     // -----------------------------------------------
+    // Métodos Públicos
+    // -----------------------------------------------
+
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
     public String nombreNodo() {

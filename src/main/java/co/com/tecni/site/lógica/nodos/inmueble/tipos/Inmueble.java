@@ -5,6 +5,8 @@ import co.com.tecni.site.lógica.nodos.contrato.Contrato;
 import co.com.tecni.site.lógica.nodos.inmueble.fichas.Ficha;
 import org.json.simple.JSONObject;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,12 +15,19 @@ public abstract class Inmueble extends Nodo {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
-    public final static String PRIV_CONSTRUIDOS = "Privados Construidos";
-    public final static String PRIV_LIBRES = "Privados Libres";
-    public final static String COM_CONSTRUIDOS = "Comunes Construidos";
-    public final static String COM_LIBRES = "Comunes Libres";
+    public final static String A_PRIV_CONSTRUIDOS = "PC";
+    public final static String A_PRIV_LIBRES = "PL";
+    public final static String A_PRIV_TOTAL = "P";
+    public final static String A_COM_CONSTRUIDOS = "CC";
+    public final static String A_COM_LIBRES = "CL";
+    public final static String A_COM_TOTAL = "C";
+    public final static String A_TOTAL = "T";
 
-    private final static String[] JSON_KEYS = {"Nombre", "M2", "Características", "Contrato"};
+    private final static String[] JK = {"Nombre", "Área", "Características", "Contrato"};
+    private final static String[] JK_ÁREA = {"Privada", "Común", "Total", "Detalle"};
+    private final static String[] JK_ÁREA_DETALLE = {"Privados Construidos", "Privados Libres", "Comunes Construidos", "Comunes Libres"};
+
+    private final static String[] JK_CONTRATO = {"Número", "Cliente Comercial"};
 
     // -----------------------------------------------
     // Atributos
@@ -49,25 +58,22 @@ public abstract class Inmueble extends Nodo {
         englobe.hijos = inmuebles;
 
         englobe.m2 = new HashMap<>();
-        englobe.m2.put(PRIV_CONSTRUIDOS,0.0);
-        englobe.m2.put(PRIV_LIBRES,0.0);
-        englobe.m2.put(COM_CONSTRUIDOS,0.0);
-        englobe.m2.put(COM_LIBRES,0.0);
+        englobe.m2.put(A_PRIV_CONSTRUIDOS,0.0);
+        englobe.m2.put(A_PRIV_LIBRES,0.0);
+        englobe.m2.put(A_COM_CONSTRUIDOS,0.0);
+        englobe.m2.put(A_COM_LIBRES,0.0);
 
         for (Inmueble inmueble : inmuebles) {
 
-            englobe.m2.put(PRIV_CONSTRUIDOS,englobe.m2.get(PRIV_CONSTRUIDOS)+inmueble.m2.get(PRIV_CONSTRUIDOS));
-            englobe.m2.put(PRIV_LIBRES,englobe.m2.get(PRIV_LIBRES)+inmueble.m2.get(PRIV_LIBRES));
-            englobe.m2.put(COM_CONSTRUIDOS,englobe.m2.get(COM_CONSTRUIDOS)+inmueble.m2.get(COM_CONSTRUIDOS));
-            englobe.m2.put(COM_LIBRES,englobe.m2.get(COM_LIBRES)+inmueble.m2.get(COM_LIBRES));
+            englobe.m2.put(A_PRIV_CONSTRUIDOS,englobe.m2.get(A_PRIV_CONSTRUIDOS)+inmueble.m2.get(A_PRIV_CONSTRUIDOS));
+            englobe.m2.put(A_PRIV_LIBRES,englobe.m2.get(A_PRIV_LIBRES)+inmueble.m2.get(A_PRIV_LIBRES));
+            englobe.m2.put(A_COM_CONSTRUIDOS,englobe.m2.get(A_COM_CONSTRUIDOS)+inmueble.m2.get(A_COM_CONSTRUIDOS));
+            englobe.m2.put(A_COM_LIBRES,englobe.m2.get(A_COM_LIBRES)+inmueble.m2.get(A_COM_LIBRES));
 
             inmueble.padre = englobe;
         }
 
-        englobe.infoNodo.put(JSON_KEYS[0], englobe.genId());
-        englobe.infoNodo.put(JSON_KEYS[1], englobe.m2);
-        englobe.infoNodo.put(JSON_KEYS[2], características);
-
+        englobe.calcularÁreas();
         return englobe;
     }
 
@@ -78,17 +84,21 @@ public abstract class Inmueble extends Nodo {
         hoja.m2 = m2;
         hoja.características = características;
 
-        hoja.infoNodo.put(JSON_KEYS[0], hoja.genId());
-        hoja.infoNodo.put(JSON_KEYS[1], m2);
-        hoja.infoNodo.put(JSON_KEYS[2], características);
-
+        hoja.calcularÁreas();
         return hoja;
     }
 
     // -----------------------------------------------
     // Métodos privados
     // -----------------------------------------------
+    private void calcularÁreas() {
+        double áreaPrivada = m2.get(A_PRIV_CONSTRUIDOS) + m2.get(A_PRIV_LIBRES);
+        double áreaComún = m2.get(A_COM_CONSTRUIDOS) + m2.get(A_COM_LIBRES);
 
+        m2.put(A_PRIV_TOTAL, áreaPrivada);
+        m2.put(A_COM_TOTAL, áreaComún);
+        m2.put(A_TOTAL, áreaPrivada + áreaComún);
+    }
     // -----------------------------------------------
     // Métodos públicos
     // -----------------------------------------------
@@ -102,7 +112,6 @@ public abstract class Inmueble extends Nodo {
 
     public void asociarContrato(Contrato contrato) {
         this.contrato = contrato;
-        this.infoNodo.put(JSON_KEYS[3], contrato.getNumContrato());
     }
 
     // -----------------------------------------------
@@ -118,5 +127,42 @@ public abstract class Inmueble extends Nodo {
             hijos.addAll(this.hijos);
         hijos.addAll(this.fichas);
         return hijos;
+    }
+
+    // -----------------------------------------------
+    // GUI / Detalle
+    // -----------------------------------------------
+    @Override
+    public String infoNodo() {
+        infoNodo.put(JK[0], genId());
+
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.CEILING);
+
+        JSONObject áreaDetalle = new JSONObject();
+        áreaDetalle.put(JK_ÁREA_DETALLE[0], df.format(m2.get(A_PRIV_CONSTRUIDOS)));
+        áreaDetalle.put(JK_ÁREA_DETALLE[1], df.format(m2.get(A_PRIV_LIBRES)));
+        áreaDetalle.put(JK_ÁREA_DETALLE[2], df.format(m2.get(A_COM_CONSTRUIDOS)));
+        áreaDetalle.put(JK_ÁREA_DETALLE[3], df.format(m2.get(A_COM_LIBRES)));
+
+        JSONObject área = new JSONObject();
+        if (m2.get(A_PRIV_TOTAL) != 0) área.put(JK_ÁREA[0], df.format(m2.get(A_PRIV_TOTAL)));
+        if (m2.get(A_COM_TOTAL) != 0) área.put(JK_ÁREA[1], df.format(m2.get(A_COM_TOTAL)));
+        área.put(JK_ÁREA[2], df.format(m2.get(A_TOTAL)));
+        área.put(JK_ÁREA[3], áreaDetalle);
+
+        infoNodo.put(JK[1], área);
+
+        if (contrato != null) {
+            JSONObject contrato = new JSONObject();
+            contrato.put(JK_CONTRATO[0], this.contrato.getNumContrato());
+            contrato.put(JK_CONTRATO[1], this.contrato.getClienteComercial().getNombre());
+            infoNodo.put(JK[3], contrato);
+        }
+
+        if (!características.isEmpty())
+            infoNodo.put(JK[2], características);
+
+        return super.infoNodo();
     }
 }
