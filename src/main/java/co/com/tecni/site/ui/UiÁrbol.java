@@ -1,9 +1,6 @@
 package co.com.tecni.site.ui;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.inmueble.Agrupación;
-import co.com.tecni.site.lógica.nodos.inmueble.fichas.Ficha;
-import co.com.tecni.site.lógica.nodos.inmueble.tipos.Inmueble;
 import co.com.tecni.site.lógica.Árbol;
 
 import javax.swing.*;
@@ -17,6 +14,11 @@ public class UiÁrbol {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
+    public final static int ÍCONO_TAMAÑO = 25;
+    public final static Color ÍCONO_COLOR = Color.GRAY;
+
+    public final static Color NODO_SEL_FONDO = new Color(225, 225, 225);
+
     private final static int[] MIN_DIMENSIONS = {100, 50};
 
     // -----------------------------------------------
@@ -46,11 +48,10 @@ public class UiÁrbol {
         jTree.setShowsRootHandles(true);
         jTree.setRootVisible(false);
         jTree.setMinimumSize(new Dimension(MIN_DIMENSIONS[0], MIN_DIMENSIONS[1]));
-
     }
 
     // -----------------------------------------------
-    // Métodos
+    // Métodos privados
     // -----------------------------------------------
     private void applySelectionListener() {
         jTree.getSelectionModel().addTreeSelectionListener(
@@ -63,6 +64,15 @@ public class UiÁrbol {
         );
     }
 
+    // -----------------------------------------------
+    // Métodos públicos
+    // -----------------------------------------------
+    void expandAll() {
+        for (int i = 0; i < jTree.getRowCount(); i++) {
+            jTree.expandRow(i);
+        }
+    }
+
     String getNombre() {
         return nombre;
     }
@@ -73,6 +83,10 @@ public class UiÁrbol {
 }
 
 class UiNodoÁrbol implements TreeCellRenderer {
+    // -----------------------------------------------
+    // Constantes
+    // -----------------------------------------------
+
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
@@ -88,19 +102,18 @@ class UiNodoÁrbol implements TreeCellRenderer {
     // -----------------------------------------------
     // Métodos
     // -----------------------------------------------
-    public Component getTreeCellRendererComponent(JTree jTree, Object o, boolean b, boolean b1, boolean b2, int i, boolean b3) {
-        if (o instanceof Inmueble)
-            jLabel.setIcon(new ImageIcon(UiSite.class.getResource("/static/íconos/inmueble.png")));
+    public Component getTreeCellRendererComponent(JTree jTree, Object o, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
+        Nodo nodo = (Nodo) o;
 
-        else if (o instanceof Ficha)
-            jLabel.setIcon(new ImageIcon(UiSite.class.getResource("/static/íconos/ficha.png")));
+        jLabel.setIcon(nodo.getÍcono());
+        jLabel.setText(nodo.nombreNodo());
+        jLabel.setOpaque(false);
 
-        else if (o instanceof Agrupación)
-            jLabel.setIcon(new ImageIcon(UiSite.class.getResource("/static/íconos/agrupacion.png")));
+        if (selected) {
+            jLabel.setOpaque(true);
+            jLabel.setBackground(UiÁrbol.NODO_SEL_FONDO);
+        }
 
-        else jLabel.setIcon(new ImageIcon(UiSite.class.getResource("/static/íconos/nodo.png")));
-
-        jLabel.setText(((Nodo)o).nombreNodo());
         return jLabel;
     }
 }

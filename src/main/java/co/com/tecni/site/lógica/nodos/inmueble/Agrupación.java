@@ -2,10 +2,16 @@ package co.com.tecni.site.lógica.nodos.inmueble;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmueble.tipos.Inmueble;
+import jiconfont.IconCode;
+import jiconfont.icons.GoogleMaterialDesignIcons;
 
 import java.util.ArrayList;
 
 public class Agrupación extends Nodo {
+    // -----------------------------------------------
+    // Constantes
+    // -----------------------------------------------
+    private final static IconCode UI_ÍCONO = GoogleMaterialDesignIcons.FOLDER_SPECIAL;
 
     // -----------------------------------------------
     // Atributos
@@ -18,6 +24,9 @@ public class Agrupación extends Nodo {
     // Constructor
     // -----------------------------------------------
     public Agrupación(String nombre) {
+        super();
+        super.setÍcono(UI_ÍCONO);
+
         this.nombre = nombre;
         this.agrupaciones = new ArrayList<>();
         this.inmuebles = new ArrayList<>();
