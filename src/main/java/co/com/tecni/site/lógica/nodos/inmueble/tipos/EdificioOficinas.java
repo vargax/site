@@ -16,7 +16,7 @@ public class EdificioOficinas extends Inmueble {
     public EdificioOficinas() {
         super();
         super.sigla = SIGLA;
-        super.setÍcono(UI_ÍCONO);
+        super.íconoCódigo = UI_ÍCONO;
     }
 
 }

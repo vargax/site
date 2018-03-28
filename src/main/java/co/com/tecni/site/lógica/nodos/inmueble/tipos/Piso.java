@@ -16,6 +16,6 @@ public class Piso extends Inmueble {
     public Piso() {
         super();
         super.sigla = SIGLA;
-        super.setÍcono(UI_ÍCONO);
+        super.íconoCódigo = UI_ÍCONO;
     }
 }

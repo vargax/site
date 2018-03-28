@@ -25,7 +25,7 @@ public class Agrupación extends Nodo {
     // -----------------------------------------------
     public Agrupación(String nombre) {
         super();
-        super.setÍcono(UI_ÍCONO);
+        super.íconoCódigo = UI_ÍCONO;
 
         this.nombre = nombre;
         this.agrupaciones = new ArrayList<>();

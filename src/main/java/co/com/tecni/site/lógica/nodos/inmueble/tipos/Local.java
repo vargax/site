@@ -16,7 +16,7 @@ public class Local extends Inmueble {
     public Local() {
         super();
         super.sigla = SIGLA;
-        super.setÍcono(UI_ÍCONO);
+        super.íconoCódigo = UI_ÍCONO;
     }
 
 }

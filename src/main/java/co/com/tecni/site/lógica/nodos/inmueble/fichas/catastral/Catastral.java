@@ -2,12 +2,15 @@ package co.com.tecni.site.lógica.nodos.inmueble.fichas.catastral;
 
 import co.com.tecni.site.lógica.nodos.inmueble.fichas.Ficha;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Catastral extends Ficha {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
+    final static Color UI_ÍCONO_COLOR = Color.BLUE;
+
     private final static String[] JSON_KEYS = {"Chip", "Cédula Catastral",
             "Nomenclatura", "M2 construcción", "M2 terreno"};
 
@@ -28,6 +31,9 @@ public class Catastral extends Ficha {
     // Constructor
     // -----------------------------------------------
     public Catastral(String chip, String cedulaCatastral, String nomenclatura, double m2construcción, double m2terreno) {
+        super();
+        super.íconoColor = UI_ÍCONO_COLOR;
+
         this.chip = chip;
         infoNodo.put(JSON_KEYS[0], chip);
 

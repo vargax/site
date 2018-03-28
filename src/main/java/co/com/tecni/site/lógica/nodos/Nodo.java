@@ -20,7 +20,8 @@ public abstract class Nodo {
     // Atributos
     // -----------------------------------------------
     protected String nombre;
-    private Icon ícono;
+    protected IconCode íconoCódigo;
+    protected Color íconoColor = UiÁrbol.ÍCONO_COLOR;
 
     protected JSONObject infoNodo;
 
@@ -29,7 +30,7 @@ public abstract class Nodo {
     // -----------------------------------------------
     public Nodo() {
         infoNodo = new JSONObject();
-        setÍcono(UI_ÍCONO);
+        íconoCódigo = UI_ÍCONO;
     }
 
     // -----------------------------------------------
@@ -38,17 +39,9 @@ public abstract class Nodo {
     public abstract String nombreNodo();
     public abstract ArrayList<Object> hijosNodo();
 
-    protected void setÍcono(IconCode códigoÍcono) {
-        setÍcono(códigoÍcono, UiÁrbol.ÍCONO_COLOR);
-    }
-
-    protected void setÍcono(IconCode códigoÍcono, Color colorÍcono) {
-        IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());
-        this.ícono = IconFontSwing.buildIcon(códigoÍcono, UiÁrbol.ÍCONO_TAMAÑO, colorÍcono);
-    }
-
     public Icon getÍcono() {
-        return ícono;
+        IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());
+        return IconFontSwing.buildIcon(íconoCódigo, UiÁrbol.ÍCONO_TAMAÑO, íconoColor);
     }
 
     // -----------------------------------------------
