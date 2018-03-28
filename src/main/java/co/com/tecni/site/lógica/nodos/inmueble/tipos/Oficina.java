@@ -17,7 +17,7 @@ public class Oficina extends Inmueble {
     public Oficina() {
         super();
         super.sigla = SIGLA;
-        super.setÍcono(UI_ÍCONO);
+        super.íconoCódigo = UI_ÍCONO;
     }
 
 }

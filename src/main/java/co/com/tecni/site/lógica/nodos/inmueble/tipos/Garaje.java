@@ -16,6 +16,6 @@ public class Garaje extends Inmueble {
     public Garaje() {
         super();
         super.sigla = SIGLA;
-        super.setÍcono(UI_ÍCONO);
+        super.íconoCódigo = UI_ÍCONO;
     }
 }

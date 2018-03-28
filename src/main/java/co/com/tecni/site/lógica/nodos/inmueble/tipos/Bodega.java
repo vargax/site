@@ -16,7 +16,7 @@ public class Bodega extends Inmueble {
     public Bodega() {
         super();
         super.sigla = SIGLA;
-        super.setÍcono(UI_ÍCONO);
+        super.íconoCódigo = UI_ÍCONO;
     }
 
 }

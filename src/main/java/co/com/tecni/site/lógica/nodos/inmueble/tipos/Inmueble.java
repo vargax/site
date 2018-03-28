@@ -54,7 +54,7 @@ public abstract class Inmueble extends Nodo {
     // -----------------------------------------------
     public Inmueble() {
         super();
-        super.setÍcono(UI_ÍCONO);
+        super.íconoCódigo = UI_ÍCONO;
 
         this.fichas = new ArrayList<>();
     }
@@ -121,7 +121,7 @@ public abstract class Inmueble extends Nodo {
 
     public void asociarContrato(Contrato contrato) {
         this.contrato = contrato;
-        super.setÍcono(UI_ÍCONO, UI_ÍCONO_COLOR_CONTRATO);
+        super.íconoColor = UI_ÍCONO_COLOR_CONTRATO;
     }
 
     // -----------------------------------------------
