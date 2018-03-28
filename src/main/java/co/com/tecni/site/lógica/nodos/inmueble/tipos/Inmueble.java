@@ -3,8 +3,11 @@ package co.com.tecni.site.lógica.nodos.inmueble.tipos;
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.contrato.Contrato;
 import co.com.tecni.site.lógica.nodos.inmueble.fichas.Ficha;
+import jiconfont.IconCode;
+import jiconfont.icons.GoogleMaterialDesignIcons;
 import org.json.simple.JSONObject;
 
+import java.awt.*;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -15,6 +18,9 @@ public abstract class Inmueble extends Nodo {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
+    private final static IconCode UI_ÍCONO = GoogleMaterialDesignIcons.MAP;
+    private final static Color UI_ÍCONO_COLOR_CONTRATO = new Color(0, 255, 128);
+
     public final static String A_PRIV_CONSTRUIDOS = "PC";
     public final static String A_PRIV_LIBRES = "PL";
     public final static String A_PRIV_TOTAL = "P";
@@ -47,6 +53,9 @@ public abstract class Inmueble extends Nodo {
     // Constructores
     // -----------------------------------------------
     public Inmueble() {
+        super();
+        super.setÍcono(UI_ÍCONO);
+
         this.fichas = new ArrayList<>();
     }
 
@@ -112,6 +121,7 @@ public abstract class Inmueble extends Nodo {
 
     public void asociarContrato(Contrato contrato) {
         this.contrato = contrato;
+        super.setÍcono(UI_ÍCONO, UI_ÍCONO_COLOR_CONTRATO);
     }
 
     // -----------------------------------------------
