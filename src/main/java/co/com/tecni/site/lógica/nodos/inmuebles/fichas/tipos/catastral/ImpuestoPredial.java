@@ -1,4 +1,4 @@
-package co.com.tecni.site.lógica.nodos.inmueble.fichas.catastral;
+package co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.catastral;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
 import jiconfont.IconCode;

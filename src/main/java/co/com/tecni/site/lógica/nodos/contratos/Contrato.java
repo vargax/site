@@ -1,7 +1,7 @@
-package co.com.tecni.site.lógica.nodos.contrato;
+package co.com.tecni.site.lógica.nodos.contratos;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.inmueble.tipos.Inmueble;
+import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;

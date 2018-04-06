@@ -4,7 +4,7 @@ import co.com.tecni.site.datos.LectorCatastral;
 import co.com.tecni.site.datos.LectorContrato;
 import co.com.tecni.site.datos.LectorInmueble;
 import co.com.tecni.site.datos.LectorJurídica;
-import co.com.tecni.site.lógica.nodos.inmueble.Agrupación;
+import co.com.tecni.site.lógica.nodos.inmuebles.Agrupación;
 
 public class Site {
     // -----------------------------------------------

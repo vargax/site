@@ -1,8 +1,10 @@
-package co.com.tecni.site.lógica.nodos.inmueble.fichas;
+package co.com.tecni.site.lógica.nodos.inmuebles.fichas;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
+
+import java.util.Date;
 
 public abstract class Ficha extends Nodo {
     // -----------------------------------------------
@@ -13,7 +15,7 @@ public abstract class Ficha extends Nodo {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-
+    private Date[] vigencia;
 
     // -----------------------------------------------
     // Constructor

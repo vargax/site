@@ -1,9 +1,9 @@
 package co.com.tecni.site.lógica;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.contrato.ClienteComercial;
-import co.com.tecni.site.lógica.nodos.contrato.ClienteFacturación;
-import co.com.tecni.site.lógica.nodos.contrato.Contrato;
+import co.com.tecni.site.lógica.nodos.contratos.ClienteComercial;
+import co.com.tecni.site.lógica.nodos.contratos.ClienteFacturación;
+import co.com.tecni.site.lógica.nodos.contratos.Contrato;
 
 import java.util.ArrayList;
 import java.util.Collection;

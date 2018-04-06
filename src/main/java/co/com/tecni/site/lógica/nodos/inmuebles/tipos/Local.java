@@ -1,4 +1,4 @@
-package co.com.tecni.site.lógica.nodos.inmueble.tipos;
+package co.com.tecni.site.lógica.nodos.inmuebles.tipos;
 
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
