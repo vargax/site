@@ -1,6 +1,6 @@
 package co.com.tecni.site.pruebas;
 
-import co.com.tecni.site.lógica.nodos.inmueble.tipos.Inmueble;
+import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
-package co.com.tecni.site.lógica.nodos.inmueble.fichas.catastral;
+package co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.catastral;
 
-import co.com.tecni.site.lógica.nodos.inmueble.fichas.Ficha;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.Ficha;
 
 import java.awt.*;
 import java.util.ArrayList;

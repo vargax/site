@@ -1,4 +1,4 @@
-package co.com.tecni.site.lógica.nodos.contrato;
+package co.com.tecni.site.lógica.nodos.contratos;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
 

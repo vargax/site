@@ -1,8 +1,8 @@
-package co.com.tecni.site.lógica.nodos.inmueble.tipos;
+package co.com.tecni.site.lógica.nodos.inmuebles.tipos;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.contrato.Contrato;
-import co.com.tecni.site.lógica.nodos.inmueble.fichas.Ficha;
+import co.com.tecni.site.lógica.nodos.contratos.Contrato;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.Ficha;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
 import org.json.simple.JSONObject;

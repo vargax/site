@@ -1,8 +1,8 @@
 package co.com.tecni.site.lógica;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.inmueble.Agrupación;
-import co.com.tecni.site.lógica.nodos.inmueble.tipos.Inmueble;
+import co.com.tecni.site.lógica.nodos.inmuebles.Agrupación;
+import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
 
 import java.util.HashMap;
 

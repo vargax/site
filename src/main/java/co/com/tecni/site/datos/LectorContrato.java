@@ -1,9 +1,9 @@
 package co.com.tecni.site.datos;
 
-import co.com.tecni.site.lógica.nodos.contrato.ClienteComercial;
-import co.com.tecni.site.lógica.nodos.contrato.ClienteFacturación;
-import co.com.tecni.site.lógica.nodos.contrato.Contrato;
-import co.com.tecni.site.lógica.nodos.inmueble.tipos.Inmueble;
+import co.com.tecni.site.lógica.nodos.contratos.ClienteComercial;
+import co.com.tecni.site.lógica.nodos.contratos.ClienteFacturación;
+import co.com.tecni.site.lógica.nodos.contratos.Contrato;
+import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
