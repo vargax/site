@@ -1,15 +1,12 @@
-package co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.catastral;
-
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.Ficha;
+package co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Catastral extends Ficha {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
-    final static Color UI_ÍCONO_COLOR = Color.BLUE;
+    public final static Color UI_ÍCONO_COLOR = Color.BLUE;
 
     private final static String[] JSON_KEYS = {"Chip", "Cédula Catastral",
             "Nomenclatura", "M2 construcción", "M2 terreno"};
@@ -24,8 +21,6 @@ public class Catastral extends Ficha {
 
     private double m2construcción;
     private double m2terreno;
-
-    private ArrayList<ImpuestoPredial> impuestosPrediales;
 
     // -----------------------------------------------
     // Constructor
@@ -48,15 +43,13 @@ public class Catastral extends Ficha {
 
         this.m2terreno = m2terreno;
         infoNodo.put(JSON_KEYS[4], m2terreno);
-
-        this.impuestosPrediales = new ArrayList<>();
     }
 
     // -----------------------------------------------
     // Métodos públicos
     // -----------------------------------------------
     public void registrarPredial(ImpuestoPredial impuestoPredial) {
-        impuestosPrediales.add(impuestoPredial);
+        fichas.add(impuestoPredial);
     }
 
     // -----------------------------------------------
@@ -64,11 +57,5 @@ public class Catastral extends Ficha {
     // -----------------------------------------------
     public String nombreNodo() {
         return "Cédula catastral: " + cedulaCatastral;
-    }
-
-    public ArrayList<Object> hijosNodo() {
-        ArrayList<Object> hijos = new ArrayList<>();
-        hijos.addAll(this.impuestosPrediales);
-        return hijos;
     }
 }

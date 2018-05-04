@@ -58,7 +58,7 @@ public class UiÁrbol {
                 new TreeSelectionListener() {
                     public void valueChanged(TreeSelectionEvent treeSelectionEvent) {
                         Nodo nodo = (Nodo) jTree.getLastSelectedPathComponent();
-                        uiSite.actualizarDetalle(nodo.infoNodo());
+                        uiSite.actualizarDetalle(nodo);
                     }
                 }
         );

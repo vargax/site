@@ -1,6 +1,7 @@
 package co.com.tecni.site.lógica.nodos.inmuebles;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
@@ -66,6 +67,21 @@ public class Agrupación extends Nodo {
         hijos.addAll(inmuebles);
 
         return hijos;
+    }
+
+    // -----------------------------------------------
+    // GUI / Detalle
+    // -----------------------------------------------
+
+    public ArrayList<Transacción> transaccionesNodo() {
+        ArrayList<Transacción> transaccionesNodo = super.transaccionesNodo();
+
+        for (Agrupación agrupación : agrupaciones)
+            transaccionesNodo.addAll(agrupación.transaccionesNodo());
+        for (Inmueble inmueble : inmuebles)
+            transaccionesNodo.addAll(inmueble.transaccionesNodo());
+
+        return transaccionesNodo;
     }
 
     // -----------------------------------------------

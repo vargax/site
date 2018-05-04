@@ -2,7 +2,8 @@ package co.com.tecni.site.lógica.nodos.inmuebles.tipos;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.contratos.Contrato;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.Ficha;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Ficha;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
 import org.json.simple.JSONObject;
@@ -56,6 +57,7 @@ public abstract class Inmueble extends Nodo {
         super();
         super.íconoCódigo = UI_ÍCONO;
 
+        this.hijos = new ArrayList<>();
         this.fichas = new ArrayList<>();
     }
 
@@ -133,8 +135,7 @@ public abstract class Inmueble extends Nodo {
 
     public ArrayList<Object> hijosNodo() {
         ArrayList<Object> hijos = new ArrayList<>();
-        if (this.hijos != null)
-            hijos.addAll(this.hijos);
+        hijos.addAll(this.hijos);
         hijos.addAll(this.fichas);
         return hijos;
     }
@@ -142,7 +143,18 @@ public abstract class Inmueble extends Nodo {
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
-    @Override
+    public ArrayList<Transacción> transaccionesNodo() {
+        ArrayList<Transacción> transaccionesNodo = super.transaccionesNodo();
+
+        for (Ficha ficha : fichas)
+            transaccionesNodo.addAll(ficha.transaccionesNodo());
+
+        for (Inmueble inmueble : hijos)
+            transaccionesNodo.addAll(inmueble.transaccionesNodo());
+
+        return transaccionesNodo;
+    }
+
     public String infoNodo() {
         infoNodo.put(JK[0], genId());
 
