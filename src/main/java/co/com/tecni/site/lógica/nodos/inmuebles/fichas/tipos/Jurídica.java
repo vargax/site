@@ -1,7 +1,5 @@
 package co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos;
 
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.Ficha;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,7 +35,7 @@ public class Jurídica extends Ficha {
         infoNodo.put(JSON_KEYS[1], matrículaInmobiliaria);
 
         this.fechaRegistroCompra = fechaRegistroCompra;
-        //infoNodo.put(JSON_KEYS[2], fechaRegistroCompra);
+        //TODO infoNodo.put(JSON_KEYS[2], fechaRegistroCompra); lanza excepción al parsear
 
         this.coefCopropiedad = coefCopropiedad;
         infoNodo.put(JSON_KEYS[3], coefCopropiedad);

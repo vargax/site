@@ -1,11 +1,11 @@
 package co.com.tecni.site.ui;
 
 import co.com.tecni.site.lógica.Site;
+import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.ÁrbolClientes;
 import co.com.tecni.site.lógica.ÁrbolInmuebles;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class UiSite extends JFrame {
 
@@ -18,6 +18,7 @@ public class UiSite extends JFrame {
     private UiÁrbol clientes;
 
     private UiInfo uiInfo;
+    private UiTransacciones uiTransacciones;
 
     // -----------------------------------------------
     // Constructor
@@ -29,19 +30,21 @@ public class UiSite extends JFrame {
         inmuebles = new UiÁrbol(ÁrbolInmuebles.NOMBRE_RAIZ, site.getÁrbolInmuebles(), this);
         clientes = new UiÁrbol(ÁrbolClientes.NOMBRE_RAIZ, site.getÁrbolClientes(), this);
         uiInfo = new UiInfo();
+        uiTransacciones = new UiTransacciones();
 
-        JTabbedPane jTabbedPane = new JTabbedPane();
-        jTabbedPane.addTab(inmuebles.getNombre(), new JScrollPane(inmuebles.getComponent()));
-        jTabbedPane.addTab(clientes.getNombre(), new JScrollPane(clientes.getComponent()));
+        JSplitPane panelSecundario = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        panelSecundario.setRightComponent(new JScrollPane(uiInfo.getComponent()));
+        panelSecundario.setLeftComponent(new JScrollPane(uiTransacciones.getComponent()));
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        splitPane.setDividerLocation(400);
-        splitPane.setPreferredSize(new Dimension(1200, 600));
+        JTabbedPane pestañasÁrboles = new JTabbedPane();
+        pestañasÁrboles.addTab(inmuebles.getNombre(), new JScrollPane(inmuebles.getComponent()));
+        pestañasÁrboles.addTab(clientes.getNombre(), new JScrollPane(clientes.getComponent()));
 
-        splitPane.setLeftComponent(jTabbedPane);
-        splitPane.setRightComponent(new JScrollPane(uiInfo.getComponent()));
+        JSplitPane panelPrincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        panelPrincipal.setLeftComponent(pestañasÁrboles);
+        panelPrincipal.setRightComponent(panelSecundario);
 
-        add(splitPane);
+        add(panelPrincipal);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("SITE");
@@ -52,8 +55,9 @@ public class UiSite extends JFrame {
     // -----------------------------------------------
     // Métodos
     // -----------------------------------------------
-    public void actualizarDetalle(String detalle) {
-        uiInfo.mostrarDetalle(detalle);
+    public void actualizarDetalle(Nodo nodo) {
+        uiInfo.mostrarDetalle(nodo.infoNodo());
+        uiTransacciones.mostrarTransacciones(nodo.transaccionesNodo());
     }
 
     // -----------------------------------------------

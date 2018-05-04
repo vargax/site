@@ -1,5 +1,6 @@
 package co.com.tecni.site.lógica.nodos;
 
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.site.ui.UiÁrbol;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
@@ -47,7 +48,12 @@ public abstract class Nodo {
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
+    public ArrayList<Transacción> transaccionesNodo() {
+        return new ArrayList<>();
+    }
+
     public String infoNodo() {
         return infoNodo.toJSONString();
     }
+
 }

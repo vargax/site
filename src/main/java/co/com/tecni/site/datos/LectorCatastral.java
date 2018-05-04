@@ -1,7 +1,7 @@
 package co.com.tecni.site.datos;
 
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.catastral.Catastral;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.catastral.ImpuestoPredial;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Catastral;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.ImpuestoPredial;
 import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
