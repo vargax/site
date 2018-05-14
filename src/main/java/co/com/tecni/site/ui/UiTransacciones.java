@@ -4,7 +4,9 @@ import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacci�
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -28,11 +30,15 @@ public class UiTransacciones {
     // Constructor
     // -----------------------------------------------
     public UiTransacciones() {
+        DoubleRender doubleRender = new DoubleRender();
+
         resumenTransacciones = new ResumenTransacciones();
         tablaResumen = new JTable(resumenTransacciones);
+        tablaResumen.setDefaultRenderer(Double.class, doubleRender);
 
         detalleTransacciones = new DetalleTransacciones();
         tablaDetalle = new JTable(detalleTransacciones);
+        tablaDetalle.setDefaultRenderer(Double.class, doubleRender);
 
         panelTransacciones = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         panelTransacciones.setLeftComponent(new JScrollPane(tablaResumen));
@@ -201,5 +207,19 @@ class DetalleTransacciones extends AbstractTableModel {
             case 3: return transacción.getTercero().getNombre();
             default: return null;
         }
+    }
+}
+
+class DoubleRender extends DefaultTableCellRenderer {
+    private final static DecimalFormat DECIMAL_FORMAT = new DecimalFormat("###,###,###");
+
+    public Component getTableCellRendererComponent(JTable jTable, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        super.getTableCellRendererComponent(jTable, value, isSelected, hasFocus, row, column);
+
+        setHorizontalAlignment(RIGHT);
+        setText(DECIMAL_FORMAT.format((Number) value));
+        if ((Double) value < 0) setForeground(Color.RED);
+
+        return this;
     }
 }
