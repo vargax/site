@@ -11,26 +11,33 @@ public class Site {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
-    public final static String MODO_PONDERACIÓN = Inmueble.A_TOTAL;
+    private final static String MODO_PONDERACIÓN = Inmueble.A_TOTAL;
 
     private final static String[] INMUEBLES_IMPORTAR = {"LaEstancia", "Ecotower93"};
 
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
+    private static Site instance;
+    private String modoPonderación;
+
     private ÁrbolInmuebles árbolInmuebles;
     private ÁrbolClientes árbolClientes;
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public Site() throws Exception {
+    private Site() {
         árbolInmuebles = new ÁrbolInmuebles();
         árbolClientes = new ÁrbolClientes();
 
-        importarInmuebles();
-        importarFichas();
-        importarContratos();
+        modoPonderación = MODO_PONDERACIÓN;
+    }
+
+    public static Site getInstance() {
+        if (instance == null)
+            instance = new Site();
+        return instance;
     }
 
     // -----------------------------------------------
@@ -75,6 +82,16 @@ public class Site {
     // -----------------------------------------------
     // Métodos Públicos
     // -----------------------------------------------
+    public void importarDatos() throws Exception {
+        importarInmuebles();
+        importarFichas();
+        importarContratos();
+    }
+
+    public String getModoPonderación() {
+        return modoPonderación;
+    }
+
     public ÁrbolInmuebles getÁrbolInmuebles() {
         return árbolInmuebles;
     }

@@ -17,43 +17,34 @@ public class LectorContrato {
     // Constantes
     // -----------------------------------------------
 
+    // CLIENTES
     private final static String HC = "Clientes";
-    // Cliente comercial
-    private final static char COL_HC_CC_ID = 'A';
+    private final static char COL_HC_CC_ID = 'A';       // Cliente comercial
     private final static char COL_HC_CC_NOMBRE = 'B';
-    // Cliente Facturación
-    private final static char COL_HC_CF_NIT = 'C';
+    private final static char COL_HC_CF_NIT = 'C';      // Cliente Facturación
     private final static char COL_HC_CF_RS = 'D';
 
-    private final static String HCC = "ContratosClientes";
-    private final static char COL_HCC_NUM_CONTRATO = 'A';
-    private final static char COL_HCC_ID_CC = 'B';
-    private final static char COL_HCC_NIT_CF = 'D';
-    private final static char COL_HCC_SUBTOTAL = 'F';
+    // CONTRATOS
+    private final static String HCT = "Contratos";
+    private final static char COL_HCT_CT_ID = 'A';
+    private final static char COL_HCT_CC_ID = 'B';
 
+    // CONTRATOS FACTURACIÓN
+    private final static String HCF = "ContratosFacturacion";
+    private final static char COL_HCF_CT_NUM = 'B';
+    private final static char COL_HCF_CF_NIT = 'E';
+    private final static char COL_HCF_PARTICIPACIÓN = 'G';
+
+    // CONTRATOS INMUEBLES
     private final static String HCI = "ContratosInmuebles";
-    private final static char COL_HCI_NUM_CONTRATO = 'A';
-    private final static char COL_HCI_ID_INMUEBLE = 'B';
-    private final static char COL_HCI_PARTICIPACIÓN = 'C';
+    private final static char COL_HCI_CT_NUM = 'B';
+    private final static char COL_HCI_INMUEBLE_ID = 'C';
+    private final static char COL_HCI_PARTICIPACIÓN = 'D';
 
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
     private XSSFWorkbook libro;
-
-    private int colHcCcId;
-    private int colHcCcNombre;
-    private int colHcCfNit;
-    private int colHcCfRs;
-
-    private int colHccNumContrato;
-    private int colHccIdCc;
-    private int colHccNitCf;
-    private int colHccSubtotal;
-
-    private int colHciNumContrato;
-    private int colHciIdInmueble;
-    private int colHciParticipación;
 
     private HashMap<Integer, ClienteComercial> clientesComerciales;
     private HashMap<Integer, ClienteFacturación> clientesFacturación;
@@ -61,23 +52,27 @@ public class LectorContrato {
     private HashMap<String, Inmueble> inmuebles;
     private HashMap<Integer, Contrato> contratos;
 
+    // CLIENTES
+    private int colHcCcId = (int) COL_HC_CC_ID - 65;
+    private int colHcCcNombre = (int) COL_HC_CC_NOMBRE - 65;
+    private int colHcCfNit = (int) COL_HC_CF_NIT - 65;
+    private int colHcCfRs = (int) COL_HC_CF_RS - 65;
+    // CONTRATOS
+    private int colHctCtId = (int) COL_HCT_CT_ID - 65;
+    private int colHctCcId = (int) COL_HCT_CC_ID - 65;
+    // CONTRATOS FACTURACIÓN
+    private int colHcfCtNum = (int) COL_HCF_CT_NUM - 65;
+    private int colHcfNitCf = (int) COL_HCF_CF_NIT -65;
+    private int colHcfParticipación = (int) COL_HCF_PARTICIPACIÓN -65;
+    // CONTRATOS INMUEBLES
+    private int colHciCtNum = (int) COL_HCI_CT_NUM - 65;
+    private int colHciInmuebleId = (int) COL_HCI_INMUEBLE_ID - 65;
+    private int colHciParticipación = (int) COL_HCI_PARTICIPACIÓN - 65;
+
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
     public LectorContrato(HashMap<String, Inmueble> inmuebles) {
-        colHcCcId = (int) COL_HC_CC_ID - 65;
-        colHcCcNombre = (int) COL_HC_CC_NOMBRE - 65;
-        colHcCfNit = (int) COL_HC_CF_NIT - 65;
-        colHcCfRs = (int) COL_HC_CF_RS - 65;
-
-        colHccNumContrato = (int) COL_HCC_NUM_CONTRATO -65;
-        colHccIdCc = (int) COL_HCC_ID_CC - 65;
-        colHccNitCf = (int) COL_HCC_NIT_CF -65;
-        colHccSubtotal = (int) COL_HCC_SUBTOTAL -65;
-
-        colHciNumContrato = (int) COL_HCI_NUM_CONTRATO - 65;
-        colHciIdInmueble = (int) COL_HCI_ID_INMUEBLE - 65;
-        colHciParticipación = (int) COL_HCI_PARTICIPACIÓN - 65;
 
         this.inmuebles = inmuebles;
     }
@@ -90,7 +85,9 @@ public class LectorContrato {
         libro = new XSSFWorkbook(inputStream);
 
         leerClientes();
-        leerContratosClientes();
+        leerContratos();
+        leerContratosFacturación();
+
         leerContratosInmuebles();
 
         inputStream.close();
@@ -137,30 +134,49 @@ public class LectorContrato {
                 + clientesFacturación.size() + " Clientes Facturación");
     }
 
-    private void leerContratosClientes() {
-        Iterator<Row> filas = libro.getSheet(HCC).iterator();
+    private void leerContratos() {
+        Iterator<Row> filas = libro.getSheet(HCT).iterator();
         Row filaActual = filas.next();
 
         while (filas.hasNext()) {
             filaActual = filas.next();
-            if (filaActual.getCell(colHccNumContrato) == null) break;
+            if(filaActual.getCell(colHctCtId) == null) break;
 
-            int numContrato = ((Double) filaActual.getCell(colHccNumContrato).getNumericCellValue()).intValue();
-            Contrato contrato = contratos.get(numContrato);
-            if (contrato == null) {
-                ClienteComercial clienteComercial = clientesComerciales.get(((Double) filaActual.getCell(colHccIdCc).getNumericCellValue()).intValue());
-                contrato = new Contrato(numContrato, clienteComercial);
-                contratos.put(contrato.getNumContrato(), contrato);
-            }
+            int numContrato = ((Double) filaActual.getCell(colHctCtId).getNumericCellValue()).intValue();
+            ClienteComercial clienteComercial = clientesComerciales.get(((Double) filaActual.getCell(colHctCcId).getNumericCellValue()).intValue());
+            Contrato contrato = new Contrato(numContrato, clienteComercial);
 
-            int nitClienteFacturación = ((Double) filaActual.getCell(colHccNitCf).getNumericCellValue()).intValue();
-            ClienteFacturación clienteFacturación = clientesFacturación.get(nitClienteFacturación);
-
-            double subtotal = filaActual.getCell(colHccSubtotal).getNumericCellValue();
-            contrato.agregarClienteFacturación(clienteFacturación, subtotal);
+            contratos.put(numContrato, contrato);
         }
 
         System.err.println("Recuperados " + contratos.size() + " Contratos");
+    }
+
+    private void leerContratosFacturación() {
+        Iterator<Row> filas = libro.getSheet(HCF).iterator();
+        Row filaActual = filas.next();
+
+        while (filas.hasNext()) {
+            filaActual = filas.next();
+            if (filaActual.getCell(colHcfCtNum) == null) break;
+
+            int numContrato = ((Double) filaActual.getCell(colHcfCtNum).getNumericCellValue()).intValue();
+            Contrato contrato = contratos.get(numContrato);
+            if (contrato == null) {
+                System.err.println("Contrato "+ numContrato + " no encontrado");
+                continue;
+            }
+
+            int nitClienteFacturación = ((Double) filaActual.getCell(colHcfNitCf).getNumericCellValue()).intValue();
+            ClienteFacturación clienteFacturación = clientesFacturación.get(nitClienteFacturación);
+
+            double participación = filaActual.getCell(colHcfParticipación).getNumericCellValue();
+            contrato.agregarClienteFacturación(clienteFacturación, participación);
+        }
+
+        for (Contrato contrato : contratos.values())
+            if (contrato.participaciónClientesFacturación() != 1)
+                System.err.println(" Suma participaciones ClientesFacturación para contrato "+ contrato.getNumContrato() + " es "+ contrato.participaciónInmuebles());
     }
 
     private void leerContratosInmuebles() {
@@ -170,10 +186,10 @@ public class LectorContrato {
 
         while (filas.hasNext()) {
             filaActual = filas.next();
-            if (filaActual.getCell(colHciNumContrato) == null) break;
+            if (filaActual.getCell(colHciCtNum) == null) break;
 
-            int numContrato = ((Double) filaActual.getCell(colHciNumContrato).getNumericCellValue()).intValue();
-            String idInmueble = filaActual.getCell(colHciIdInmueble).getStringCellValue();
+            int numContrato = ((Double) filaActual.getCell(colHciCtNum).getNumericCellValue()).intValue();
+            String idInmueble = filaActual.getCell(colHciInmuebleId).getStringCellValue();
             Double participación = filaActual.getCell(colHciParticipación).getNumericCellValue();
 
             Contrato contrato = contratos.get(numContrato);
@@ -193,8 +209,8 @@ public class LectorContrato {
         }
 
         for (Contrato contrato : contratos.values())
-            if (contrato.sumaParicipaciones() != 1)
-                System.err.println(" Suma participaciones para contrato "+ contrato.getNumContrato() + " es "+ contrato.sumaParicipaciones());
+            if (contrato.participaciónInmuebles() != 1)
+                System.err.println(" Suma participaciones para contrato "+ contrato.getNumContrato() + " es "+ contrato.participaciónInmuebles());
 
         System.err.println("Asociados "+contador+ " inmuebles a "+contratos.size()+" contratos");
     }

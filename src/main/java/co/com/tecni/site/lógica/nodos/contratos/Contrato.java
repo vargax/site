@@ -42,10 +42,19 @@ public class Contrato extends Nodo {
     // -----------------------------------------------
     // Métodos Públicos
     // -----------------------------------------------
-    public void agregarClienteFacturación(ClienteFacturación clienteFacturación, double subtotal) {
+    public void agregarClienteFacturación(ClienteFacturación clienteFacturación, double participación) {
         clientesFacturación.add(clienteFacturación);
-        participaciónClientesFacturación.put(clienteFacturación.getNit(), subtotal);
+        participaciónClientesFacturación.put(clienteFacturación.getNit(), participación);
         clienteFacturación.registrarContrato(this);
+    }
+
+    public double participaciónClientesFacturación() {
+        double total = 0;
+
+        for (Double participación : participaciónClientesFacturación.values())
+            total += participación;
+
+        return total;
     }
 
     public void agregarInmueble(Inmueble inmueble, double participación) {
@@ -54,7 +63,7 @@ public class Contrato extends Nodo {
         inmueble.asociarContrato(this);
     }
 
-    public double sumaParicipaciones() {
+    public double participaciónInmuebles() {
         double total = 0;
 
         for (Double participación : participaciónInmuebles.values())

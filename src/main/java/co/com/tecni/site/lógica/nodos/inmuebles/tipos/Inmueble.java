@@ -40,6 +40,8 @@ public abstract class Inmueble extends Nodo {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
+    private Site site;
+
     private HashMap<String , Double> m2;
     private ArrayList<Ficha> fichas;
 
@@ -60,6 +62,8 @@ public abstract class Inmueble extends Nodo {
 
         this.hijos = new ArrayList<>();
         this.fichas = new ArrayList<>();
+
+        site = Site.getInstance();
     }
 
     public static Inmueble englobar(String tipo, String nombre, JSONObject características, ArrayList<Inmueble> inmuebles) throws Exception {
@@ -146,7 +150,7 @@ public abstract class Inmueble extends Nodo {
 
         ArrayList<Transacción> ancestros = new ArrayList<>();
         if (padre != null && 0 < factorPonderación && factorPonderación < 1) {
-            factorPonderación = factorPonderación*(this.getM2(Site.MODO_PONDERACIÓN)/padre.getM2(Site.MODO_PONDERACIÓN));
+            factorPonderación = factorPonderación*(this.getM2(site.getModoPonderación())/padre.getM2(site.getModoPonderación()));
             ArrayList<Transacción>[] transaccionesAncestro = padre.recursiónTransacciones(factorPonderación);
 
             ancestros.addAll(transaccionesAncestro[0]);
@@ -199,7 +203,7 @@ public abstract class Inmueble extends Nodo {
         ArrayList[] resultado = super.transaccionesNodo();
 
         if (padre != null) {
-            double factorPonderación = this.getM2(Site.MODO_PONDERACIÓN)/padre.getM2(Site.MODO_PONDERACIÓN);
+            double factorPonderación = this.getM2(site.getModoPonderación())/padre.getM2(site.getModoPonderación());
             ArrayList<Transacción>[] ancestros = recursiónTransacciones(factorPonderación);
             resultado[0] = ancestros[0];
         } else resultado[0] = new ArrayList();
