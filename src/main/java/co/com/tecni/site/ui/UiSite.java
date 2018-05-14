@@ -25,7 +25,8 @@ public class UiSite extends JFrame {
     // -----------------------------------------------
     UiSite() throws Exception {
 
-        site = new Site();
+        site = Site.getInstance();
+        site.importarDatos();
 
         inmuebles = new UiÁrbol(ÁrbolInmuebles.NOMBRE_RAIZ, site.getÁrbolInmuebles(), this);
         clientes = new UiÁrbol(ÁrbolClientes.NOMBRE_RAIZ, site.getÁrbolClientes(), this);
