@@ -73,13 +73,13 @@ public class Agrupación extends Nodo {
     // GUI / Detalle
     // -----------------------------------------------
 
-    public ArrayList<Transacción> transaccionesNodo() {
-        ArrayList<Transacción> transaccionesNodo = super.transaccionesNodo();
+    public ArrayList<Transacción>[] transaccionesNodo() {
+        ArrayList<Transacción>[] transaccionesNodo = super.transaccionesNodo();
 
-        for (Agrupación agrupación : agrupaciones)
-            transaccionesNodo.addAll(agrupación.transaccionesNodo());
-        for (Inmueble inmueble : inmuebles)
-            transaccionesNodo.addAll(inmueble.transaccionesNodo());
+//        for (Agrupación agrupación : agrupaciones)
+//            transaccionesNodo.addAll(agrupación.transaccionesNodo());
+//        for (Inmueble inmueble : inmuebles)
+//            transaccionesNodo.addAll(inmueble.transaccionesNodo());
 
         return transaccionesNodo;
     }

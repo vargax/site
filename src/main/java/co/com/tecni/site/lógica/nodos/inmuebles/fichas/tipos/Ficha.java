@@ -42,13 +42,22 @@ public abstract class Ficha extends Nodo {
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
-    public ArrayList<Transacción> transaccionesNodo() {
-        ArrayList<Transacción> transaccionesNodo = super.transaccionesNodo();
+    public ArrayList<Transacción>[] recursiónTransacciones(double factorPonderación) {
+        ArrayList<Transacción>[] resultado = super.transaccionesNodo();
 
-        transaccionesNodo.addAll(this.transacciones);
-        for(Ficha ficha : fichas)
-            transaccionesNodo.addAll(ficha.transaccionesNodo());
+        ArrayList<Transacción> propias = new ArrayList<>();
+        for (Transacción transacción : this.transacciones)
+            propias.add(transacción.ponderar(factorPonderación));
+        resultado[1] = propias;
 
-        return transaccionesNodo;
+        ArrayList<Transacción> descendientes = new ArrayList<>();
+        for(Ficha ficha : fichas) {
+            ArrayList<Transacción>[] transaccionesFicha = ficha.recursiónTransacciones(factorPonderación);
+            descendientes.addAll(transaccionesFicha[1]);
+            descendientes.addAll(transaccionesFicha[2]);
+        }
+        resultado[2] = descendientes;
+
+        return resultado;
     }
 }

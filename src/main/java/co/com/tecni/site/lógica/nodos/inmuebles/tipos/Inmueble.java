@@ -1,5 +1,6 @@
 package co.com.tecni.site.lógica.nodos.inmuebles.tipos;
 
+import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.contratos.Contrato;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Ficha;
@@ -110,6 +111,52 @@ public abstract class Inmueble extends Nodo {
         m2.put(A_COM_TOTAL, áreaComún);
         m2.put(A_TOTAL, áreaPrivada + áreaComún);
     }
+
+    /**
+     * Devuelve las transacciones del inmueble ponderadas por el factor especificado.
+     * @param factorPonderación Factor por el cual se ponderarán las transacciones:
+     *                          Si     factor = 0 se incluyen todas las transacciones (ancestros, propias, descencientes)
+     *                          Si 0 < factor < 1 sólo se incluyen las transacciones propias y de los ancestros
+     *                          Si     factor = 1 sólo se incluyen las transacciones propias y de los descendientes
+     * @return Arreglo con:
+     *  [0] Transacciones Ancestros
+     *  [1] Transacciones Propias
+     *  [2] Transacciones Descendientes
+     */
+    private ArrayList<Transacción>[] recursiónTransacciones(double factorPonderación) {
+        ArrayList[] resultado = super.transaccionesNodo();
+
+        ArrayList<Transacción> descendientes = new ArrayList<>();
+        if (factorPonderación == 1) {
+            for (Inmueble hijo : hijos) {
+                ArrayList<Transacción>[] transaccionesHijo = hijo.recursiónTransacciones(factorPonderación);
+                descendientes.addAll(transaccionesHijo[1]);
+                descendientes.addAll(transaccionesHijo[2]);
+            }
+        }
+        resultado[2] = descendientes;
+
+        ArrayList<Transacción> propias = new ArrayList<>();
+        for (Ficha ficha : fichas) {
+            ArrayList<Transacción>[] transaccionesFichas = ficha.recursiónTransacciones(factorPonderación);
+            propias.addAll(transaccionesFichas[1]);
+            propias.addAll(transaccionesFichas[2]);
+        }
+        resultado[1] = propias;
+
+        ArrayList<Transacción> ancestros = new ArrayList<>();
+        if (padre != null && 0 < factorPonderación && factorPonderación < 1) {
+            factorPonderación = factorPonderación*(this.getM2(Site.MODO_PONDERACIÓN)/padre.getM2(Site.MODO_PONDERACIÓN));
+            ArrayList<Transacción>[] transaccionesAncestro = padre.recursiónTransacciones(factorPonderación);
+
+            ancestros.addAll(transaccionesAncestro[0]);
+            ancestros.addAll(transaccionesAncestro[1]);
+        }
+        resultado[0] = ancestros;
+
+        return resultado;
+    }
+
     // -----------------------------------------------
     // Métodos públicos
     // -----------------------------------------------
@@ -126,6 +173,9 @@ public abstract class Inmueble extends Nodo {
         super.íconoColor = UI_ÍCONO_COLOR_CONTRATO;
     }
 
+    public double getM2(String area) {
+        return m2.get(area);
+    }
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
@@ -143,16 +193,22 @@ public abstract class Inmueble extends Nodo {
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
-    public ArrayList<Transacción> transaccionesNodo() {
-        ArrayList<Transacción> transaccionesNodo = super.transaccionesNodo();
 
-        for (Ficha ficha : fichas)
-            transaccionesNodo.addAll(ficha.transaccionesNodo());
 
-        for (Inmueble inmueble : hijos)
-            transaccionesNodo.addAll(inmueble.transaccionesNodo());
+    public ArrayList<Transacción>[] transaccionesNodo() {
+        ArrayList[] resultado = super.transaccionesNodo();
 
-        return transaccionesNodo;
+        if (padre != null) {
+            double factorPonderación = this.getM2(Site.MODO_PONDERACIÓN)/padre.getM2(Site.MODO_PONDERACIÓN);
+            ArrayList<Transacción>[] ancestros = recursiónTransacciones(factorPonderación);
+            resultado[0] = ancestros[0];
+        } else resultado[0] = new ArrayList();
+
+        ArrayList<Transacción>[] propiasYDescendientes = recursiónTransacciones(1);
+        resultado[1] = propiasYDescendientes[1];
+        resultado[2] = propiasYDescendientes[2];
+
+        return resultado;
     }
 
     public String infoNodo() {
