@@ -34,7 +34,8 @@ public class UiSite extends JFrame {
 
         JSplitPane panelSecundario = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         panelSecundario.setRightComponent(new JScrollPane(uiInfo.getComponent()));
-        panelSecundario.setLeftComponent(new JScrollPane(uiTransacciones.getComponent()));
+        panelSecundario.setLeftComponent(uiTransacciones.getComponent());
+        panelSecundario.setResizeWeight(0.3d);
 
         JTabbedPane pestañasÁrboles = new JTabbedPane();
         pestañasÁrboles.addTab(inmuebles.getNombre(), new JScrollPane(inmuebles.getComponent()));
@@ -48,7 +49,7 @@ public class UiSite extends JFrame {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("SITE");
-        this.setSize(1200, 600);
+        this.setSize(1280, 800);
         this.setVisible(true);
     }
 

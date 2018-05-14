@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UiTransacciones {
     // -----------------------------------------------
@@ -15,31 +16,132 @@ public class UiTransacciones {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    private ModeloTransacciones modeloTransacciones;
-    private JTable jTable;
+    private JSplitPane panelTransacciones;
+
+    private ResumenTransacciones resumenTransacciones;
+    private JTable tablaResumen;
+
+    private DetalleTransacciones detalleTransacciones;
+    private JTable tablaDetalle;
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
     public UiTransacciones() {
-        modeloTransacciones = new ModeloTransacciones();
-        jTable = new JTable(modeloTransacciones);
+        resumenTransacciones = new ResumenTransacciones();
+        tablaResumen = new JTable(resumenTransacciones);
+
+        detalleTransacciones = new DetalleTransacciones();
+        tablaDetalle = new JTable(detalleTransacciones);
+
+        panelTransacciones = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        panelTransacciones.setLeftComponent(new JScrollPane(tablaResumen));
+        panelTransacciones.setRightComponent(new JScrollPane(tablaDetalle));
+        panelTransacciones.setResizeWeight(0.5d);
     }
 
     // -----------------------------------------------
     // Métodos
     // -----------------------------------------------
     Component getComponent() {
-        return jTable;
+        return panelTransacciones;
     }
 
-    void mostrarTransacciones(ArrayList<Transacción> transacciones) {
-        modeloTransacciones.setTransacciones(transacciones);
-        jTable.updateUI();
+    /**
+     * Muestras las transacciones asociadas al nodo seleccionado
+     * @param transacciones arreglo con las transacciones dividas en:
+     *                      transacciones[0] ancestros
+     *                      transacciones[1] propias
+     *                      transacciones[2] descendientes
+     */
+    void mostrarTransacciones(ArrayList<Transacción>[] transacciones) {
+        resumenTransacciones.setTransxTipoPariente(transacciones);
+        detalleTransacciones.setTransxTipoPariente(transacciones);
+
+        tablaResumen.updateUI();
+        tablaDetalle.updateUI();
     }
 }
 
-class ModeloTransacciones extends AbstractTableModel {
+class ResumenTransacciones extends AbstractTableModel {
+    // -----------------------------------------------
+    // Constantes
+    // -----------------------------------------------
+    private final static String[] COLUMNAS = {"Ficha",
+            "Ancestros",
+            "Propias",
+            "Descencientes",
+            "TOTAL"
+    };
+
+    // -----------------------------------------------
+    // Atributos
+    // -----------------------------------------------
+    private ArrayList<Transacción>[] transxTipoPariente;
+    private HashMap<String, double[]> resumen;
+
+    // -----------------------------------------------
+    // Constructor
+    // -----------------------------------------------
+    ResumenTransacciones() {
+        transxTipoPariente = new ArrayList[3];
+        resumen = new HashMap<>();
+    }
+
+    // -----------------------------------------------
+    // Métodos lógica
+    // -----------------------------------------------
+    void setTransxTipoPariente(ArrayList<Transacción>[] transxTipoPariente) {
+        this.transxTipoPariente = transxTipoPariente;
+        resumen.clear();
+
+        for (int i = 0; i < transxTipoPariente.length; i++) {
+            for (Transacción transacción : transxTipoPariente[i]) {
+                String llave = transacción.getFicha().getClass().getSimpleName();
+                double[] valores = resumen.get(llave);
+
+                if (valores == null) {
+                    valores = new double[4];
+                    resumen.put(llave, valores);
+                }
+
+                valores[i] = valores[i] + transacción.getMonto();
+            }
+        }
+
+        for (double[] valores : resumen.values())
+            valores[3] = valores[0] + valores[1] + valores[2];
+
+    }
+
+    // -----------------------------------------------
+    // Métodos Interface
+    // -----------------------------------------------
+    public int getColumnCount() {
+        return COLUMNAS.length;
+    }
+
+    public String getColumnName(int col) {
+        return COLUMNAS[col];
+    }
+
+    public Class getColumnClass(int col) {
+        return getValueAt(0,col).getClass();
+    }
+
+    public int getRowCount() {
+        return resumen.size();
+    }
+
+    public Object getValueAt(int row, int col) {
+        String fila = (String) resumen.keySet().toArray()[row];
+        if (col == 0)
+            return fila;
+        return resumen.get(fila)[col-1];
+    }
+}
+
+class DetalleTransacciones extends AbstractTableModel {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
@@ -56,15 +158,19 @@ class ModeloTransacciones extends AbstractTableModel {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public ModeloTransacciones() {
+    DetalleTransacciones() {
         transacciones = new ArrayList<>();
     }
 
     // -----------------------------------------------
-    // Métodos públicos
+    // Métodos lógica
     // -----------------------------------------------
-    void setTransacciones(ArrayList<Transacción> transacciones) {
-        this.transacciones = transacciones;
+    void setTransxTipoPariente(ArrayList<Transacción>[] transxTipoPariente) {
+        transacciones.clear();
+
+        for (int i = 0; i < transxTipoPariente.length; i++)
+                transacciones.addAll(transxTipoPariente[i]);
+
     }
 
     // -----------------------------------------------

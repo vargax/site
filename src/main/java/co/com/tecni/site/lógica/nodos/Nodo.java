@@ -48,8 +48,8 @@ public abstract class Nodo {
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
-    public ArrayList<Transacción> transaccionesNodo() {
-        return new ArrayList<>();
+    public ArrayList<Transacción>[] transaccionesNodo() {
+        return new ArrayList[3];
     }
 
     public String infoNodo() {

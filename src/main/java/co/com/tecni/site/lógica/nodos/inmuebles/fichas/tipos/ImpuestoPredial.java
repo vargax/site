@@ -36,12 +36,12 @@ public class ImpuestoPredial extends Ficha {
 
         super.transacciones = new ArrayList<>();
 
-        double monto = impuestoACargo/PRORRATA;
+        double monto = -impuestoACargo/PRORRATA;
         Tercero tercero = new Tercero(TERCERO[0], TERCERO[1]);
         for (int i = 1; i <= PRORRATA; i++) {
             String concepto = "Prorrata predial mes "+i;
             LocalDate fecha = LocalDate.parse(añoFiscal+"-"+i+"-1",DateTimeFormatter.ofPattern("yyyy-M-d"));
-            transacciones.add(new Transacción(concepto, fecha, monto, tercero));
+            transacciones.add(new Transacción(this, concepto, fecha, monto, tercero));
         }
 
         infoNodo.put(JSON_KEYS[0], añoFiscal);

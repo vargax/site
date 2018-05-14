@@ -5,11 +5,14 @@ import co.com.tecni.site.datos.LectorContrato;
 import co.com.tecni.site.datos.LectorInmueble;
 import co.com.tecni.site.datos.LectorJurídica;
 import co.com.tecni.site.lógica.nodos.inmuebles.Agrupación;
+import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
 
 public class Site {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
+    public final static String MODO_PONDERACIÓN = Inmueble.A_TOTAL;
+
     private final static String[] INMUEBLES_IMPORTAR = {"LaEstancia", "Ecotower93"};
 
     // -----------------------------------------------
@@ -72,7 +75,6 @@ public class Site {
     // -----------------------------------------------
     // Métodos Públicos
     // -----------------------------------------------
-
     public ÁrbolInmuebles getÁrbolInmuebles() {
         return árbolInmuebles;
     }
