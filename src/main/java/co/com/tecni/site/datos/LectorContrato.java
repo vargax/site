@@ -87,8 +87,9 @@ public class LectorContrato {
         leerClientes();
         leerContratos();
         leerContratosFacturación();
-
         leerContratosInmuebles();
+
+
 
         inputStream.close();
     }
@@ -144,6 +145,7 @@ public class LectorContrato {
 
             int numContrato = ((Double) filaActual.getCell(colHctCtId).getNumericCellValue()).intValue();
             ClienteComercial clienteComercial = clientesComerciales.get(((Double) filaActual.getCell(colHctCcId).getNumericCellValue()).intValue());
+
             Contrato contrato = new Contrato(numContrato, clienteComercial);
 
             contratos.put(numContrato, contrato);
