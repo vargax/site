@@ -119,7 +119,6 @@ public abstract class Inmueble extends Nodo {
     /**
      * Devuelve las transacciones del inmueble ponderadas por el factor especificado.
      * @param factorPonderación Factor por el cual se ponderarán las transacciones:
-     *                          Si     factor = 0 se incluyen todas las transacciones (ancestros, propias, descencientes)
      *                          Si 0 < factor < 1 sólo se incluyen las transacciones propias y de los ancestros
      *                          Si     factor = 1 sólo se incluyen las transacciones propias y de los descendientes
      * @return Arreglo con:
