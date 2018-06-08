@@ -3,6 +3,7 @@ package co.com.tecni.site.datos;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Catastral;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.ImpuestoPredial;
 import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
+import com.google.gson.Gson;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -30,6 +31,8 @@ public class LectorCatastral {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
+    private Gson gson;
+
     private HashMap<String, Inmueble> inmuebles;
 
     private int colId;
@@ -47,6 +50,8 @@ public class LectorCatastral {
     // Constructor
     // -----------------------------------------------
     public LectorCatastral(HashMap<String, Inmueble> inmuebles) {
+
+        gson = new Gson();
 
         colId = (int)COL_ID - 65;
         colChip = (int)COL_CHIP - 65;
@@ -84,10 +89,11 @@ public class LectorCatastral {
             String chip = filaActual.getCell(colChip).getStringCellValue();
             String cedulaCatastral = filaActual.getCell(colCédulaCatastral).getStringCellValue();
             String nomenclatura = filaActual.getCell(colNomenclatura).getStringCellValue();
-            double m2construccion = filaActual.getCell(colM2Construccion).getNumericCellValue();
+            double m2construcción = filaActual.getCell(colM2Construccion).getNumericCellValue();
             double m2terreno = filaActual.getCell(colM2Terreno).getNumericCellValue();
 
-            Catastral catastral = new Catastral(chip, cedulaCatastral, nomenclatura, m2construccion, m2terreno);
+            Catastral.Json json = new Catastral.Json(chip, cedulaCatastral, nomenclatura, m2construcción, m2terreno);
+            Catastral catastral = new Catastral(json);
 
             int año = añoPrimerPredial;
 
@@ -103,7 +109,8 @@ public class LectorCatastral {
                 double impuesto = columnaActual.getNumericCellValue();
                 columnaActual = columnas.next();
 
-                catastral.registrarPredial(new ImpuestoPredial(año, avaluo, impuesto));
+                ImpuestoPredial impuestoPredial = new ImpuestoPredial(new ImpuestoPredial.Json(año, avaluo, impuesto));
+                catastral.registrarPredial(impuestoPredial);
                 año++;
             }
             inmueble.registrarFicha(catastral);

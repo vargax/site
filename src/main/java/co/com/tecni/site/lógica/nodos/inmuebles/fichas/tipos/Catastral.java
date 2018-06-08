@@ -1,5 +1,8 @@
 package co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos;
 
+import co.com.tecni.site.lógica.Site;
+import co.com.tecni.site.lógica.Árbol;
+
 import java.awt.*;
 
 public class Catastral extends Ficha {
@@ -8,41 +11,35 @@ public class Catastral extends Ficha {
     // -----------------------------------------------
     public final static Color UI_ÍCONO_COLOR = Color.BLUE;
 
-    private final static String[] JSON_KEYS = {"Chip", "Cédula Catastral",
-            "Nomenclatura", "M2 construcción", "M2 terreno"};
-
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    private String chip;
-    private String cedulaCatastral;
+    private Json json;
 
-    private String nomenclatura;
+    public static class Json {
+        String chip;
+        String cedulaCatastral;
+        String nomenclatura;
+        double m2construcción;
+        double m2terreno;
 
-    private double m2construcción;
-    private double m2terreno;
+        public Json(String chip, String cedulaCatastral, String nomenclatura, double m2construcción, double m2terreno) {
+            this.chip = chip;
+            this.cedulaCatastral = cedulaCatastral;
+            this.nomenclatura = nomenclatura;
+            this.m2construcción = m2construcción;
+            this.m2terreno = m2terreno;
+        }
+    }
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public Catastral(String chip, String cedulaCatastral, String nomenclatura, double m2construcción, double m2terreno) {
+    public Catastral(Json json) {
         super();
         super.íconoColor = UI_ÍCONO_COLOR;
 
-        this.chip = chip;
-        infoNodo.put(JSON_KEYS[0], chip);
-
-        this.cedulaCatastral = cedulaCatastral;
-        infoNodo.put(JSON_KEYS[1], cedulaCatastral);
-
-        this.nomenclatura = nomenclatura;
-        infoNodo.put(JSON_KEYS[2], nomenclatura);
-
-        this.m2construcción = m2construcción;
-        infoNodo.put(JSON_KEYS[3], m2construcción);
-
-        this.m2terreno = m2terreno;
-        infoNodo.put(JSON_KEYS[4], m2terreno);
+        this.json = json;
     }
 
     // -----------------------------------------------
@@ -55,7 +52,11 @@ public class Catastral extends Ficha {
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
-    public String nombreNodo() {
-        return "Cédula catastral: " + cedulaCatastral;
+    public String nombreNodo(Árbol árbol) {
+        return "Cédula catastral: " + json.cedulaCatastral;
+    }
+
+    public String infoNodo() {
+        return Site.gson.toJson(json);
     }
 }

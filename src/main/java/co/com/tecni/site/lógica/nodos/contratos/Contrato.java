@@ -1,8 +1,9 @@
 package co.com.tecni.site.lógica.nodos.contratos;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Contractual;
 import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
-import org.json.simple.JSONObject;
+import co.com.tecni.site.lógica.Árbol;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,13 +16,10 @@ public class Contrato extends Nodo {
     private int numContrato;
 
     private ClienteComercial clienteComercial;
+    private ArrayList<Contractual> fichasContractuales;
+
     private ArrayList<ClienteFacturación> clientesFacturación;
-    private ArrayList<Inmueble> inmuebles;
-
     private HashMap<Integer, Double> participaciónClientesFacturación;
-    private HashMap<String, Double> participaciónInmuebles;
-
-    private JSONObject json;
 
     // -----------------------------------------------
     // Constructor
@@ -30,11 +28,10 @@ public class Contrato extends Nodo {
         this.numContrato = numContrato;
         this.clienteComercial = clienteComercial;
 
-        clientesFacturación = new ArrayList<>();
-        inmuebles = new ArrayList<>();
+        fichasContractuales = new ArrayList<>();
 
+        clientesFacturación = new ArrayList<>();
         participaciónClientesFacturación = new HashMap<>();
-        participaciónInmuebles = new HashMap<>();
 
         clienteComercial.registrarContrato(this);
     }
@@ -58,16 +55,16 @@ public class Contrato extends Nodo {
     }
 
     public void agregarInmueble(Inmueble inmueble, double participación) {
-        inmuebles.add(inmueble);
-        participaciónInmuebles.put(inmueble.genId(), participación);
-        inmueble.asociarContrato(this);
+
+        fichasContractuales.add(new Contractual(this,  inmueble, new Contractual.Json(participación)));
+
     }
 
     public double participaciónInmuebles() {
         double total = 0;
 
-        for (Double participación : participaciónInmuebles.values())
-            total += participación;
+        for (Contractual fichaContractual : fichasContractuales)
+            total += fichaContractual.getParticipación();
 
         return total;
     }
@@ -80,16 +77,18 @@ public class Contrato extends Nodo {
         return clienteComercial;
     }
 
+
+
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
-    public String nombreNodo() {
+    public String nombreNodo(Árbol árbol) {
         return "Contrato "+numContrato;
     }
 
-    public ArrayList<Object> hijosNodo() {
+    public ArrayList<Object> hijosNodo(Object padre) {
         ArrayList<Object> hijos = new ArrayList<>();
-        hijos.addAll(clientesFacturación);
+        hijos.addAll(fichasContractuales);
         return hijos;
     }
 

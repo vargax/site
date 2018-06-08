@@ -89,8 +89,6 @@ public class LectorContrato {
         leerContratosFacturación();
         leerContratosInmuebles();
 
-
-
         inputStream.close();
     }
 
@@ -151,7 +149,7 @@ public class LectorContrato {
             contratos.put(numContrato, contrato);
         }
 
-        System.err.println("Recuperados " + contratos.size() + " Contratos");
+        System.err.println("Recuperados " + contratos.size() + " ÁrbolContratos");
     }
 
     private void leerContratosFacturación() {

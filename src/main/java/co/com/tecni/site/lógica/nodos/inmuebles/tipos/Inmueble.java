@@ -2,15 +2,14 @@ package co.com.tecni.site.lógica.nodos.inmuebles.tipos;
 
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.contratos.Contrato;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Ficha;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.site.lógica.Árbol;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
 import org.json.simple.JSONObject;
 
 import java.awt.*;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,7 +50,7 @@ public abstract class Inmueble extends Nodo {
     protected String sigla;
     protected JSONObject características;
 
-    private Contrato contrato;
+
 
     // -----------------------------------------------
     // Constructores
@@ -171,22 +170,17 @@ public abstract class Inmueble extends Nodo {
         fichas.add(ficha);
     }
 
-    public void asociarContrato(Contrato contrato) {
-        this.contrato = contrato;
-        super.íconoColor = UI_ÍCONO_COLOR_CONTRATO;
-    }
-
     public double getM2(String area) {
         return m2.get(area);
     }
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
-    public String nombreNodo() {
+    public String nombreNodo(Árbol árbol) {
         return genId();
     }
 
-    public ArrayList<Object> hijosNodo() {
+    public ArrayList<Object> hijosNodo(Object padre) {
         ArrayList<Object> hijos = new ArrayList<>();
         hijos.addAll(this.hijos);
         hijos.addAll(this.fichas);
@@ -196,8 +190,6 @@ public abstract class Inmueble extends Nodo {
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
-
-
     public ArrayList<Transacción>[] transaccionesNodo() {
         ArrayList[] resultado = super.transaccionesNodo();
 
@@ -217,8 +209,7 @@ public abstract class Inmueble extends Nodo {
     public String infoNodo() {
         infoNodo.put(JK[0], genId());
 
-        DecimalFormat df = new DecimalFormat("#.##");
-        df.setRoundingMode(RoundingMode.CEILING);
+        DecimalFormat df = Site.df;
 
         JSONObject áreaDetalle = new JSONObject();
         áreaDetalle.put(JK_ÁREA_DETALLE[0], df.format(m2.get(A_PRIV_CONSTRUIDOS)));
@@ -233,13 +224,6 @@ public abstract class Inmueble extends Nodo {
         área.put(JK_ÁREA[3], áreaDetalle);
 
         infoNodo.put(JK[1], área);
-
-        if (contrato != null) {
-            JSONObject contrato = new JSONObject();
-            contrato.put(JK_CONTRATO[0], this.contrato.getNumContrato());
-            contrato.put(JK_CONTRATO[1], this.contrato.getClienteComercial().getNombre());
-            infoNodo.put(JK[3], contrato);
-        }
 
         if (!características.isEmpty())
             infoNodo.put(JK[2], características);

@@ -1,6 +1,9 @@
 package co.com.tecni.site.lógica.nodos.contratos;
 
+import co.com.tecni.site.lógica.Cartera;
 import co.com.tecni.site.lógica.nodos.Nodo;
+import co.com.tecni.site.lógica.Árbol;
+import co.com.tecni.site.lógica.ÁrbolContratos;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,8 +41,6 @@ public class ClienteComercial extends Nodo {
     // -----------------------------------------------
     // Métodos Públicos
     // -----------------------------------------------
-
-
     public String getNombre() {
         return nombre;
     }
@@ -47,11 +48,16 @@ public class ClienteComercial extends Nodo {
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
-    public String nombreNodo() {
+    public String nombreNodo(Árbol árbol) {
         return nombre;
     }
 
-    public ArrayList<Object> hijosNodo() {
-        return new ArrayList<>(contratos.values());
+    public ArrayList<Object> hijosNodo(Object padre) {
+        if (padre instanceof ÁrbolContratos)
+            return new ArrayList<>(contratos.values());
+        else if (padre instanceof Cartera)
+            return new ArrayList<>(clientesFacturación.values());
+
+        return null;
     }
 }

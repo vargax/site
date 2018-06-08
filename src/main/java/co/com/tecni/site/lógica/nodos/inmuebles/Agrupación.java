@@ -3,6 +3,7 @@ package co.com.tecni.site.lógica.nodos.inmuebles;
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
+import co.com.tecni.site.lógica.Árbol;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
 
@@ -56,11 +57,11 @@ public class Agrupación extends Nodo {
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
-    public String nombreNodo() {
+    public String nombreNodo(Árbol árbol) {
         return nombre;
     }
 
-    public ArrayList<Object> hijosNodo() {
+    public ArrayList<Object> hijosNodo(Object padre) {
         ArrayList<Object> hijos = new ArrayList<>();
 
         hijos.addAll(agrupaciones);
