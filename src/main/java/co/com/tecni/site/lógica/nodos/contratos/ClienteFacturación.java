@@ -1,6 +1,7 @@
 package co.com.tecni.site.lógica.nodos.contratos;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
+import co.com.tecni.site.lógica.Árbol;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,11 +40,11 @@ public class ClienteFacturación extends Nodo {
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
-    public String nombreNodo() {
+    public String nombreNodo(Árbol árbol) {
         return nombre;
     }
 
-    public ArrayList<Object> hijosNodo() {
+    public ArrayList<Object> hijosNodo(Object padre) {
         return null;
     }
 }

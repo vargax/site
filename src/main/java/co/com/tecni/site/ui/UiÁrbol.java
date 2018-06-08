@@ -31,6 +31,42 @@ public class UiÁrbol {
     private JTree jTree;
     private UiNodoÁrbol uiNodoÁrbol;
 
+    class UiNodoÁrbol implements TreeCellRenderer {
+        // -----------------------------------------------
+        // Constantes
+        // -----------------------------------------------
+
+        // -----------------------------------------------
+        // Atributos
+        // -----------------------------------------------
+        private JLabel jLabel;
+
+        // -----------------------------------------------
+        // Constructor
+        // -----------------------------------------------
+        public UiNodoÁrbol() {
+            jLabel = new JLabel();
+        }
+
+        // -----------------------------------------------
+        // Métodos
+        // -----------------------------------------------
+        public Component getTreeCellRendererComponent(JTree jTree, Object o, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
+            Nodo nodo = (Nodo) o;
+
+            jLabel.setIcon(nodo.getÍcono());
+            jLabel.setText(nodo.nombreNodo(árbol));
+            jLabel.setOpaque(false);
+
+            if (selected) {
+                jLabel.setOpaque(true);
+                jLabel.setBackground(UiÁrbol.NODO_SEL_FONDO);
+            }
+
+            return jLabel;
+        }
+    }
+
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
@@ -79,41 +115,5 @@ public class UiÁrbol {
 
     Component getComponent() {
         return jTree;
-    }
-}
-
-class UiNodoÁrbol implements TreeCellRenderer {
-    // -----------------------------------------------
-    // Constantes
-    // -----------------------------------------------
-
-    // -----------------------------------------------
-    // Atributos
-    // -----------------------------------------------
-    private JLabel jLabel;
-
-    // -----------------------------------------------
-    // Constructor
-    // -----------------------------------------------
-    public UiNodoÁrbol() {
-        jLabel = new JLabel();
-    }
-
-    // -----------------------------------------------
-    // Métodos
-    // -----------------------------------------------
-    public Component getTreeCellRendererComponent(JTree jTree, Object o, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
-        Nodo nodo = (Nodo) o;
-
-        jLabel.setIcon(nodo.getÍcono());
-        jLabel.setText(nodo.nombreNodo());
-        jLabel.setOpaque(false);
-
-        if (selected) {
-            jLabel.setOpaque(true);
-            jLabel.setBackground(UiÁrbol.NODO_SEL_FONDO);
-        }
-
-        return jLabel;
     }
 }

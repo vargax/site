@@ -6,30 +6,41 @@ import co.com.tecni.site.datos.LectorInmueble;
 import co.com.tecni.site.datos.LectorJurídica;
 import co.com.tecni.site.lógica.nodos.inmuebles.Agrupación;
 import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 public class Site {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
     private final static String MODO_PONDERACIÓN = Inmueble.A_TOTAL;
-
     private final static String[] INMUEBLES_IMPORTAR = {"LaEstancia", "Ecotower93"};
 
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
+    public static Gson gson;
+    public static DecimalFormat df;
+
     private static Site instance;
     private String modoPonderación;
 
     private ÁrbolInmuebles árbolInmuebles;
-    private ÁrbolClientes árbolClientes;
+    private Clientes clientes;
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
     private Site() {
+        gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE_WITH_SPACES).create();
+        df = new DecimalFormat("#.##"); df.setRoundingMode(RoundingMode.CEILING);
+
         árbolInmuebles = new ÁrbolInmuebles();
-        árbolClientes = new ÁrbolClientes();
+        clientes = Clientes.getInstance();
 
         modoPonderación = MODO_PONDERACIÓN;
     }
@@ -72,9 +83,9 @@ public class Site {
     private void importarContratos() throws Exception {
         LectorContrato lectorContrato = new LectorContrato(árbolInmuebles.getInmueblesxId());
 
-        lectorContrato.setClientesComerciales(árbolClientes.getClientesComerciales());
-        lectorContrato.setClientesFacturación(árbolClientes.getClientesFacturación());
-        lectorContrato.setContratos(árbolClientes.getContratos());
+        lectorContrato.setClientesComerciales(clientes.getClientesComercialesxId());
+        lectorContrato.setClientesFacturación(clientes.getClientesFacturaciónxId());
+        lectorContrato.setContratos(clientes.getContratosxId());
 
         lectorContrato.leer();
     }
@@ -96,7 +107,7 @@ public class Site {
         return árbolInmuebles;
     }
 
-    public ÁrbolClientes getÁrbolClientes() {
-        return árbolClientes;
+    public Clientes getClientes() {
+        return clientes;
     }
 }

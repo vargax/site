@@ -1,8 +1,9 @@
 package co.com.tecni.site.ui;
 
+import co.com.tecni.site.lógica.Clientes;
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.ÁrbolClientes;
+import co.com.tecni.site.lógica.ÁrbolContratos;
 import co.com.tecni.site.lógica.ÁrbolInmuebles;
 
 import javax.swing.*;
@@ -29,7 +30,7 @@ public class UiSite extends JFrame {
         site.importarDatos();
 
         inmuebles = new UiÁrbol(ÁrbolInmuebles.NOMBRE_RAIZ, site.getÁrbolInmuebles(), this);
-        clientes = new UiÁrbol(ÁrbolClientes.NOMBRE_RAIZ, site.getÁrbolClientes(), this);
+        clientes = new UiÁrbol(ÁrbolContratos.NOMBRE_RAIZ, Clientes.getInstance().getÁrbolContratos(), this);
         uiInfo = new UiInfo();
         uiTransacciones = new UiTransacciones();
 

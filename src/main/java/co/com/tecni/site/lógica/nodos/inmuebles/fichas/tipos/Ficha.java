@@ -33,7 +33,7 @@ public abstract class Ficha extends Nodo {
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
-    public ArrayList<Object> hijosNodo() {
+    public ArrayList<Object> hijosNodo(Object padre) {
         ArrayList<Object> hijos = new ArrayList<>();
         hijos.addAll(this.fichas);
         return hijos;

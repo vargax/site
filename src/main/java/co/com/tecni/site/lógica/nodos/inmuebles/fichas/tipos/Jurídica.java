@@ -1,7 +1,9 @@
 package co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos;
 
+import co.com.tecni.site.lógica.Site;
+import co.com.tecni.site.lógica.Árbol;
+
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class Jurídica extends Ficha {
@@ -10,46 +12,44 @@ public class Jurídica extends Ficha {
     // -----------------------------------------------
     private final static Color UI_ÍCONO_COLOR = Color.YELLOW;
 
-    private final static String[] JSON_KEYS = {"Oficina Registro", "Matrícula Inmobiliaria",
-            "Fecha de compra en registro", "Coeficiente de Copropiedad"};
-
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    private String oficinaRegistro;
-    private String matrículaInmobiliaria;
-    private Date fechaRegistroCompra;
-    private double coefCopropiedad;
+    private Json json;
+
+    public static class Json {
+        String oficinaRegistro;
+        String matrículaInmobiliaria;
+        Date fechaRegistroCompra;
+        double coefCopropiedad;
+
+        public Json(String oficinaRegistro, String matrículaInmobiliaria, Date fechaRegistroCompra, double coefCopropiedad) {
+            this.oficinaRegistro = oficinaRegistro;
+            this.matrículaInmobiliaria = matrículaInmobiliaria;
+            this.fechaRegistroCompra = fechaRegistroCompra;
+            this.coefCopropiedad = coefCopropiedad;
+        }
+    }
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public Jurídica(String oficinaRegistro, String matrículaInmobiliaria, Date fechaRegistroCompra, double coefCopropiedad) {
+    public Jurídica(Json json) {
         super();
         super.íconoColor = UI_ÍCONO_COLOR;
 
-        this.oficinaRegistro = oficinaRegistro;
-        infoNodo.put(JSON_KEYS[0], oficinaRegistro);
-
-        this.matrículaInmobiliaria = matrículaInmobiliaria;
-        infoNodo.put(JSON_KEYS[1], matrículaInmobiliaria);
-
-        this.fechaRegistroCompra = fechaRegistroCompra;
-        //TODO infoNodo.put(JSON_KEYS[2], fechaRegistroCompra); lanza excepción al parsear
-
-        this.coefCopropiedad = coefCopropiedad;
-        infoNodo.put(JSON_KEYS[3], coefCopropiedad);
+        this.json = json;
     }
 
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
-    public String nombreNodo() {
-        return "Matrícula inmobiliaria: "+matrículaInmobiliaria;
+    public String nombreNodo(Árbol árbol) {
+        return "Matrícula inmobiliaria: "+json.matrículaInmobiliaria;
     }
 
-    public ArrayList<Object> hijosNodo() {
-        return null;
+    @Override
+    public String infoNodo() {
+        return Site.gson.toJson(json);
     }
-
 }

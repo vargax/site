@@ -1,6 +1,7 @@
 package co.com.tecni.site.lógica.nodos;
 
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.site.lógica.Árbol;
 import co.com.tecni.site.ui.UiÁrbol;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
@@ -37,8 +38,8 @@ public abstract class Nodo {
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
-    public abstract String nombreNodo();
-    public abstract ArrayList<Object> hijosNodo();
+    public abstract String nombreNodo(Árbol árbol);
+    public abstract ArrayList<Object> hijosNodo(Object padre);
 
     public Icon getÍcono() {
         IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());

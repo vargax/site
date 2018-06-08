@@ -69,7 +69,8 @@ public class LectorJurídica {
             Date fechaRegistroCompra  = new Date((long)filaActual.getCell(colFechaRegistroCompra).getNumericCellValue());
             double coefCopropiedad = filaActual.getCell(colCoefCopropiedad).getNumericCellValue();
 
-            Jurídica jurídica = new Jurídica(oficinaRegistro,matrículaInmobiliaria,fechaRegistroCompra,coefCopropiedad);
+            Jurídica.Json json = new Jurídica.Json(oficinaRegistro,matrículaInmobiliaria,fechaRegistroCompra,coefCopropiedad);
+            Jurídica jurídica = new Jurídica(json);
 
             inmueble.registrarFicha(jurídica);
         }
