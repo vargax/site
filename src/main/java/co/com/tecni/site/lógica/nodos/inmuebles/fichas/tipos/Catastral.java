@@ -1,7 +1,7 @@
 package co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos;
 
 import co.com.tecni.site.lógica.Site;
-import co.com.tecni.site.lógica.Árbol;
+import co.com.tecni.site.lógica.árboles.Árbol;
 
 import java.awt.*;
 

@@ -1,7 +1,7 @@
 package co.com.tecni.site.ui;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.Árbol;
+import co.com.tecni.site.lógica.árboles.Árbol;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
@@ -26,7 +26,6 @@ public class UiÁrbol {
     // -----------------------------------------------
     private String nombre;
     private Árbol árbol;
-    private UiSite uiSite;
 
     private JTree jTree;
     private UiNodoÁrbol uiNodoÁrbol;
@@ -44,7 +43,7 @@ public class UiÁrbol {
         // -----------------------------------------------
         // Constructor
         // -----------------------------------------------
-        public UiNodoÁrbol() {
+        UiNodoÁrbol() {
             jLabel = new JLabel();
         }
 
@@ -70,10 +69,9 @@ public class UiÁrbol {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    UiÁrbol(String nombre, Árbol árbol, UiSite uiSite) {
+    UiÁrbol(String nombre, Árbol árbol) {
         this.nombre = nombre;
         this.árbol = árbol;
-        this.uiSite = uiSite;
 
         uiNodoÁrbol = new UiNodoÁrbol();
 
@@ -94,7 +92,7 @@ public class UiÁrbol {
                 new TreeSelectionListener() {
                     public void valueChanged(TreeSelectionEvent treeSelectionEvent) {
                         Nodo nodo = (Nodo) jTree.getLastSelectedPathComponent();
-                        uiSite.actualizarDetalle(nodo);
+                        UiSite.instance.actualizarDetalle(nodo);
                     }
                 }
         );

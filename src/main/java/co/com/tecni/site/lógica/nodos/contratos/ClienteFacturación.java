@@ -1,7 +1,7 @@
 package co.com.tecni.site.lógica.nodos.contratos;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.Árbol;
+import co.com.tecni.site.lógica.árboles.Árbol;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,30 +11,24 @@ public class ClienteFacturación extends Nodo {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    private int nit;
-    private String nombre;
+    final int id;
+    final ClienteComercial clienteComercial;
 
-    private ClienteComercial clienteComercial;
-    private HashMap<Integer, Contrato> contratos;
+    private final HashMap<Integer, Factura> facturas;
+
+    private String nombre;
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public ClienteFacturación(ClienteComercial clienteComercial, int nit, String nombre) {
+    public ClienteFacturación(ClienteComercial clienteComercial, int id, String nombre) {
         this.clienteComercial = clienteComercial;
-        this.nit = nit;
+        this.id = id;
         this.nombre = nombre;
 
-        contratos = new HashMap<>();
-        this.clienteComercial.registrarClienteFacturación(this);
-    }
+        facturas = new HashMap<>();
 
-    protected void registrarContrato(Contrato contrato) {
-        contratos.put(contrato.getNumContrato(), contrato);
-    }
-
-    public int getNit() {
-        return nit;
+        clienteComercial.registrarClienteFacturación(this);
     }
 
     // -----------------------------------------------
@@ -45,6 +39,8 @@ public class ClienteFacturación extends Nodo {
     }
 
     public ArrayList<Object> hijosNodo(Object padre) {
-        return null;
+        ArrayList<Object> hijos = new ArrayList<>();
+        hijos.addAll(facturas.values());
+        return hijos;
     }
 }

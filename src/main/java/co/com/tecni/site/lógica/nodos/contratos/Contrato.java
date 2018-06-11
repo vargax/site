@@ -1,97 +1,67 @@
 package co.com.tecni.site.lógica.nodos.contratos;
 
+import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Contractual;
-import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
-import co.com.tecni.site.lógica.Árbol;
+import co.com.tecni.site.lógica.árboles.Árbol;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Contrato extends Nodo {
 
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    private int numContrato;
+    final int id;
+    final ClienteComercial clienteComercial;
 
-    private ClienteComercial clienteComercial;
-    private ArrayList<Contractual> fichasContractuales;
+    private ArrayList<Secuencia> secuencias;
 
-    private ArrayList<ClienteFacturación> clientesFacturación;
-    private HashMap<Integer, Double> participaciónClientesFacturación;
+    private Json json;
+    public static class Json {
+        int númeroContrato;
+        String openKM;
+
+        public Json(String openKM) {
+            this.openKM = openKM;
+        }
+    }
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public Contrato(int numContrato, ClienteComercial clienteComercial) {
-        this.numContrato = numContrato;
+    public Contrato(int id, ClienteComercial clienteComercial, Json json) {
+        this.id = id;
         this.clienteComercial = clienteComercial;
+        this.json = json;
 
-        fichasContractuales = new ArrayList<>();
+        json.númeroContrato = id;
 
-        clientesFacturación = new ArrayList<>();
-        participaciónClientesFacturación = new HashMap<>();
-
+        secuencias = new ArrayList<>();
         clienteComercial.registrarContrato(this);
     }
 
     // -----------------------------------------------
     // Métodos Públicos
     // -----------------------------------------------
-    public void agregarClienteFacturación(ClienteFacturación clienteFacturación, double participación) {
-        clientesFacturación.add(clienteFacturación);
-        participaciónClientesFacturación.put(clienteFacturación.getNit(), participación);
-        clienteFacturación.registrarContrato(this);
-    }
-
-    public double participaciónClientesFacturación() {
-        double total = 0;
-
-        for (Double participación : participaciónClientesFacturación.values())
-            total += participación;
-
-        return total;
-    }
-
-    public void agregarInmueble(Inmueble inmueble, double participación) {
-
-        fichasContractuales.add(new Contractual(this,  inmueble, new Contractual.Json(participación)));
-
-    }
-
-    public double participaciónInmuebles() {
-        double total = 0;
-
-        for (Contractual fichaContractual : fichasContractuales)
-            total += fichaContractual.getParticipación();
-
-        return total;
-    }
-
-    public int getNumContrato() {
-        return numContrato;
-    }
-
-    public ClienteComercial getClienteComercial() {
-        return clienteComercial;
-    }
-
 
 
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
     public String nombreNodo(Árbol árbol) {
-        return "Contrato "+numContrato;
+        return "Contrato: "+json.númeroContrato;
     }
 
     public ArrayList<Object> hijosNodo(Object padre) {
         ArrayList<Object> hijos = new ArrayList<>();
-        hijos.addAll(fichasContractuales);
+        hijos.addAll(secuencias);
         return hijos;
     }
 
+    @Override
+    public String infoNodo() {
+        return Site.gson.toJson(json);
+    }
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------

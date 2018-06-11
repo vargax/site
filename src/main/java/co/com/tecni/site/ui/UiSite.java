@@ -1,18 +1,19 @@
 package co.com.tecni.site.ui;
 
-import co.com.tecni.site.lógica.Clientes;
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.ÁrbolContratos;
-import co.com.tecni.site.lógica.ÁrbolInmuebles;
+import co.com.tecni.site.lógica.árboles.ÁrbolContratos;
+import co.com.tecni.site.lógica.árboles.ÁrbolInmuebles;
 
 import javax.swing.*;
 
-public class UiSite extends JFrame {
+class UiSite extends JFrame {
 
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
+    static UiSite instance;
+
     private Site site;
 
     private UiÁrbol inmuebles;
@@ -26,11 +27,13 @@ public class UiSite extends JFrame {
     // -----------------------------------------------
     UiSite() throws Exception {
 
+        instance = this;
+
         site = Site.getInstance();
         site.importarDatos();
 
-        inmuebles = new UiÁrbol(ÁrbolInmuebles.NOMBRE_RAIZ, site.getÁrbolInmuebles(), this);
-        clientes = new UiÁrbol(ÁrbolContratos.NOMBRE_RAIZ, Clientes.getInstance().getÁrbolContratos(), this);
+        inmuebles = new UiÁrbol(ÁrbolInmuebles.NOMBRE_RAIZ, Site.árbolInmuebles);
+        clientes = new UiÁrbol(ÁrbolContratos.NOMBRE_RAIZ, Site.árbolContratos);
         uiInfo = new UiInfo();
         uiTransacciones = new UiTransacciones();
 
@@ -54,6 +57,8 @@ public class UiSite extends JFrame {
         this.setSize(1280, 800);
         this.setVisible(true);
     }
+
+
 
     // -----------------------------------------------
     // Métodos

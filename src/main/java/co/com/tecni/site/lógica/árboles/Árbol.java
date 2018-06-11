@@ -1,4 +1,4 @@
-package co.com.tecni.site.lógica;
+package co.com.tecni.site.lógica.árboles;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
 
