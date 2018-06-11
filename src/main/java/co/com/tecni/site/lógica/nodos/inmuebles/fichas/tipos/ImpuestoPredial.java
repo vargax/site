@@ -3,7 +3,7 @@ package co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos;
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Tercero;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
-import co.com.tecni.site.lógica.Árbol;
+import co.com.tecni.site.lógica.árboles.Árbol;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
 

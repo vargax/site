@@ -3,7 +3,6 @@ package co.com.tecni.site.datos;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Catastral;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.ImpuestoPredial;
 import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
-import com.google.gson.Gson;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -12,7 +11,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class LectorCatastral {
+class LectorCatastral {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
@@ -28,49 +27,34 @@ public class LectorCatastral {
     private final static char COL_PRIMER_PREDIAL = 'G';
     private final static char COL_ÚLTIMO_PREDIAL = 'I';
 
+    private final static int colId = (int)COL_ID - 65;
+    private final static int colChip = (int)COL_CHIP - 65;
+    private final static int colCédulaCatastral = (int)COL_CÉDULA_CATASTRAL - 65;
+    private final static int colNomenclatura = (int)COL_NOMENCLATURA - 65;
+    private final static int colM2Construccion = (int)COL_M2_CONSTRUCCION - 65;
+    private final static int colM2Terreno = (int)COL_M2_TERRENO - 65;
+    private final static int colPrimerPredial = (int)COL_PRIMER_PREDIAL - 65;
+    private final static int colÚltimoPredial = (int)COL_ÚLTIMO_PREDIAL - 65;
+
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    private Gson gson;
-
-    private HashMap<String, Inmueble> inmuebles;
-
-    private int colId;
-    private int colChip;
-    private int colCédulaCatastral;
-    private int colNomenclatura;
-    private int colM2Construccion;
-    private int colM2Terreno;
-
-    private int colPrimerPredial;
-    private int colÚltimoPredial;
+    HashMap<String, Inmueble> inmueblesxId;
     private int añoPrimerPredial;
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public LectorCatastral(HashMap<String, Inmueble> inmuebles) {
 
-        gson = new Gson();
-
-        colId = (int)COL_ID - 65;
-        colChip = (int)COL_CHIP - 65;
-        colCédulaCatastral = (int)COL_CÉDULA_CATASTRAL - 65;
-        colNomenclatura = (int)COL_NOMENCLATURA - 65;
-        colM2Construccion = (int)COL_M2_CONSTRUCCION - 65;
-        colM2Terreno = (int)COL_M2_TERRENO - 65;
-
-        colPrimerPredial = (int)COL_PRIMER_PREDIAL - 65;
-        colÚltimoPredial = (int)COL_ÚLTIMO_PREDIAL - 65;
-
-        this.inmuebles = inmuebles;
+    public LectorCatastral(HashMap<String, Inmueble> inmueblesxId) {
+        this.inmueblesxId = inmueblesxId;
     }
 
     // -----------------------------------------------
     // Métodos
     // -----------------------------------------------
-    public void leer(String nombreArchivo) throws Exception {
-        InputStream inputStream = LectorCatastral.class.getResourceAsStream("/static/archivos/catastral "+ nombreArchivo + ".xlsx");
+    public void leer(String nombreInmueble) throws Exception {
+        InputStream inputStream = LectorCatastral.class.getResourceAsStream("/static/archivos/catastral "+ nombreInmueble + ".xlsx");
         XSSFWorkbook libro = new XSSFWorkbook(inputStream);
 
         Iterator<Row> filas = libro.getSheet(HOJA_NOMBRE).iterator();
@@ -82,7 +66,7 @@ public class LectorCatastral {
             filaActual = filas.next();
 
             String id = filaActual.getCell(colId).getStringCellValue();
-            Inmueble inmueble = inmuebles.get(id);
+            Inmueble inmueble = inmueblesxId.get(id);
 
             if (inmueble == null) throw new Exception("Inmueble "+id+" no encontrado");
 

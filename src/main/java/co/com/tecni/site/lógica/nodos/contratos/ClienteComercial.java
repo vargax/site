@@ -1,9 +1,9 @@
 package co.com.tecni.site.lógica.nodos.contratos;
 
-import co.com.tecni.site.lógica.Cartera;
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.Árbol;
-import co.com.tecni.site.lógica.ÁrbolContratos;
+import co.com.tecni.site.lógica.árboles.Árbol;
+import co.com.tecni.site.lógica.árboles.ÁrbolCartera;
+import co.com.tecni.site.lógica.árboles.ÁrbolContratos;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,11 +13,11 @@ public class ClienteComercial extends Nodo {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    private int id;
-    private String nombre;
+    final int id;
+    final String nombre;
 
-    private HashMap<Integer, ClienteFacturación> clientesFacturación;
-    private HashMap<Integer, Contrato> contratos;
+    private final HashMap<Integer, ClienteFacturación> clientesFacturación;
+    private final HashMap<Integer, Contrato> contratos;
 
     // -----------------------------------------------
     // Constructor
@@ -30,20 +30,17 @@ public class ClienteComercial extends Nodo {
         contratos = new HashMap<>();
     }
 
-    protected void registrarClienteFacturación(ClienteFacturación clienteFacturación) {
-        clientesFacturación.put(clienteFacturación.getNit(), clienteFacturación);
+    void registrarClienteFacturación(ClienteFacturación clienteFacturación) {
+        clientesFacturación.put(clienteFacturación.id, clienteFacturación);
     }
 
-    protected void registrarContrato(Contrato contrato) {
-        contratos.put(contrato.getNumContrato(), contrato);
+    void registrarContrato(Contrato contrato) {
+        contratos.put(contrato.id, contrato);
     }
 
     // -----------------------------------------------
     // Métodos Públicos
     // -----------------------------------------------
-    public String getNombre() {
-        return nombre;
-    }
 
     // -----------------------------------------------
     // GUI / Árbol
@@ -55,7 +52,7 @@ public class ClienteComercial extends Nodo {
     public ArrayList<Object> hijosNodo(Object padre) {
         if (padre instanceof ÁrbolContratos)
             return new ArrayList<>(contratos.values());
-        else if (padre instanceof Cartera)
+        else if (padre instanceof ÁrbolCartera)
             return new ArrayList<>(clientesFacturación.values());
 
         return null;

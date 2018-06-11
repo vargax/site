@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class LectorJurídica {
+class LectorJurídica {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
@@ -22,35 +22,29 @@ public class LectorJurídica {
     private final static char COL_FECHA_REGISTRO_COMPRA = 'D';
     private final static char COL_COEF_COPROPIEDAD = 'E';
 
+    private int colId = (int)COL_ID - 65;
+    private int colOficinaRegistro = (int) COL_OFICINA_REGISTRO - 65;
+    private int colMatículaInmobiliaria = (int) COL_MATRÍCULA_INMOBILIARIA - 65;
+    private int colFechaRegistroCompra = (int) COL_FECHA_REGISTRO_COMPRA - 65;
+    private int colCoefCopropiedad = (int) COL_COEF_COPROPIEDAD - 65;
+
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    private HashMap<String, Inmueble> inmuebles;
-
-    private int colId;
-    private int colOficinaRegistro;
-    private int colMatículaInmobiliaria;
-    private int colFechaRegistroCompra;
-    private int colCoefCopropiedad;
+    HashMap<String, Inmueble> inmueblesxId;
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public LectorJurídica(HashMap<String, Inmueble> inmuebles) {
-        colId = (int)COL_ID - 65;
-        colOficinaRegistro = (int) COL_OFICINA_REGISTRO - 65;
-        colMatículaInmobiliaria = (int) COL_MATRÍCULA_INMOBILIARIA - 65;
-        colFechaRegistroCompra = (int) COL_FECHA_REGISTRO_COMPRA - 65;
-        colCoefCopropiedad = (int) COL_COEF_COPROPIEDAD - 65;
-
-        this.inmuebles = inmuebles;
+    public LectorJurídica(HashMap<String, Inmueble> inmueblesxId) {
+        this.inmueblesxId = inmueblesxId;
     }
 
     // -----------------------------------------------
     // Métodos
     // -----------------------------------------------
-    public void leer(String nombreArchivo) throws Exception {
-        InputStream inputStream = LectorJurídica.class.getResourceAsStream("/static/archivos/jurídica "+ nombreArchivo + ".xlsx");
+    public void leer(String nombreInmueble) throws Exception {
+        InputStream inputStream = LectorJurídica.class.getResourceAsStream("/static/archivos/jurídica "+ nombreInmueble + ".xlsx");
         XSSFWorkbook libro = new XSSFWorkbook(inputStream);
 
         Iterator<Row> filas = libro.getSheet(HOJA_NOMBRE).iterator();
@@ -60,7 +54,7 @@ public class LectorJurídica {
             filaActual = filas.next();
 
             String id = filaActual.getCell(colId).getStringCellValue();
-            Inmueble inmueble = inmuebles.get(id);
+            Inmueble inmueble = inmueblesxId.get(id);
 
             if (inmueble == null) throw new Exception("Inmueble "+id+" no encontrado");
 

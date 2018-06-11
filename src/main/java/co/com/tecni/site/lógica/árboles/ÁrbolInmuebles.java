@@ -1,4 +1,4 @@
-package co.com.tecni.site.lógica;
+package co.com.tecni.site.lógica.árboles;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmuebles.Agrupación;
@@ -16,8 +16,8 @@ public class ÁrbolInmuebles extends Árbol {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    private Agrupación raiz;
     private HashMap<String, Inmueble> inmueblesxId;
+    private Agrupación raiz;
 
     // -----------------------------------------------
     // Constructor
@@ -40,17 +40,16 @@ public class ÁrbolInmuebles extends Árbol {
     // -----------------------------------------------
     // Métodos Públicos
     // -----------------------------------------------
-    public void registrarIdentificadores() {
+    public Agrupación registrarAgrupación(String nombre) {
+        Agrupación agrupación = new Agrupación(nombre);
+        raiz.agregarAgrupación(agrupación);
+        return agrupación;
+    }
+
+    public HashMap<String, Inmueble> registrarIdentificadores() {
         inmueblesxId = new HashMap<>();
         recursiónIdentificadores(raiz);
-    }
-
-    public HashMap<String, Inmueble> getInmueblesxId() {
         return inmueblesxId;
-    }
-
-    public Inmueble getInmueble(String id) {
-        return inmueblesxId.get(id);
     }
 
     // -----------------------------------------------

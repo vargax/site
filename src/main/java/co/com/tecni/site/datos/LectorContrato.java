@@ -3,15 +3,17 @@ package co.com.tecni.site.datos;
 import co.com.tecni.site.lógica.nodos.contratos.ClienteComercial;
 import co.com.tecni.site.lógica.nodos.contratos.ClienteFacturación;
 import co.com.tecni.site.lógica.nodos.contratos.Contrato;
+import co.com.tecni.site.lógica.nodos.contratos.Secuencia;
 import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.InputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class LectorContrato {
+class LectorContrato {
 
     // -----------------------------------------------
     // Constantes
@@ -23,57 +25,81 @@ public class LectorContrato {
     private final static char COL_HC_CC_NOMBRE = 'B';
     private final static char COL_HC_CF_NIT = 'C';      // Cliente Facturación
     private final static char COL_HC_CF_RS = 'D';
-
     // CONTRATOS
     private final static String HCT = "Contratos";
     private final static char COL_HCT_CT_ID = 'A';
     private final static char COL_HCT_CC_ID = 'B';
+    private final static char COL_HCT_URL_OPENKM = 'D';
+    // SECUENCIAS
+    private final static String HS = "Secuencias";
+    private final static char COL_HS_CT_ID = 'A';
+    private final static char COL_HS_SC_ID = 'B';
+    private final static char COL_HS_FECHA_INICIO = 'D';
+    private final static char COL_HS_FECHA_FIN = 'E';
+    private final static char COL_HS_CANON = 'F';
+    private final static char COL_HS_FECHA_PRIMER_COBRO = 'G';
+    private final static char COL_HS_FECHA_PRIMER_INCREMENTO = 'H';
+    private final static char COL_HS_PERIODICIDAD_INCREMENTOS_POSTERIORES = 'I';
+    private final static char COL_HS_ÍNDICE_BASE_INCREMENTO = 'J';
+    private final static char COL_HS_PUNTOS_ADICIONALES_INCREMENTO = 'K';
+    private final static char COL_HS_ESTADO_FACTURACIÓN = 'L';
+    // SECUENCIAS CLIENTES FACTURACIÓN
+    private final static String HSCF = "SecuenciaClientesFacturación";
+    private final static char COL_HSCF_SC_ID = 'A';
+    private final static char COL_HSCF_CF_NIT = 'D';
+    private final static char COL_HSCF_PARTICIPACIÓN = 'F';
+    // SECUENCIAS INMUEBLES
+    private final static String HSI = "SecuenciaInmuebles";
+    private final static char COL_HSI_SC_ID = 'A';
+    private final static char COL_HSI_INMUEBLE_ID = 'B';
+    private final static char COL_HSI_PARTICIPACIÓN = 'C';
 
-    // CONTRATOS FACTURACIÓN
-    private final static String HCF = "ContratosFacturacion";
-    private final static char COL_HCF_CT_NUM = 'B';
-    private final static char COL_HCF_CF_NIT = 'E';
-    private final static char COL_HCF_PARTICIPACIÓN = 'G';
-
-    // CONTRATOS INMUEBLES
-    private final static String HCI = "ContratosInmuebles";
-    private final static char COL_HCI_CT_NUM = 'B';
-    private final static char COL_HCI_INMUEBLE_ID = 'C';
-    private final static char COL_HCI_PARTICIPACIÓN = 'D';
+    // CLIENTES
+    private final static int colHcCcId = (int) COL_HC_CC_ID - 65;
+    private final static int colHcCcNombre = (int) COL_HC_CC_NOMBRE - 65;
+    private final static int colHcCfNit = (int) COL_HC_CF_NIT - 65;
+    private final static int colHcCfRs = (int) COL_HC_CF_RS - 65;
+    // CONTRATOS
+    private final static int colHctCtId = (int) COL_HCT_CT_ID - 65;
+    private final static int colHctCcId = (int) COL_HCT_CC_ID - 65;
+    private final static int colHctUrlOpenkm = (int) COL_HCT_URL_OPENKM - 65;
+    // SECUENCIAS
+    private final static int colHsCtId = (int) COL_HS_CT_ID - 65;
+    private final static int colHsScId = (int) COL_HS_SC_ID - 65;
+    private final static int colHsFechaInicio = (int) COL_HS_FECHA_INICIO - 65;
+    private final static int colHsFechaFin = (int) COL_HS_FECHA_FIN - 65;
+    private final static int colHsCanon = (int) COL_HS_CANON - 65;
+    private final static int colHsFechaPrimerCobro = (int) COL_HS_FECHA_PRIMER_COBRO - 65;
+    private final static int colHsFechaPrimerIncremento = (int) COL_HS_FECHA_PRIMER_INCREMENTO - 65;
+    private final static int colHsPeriodicidadIncrementosPosteriores = (int) COL_HS_PERIODICIDAD_INCREMENTOS_POSTERIORES - 65;
+    private final static int colHsÍndiceBaseIncremento = (int) COL_HS_ÍNDICE_BASE_INCREMENTO - 65;
+    private final static int colHsPuntosAdicionalesIncremento = (int) COL_HS_PUNTOS_ADICIONALES_INCREMENTO - 65;
+    private final static int colHsEstadoFacturación = (int) COL_HS_ESTADO_FACTURACIÓN - 65;
+    // SECUENCIAS CLIENTES FACTURACIÓN
+    private final static int colHscfScId = (int) COL_HSCF_SC_ID - 65;
+    private final static int colHscfCfNit = (int) COL_HSCF_CF_NIT -65;
+    private final static int colHscfParticipación = (int) COL_HSCF_PARTICIPACIÓN -65;
+    // SECUENCIAS INMUEBLES
+    private final static int colHsiScId = (int) COL_HSI_SC_ID - 65;
+    private final static int colHsiInmuebleId = (int) COL_HSI_INMUEBLE_ID - 65;
+    private final static int colHsiParticipación = (int) COL_HSI_PARTICIPACIÓN - 65;
 
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
     private XSSFWorkbook libro;
 
-    private HashMap<Integer, ClienteComercial> clientesComerciales;
-    private HashMap<Integer, ClienteFacturación> clientesFacturación;
-
     private HashMap<String, Inmueble> inmuebles;
-    private HashMap<Integer, Contrato> contratos;
 
-    // CLIENTES
-    private int colHcCcId = (int) COL_HC_CC_ID - 65;
-    private int colHcCcNombre = (int) COL_HC_CC_NOMBRE - 65;
-    private int colHcCfNit = (int) COL_HC_CF_NIT - 65;
-    private int colHcCfRs = (int) COL_HC_CF_RS - 65;
-    // CONTRATOS
-    private int colHctCtId = (int) COL_HCT_CT_ID - 65;
-    private int colHctCcId = (int) COL_HCT_CC_ID - 65;
-    // CONTRATOS FACTURACIÓN
-    private int colHcfCtNum = (int) COL_HCF_CT_NUM - 65;
-    private int colHcfNitCf = (int) COL_HCF_CF_NIT -65;
-    private int colHcfParticipación = (int) COL_HCF_PARTICIPACIÓN -65;
-    // CONTRATOS INMUEBLES
-    private int colHciCtNum = (int) COL_HCI_CT_NUM - 65;
-    private int colHciInmuebleId = (int) COL_HCI_INMUEBLE_ID - 65;
-    private int colHciParticipación = (int) COL_HCI_PARTICIPACIÓN - 65;
+    HashMap<Integer, ClienteComercial> clientesComerciales;
+    HashMap<Integer, ClienteFacturación> clientesFacturación;
+    HashMap<Integer, Contrato> contratos;
+    HashMap<Integer, Secuencia> secuencias;
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
     public LectorContrato(HashMap<String, Inmueble> inmuebles) {
-
         this.inmuebles = inmuebles;
     }
 
@@ -86,28 +112,19 @@ public class LectorContrato {
 
         leerClientes();
         leerContratos();
-        leerContratosFacturación();
-        leerContratosInmuebles();
+        leerSecuencias();
+        leerSecuenciasClientesFacturación();
+        leerSecuenciasInmuebles();
 
         inputStream.close();
     }
-
-    public void setClientesComerciales(HashMap<Integer, ClienteComercial> clientesComerciales) {
-        this.clientesComerciales = clientesComerciales;
-    }
-
-    public void setClientesFacturación(HashMap<Integer, ClienteFacturación> clientesFacturación) {
-        this.clientesFacturación = clientesFacturación;
-    }
-
-    public void setContratos(HashMap<Integer, Contrato> contratos) {
-        this.contratos = contratos;
-    }
-
     // -----------------------------------------------
     // Métodos de soporte
     // -----------------------------------------------
     private void leerClientes() {
+        clientesComerciales = new HashMap<>();
+        clientesFacturación = new HashMap<>();
+
         Iterator<Row> filas = libro.getSheet(HC).iterator();
         Row filaActual = filas.next();
 
@@ -129,11 +146,13 @@ public class LectorContrato {
             clientesFacturación.put(nit, clienteFacturación);
         }
 
-        System.err.println("Recuperados "+ clientesComerciales.size() + " Clientes Comerciales y "
+        System.out.println("Recuperados "+ clientesComerciales.size() + " Clientes Comerciales y "
                 + clientesFacturación.size() + " Clientes Facturación");
     }
 
     private void leerContratos() {
+        contratos = new HashMap<>();
+
         Iterator<Row> filas = libro.getSheet(HCT).iterator();
         Row filaActual = filas.next();
 
@@ -141,77 +160,129 @@ public class LectorContrato {
             filaActual = filas.next();
             if(filaActual.getCell(colHctCtId) == null) break;
 
-            int numContrato = ((Double) filaActual.getCell(colHctCtId).getNumericCellValue()).intValue();
-            ClienteComercial clienteComercial = clientesComerciales.get(((Double) filaActual.getCell(colHctCcId).getNumericCellValue()).intValue());
+            int idContrato = Lector.entero(filaActual, colHctCtId);
+            ClienteComercial clienteComercial = clientesComerciales.get(Lector.entero(filaActual, colHctCcId));
+            String openKM = Lector.cadena(filaActual, colHctUrlOpenkm);
 
-            Contrato contrato = new Contrato(numContrato, clienteComercial);
+            Contrato.Json json = new Contrato.Json(openKM);
+            Contrato contrato = new Contrato(idContrato, clienteComercial, json);
 
-            contratos.put(numContrato, contrato);
+            contratos.put(idContrato, contrato);
         }
 
-        System.err.println("Recuperados " + contratos.size() + " ÁrbolContratos");
+        System.out.println("Recuperados " + contratos.size() + " contratos");
     }
 
-    private void leerContratosFacturación() {
-        Iterator<Row> filas = libro.getSheet(HCF).iterator();
+    private void leerSecuencias() {
+        secuencias = new HashMap<>();
+
+        Iterator<Row> filas = libro.getSheet(HS).iterator();
         Row filaActual = filas.next();
 
         while (filas.hasNext()) {
             filaActual = filas.next();
-            if (filaActual.getCell(colHcfCtNum) == null) break;
+            if(filaActual.getCell(colHsScId) == null) break;
 
-            int numContrato = ((Double) filaActual.getCell(colHcfCtNum).getNumericCellValue()).intValue();
-            Contrato contrato = contratos.get(numContrato);
+            int idSecuencia = Lector.entero(filaActual, colHsScId);
+            int idContrato = Lector.entero(filaActual, colHsCtId);
+
+            Contrato contrato = contratos.get(idContrato);
             if (contrato == null) {
-                System.err.println("Contrato "+ numContrato + " no encontrado");
+                System.err.println("Contrato "+ idContrato + " no encontrado");
                 continue;
             }
 
-            int nitClienteFacturación = ((Double) filaActual.getCell(colHcfNitCf).getNumericCellValue()).intValue();
-            ClienteFacturación clienteFacturación = clientesFacturación.get(nitClienteFacturación);
+            Date inicio = Lector.fecha(filaActual, colHsFechaInicio);
+            Date fin = Lector.fecha(filaActual, colHsFechaFin);
 
-            double participación = filaActual.getCell(colHcfParticipación).getNumericCellValue();
-            contrato.agregarClienteFacturación(clienteFacturación, participación);
+            double cánonMensual = Lector.doble(filaActual, colHsCanon);
+            Date primerCobro = Lector.fecha(filaActual, colHsFechaPrimerCobro);
+
+            Date primerIncremento = Lector.fecha(filaActual, colHsFechaPrimerIncremento);
+            int periodicidadIncremento = Lector.entero(filaActual, colHsPeriodicidadIncrementosPosteriores);
+            String índiceBaseIncremento = Lector.cadena(filaActual, colHsÍndiceBaseIncremento);
+            double ptosAdicionalesIncremento = Lector.doble(filaActual, colHsPuntosAdicionalesIncremento);
+            Secuencia.Cánon.Incremento incremento = new Secuencia.Cánon.Incremento(índiceBaseIncremento, ptosAdicionalesIncremento, periodicidadIncremento, primerIncremento);
+
+            Secuencia.Cánon cánon = new Secuencia.Cánon(cánonMensual, primerCobro, incremento);
+
+            Secuencia secuencia = new Secuencia(idSecuencia, inicio, fin, contrato, cánon);
+
+            secuencias.put(idSecuencia, secuencia);
         }
 
-        for (Contrato contrato : contratos.values())
-            if (contrato.participaciónClientesFacturación() != 1)
-                System.err.println(" Suma participaciones ClientesFacturación para contrato "+ contrato.getNumContrato() + " es "+ contrato.participaciónInmuebles());
+        System.out.println("Recuperadas "+ secuencias.size() + " secuencias");
+
     }
 
-    private void leerContratosInmuebles() {
-        Iterator<Row> filas = libro.getSheet(HCI).iterator();
+    private void leerSecuenciasClientesFacturación() {
+        Iterator<Row> filas = libro.getSheet(HSCF).iterator();
+        Row filaActual = filas.next();
+
+        while (filas.hasNext()) {
+            filaActual = filas.next();
+            if (filaActual.getCell(colHscfScId) == null) break;
+
+            int idSecuencia = Lector.entero(filaActual, colHscfScId);
+            Secuencia secuencia = secuencias.get(idSecuencia);
+            if (secuencia == null) {
+                System.err.println("Secuencia "+ idSecuencia + " no encontrada");
+                continue;
+            }
+
+            int nitClienteFacturación = Lector.entero(filaActual, colHscfCfNit);
+            ClienteFacturación clienteFacturación = clientesFacturación.get(nitClienteFacturación);
+            if (clienteFacturación == null) {
+                System.err.println("ClienteFacturación"+ nitClienteFacturación + " no encontrado para secuencia "+idSecuencia);
+                continue;
+            }
+
+            double participación = Lector.doble(filaActual, colHscfParticipación);
+            secuencia.agregarClienteFacturación(clienteFacturación, participación);
+        }
+
+        for (Secuencia secuencia : secuencias.values())
+            try {
+                secuencia.verificarParticipaciónClientesFacturación();
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
+
+    }
+
+    private void leerSecuenciasInmuebles() {
+        Iterator<Row> filas = libro.getSheet(HSI).iterator();
         Row filaActual = filas.next();
         int contador = 0;
 
         while (filas.hasNext()) {
             filaActual = filas.next();
-            if (filaActual.getCell(colHciCtNum) == null) break;
+            if (filaActual.getCell(colHsiScId) == null) break;
 
-            int numContrato = ((Double) filaActual.getCell(colHciCtNum).getNumericCellValue()).intValue();
-            String idInmueble = filaActual.getCell(colHciInmuebleId).getStringCellValue();
-            Double participación = filaActual.getCell(colHciParticipación).getNumericCellValue();
+            int idSecuencia = Lector.entero(filaActual, colHsiScId);
+            Secuencia secuencia = secuencias.get(idSecuencia);
 
-            Contrato contrato = contratos.get(numContrato);
-            if (contrato == null) {
-                System.err.println("Contrato "+ numContrato + " no encontrado");
-                continue;
-            }
-
+            String idInmueble = Lector.cadena(filaActual, colHsiInmuebleId);
             Inmueble inmueble = inmuebles.get(idInmueble);
-            if (inmueble == null) {
-                System.err.println("Inmueble "+ idInmueble + " no encontrado");
+
+            if (secuencia == null || inmueble == null) {
+                System.err.println("Error al recuperar secuencia "+idSecuencia+" o inmueble "+ idInmueble);
                 continue;
             }
 
-            contrato.agregarInmueble(inmueble, participación);
+            Double participación = Lector.doble(filaActual, colHsiParticipación);
+
+            secuencia.agregarInmueble(inmueble, participación);
             contador++;
         }
 
-        for (Contrato contrato : contratos.values())
-            if (contrato.participaciónInmuebles() != 1)
-                System.err.println(" Suma participaciones para contrato "+ contrato.getNumContrato() + " es "+ contrato.participaciónInmuebles());
+        for (Secuencia secuencia : secuencias.values())
+            try {
+                secuencia.verificarParticipaciónInmuebles();
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
 
-        System.err.println("Asociados "+contador+ " inmuebles a "+contratos.size()+" contratos");
+        System.out.println("Asociados "+contador+ " inmuebles a "+secuencias.size()+" secuencias en "+contratos.size() +" contratos");
     }
 }
