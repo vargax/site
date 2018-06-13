@@ -21,7 +21,6 @@ public abstract class Nodo {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    protected String nombre;
     protected IconCode íconoCódigo;
     protected Color íconoColor = UiÁrbol.ÍCONO_COLOR;
 
@@ -39,7 +38,7 @@ public abstract class Nodo {
     // GUI / Árbol
     // -----------------------------------------------
     public abstract String nombreNodo(Árbol árbol);
-    public abstract ArrayList<Object> hijosNodo(Object padre);
+    public abstract ArrayList<Object> hijosNodo(Árbol árbol);
 
     public Icon getÍcono() {
         IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());

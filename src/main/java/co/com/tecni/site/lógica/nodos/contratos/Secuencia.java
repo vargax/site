@@ -1,7 +1,8 @@
 package co.com.tecni.site.lógica.nodos.contratos;
 
+import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Contractual;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Arrendamiento;
 import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
 import co.com.tecni.site.lógica.árboles.Árbol;
 
@@ -19,12 +20,12 @@ public class Secuencia extends Nodo {
     final Date INICIO;
     final Date FIN;
 
-    private ArrayList<Contractual> fichasContractuales;
+    private ArrayList<Arrendamiento> fichasArrendamiento;
 
-    private ArrayList<ClienteFacturación> clientesFacturación;
+    private HashMap<Integer, ClienteFacturación> clientesFacturación;
     private HashMap<Integer, Double> participaciónClientesFacturación;
 
-    Cánon cánon;
+    private Cánon cánon;
     public static class Cánon {
         double cánon;
         Date primerCobro;
@@ -51,7 +52,7 @@ public class Secuencia extends Nodo {
         }
     }
 
-    ArrayList<Descuento> descuentos;
+    private ArrayList<Descuento> descuentos;
     public static class Descuento {
         double porcentajeDescuento;
         Date inicio;
@@ -61,6 +62,31 @@ public class Secuencia extends Nodo {
             this.porcentajeDescuento = porcentajeDescuento;
             this.inicio = inicio;
             this.fin = fin;
+        }
+    }
+
+    private Json json;
+    static class Json {
+        int número;
+        Date fechaInicio;
+        Date fechaFin;
+        Cánon cánon;
+        Map<String, Double> clientesFacturación;
+
+        Json(Secuencia secuencia) {
+            this.número = secuencia.ID;
+            this.fechaInicio = secuencia.INICIO;
+            this.fechaFin = secuencia.FIN;
+            this.cánon = secuencia.cánon;
+        }
+
+        void genInfoClientesFacturación(Secuencia secuencia) {
+            clientesFacturación = new HashMap<>();
+            for (Map.Entry<Integer, Double> me : secuencia.participaciónClientesFacturación.entrySet()) {
+                String cf = secuencia.clientesFacturación.get(me.getKey()).nombre;
+                double participación = me.getValue();
+                clientesFacturación.put(cf, participación);
+            }
         }
     }
 
@@ -77,9 +103,13 @@ public class Secuencia extends Nodo {
 
         descuentos = new ArrayList<>();
 
-        fichasContractuales = new ArrayList<>();
-        clientesFacturación = new ArrayList<>();
+        fichasArrendamiento = new ArrayList<>();
+        clientesFacturación = new HashMap<>();
         participaciónClientesFacturación = new HashMap<>();
+
+        CONTRATO.secuencias.add(this);
+
+        json = new Json(this);
     }
 
     public void registrarDescuento(Descuento descuento) {
@@ -87,15 +117,15 @@ public class Secuencia extends Nodo {
     }
 
     public void agregarClienteFacturación(ClienteFacturación clienteFacturación, double participación) {
-        clientesFacturación.add(clienteFacturación);
+        clientesFacturación.put(clienteFacturación.id, clienteFacturación);
         participaciónClientesFacturación.put(clienteFacturación.id, participación);
 
     }
 
     public void agregarInmueble(Inmueble inmueble, double participación) {
-        Contractual.Json json = new Contractual.Json(ID, CONTRATO.clienteComercial.nombre, participación);
-        Contractual contractual = new Contractual(this, inmueble, json);
-        fichasContractuales.add(contractual);
+        Arrendamiento.Json json = new Arrendamiento.Json(ID, CONTRATO.clienteComercial.nombre, participación);
+        Arrendamiento arrendamiento = new Arrendamiento(this, inmueble, json);
+        fichasArrendamiento.add(arrendamiento);
     }
 
     public void verificarParticipaciónClientesFacturación() throws Exception {
@@ -106,13 +136,15 @@ public class Secuencia extends Nodo {
 
         if (total != 1)
             throw new Exception("Participación clientes facturación para secuencia "+ID+" es "+total);
+
+        json.genInfoClientesFacturación(this);
     }
 
     public void verificarParticipaciónInmuebles() throws Exception {
         double total = 0;
 
-        for (Contractual fichaContractual : fichasContractuales)
-            total += fichaContractual.getParticipación();
+        for (Arrendamiento fichaArrendamiento : fichasArrendamiento)
+            total += fichaArrendamiento.getParticipación();
 
         if (total != 1)
             throw new Exception("Participación inmuebles para secuencia "+ID+" es "+total);
@@ -140,9 +172,14 @@ public class Secuencia extends Nodo {
     }
 
     @Override
-    public ArrayList<Object> hijosNodo(Object padre) {
+    public ArrayList<Object> hijosNodo(Árbol árbol) {
         ArrayList<Object> hijos = new ArrayList<>();
-        hijos.addAll(fichasContractuales);
+        hijos.addAll(fichasArrendamiento);
         return hijos;
+    }
+
+    @Override
+    public String infoNodo() {
+        return Site.gson.toJson(json);
     }
 }

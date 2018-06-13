@@ -50,7 +50,9 @@ public class UiÁrbol {
         // -----------------------------------------------
         // Métodos
         // -----------------------------------------------
-        public Component getTreeCellRendererComponent(JTree jTree, Object o, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
+        public Component getTreeCellRendererComponent(JTree jTree, Object o,
+                                                      boolean selected, boolean expanded,
+                                                      boolean leaf, int row, boolean hasFocus) {
             Nodo nodo = (Nodo) o;
 
             jLabel.setIcon(nodo.getÍcono());

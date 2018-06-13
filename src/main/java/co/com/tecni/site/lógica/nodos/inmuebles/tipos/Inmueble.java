@@ -2,6 +2,7 @@ package co.com.tecni.site.lógica.nodos.inmuebles.tipos;
 
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Arrendamiento;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Ficha;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.site.lógica.árboles.Árbol;
@@ -20,7 +21,7 @@ public abstract class Inmueble extends Nodo {
     // Constantes
     // -----------------------------------------------
     private final static IconCode UI_ÍCONO = GoogleMaterialDesignIcons.MAP;
-    private final static Color UI_ÍCONO_COLOR_CONTRATO = new Color(0, 255, 128);
+    private final static Color UI_ÍCONO_COLOR_ARRENDADO = new Color(0, 255, 128);
 
     public final static String A_PRIV_CONSTRUIDOS = "PC";
     public final static String A_PRIV_LIBRES = "PL";
@@ -39,6 +40,8 @@ public abstract class Inmueble extends Nodo {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
+    private String nombre;
+
     private Site site;
 
     private HashMap<String , Double> m2;
@@ -49,7 +52,6 @@ public abstract class Inmueble extends Nodo {
 
     protected String sigla;
     protected JSONObject características;
-
 
 
     // -----------------------------------------------
@@ -168,6 +170,15 @@ public abstract class Inmueble extends Nodo {
 
     public void registrarFicha(Ficha ficha) {
         fichas.add(ficha);
+
+        if (ficha instanceof Arrendamiento)
+            recursiónColorÍcono(UI_ÍCONO_COLOR_ARRENDADO);
+    }
+
+    void recursiónColorÍcono(Color color) {
+        super.íconoColor = color;
+        for (Inmueble inmueble : hijos)
+            inmueble.recursiónColorÍcono(color);
     }
 
     public double getM2(String area) {
@@ -180,7 +191,7 @@ public abstract class Inmueble extends Nodo {
         return genId();
     }
 
-    public ArrayList<Object> hijosNodo(Object padre) {
+    public ArrayList<Object> hijosNodo(Árbol árbol) {
         ArrayList<Object> hijos = new ArrayList<>();
         hijos.addAll(this.hijos);
         hijos.addAll(this.fichas);

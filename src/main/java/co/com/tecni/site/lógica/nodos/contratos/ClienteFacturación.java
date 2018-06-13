@@ -16,7 +16,7 @@ public class ClienteFacturación extends Nodo {
 
     private final HashMap<Integer, Factura> facturas;
 
-    private String nombre;
+    String nombre;
 
     // -----------------------------------------------
     // Constructor
@@ -28,7 +28,7 @@ public class ClienteFacturación extends Nodo {
 
         facturas = new HashMap<>();
 
-        clienteComercial.registrarClienteFacturación(this);
+        clienteComercial.clientesFacturación.put(id, this);
     }
 
     // -----------------------------------------------
@@ -38,7 +38,7 @@ public class ClienteFacturación extends Nodo {
         return nombre;
     }
 
-    public ArrayList<Object> hijosNodo(Object padre) {
+    public ArrayList<Object> hijosNodo(Árbol árbol) {
         ArrayList<Object> hijos = new ArrayList<>();
         hijos.addAll(facturas.values());
         return hijos;

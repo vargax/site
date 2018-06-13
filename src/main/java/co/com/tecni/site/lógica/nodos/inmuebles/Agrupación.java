@@ -18,6 +18,8 @@ public class Agrupación extends Nodo {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
+    private String nombre;
+
     private Agrupación padre;
     private ArrayList<Agrupación> agrupaciones;
     protected ArrayList<Inmueble> inmuebles;
@@ -61,7 +63,7 @@ public class Agrupación extends Nodo {
         return nombre;
     }
 
-    public ArrayList<Object> hijosNodo(Object padre) {
+    public ArrayList<Object> hijosNodo(Árbol árbol) {
         ArrayList<Object> hijos = new ArrayList<>();
 
         hijos.addAll(agrupaciones);
@@ -88,7 +90,4 @@ public class Agrupación extends Nodo {
     // -----------------------------------------------
     // Métodos Object
     // -----------------------------------------------
-    public String toString() {
-        return "{ID:'"+super.nombre+"',A: "+agrupaciones.size()+",I:"+inmuebles.size()+"}";
-    }
 }

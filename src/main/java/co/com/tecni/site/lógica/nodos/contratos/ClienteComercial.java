@@ -16,8 +16,8 @@ public class ClienteComercial extends Nodo {
     final int id;
     final String nombre;
 
-    private final HashMap<Integer, ClienteFacturación> clientesFacturación;
-    private final HashMap<Integer, Contrato> contratos;
+    final HashMap<Integer, ClienteFacturación> clientesFacturación;
+    final HashMap<Integer, Contrato> contratos;
 
     // -----------------------------------------------
     // Constructor
@@ -28,14 +28,6 @@ public class ClienteComercial extends Nodo {
 
         clientesFacturación = new HashMap<>();
         contratos = new HashMap<>();
-    }
-
-    void registrarClienteFacturación(ClienteFacturación clienteFacturación) {
-        clientesFacturación.put(clienteFacturación.id, clienteFacturación);
-    }
-
-    void registrarContrato(Contrato contrato) {
-        contratos.put(contrato.id, contrato);
     }
 
     // -----------------------------------------------
@@ -49,10 +41,10 @@ public class ClienteComercial extends Nodo {
         return nombre;
     }
 
-    public ArrayList<Object> hijosNodo(Object padre) {
-        if (padre instanceof ÁrbolContratos)
+    public ArrayList<Object> hijosNodo(Árbol árbol) {
+        if (árbol instanceof ÁrbolContratos)
             return new ArrayList<>(contratos.values());
-        else if (padre instanceof ÁrbolCartera)
+        else if (árbol instanceof ÁrbolCartera)
             return new ArrayList<>(clientesFacturación.values());
 
         return null;

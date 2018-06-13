@@ -2,6 +2,7 @@ package co.com.tecni.site.ui;
 
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
+import co.com.tecni.site.lógica.árboles.ÁrbolCartera;
 import co.com.tecni.site.lógica.árboles.ÁrbolContratos;
 import co.com.tecni.site.lógica.árboles.ÁrbolInmuebles;
 
@@ -17,7 +18,8 @@ class UiSite extends JFrame {
     private Site site;
 
     private UiÁrbol inmuebles;
-    private UiÁrbol clientes;
+    private UiÁrbol contratos;
+    private UiÁrbol cartera;
 
     private UiInfo uiInfo;
     private UiTransacciones uiTransacciones;
@@ -30,10 +32,12 @@ class UiSite extends JFrame {
         instance = this;
 
         site = Site.getInstance();
-        site.importarDatos();
+        site.generarÁrboles();
 
         inmuebles = new UiÁrbol(ÁrbolInmuebles.NOMBRE_RAIZ, Site.árbolInmuebles);
-        clientes = new UiÁrbol(ÁrbolContratos.NOMBRE_RAIZ, Site.árbolContratos);
+        contratos = new UiÁrbol(ÁrbolContratos.NOMBRE_RAIZ, Site.árbolContratos);
+        cartera = new UiÁrbol(ÁrbolCartera.NOMBRE_RAIZ, Site.árbolCartera);
+
         uiInfo = new UiInfo();
         uiTransacciones = new UiTransacciones();
 
@@ -44,7 +48,8 @@ class UiSite extends JFrame {
 
         JTabbedPane pestañasÁrboles = new JTabbedPane();
         pestañasÁrboles.addTab(inmuebles.getNombre(), new JScrollPane(inmuebles.getComponent()));
-        pestañasÁrboles.addTab(clientes.getNombre(), new JScrollPane(clientes.getComponent()));
+        pestañasÁrboles.addTab(contratos.getNombre(), new JScrollPane(contratos.getComponent()));
+        pestañasÁrboles.addTab(cartera.getNombre(), new JScrollPane(cartera.getComponent()));
 
         JSplitPane panelPrincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         panelPrincipal.setLeftComponent(pestañasÁrboles);
@@ -63,7 +68,7 @@ class UiSite extends JFrame {
     // -----------------------------------------------
     // Métodos
     // -----------------------------------------------
-    public void actualizarDetalle(Nodo nodo) {
+    void actualizarDetalle(Nodo nodo) {
         uiInfo.mostrarDetalle(nodo.infoNodo());
         uiTransacciones.mostrarTransacciones(nodo.transaccionesNodo());
     }
