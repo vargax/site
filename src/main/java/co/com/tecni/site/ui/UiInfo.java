@@ -4,7 +4,7 @@ import com.doitnext.swing.widgets.json.JSONEditPanel;
 
 import java.awt.*;
 
-public class UiInfo {
+class UiInfo {
 
     // -----------------------------------------------
     // Atributos
@@ -14,7 +14,7 @@ public class UiInfo {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public UiInfo() {
+    UiInfo() {
         jsonEditPanel = new JSONEditPanel();
     }
 

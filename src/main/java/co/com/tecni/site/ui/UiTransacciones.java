@@ -29,7 +29,7 @@ public class UiTransacciones {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public UiTransacciones() {
+    UiTransacciones() {
         DoubleRender doubleRender = new DoubleRender();
 
         resumenTransacciones = new ResumenTransacciones();
@@ -217,7 +217,7 @@ class DoubleRender extends DefaultTableCellRenderer {
         super.getTableCellRendererComponent(jTable, value, isSelected, hasFocus, row, column);
 
         setHorizontalAlignment(RIGHT);
-        setText(DECIMAL_FORMAT.format((Number) value));
+        setText(DECIMAL_FORMAT.format(value));
         if ((Double) value < 0) setForeground(Color.RED);
 
         return this;

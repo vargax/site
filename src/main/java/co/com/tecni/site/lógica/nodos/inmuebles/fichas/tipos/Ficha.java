@@ -2,6 +2,7 @@ package co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.site.lógica.árboles.Árbol;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
 
@@ -33,7 +34,7 @@ public abstract class Ficha extends Nodo {
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
-    public ArrayList<Object> hijosNodo(Object padre) {
+    public ArrayList<Object> hijosNodo(Árbol árbol) {
         ArrayList<Object> hijos = new ArrayList<>();
         hijos.addAll(this.fichas);
         return hijos;

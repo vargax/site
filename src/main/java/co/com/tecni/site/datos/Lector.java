@@ -2,10 +2,14 @@ package co.com.tecni.site.datos;
 
 import co.com.tecni.site.lógica.nodos.contratos.ClienteComercial;
 import co.com.tecni.site.lógica.nodos.contratos.ClienteFacturación;
+import co.com.tecni.site.lógica.nodos.contratos.Contrato;
+import co.com.tecni.site.lógica.nodos.contratos.Secuencia;
 import co.com.tecni.site.lógica.nodos.inmuebles.Agrupación;
 import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
+import co.com.tecni.site.lógica.árboles.ÁrbolCartera;
 import co.com.tecni.site.lógica.árboles.ÁrbolContratos;
 import co.com.tecni.site.lógica.árboles.ÁrbolInmuebles;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 
 import java.util.Date;
@@ -15,13 +19,10 @@ public class Lector {
     private final static String[] INMUEBLES_IMPORTAR = {"LaEstancia", "Ecotower93"};
 
     private HashMap<String, Inmueble> inmueblesxId;
-    private HashMap<Integer, ClienteComercial> clientesComerciales;
-    private HashMap<Integer, ClienteFacturación> clientesFacturación;
-
-
-    public Lector() {
-
-    }
+    private HashMap<Integer, ClienteComercial> clientesComercialesxId;
+    private HashMap<Integer, ClienteFacturación> clientesFacturaciónxId;
+    private HashMap<Integer, Contrato> contratosxId;
+    private HashMap<Integer, Secuencia> secuenciasxId;
 
     // -----------------------------------------------
     // Soporte parsers
@@ -29,7 +30,7 @@ public class Lector {
     static Date fecha(Row fila, int columna) {
         Date fecha = null;
         try {
-            fecha = new Date((long)fila.getCell(columna).getNumericCellValue());
+            fecha = DateUtil.getJavaDate(fila.getCell(columna).getNumericCellValue());
         } catch (NullPointerException e) {
             char col = (char) (columna + 65);
             System.err.println("Columna "+col+" indefinida como fecha para la fila "+ fila.getRowNum());
@@ -98,16 +99,23 @@ public class Lector {
         }
     }
 
-    public ÁrbolContratos importarContratos() throws Exception {
+    public void importarContratos() throws Exception {
         LectorContrato lectorContrato = new LectorContrato(inmueblesxId);
 
         lectorContrato.leer();
 
-        return new ÁrbolContratos(
-                lectorContrato.clientesComerciales,
-                lectorContrato.clientesFacturación,
-                lectorContrato.contratos,
-                lectorContrato.secuencias);
+        clientesComercialesxId = lectorContrato.clientesComerciales;
+        clientesFacturaciónxId = lectorContrato.clientesFacturación;
+        contratosxId = lectorContrato.contratos;
+        secuenciasxId = lectorContrato.secuencias;
+    }
+
+    public ÁrbolContratos genÁrbolContratos() {
+        return new ÁrbolContratos(clientesComercialesxId);
+    }
+
+    public ÁrbolCartera genÁrbolCartera() {
+        return new ÁrbolCartera(clientesComercialesxId);
     }
 
 }

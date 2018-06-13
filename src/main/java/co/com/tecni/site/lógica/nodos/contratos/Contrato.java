@@ -14,7 +14,7 @@ public class Contrato extends Nodo {
     final int id;
     final ClienteComercial clienteComercial;
 
-    private ArrayList<Secuencia> secuencias;
+    ArrayList<Secuencia> secuencias;
 
     private Json json;
     public static class Json {
@@ -37,13 +37,12 @@ public class Contrato extends Nodo {
         json.númeroContrato = id;
 
         secuencias = new ArrayList<>();
-        clienteComercial.registrarContrato(this);
+        clienteComercial.contratos.put(id,this);
     }
 
     // -----------------------------------------------
     // Métodos Públicos
     // -----------------------------------------------
-
 
     // -----------------------------------------------
     // GUI / Árbol
@@ -52,7 +51,7 @@ public class Contrato extends Nodo {
         return "Contrato: "+json.númeroContrato;
     }
 
-    public ArrayList<Object> hijosNodo(Object padre) {
+    public ArrayList<Object> hijosNodo(Árbol árbol) {
         ArrayList<Object> hijos = new ArrayList<>();
         hijos.addAll(secuencias);
         return hijos;

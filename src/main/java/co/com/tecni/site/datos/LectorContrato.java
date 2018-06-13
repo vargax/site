@@ -132,16 +132,16 @@ class LectorContrato {
             filaActual = filas.next();
             if (filaActual.getCell(colHcCcId) == null) break;
 
-            int id = ((Double) filaActual.getCell(colHcCcId).getNumericCellValue()).intValue();
+            int id = Lector.entero(filaActual, colHcCcId);
             ClienteComercial clienteComercial = clientesComerciales.get(id);
             if (clienteComercial == null) {
-                String nombreClienteComercial = filaActual.getCell(colHcCcNombre).getStringCellValue();
+                String nombreClienteComercial = Lector.cadena(filaActual, colHcCcNombre);
                 clienteComercial = new ClienteComercial(id, nombreClienteComercial);
                 clientesComerciales.put(id, clienteComercial);
             }
 
-            int nit = ((Double) filaActual.getCell(colHcCfNit).getNumericCellValue()).intValue();
-            String nombreClienteFacturación = filaActual.getCell(colHcCfRs).getStringCellValue();
+            int nit = Lector.entero(filaActual, colHcCfNit);
+            String nombreClienteFacturación = Lector.cadena(filaActual, colHcCfRs);
             ClienteFacturación clienteFacturación = new ClienteFacturación(clienteComercial, nit, nombreClienteFacturación);
             clientesFacturación.put(nit, clienteFacturación);
         }
