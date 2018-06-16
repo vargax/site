@@ -103,7 +103,7 @@ class ResumenTransacciones extends AbstractTableModel {
 
         for (int i = 0; i < transxTipoPariente.length; i++) {
             for (Transacción transacción : transxTipoPariente[i]) {
-                String llave = transacción.getFicha().getClass().getSimpleName();
+                String llave = transacción.ficha.getClass().getSimpleName();
                 double[] valores = resumen.get(llave);
 
                 if (valores == null) {
@@ -111,7 +111,7 @@ class ResumenTransacciones extends AbstractTableModel {
                     resumen.put(llave, valores);
                 }
 
-                valores[i] = valores[i] + transacción.getMonto();
+                valores[i] = valores[i] + transacción.monto;
             }
         }
 
@@ -201,10 +201,10 @@ class DetalleTransacciones extends AbstractTableModel {
     public Object getValueAt(int row, int col) {
         Transacción transacción = transacciones.get(row);
         switch (col) {
-            case 0: return transacción.getFecha();
-            case 1: return transacción.getMonto();
-            case 2: return transacción.getConcepto();
-            case 3: return transacción.getTercero().getNombre();
+            case 0: return transacción.fecha;
+            case 1: return transacción.monto;
+            case 2: return transacción.concepto;
+            case 3: return transacción.tercero.nombre;
             default: return null;
         }
     }

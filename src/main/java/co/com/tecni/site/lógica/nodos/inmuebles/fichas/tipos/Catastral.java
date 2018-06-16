@@ -37,7 +37,7 @@ public class Catastral extends Ficha {
     // -----------------------------------------------
     public Catastral(Json json) {
         super();
-        super.íconoColor = UI_ÍCONO_COLOR;
+        super.ícono.setColor(UI_ÍCONO_COLOR);
 
         this.json = json;
     }

@@ -5,25 +5,14 @@ public class Tercero {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    private String nit;
-    private String nombre;
+    public final int nit;
+    public final String nombre;
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public Tercero(String nit, String nombre) {
+    public Tercero(int nit, String nombre) {
         this.nit = nit;
         this.nombre = nombre;
-    }
-
-    // -----------------------------------------------
-    // Getters
-    // -----------------------------------------------
-    public String getNit() {
-        return nit;
-    }
-
-    public String getNombre() {
-        return nombre;
     }
 }

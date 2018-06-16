@@ -53,10 +53,12 @@ public class Site {
     // -----------------------------------------------
     private static Gson genGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE_WITH_SPACES);
+        gsonBuilder.setDateFormat("yyyy MMM dd");
+
         gsonBuilder.registerTypeAdapter(Double.class, new JsonSerializer<Double>() {
             @Override
             public JsonElement serialize(Double aDouble, Type type, JsonSerializationContext jsonSerializationContext) {
-
                 DecimalFormat df;
                 if (aDouble < 10) {
                     df = new DecimalFormat("#.##");
@@ -68,7 +70,7 @@ public class Site {
                 return new JsonPrimitive(df.format(aDouble));
             }
         });
-        gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE_WITH_SPACES);
+
         return gsonBuilder.create();
     }
 

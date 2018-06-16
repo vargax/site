@@ -1,9 +1,14 @@
 package co.com.tecni.site.lógica.nodos.contratos;
 
-public class Factura {
+class Factura {
 
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
+    static int consecutivoFactura = 1;
+
+    static int generarConsecutivo() {
+        return consecutivoFactura += 1;
+    }
 
 }

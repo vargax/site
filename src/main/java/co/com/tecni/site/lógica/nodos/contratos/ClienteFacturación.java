@@ -1,34 +1,33 @@
 package co.com.tecni.site.lógica.nodos.contratos;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Tercero;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.site.lógica.árboles.Árbol;
+import co.com.tecni.site.ui.UiÁrbol;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ClienteFacturación extends Nodo {
+public class ClienteFacturación extends Tercero implements Nodo {
 
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    final int id;
     final ClienteComercial clienteComercial;
-
     private final HashMap<Integer, Factura> facturas;
-
-    String nombre;
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public ClienteFacturación(ClienteComercial clienteComercial, int id, String nombre) {
+    public ClienteFacturación(ClienteComercial clienteComercial, int nit, String nombre) {
+        super(nit, nombre);
+
         this.clienteComercial = clienteComercial;
-        this.id = id;
-        this.nombre = nombre;
 
         facturas = new HashMap<>();
 
-        clienteComercial.clientesFacturación.put(id, this);
+        clienteComercial.clientesFacturación.put(nit, this);
     }
 
     // -----------------------------------------------
@@ -38,9 +37,23 @@ public class ClienteFacturación extends Nodo {
         return nombre;
     }
 
+    public UiÁrbol.Ícono íconoNodo() {
+        return null;
+    }
+
     public ArrayList<Object> hijosNodo(Árbol árbol) {
         ArrayList<Object> hijos = new ArrayList<>();
         hijos.addAll(facturas.values());
         return hijos;
     }
+
+    public ArrayList<Transacción>[] transaccionesNodo() {
+        return new ArrayList[3];
+    }
+
+    public String infoNodo() {
+        return null;
+    }
+
+
 }

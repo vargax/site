@@ -2,16 +2,18 @@ package co.com.tecni.site.lógica.árboles;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.contratos.ClienteComercial;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.site.ui.UiÁrbol;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-class ÁrbolClientes extends Árbol {
+abstract class ÁrbolClientes extends Árbol {
     private HashMap<Integer, ClienteComercial> clientesComercialesxId;
     String nombreRaiz;
 
     private Raiz raiz;
-    private class Raiz extends Nodo {
+    private class Raiz implements Nodo {
         public String nombreNodo(Árbol árbol) {
             return nombreRaiz;
         }
@@ -20,6 +22,18 @@ class ÁrbolClientes extends Árbol {
             ArrayList<Object> hijos = new ArrayList<>();
             hijos.addAll(clientesComercialesxId.values());
             return hijos;
+        }
+
+        public UiÁrbol.Ícono íconoNodo() {
+            return null;
+        }
+
+        public ArrayList<Transacción>[] transaccionesNodo() {
+            return new ArrayList[0];
+        }
+
+        public String infoNodo() {
+            return null;
         }
     }
 

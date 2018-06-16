@@ -1,11 +1,15 @@
 package co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos;
 
 import co.com.tecni.site.lógica.Site;
+import co.com.tecni.site.lógica.nodos.contratos.ClienteFacturación;
 import co.com.tecni.site.lógica.nodos.contratos.Secuencia;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
 import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.lógica.árboles.ÁrbolContratos;
 import co.com.tecni.site.lógica.árboles.ÁrbolInmuebles;
+
+import java.util.Date;
 
 public class Arrendamiento extends Ficha {
 
@@ -33,6 +37,22 @@ public class Arrendamiento extends Ficha {
         inmueble.registrarFicha(this);
     }
 
+    public Transacción facturar(ClienteFacturación clienteFacturación,
+                                Date fechaFactura,
+                                double cánon) {
+
+        Transacción transacción = new Transacción(
+                this,
+                "Ingreso por arrendamiento",
+                fechaFactura,
+                json.participación*cánon,
+                clienteFacturación
+                );
+
+        transacciones.add(transacción);
+        return transacción;
+    }
+
     public double getParticipación() {
         return json.participación;
     }
@@ -45,7 +65,6 @@ public class Arrendamiento extends Ficha {
         return "Típo de Árbol no definido en Ficha.Arrendamiento.nombreNodo()";
     }
 
-    @Override
     public String infoNodo() {
         return Site.gson.toJson(json);
     }
