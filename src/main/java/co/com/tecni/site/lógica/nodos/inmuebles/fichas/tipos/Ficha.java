@@ -3,12 +3,13 @@ package co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos;
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.site.lógica.árboles.Árbol;
+import co.com.tecni.site.ui.UiÁrbol;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
 
 import java.util.ArrayList;
 
-public abstract class Ficha extends Nodo {
+public abstract class Ficha implements Nodo {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
@@ -18,33 +19,24 @@ public abstract class Ficha extends Nodo {
     // Atributos
     // -----------------------------------------------
     ArrayList<Ficha> fichas;
-    protected ArrayList<Transacción> transacciones;
+    ArrayList<Transacción> transacciones;
 
+    UiÁrbol.Ícono ícono;
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    protected Ficha() {
-        super();
-        super.íconoCódigo  = UI_ÍCONO;
-
+    Ficha() {
         fichas = new ArrayList<>();
         transacciones = new ArrayList<>();
-    }
 
-    // -----------------------------------------------
-    // GUI / Árbol
-    // -----------------------------------------------
-    public ArrayList<Object> hijosNodo(Árbol árbol) {
-        ArrayList<Object> hijos = new ArrayList<>();
-        hijos.addAll(this.fichas);
-        return hijos;
+        ícono = new UiÁrbol.Ícono(UI_ÍCONO);
     }
 
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
     public ArrayList<Transacción>[] recursiónTransacciones(double factorPonderación) {
-        ArrayList<Transacción>[] resultado = super.transaccionesNodo();
+        ArrayList[] resultado = new ArrayList[3];
 
         ArrayList<Transacción> propias = new ArrayList<>();
         for (Transacción transacción : this.transacciones)
@@ -60,5 +52,22 @@ public abstract class Ficha extends Nodo {
         resultado[2] = descendientes;
 
         return resultado;
+    }
+
+    // -----------------------------------------------
+    // GUI / Árbol
+    // -----------------------------------------------
+    public UiÁrbol.Ícono íconoNodo() {
+        return ícono;
+    }
+
+    public ArrayList<Object> hijosNodo(Árbol árbol) {
+        ArrayList<Object> hijos = new ArrayList<>();
+        hijos.addAll(this.fichas);
+        return hijos;
+    }
+
+    public ArrayList<Transacción>[] transaccionesNodo() {
+        return recursiónTransacciones(1);
     }
 }

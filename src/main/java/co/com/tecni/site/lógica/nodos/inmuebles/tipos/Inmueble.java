@@ -6,6 +6,7 @@ import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Arrendamiento;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Ficha;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.site.lógica.árboles.Árbol;
+import co.com.tecni.site.ui.UiÁrbol;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
 import org.json.simple.JSONObject;
@@ -15,7 +16,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class Inmueble extends Nodo {
+public abstract class Inmueble implements Nodo {
 
     // -----------------------------------------------
     // Constantes
@@ -35,12 +36,11 @@ public abstract class Inmueble extends Nodo {
     private final static String[] JK_ÁREA = {"Privada", "Común", "Total", "Detalle"};
     private final static String[] JK_ÁREA_DETALLE = {"Privados Construidos", "Privados Libres", "Comunes Construidos", "Comunes Libres"};
 
-    private final static String[] JK_CONTRATO = {"Número", "Cliente Comercial"};
-
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
     private String nombre;
+    UiÁrbol.Ícono ícono;
 
     private Site site;
 
@@ -50,19 +50,17 @@ public abstract class Inmueble extends Nodo {
     private Inmueble padre;
     private ArrayList<Inmueble> hijos;
 
-    protected String sigla;
-    protected JSONObject características;
-
-
+    String sigla;
+    private JSONObject infoNodo;
+    private JSONObject características;
     // -----------------------------------------------
     // Constructores
     // -----------------------------------------------
     public Inmueble() {
-        super();
-        super.íconoCódigo = UI_ÍCONO;
+        hijos = new ArrayList<>();
+        fichas = new ArrayList<>();
 
-        this.hijos = new ArrayList<>();
-        this.fichas = new ArrayList<>();
+        ícono = new UiÁrbol.Ícono(UI_ÍCONO);
 
         site = Site.getInstance();
     }
@@ -128,7 +126,7 @@ public abstract class Inmueble extends Nodo {
      *  [2] Transacciones Descendientes
      */
     private ArrayList<Transacción>[] recursiónTransacciones(double factorPonderación) {
-        ArrayList[] resultado = super.transaccionesNodo();
+        ArrayList[] resultado = new ArrayList[3];
 
         ArrayList<Transacción> descendientes = new ArrayList<>();
         if (factorPonderación == 1) {
@@ -176,7 +174,7 @@ public abstract class Inmueble extends Nodo {
     }
 
     void recursiónColorÍcono(Color color) {
-        super.íconoColor = color;
+        ícono.setColor(color);
         for (Inmueble inmueble : hijos)
             inmueble.recursiónColorÍcono(color);
     }
@@ -198,11 +196,15 @@ public abstract class Inmueble extends Nodo {
         return hijos;
     }
 
+    public UiÁrbol.Ícono íconoNodo() {
+        return ícono;
+    }
+
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
     public ArrayList<Transacción>[] transaccionesNodo() {
-        ArrayList[] resultado = super.transaccionesNodo();
+        ArrayList[] resultado = new ArrayList[3];
 
         if (padre != null) {
             double factorPonderación = this.getM2(site.getModoPonderación())/padre.getM2(site.getModoPonderación());
@@ -218,27 +220,30 @@ public abstract class Inmueble extends Nodo {
     }
 
     public String infoNodo() {
-        infoNodo.put(JK[0], genId());
+        if (infoNodo == null) {
+            infoNodo = new JSONObject();
+            infoNodo.put(JK[0], genId());
 
-        DecimalFormat df = Site.df;
+            DecimalFormat df = Site.df;
 
-        JSONObject áreaDetalle = new JSONObject();
-        áreaDetalle.put(JK_ÁREA_DETALLE[0], df.format(m2.get(A_PRIV_CONSTRUIDOS)));
-        áreaDetalle.put(JK_ÁREA_DETALLE[1], df.format(m2.get(A_PRIV_LIBRES)));
-        áreaDetalle.put(JK_ÁREA_DETALLE[2], df.format(m2.get(A_COM_CONSTRUIDOS)));
-        áreaDetalle.put(JK_ÁREA_DETALLE[3], df.format(m2.get(A_COM_LIBRES)));
+            JSONObject áreaDetalle = new JSONObject();
+            áreaDetalle.put(JK_ÁREA_DETALLE[0], df.format(m2.get(A_PRIV_CONSTRUIDOS)));
+            áreaDetalle.put(JK_ÁREA_DETALLE[1], df.format(m2.get(A_PRIV_LIBRES)));
+            áreaDetalle.put(JK_ÁREA_DETALLE[2], df.format(m2.get(A_COM_CONSTRUIDOS)));
+            áreaDetalle.put(JK_ÁREA_DETALLE[3], df.format(m2.get(A_COM_LIBRES)));
 
-        JSONObject área = new JSONObject();
-        if (m2.get(A_PRIV_TOTAL) != 0) área.put(JK_ÁREA[0], df.format(m2.get(A_PRIV_TOTAL)));
-        if (m2.get(A_COM_TOTAL) != 0) área.put(JK_ÁREA[1], df.format(m2.get(A_COM_TOTAL)));
-        área.put(JK_ÁREA[2], df.format(m2.get(A_TOTAL)));
-        área.put(JK_ÁREA[3], áreaDetalle);
+            JSONObject área = new JSONObject();
+            if (m2.get(A_PRIV_TOTAL) != 0) área.put(JK_ÁREA[0], df.format(m2.get(A_PRIV_TOTAL)));
+            if (m2.get(A_COM_TOTAL) != 0) área.put(JK_ÁREA[1], df.format(m2.get(A_COM_TOTAL)));
+            área.put(JK_ÁREA[2], df.format(m2.get(A_TOTAL)));
+            área.put(JK_ÁREA[3], áreaDetalle);
 
-        infoNodo.put(JK[1], área);
+            infoNodo.put(JK[1], área);
 
-        if (!características.isEmpty())
-            infoNodo.put(JK[2], características);
+            if (!características.isEmpty())
+                infoNodo.put(JK[2], características);
+        }
 
-        return super.infoNodo();
+        return infoNodo.toJSONString();
     }
 }

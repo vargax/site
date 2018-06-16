@@ -1,15 +1,17 @@
 package co.com.tecni.site.lógica.nodos.inmuebles;
 
+import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
 import co.com.tecni.site.lógica.árboles.Árbol;
+import co.com.tecni.site.ui.UiÁrbol;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
 
 import java.util.ArrayList;
 
-public class Agrupación extends Nodo {
+public class Agrupación implements Nodo {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
@@ -19,21 +21,33 @@ public class Agrupación extends Nodo {
     // Atributos
     // -----------------------------------------------
     private String nombre;
+    private UiÁrbol.Ícono ícono;
 
     private Agrupación padre;
     private ArrayList<Agrupación> agrupaciones;
     protected ArrayList<Inmueble> inmuebles;
 
+    private Json json;
+    static class Json {
+        String nombre;
+        int agrupaciones;
+        int inmuebles;
+
+        Json(Agrupación agrupación) {
+            nombre = agrupación.nombre;
+            agrupaciones = agrupación.agrupaciones.size();
+            inmuebles = agrupación.inmuebles.size();
+        }
+    }
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
     public Agrupación(String nombre) {
-        super();
-        super.íconoCódigo = UI_ÍCONO;
-
         this.nombre = nombre;
-        this.agrupaciones = new ArrayList<>();
-        this.inmuebles = new ArrayList<>();
+        ícono = new UiÁrbol.Ícono(UI_ÍCONO);
+
+        agrupaciones = new ArrayList<>();
+        inmuebles = new ArrayList<>();
     }
 
     // -----------------------------------------------
@@ -48,19 +62,19 @@ public class Agrupación extends Nodo {
         agrupaciones.add(agrupación);
     }
 
-    public String genNombre() {
-        return padre == null ? nombre : padre.genNombre() + ' ' + nombre;
-    }
-
     // -----------------------------------------------
     // Getters and Setters
     // -----------------------------------------------
 
     // -----------------------------------------------
-    // GUI / Árbol
+    // Nodo
     // -----------------------------------------------
     public String nombreNodo(Árbol árbol) {
         return nombre;
+    }
+
+    public UiÁrbol.Ícono íconoNodo() {
+        return ícono;
     }
 
     public ArrayList<Object> hijosNodo(Árbol árbol) {
@@ -72,22 +86,17 @@ public class Agrupación extends Nodo {
         return hijos;
     }
 
-    // -----------------------------------------------
-    // GUI / Detalle
-    // -----------------------------------------------
-
     public ArrayList<Transacción>[] transaccionesNodo() {
-        ArrayList<Transacción>[] transaccionesNodo = super.transaccionesNodo();
+        ArrayList[] transaccionesNodo = new ArrayList[3];
 
-//        for (Agrupación agrupación : agrupaciones)
-//            transaccionesNodo.addAll(agrupación.transaccionesNodo());
-//        for (Inmueble inmueble : inmuebles)
-//            transaccionesNodo.addAll(inmueble.transaccionesNodo());
 
         return transaccionesNodo;
     }
 
-    // -----------------------------------------------
-    // Métodos Object
-    // -----------------------------------------------
+    public String infoNodo() {
+        if (json == null) {
+            json = new Json(this);
+        }
+        return Site.gson.toJson(json);
+    }
 }

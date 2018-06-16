@@ -1,5 +1,6 @@
 package co.com.tecni.site.lógica.nodos.inmuebles.tipos;
 
+import co.com.tecni.site.ui.UiÁrbol;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
 
@@ -17,6 +18,6 @@ public class ConjuntoBodegas extends Inmueble {
     public ConjuntoBodegas() {
         super();
         super.sigla = SIGLA;
-        super.íconoCódigo = UI_ÍCONO;
+        super.ícono = new UiÁrbol.Ícono(UI_ÍCONO);
     }
 }

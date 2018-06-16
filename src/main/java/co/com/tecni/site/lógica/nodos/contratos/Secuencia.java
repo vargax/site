@@ -3,15 +3,17 @@ package co.com.tecni.site.lógica.nodos.contratos;
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Arrendamiento;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
 import co.com.tecni.site.lógica.árboles.Árbol;
+import co.com.tecni.site.ui.UiÁrbol;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Secuencia extends Nodo {
+public class Secuencia implements Nodo {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
@@ -83,9 +85,12 @@ public class Secuencia extends Nodo {
         void genInfoClientesFacturación(Secuencia secuencia) {
             clientesFacturación = new HashMap<>();
             for (Map.Entry<Integer, Double> me : secuencia.participaciónClientesFacturación.entrySet()) {
-                String cf = secuencia.clientesFacturación.get(me.getKey()).nombre;
+
+                int nit = me.getKey();
+                String nombre = secuencia.clientesFacturación.get(nit).nombre;
                 double participación = me.getValue();
-                clientesFacturación.put(cf, participación);
+
+                clientesFacturación.put(nombre, participación);
             }
         }
     }
@@ -117,8 +122,8 @@ public class Secuencia extends Nodo {
     }
 
     public void agregarClienteFacturación(ClienteFacturación clienteFacturación, double participación) {
-        clientesFacturación.put(clienteFacturación.id, clienteFacturación);
-        participaciónClientesFacturación.put(clienteFacturación.id, participación);
+        clientesFacturación.put(clienteFacturación.nit, clienteFacturación);
+        participaciónClientesFacturación.put(clienteFacturación.nit, participación);
 
     }
 
@@ -159,26 +164,39 @@ public class Secuencia extends Nodo {
             int idClienteFacturación = participaciónClienteFacturación.getKey();
             double participación = participaciónClienteFacturación.getValue();
 
+            valorxClienteFacturación.put(idClienteFacturación, participación*this.cánon.cánon);
         }
+
+        HashMap<String, Double> valorxInmueble = new HashMap<>();
+        for (Arrendamiento arrendamiento : fichasArrendamiento) {
+
+        }
+
     }
 
     // -----------------------------------------------
-    // GUI / Árbol
+    // Nodo
     // -----------------------------------------------
-
-    @Override
     public String nombreNodo(Árbol árbol) {
         return "Secuencia: "+ ID;
     }
 
-    @Override
+    public UiÁrbol.Ícono íconoNodo() {
+        return null;
+    }
+
     public ArrayList<Object> hijosNodo(Árbol árbol) {
         ArrayList<Object> hijos = new ArrayList<>();
         hijos.addAll(fichasArrendamiento);
         return hijos;
     }
 
-    @Override
+    public ArrayList<Transacción>[] transaccionesNodo() {
+        return new ArrayList[0];
+    }
+
+
+
     public String infoNodo() {
         return Site.gson.toJson(json);
     }

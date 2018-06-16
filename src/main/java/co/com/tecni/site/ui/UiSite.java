@@ -69,7 +69,10 @@ class UiSite extends JFrame {
     // Métodos
     // -----------------------------------------------
     void actualizarDetalle(Nodo nodo) {
-        uiInfo.mostrarDetalle(nodo.infoNodo());
+        String infoNodo = nodo.infoNodo();
+        if (infoNodo != null)
+            uiInfo.mostrarDetalle(infoNodo);
+
         uiTransacciones.mostrarTransacciones(nodo.transaccionesNodo());
     }
 

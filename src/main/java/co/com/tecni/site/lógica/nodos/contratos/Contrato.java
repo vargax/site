@@ -2,11 +2,13 @@ package co.com.tecni.site.lógica.nodos.contratos;
 
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.site.lógica.árboles.Árbol;
+import co.com.tecni.site.ui.UiÁrbol;
 
 import java.util.ArrayList;
 
-public class Contrato extends Nodo {
+public class Contrato implements Nodo {
 
     // -----------------------------------------------
     // Atributos
@@ -41,14 +43,18 @@ public class Contrato extends Nodo {
     }
 
     // -----------------------------------------------
-    // Métodos Públicos
-    // -----------------------------------------------
-
-    // -----------------------------------------------
-    // GUI / Árbol
+    // Nodo
     // -----------------------------------------------
     public String nombreNodo(Árbol árbol) {
         return "Contrato: "+json.númeroContrato;
+    }
+
+    public UiÁrbol.Ícono íconoNodo() {
+        return null;
+    }
+
+    public ArrayList<Transacción>[] transaccionesNodo() {
+        return new ArrayList[3];
     }
 
     public ArrayList<Object> hijosNodo(Árbol árbol) {
@@ -57,12 +63,8 @@ public class Contrato extends Nodo {
         return hijos;
     }
 
-    @Override
     public String infoNodo() {
         return Site.gson.toJson(json);
     }
-    // -----------------------------------------------
-    // GUI / Detalle
-    // -----------------------------------------------
 
 }

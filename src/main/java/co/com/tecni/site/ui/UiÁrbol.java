@@ -2,6 +2,9 @@ package co.com.tecni.site.ui;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.árboles.Árbol;
+import jiconfont.IconCode;
+import jiconfont.icons.GoogleMaterialDesignIcons;
+import jiconfont.swing.IconFontSwing;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
@@ -14,6 +17,7 @@ public class UiÁrbol {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
+    public final static IconCode ÍCONO_DEFAULT = GoogleMaterialDesignIcons.INSERT_DRIVE_FILE;
     public final static int ÍCONO_TAMAÑO = 25;
     public final static Color ÍCONO_COLOR = Color.GRAY;
 
@@ -29,7 +33,6 @@ public class UiÁrbol {
 
     private JTree jTree;
     private UiNodoÁrbol uiNodoÁrbol;
-
     class UiNodoÁrbol implements TreeCellRenderer {
         // -----------------------------------------------
         // Constantes
@@ -55,7 +58,13 @@ public class UiÁrbol {
                                                       boolean leaf, int row, boolean hasFocus) {
             Nodo nodo = (Nodo) o;
 
-            jLabel.setIcon(nodo.getÍcono());
+            Ícono ícono = nodo.íconoNodo();
+            if (ícono == null) {
+                //System.err.println("Ícono indefinido para "+nodo.getClass().getSimpleName());
+                ícono = new Ícono();
+            }
+
+            jLabel.setIcon(IconFontSwing.buildIcon(ícono.código, ÍCONO_TAMAÑO, ícono.color));
             jLabel.setText(nodo.nombreNodo(árbol));
             jLabel.setOpaque(false);
 
@@ -74,6 +83,7 @@ public class UiÁrbol {
     UiÁrbol(String nombre, Árbol árbol) {
         this.nombre = nombre;
         this.árbol = árbol;
+        IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());
 
         uiNodoÁrbol = new UiNodoÁrbol();
 
@@ -115,5 +125,29 @@ public class UiÁrbol {
 
     Component getComponent() {
         return jTree;
+    }
+
+    public static class Ícono {
+        IconCode código;
+        Color color;
+
+        public Ícono(IconCode código, Color color) {
+            this.código = código;
+            this.color = color;
+        }
+
+        public Ícono(IconCode código) {
+            this.código = código;
+            this.color = ÍCONO_COLOR;
+        }
+
+        public Ícono() {
+            this.código = ÍCONO_DEFAULT;
+            this.color = ÍCONO_COLOR;
+        }
+
+        public void setColor(Color color) {
+            this.color = color;
+        }
     }
 }

@@ -36,7 +36,7 @@ public class Jurídica extends Ficha {
     // -----------------------------------------------
     public Jurídica(Json json) {
         super();
-        super.íconoColor = UI_ÍCONO_COLOR;
+        super.ícono.setColor(UI_ÍCONO_COLOR);
 
         this.json = json;
     }
@@ -48,7 +48,6 @@ public class Jurídica extends Ficha {
         return "Matrícula inmobiliaria: "+json.matrículaInmobiliaria;
     }
 
-    @Override
     public String infoNodo() {
         return Site.gson.toJson(json);
     }
