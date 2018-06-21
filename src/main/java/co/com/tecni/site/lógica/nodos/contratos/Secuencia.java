@@ -158,20 +158,29 @@ public class Secuencia implements Nodo {
     // -----------------------------------------------
     // Lógica
     // -----------------------------------------------
-    public void facturar() {
-        HashMap<Integer, Double> valorxClienteFacturación = new HashMap<>();
-        for (Map.Entry<Integer, Double> participaciónClienteFacturación : participaciónClientesFacturación.entrySet()) {
-            int idClienteFacturación = participaciónClienteFacturación.getKey();
-            double participación = participaciónClienteFacturación.getValue();
+    void facturar(Date fechaCorte) {
 
-            valorxClienteFacturación.put(idClienteFacturación, participación*this.cánon.cánon);
+        if (fechaCorte.before(FIN))
+            System.err.println("Secuencia "+json.número+".facturar() / Imposible facturar "
+                    +Site.df.format(fechaCorte)+" / Fecha fin es "+Site.df.format(FIN));
+
+        else {
+            for (Map.Entry<Integer, Double> me : participaciónClientesFacturación.entrySet()) {
+
+                ClienteFacturación cf = clientesFacturación.get(me.getKey());
+                double participación = me.getValue();
+
+                ArrayList<Transacción> transacciones = new ArrayList<>();
+                for (Arrendamiento arrendamiento : fichasArrendamiento) {
+                    double valor = this.cánon.cánon * participación;
+                    transacciones.add(arrendamiento.facturar(cf, fechaCorte, valor));
+                }
+
+                Factura f = new Factura(cf, fechaCorte, transacciones);
+                cf.facturas.put(f.json.consecutivo, f);
+
+            }
         }
-
-        HashMap<String, Double> valorxInmueble = new HashMap<>();
-        for (Arrendamiento arrendamiento : fichasArrendamiento) {
-
-        }
-
     }
 
     // -----------------------------------------------

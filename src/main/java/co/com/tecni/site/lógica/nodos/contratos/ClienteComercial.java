@@ -8,6 +8,7 @@ import co.com.tecni.site.lógica.árboles.ÁrbolContratos;
 import co.com.tecni.site.ui.UiÁrbol;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class ClienteComercial implements Nodo {
@@ -35,7 +36,12 @@ public class ClienteComercial implements Nodo {
     // -----------------------------------------------
     // Métodos Públicos
     // -----------------------------------------------
-
+    public void facturar(Date fechaCorte) {
+        for (Contrato contrato : contratos.values()) {
+            ArrayList<Secuencia> secuencias = contrato.secuencias;
+            (secuencias.get(secuencias.size()-1)).facturar(fechaCorte);
+        }
+    }
 
     // -----------------------------------------------
     // GUI / Árbol

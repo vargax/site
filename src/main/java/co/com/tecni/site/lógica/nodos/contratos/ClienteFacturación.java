@@ -15,7 +15,7 @@ public class ClienteFacturación extends Tercero implements Nodo {
     // Atributos
     // -----------------------------------------------
     final ClienteComercial clienteComercial;
-    private final HashMap<Integer, Factura> facturas;
+    final HashMap<Integer, Factura> facturas;
 
     // -----------------------------------------------
     // Constructor

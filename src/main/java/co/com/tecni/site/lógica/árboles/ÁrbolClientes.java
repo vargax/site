@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 abstract class ÁrbolClientes extends Árbol {
-    private HashMap<Integer, ClienteComercial> clientesComercialesxId;
+    HashMap<Integer, ClienteComercial> clientesComercialesxId;
     String nombreRaiz;
 
     private Raiz raiz;

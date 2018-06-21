@@ -10,20 +10,25 @@ import com.google.gson.*;
 import java.lang.reflect.Type;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Site {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
-
     private final static String MODO_PONDERACIÓN = Inmueble.A_TOTAL;
 
+    private final static Date FECHA_INICIAL_FACTURACIÓN = new Date(2017, 01, 01);
+    private final static int MESES_FACTURACIÓN = 24;
 
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
     public static Gson gson;
-    public static DecimalFormat df;
+    public static DecimalFormat sdf;
+    public static DecimalFormat bdf;
+    public static SimpleDateFormat df;
 
     private static Site instance;
     private String modoPonderación;
@@ -37,7 +42,10 @@ public class Site {
     // -----------------------------------------------
     private Site() {
         gson = genGson();
-        df = new DecimalFormat("#.##"); df.setRoundingMode(RoundingMode.CEILING);
+        df = new SimpleDateFormat("MMM yy");
+
+        sdf = new DecimalFormat("#.##"); sdf.setRoundingMode(RoundingMode.CEILING);
+        bdf = new DecimalFormat("###,###,###");
 
         modoPonderación = MODO_PONDERACIÓN;
     }
@@ -60,12 +68,10 @@ public class Site {
             @Override
             public JsonElement serialize(Double aDouble, Type type, JsonSerializationContext jsonSerializationContext) {
                 DecimalFormat df;
-                if (aDouble < 10) {
-                    df = new DecimalFormat("#.##");
-                    df.setRoundingMode(RoundingMode.CEILING);
-                } else {
-                    df = new DecimalFormat("#,###,###");
-                }
+                if (-10 < aDouble && aDouble < 10)
+                    df = Site.sdf;
+                else
+                    df = Site.bdf;
 
                 return new JsonPrimitive(df.format(aDouble));
             }
@@ -85,6 +91,8 @@ public class Site {
         lector.importarContratos();
         árbolContratos = lector.genÁrbolContratos();
         árbolCartera = lector.genÁrbolCartera();
+
+        árbolCartera.genFacturas(FECHA_INICIAL_FACTURACIÓN, MESES_FACTURACIÓN);
     }
 
     public String getModoPonderación() {
