@@ -26,7 +26,6 @@ public class ImpuestoPredial extends Ficha {
     // Atributos
     // -----------------------------------------------
     private Json json;
-
     public static class Json {
         int añoFiscal;
         double avalúoCatastral;

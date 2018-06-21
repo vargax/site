@@ -1,12 +1,12 @@
 package co.com.tecni.site.ui;
 
+import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -211,14 +211,14 @@ class DetalleTransacciones extends AbstractTableModel {
 }
 
 class DoubleRender extends DefaultTableCellRenderer {
-    private final static DecimalFormat DECIMAL_FORMAT = new DecimalFormat("###,###,###");
 
     public Component getTableCellRendererComponent(JTable jTable, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         super.getTableCellRendererComponent(jTable, value, isSelected, hasFocus, row, column);
 
         setHorizontalAlignment(RIGHT);
-        setText(DECIMAL_FORMAT.format(value));
+        setText(Site.bdf.format(value));
         if ((Double) value < 0) setForeground(Color.RED);
+        else setForeground(Color.BLACK);
 
         return this;
     }
