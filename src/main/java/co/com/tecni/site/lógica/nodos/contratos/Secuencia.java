@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Secuencia implements Nodo {
+    static HashMap<Integer, Secuencia> secuencias = new HashMap<>();
+
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
@@ -115,6 +117,8 @@ public class Secuencia implements Nodo {
         CONTRATO.secuencias.add(this);
 
         json = new Json(this);
+
+        secuencias.put(this.ID, this);
     }
 
     public void registrarDescuento(Descuento descuento) {
@@ -128,7 +132,7 @@ public class Secuencia implements Nodo {
     }
 
     public void agregarInmueble(Inmueble inmueble, double participación) {
-        Arrendamiento.Json json = new Arrendamiento.Json(ID, CONTRATO.clienteComercial.nombre, participación);
+        Arrendamiento.Json json = new Arrendamiento.Json(ID, CONTRATO.CLIENTE_COMERCIAL.nombre, participación);
         Arrendamiento arrendamiento = new Arrendamiento(this, inmueble, json);
         fichasArrendamiento.add(arrendamiento);
     }

@@ -46,6 +46,7 @@ public class Catastral extends Ficha {
     // Métodos públicos
     // -----------------------------------------------
     public void registrarPredial(ImpuestoPredial impuestoPredial) {
+        impuestoPredial.padre = this;
         fichas.add(impuestoPredial);
     }
 
