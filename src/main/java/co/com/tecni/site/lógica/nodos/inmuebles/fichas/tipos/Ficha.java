@@ -18,6 +18,8 @@ public abstract class Ficha implements Nodo {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
+    Ficha padre;
+
     ArrayList<Ficha> fichas;
     ArrayList<Transacción> transacciones;
 
@@ -38,11 +40,6 @@ public abstract class Ficha implements Nodo {
     public ArrayList<Transacción>[] recursiónTransacciones(double factorPonderación) {
         ArrayList[] resultado = new ArrayList[3];
 
-        ArrayList<Transacción> propias = new ArrayList<>();
-        for (Transacción transacción : this.transacciones)
-            propias.add(transacción.ponderar(factorPonderación));
-        resultado[1] = propias;
-
         ArrayList<Transacción> descendientes = new ArrayList<>();
         for(Ficha ficha : fichas) {
             ArrayList<Transacción>[] transaccionesFicha = ficha.recursiónTransacciones(factorPonderación);
@@ -50,6 +47,14 @@ public abstract class Ficha implements Nodo {
             descendientes.addAll(transaccionesFicha[2]);
         }
         resultado[2] = descendientes;
+
+        ArrayList<Transacción> propias = new ArrayList<>();
+        for (Transacción transacción : this.transacciones)
+            propias.add(transacción.ponderar(factorPonderación));
+        resultado[1] = propias;
+
+        ArrayList<Transacción> ancestros = new ArrayList<>();
+        resultado[0] = ancestros;
 
         return resultado;
     }

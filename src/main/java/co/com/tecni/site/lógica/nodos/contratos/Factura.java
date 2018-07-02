@@ -9,12 +9,14 @@ import co.com.tecni.site.ui.UiÁrbol;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 class Factura implements Nodo {
     private final static double PORCENTAJE_IVA = 0.19;
     private final static double PORCENTAJE_RETEFUENTE = -0.035;
 
     private static int consecutivoFactura = 1;
+    static HashMap<Integer, Factura> facturas = new HashMap<>();
 
     private final Tercero tercero;
     private ArrayList<Transacción> transacciones;
@@ -50,6 +52,8 @@ class Factura implements Nodo {
         this.transacciones = transacciones;
 
         json = new Json(fecha, this);
+
+        facturas.put(json.consecutivo, this);
     }
 
     public String nombreNodo(Árbol árbol) {
@@ -65,7 +69,19 @@ class Factura implements Nodo {
     }
 
     public ArrayList<Transacción>[] transaccionesNodo() {
-        return new ArrayList[3];
+        ArrayList[] resultado = new ArrayList[3];
+
+        ArrayList<Transacción> descendientes = new ArrayList<>();
+        resultado[2] = descendientes;
+
+        ArrayList<Transacción> propias = new ArrayList<>();
+        propias.addAll(this.transacciones);
+        resultado[1] = propias;
+
+        ArrayList<Transacción> ancestros = new ArrayList<>();
+        resultado[0] = ancestros;
+
+        return resultado;
     }
 
     public String infoNodo() {

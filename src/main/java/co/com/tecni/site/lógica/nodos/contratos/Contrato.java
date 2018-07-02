@@ -7,14 +7,17 @@ import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.ui.UiÁrbol;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Contrato implements Nodo {
+
+    static HashMap<Integer, Contrato> contratos = new HashMap<>();
 
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    final int id;
-    final ClienteComercial clienteComercial;
+    final int ID;
+    final ClienteComercial CLIENTE_COMERCIAL;
 
     ArrayList<Secuencia> secuencias;
 
@@ -31,15 +34,17 @@ public class Contrato implements Nodo {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public Contrato(int id, ClienteComercial clienteComercial, Json json) {
-        this.id = id;
-        this.clienteComercial = clienteComercial;
+    public Contrato(int ID, ClienteComercial CLIENTE_COMERCIAL, Json json) {
+        this.ID = ID;
+        this.CLIENTE_COMERCIAL = CLIENTE_COMERCIAL;
         this.json = json;
 
-        json.númeroContrato = id;
+        json.númeroContrato = ID;
 
         secuencias = new ArrayList<>();
-        clienteComercial.contratos.put(id,this);
+        CLIENTE_COMERCIAL.contratos.put(ID,this);
+
+        contratos.put(this.ID, this);
     }
 
     // -----------------------------------------------

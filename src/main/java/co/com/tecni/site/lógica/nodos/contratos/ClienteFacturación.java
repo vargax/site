@@ -1,5 +1,6 @@
 package co.com.tecni.site.lógica.nodos.contratos;
 
+import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Tercero;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
@@ -11,11 +12,19 @@ import java.util.HashMap;
 
 public class ClienteFacturación extends Tercero implements Nodo {
 
+    static HashMap<Integer, ClienteFacturación> clientesFacturación = new HashMap<>();
+
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
     final ClienteComercial clienteComercial;
     final HashMap<Integer, Factura> facturas;
+
+    private Json json;
+    static class Json {
+        String nombre;
+        int nit;
+    }
 
     // -----------------------------------------------
     // Constructor
@@ -24,10 +33,15 @@ public class ClienteFacturación extends Tercero implements Nodo {
         super(nit, nombre);
 
         this.clienteComercial = clienteComercial;
-
         facturas = new HashMap<>();
 
+        json = new Json();
+        json.nit = super.nit;
+        json.nombre = super.nombre;
+
         clienteComercial.clientesFacturación.put(nit, this);
+
+        clientesFacturación.put(super.nit, this);
     }
 
     // -----------------------------------------------
@@ -48,11 +62,26 @@ public class ClienteFacturación extends Tercero implements Nodo {
     }
 
     public ArrayList<Transacción>[] transaccionesNodo() {
-        return new ArrayList[3];
+        ArrayList<Transacción> descendientes = new ArrayList<>();
+        ArrayList<Transacción> propias = new ArrayList<>();
+        ArrayList<Transacción> ancestros = new ArrayList<>();
+
+        for (Factura fact : facturas.values()) {
+            ArrayList<Transacción>[] transFact = fact.transaccionesNodo();
+            descendientes.addAll(transFact[2]);
+            propias.addAll(transFact[1]);
+            ancestros.addAll(transFact[0]);
+        }
+
+        ArrayList[] resultado = new ArrayList[3];
+        resultado[2] = descendientes;
+        resultado[1] = propias;
+        resultado[0] = ancestros;
+        return resultado;
     }
 
     public String infoNodo() {
-        return null;
+        return Site.gson.toJson(json);
     }
 
 

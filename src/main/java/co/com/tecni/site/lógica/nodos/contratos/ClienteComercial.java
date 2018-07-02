@@ -13,6 +13,8 @@ import java.util.HashMap;
 
 public class ClienteComercial implements Nodo {
 
+    static HashMap<Integer, ClienteComercial> clientesComerciales = new HashMap<>();
+
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
@@ -31,6 +33,8 @@ public class ClienteComercial implements Nodo {
 
         clientesFacturación = new HashMap<>();
         contratos = new HashMap<>();
+
+        clientesComerciales.put(id, this);
     }
 
     // -----------------------------------------------
@@ -64,7 +68,22 @@ public class ClienteComercial implements Nodo {
     }
 
     public ArrayList<Transacción>[] transaccionesNodo() {
-        return new ArrayList[3];
+        ArrayList<Transacción> descendientes = new ArrayList<>();
+        ArrayList<Transacción> propias = new ArrayList<>();
+        ArrayList<Transacción> ancestros = new ArrayList<>();
+
+        for (ClienteFacturación clFact : clientesFacturación.values()) {
+            ArrayList<Transacción>[] transClFact = clFact.transaccionesNodo();
+            descendientes.addAll(transClFact[2]);
+            propias.addAll(transClFact[1]);
+            ancestros.addAll(transClFact[0]);
+        }
+
+        ArrayList[] resultado = new ArrayList[3];
+        resultado[2] = descendientes;
+        resultado[1] = propias;
+        resultado[0] = ancestros;
+        return resultado;
     }
 
     public String infoNodo() {
