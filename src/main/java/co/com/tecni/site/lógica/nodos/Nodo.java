@@ -19,7 +19,7 @@ public interface Nodo {
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
-    ArrayList<Transacción>[] transaccionesNodo();
-    String infoNodo();
+    ArrayList<Transacción>[] transaccionesNodo(Árbol árbol);
+    String infoNodo(Árbol árbol);
 
 }

@@ -58,8 +58,20 @@ public class Contrato implements Nodo {
         return null;
     }
 
-    public ArrayList<Transacción>[] transaccionesNodo() {
-        return new ArrayList[3];
+    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
+        ArrayList<Transacción> descendientes = new ArrayList<>();
+        ArrayList<Transacción> propias = new ArrayList<>();
+        ArrayList<Transacción> ancestros = new ArrayList<>();
+
+        // DESCENDIENTES
+        for (Secuencia secuencia : secuencias)
+            descendientes.addAll(secuencia.transaccionesNodo(árbol)[2]);
+
+        ArrayList[] resultado = new ArrayList[3];
+        resultado[2] = descendientes;
+        resultado[1] = propias;
+        resultado[0] = ancestros;
+        return resultado;
     }
 
     public ArrayList<Object> hijosNodo(Árbol árbol) {
@@ -68,7 +80,7 @@ public class Contrato implements Nodo {
         return hijos;
     }
 
-    public String infoNodo() {
+    public String infoNodo(Árbol árbol) {
         return Site.gson.toJson(json);
     }
 

@@ -61,17 +61,13 @@ public class ClienteFacturación extends Tercero implements Nodo {
         return hijos;
     }
 
-    public ArrayList<Transacción>[] transaccionesNodo() {
+    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
         ArrayList<Transacción> descendientes = new ArrayList<>();
         ArrayList<Transacción> propias = new ArrayList<>();
         ArrayList<Transacción> ancestros = new ArrayList<>();
 
-        for (Factura fact : facturas.values()) {
-            ArrayList<Transacción>[] transFact = fact.transaccionesNodo();
-            descendientes.addAll(transFact[2]);
-            propias.addAll(transFact[1]);
-            ancestros.addAll(transFact[0]);
-        }
+        for (Factura fact : facturas.values())
+            descendientes.addAll(fact.transaccionesNodo(árbol)[1]);
 
         ArrayList[] resultado = new ArrayList[3];
         resultado[2] = descendientes;
@@ -80,7 +76,7 @@ public class ClienteFacturación extends Tercero implements Nodo {
         return resultado;
     }
 
-    public String infoNodo() {
+    public String infoNodo(Árbol árbol) {
         return Site.gson.toJson(json);
     }
 

@@ -76,7 +76,7 @@ public class ImpuestoPredial extends Ficha {
     }
 
     @Override
-    public String infoNodo() {
+    public String infoNodo(Árbol árbol) {
         return Site.gson.toJson(json);
     }
 }

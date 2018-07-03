@@ -98,7 +98,7 @@ class LectorInmueble {
         }
 
         Inmueble inmueble = Inmueble.englobar(tipo, nombre, características, hijos);
-        System.out.println("r "+inmueble.infoNodo());
+        System.out.println("r "+inmueble.infoNodo(null));
         return inmueble;
     }
 
@@ -114,7 +114,7 @@ class LectorInmueble {
         metros.put(Inmueble.A_COM_LIBRES, filaActual.getCell(colComunLibre).getNumericCellValue());
 
         Inmueble inmueble = Inmueble.hoja(tipo, nombre, características, metros);
-        System.out.println("h "+inmueble.infoNodo());
+        System.out.println("h "+inmueble.infoNodo(null));
         return inmueble;
     }
 

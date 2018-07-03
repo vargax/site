@@ -203,7 +203,7 @@ public abstract class Inmueble implements Nodo {
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
-    public ArrayList<Transacción>[] transaccionesNodo() {
+    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
         ArrayList[] resultado = new ArrayList[3];
 
         if (padre != null) {
@@ -219,7 +219,7 @@ public abstract class Inmueble implements Nodo {
         return resultado;
     }
 
-    public String infoNodo() {
+    public String infoNodo(Árbol árbol) {
         if (infoNodo == null) {
             infoNodo = new JSONObject();
             infoNodo.put(JK[0], genId());

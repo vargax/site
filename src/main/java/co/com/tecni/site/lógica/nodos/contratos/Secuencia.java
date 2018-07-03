@@ -204,13 +204,24 @@ public class Secuencia implements Nodo {
         return hijos;
     }
 
-    public ArrayList<Transacción>[] transaccionesNodo() {
-        return new ArrayList[0];
-    }
+    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
+        ArrayList<Transacción> descendientes = new ArrayList<>();
+        ArrayList<Transacción> propias = new ArrayList<>();
+        ArrayList<Transacción> ancestros = new ArrayList<>();
+
+        // DESCENDIENTES
+        for (Arrendamiento arrendamiento : fichasArrendamiento)
+            descendientes.addAll(arrendamiento.transaccionesNodo(árbol)[1]);
+
+        ArrayList[] resultado = new ArrayList[3];
+        resultado[2] = descendientes;
+        resultado[1] = propias;
+        resultado[0] = ancestros;
+        return resultado;    }
 
 
 
-    public String infoNodo() {
+    public String infoNodo(Árbol árbol) {
         return Site.gson.toJson(json);
     }
 }

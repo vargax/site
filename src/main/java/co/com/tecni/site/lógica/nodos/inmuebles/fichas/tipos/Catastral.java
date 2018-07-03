@@ -57,7 +57,7 @@ public class Catastral extends Ficha {
         return "Cédula catastral: " + json.cedulaCatastral;
     }
 
-    public String infoNodo() {
+    public String infoNodo(Árbol árbol) {
         return Site.gson.toJson(json);
     }
 }

@@ -68,7 +68,7 @@ class Factura implements Nodo {
         return null;
     }
 
-    public ArrayList<Transacción>[] transaccionesNodo() {
+    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
         ArrayList[] resultado = new ArrayList[3];
 
         ArrayList<Transacción> descendientes = new ArrayList<>();
@@ -84,7 +84,7 @@ class Factura implements Nodo {
         return resultado;
     }
 
-    public String infoNodo() {
+    public String infoNodo(Árbol árbol) {
         return Site.gson.toJson(json);
     }
 }

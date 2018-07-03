@@ -1,5 +1,6 @@
 package co.com.tecni.site.lógica.nodos.contratos;
 
+import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.site.lógica.árboles.Árbol;
@@ -23,6 +24,26 @@ public class ClienteComercial implements Nodo {
 
     final HashMap<Integer, ClienteFacturación> clientesFacturación;
     final HashMap<Integer, Contrato> contratos;
+
+    private Json json;
+    static class Json {
+        int id;
+        String nombre;
+        int clientesFacturación;
+        int contratos;
+        int secuencias;
+
+        Json(ClienteComercial cc) {
+            id = cc.id;
+            nombre = cc.nombre;
+            clientesFacturación = cc.clientesFacturación.size();
+            contratos = cc.contratos.size();
+
+
+            for (Contrato contrato : cc.contratos.values())
+                secuencias += contrato.secuencias.size();
+        }
+    }
 
     // -----------------------------------------------
     // Constructor
@@ -67,17 +88,18 @@ public class ClienteComercial implements Nodo {
         return null;
     }
 
-    public ArrayList<Transacción>[] transaccionesNodo() {
+    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
         ArrayList<Transacción> descendientes = new ArrayList<>();
         ArrayList<Transacción> propias = new ArrayList<>();
         ArrayList<Transacción> ancestros = new ArrayList<>();
 
-        for (ClienteFacturación clFact : clientesFacturación.values()) {
-            ArrayList<Transacción>[] transClFact = clFact.transaccionesNodo();
-            descendientes.addAll(transClFact[2]);
-            propias.addAll(transClFact[1]);
-            ancestros.addAll(transClFact[0]);
-        }
+        if (árbol instanceof ÁrbolCartera)
+            for (ClienteFacturación clFact : clientesFacturación.values())
+                descendientes.addAll(clFact.transaccionesNodo(árbol)[2]);
+
+        if (árbol instanceof ÁrbolContratos)
+            for (Contrato contrato : contratos.values())
+                descendientes.addAll(contrato.transaccionesNodo(árbol)[2]);
 
         ArrayList[] resultado = new ArrayList[3];
         resultado[2] = descendientes;
@@ -86,7 +108,10 @@ public class ClienteComercial implements Nodo {
         return resultado;
     }
 
-    public String infoNodo() {
-        return null;
+    public String infoNodo(Árbol árbol) {
+        if (json == null)
+            json = new Json(this);
+
+        return Site.gson.toJson(json);
     }
 }
