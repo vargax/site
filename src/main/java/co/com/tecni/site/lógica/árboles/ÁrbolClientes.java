@@ -28,11 +28,11 @@ abstract class ÁrbolClientes extends Árbol {
             return null;
         }
 
-        public ArrayList<Transacción>[] transaccionesNodo() {
+        public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
             return new ArrayList[0];
         }
 
-        public String infoNodo() {
+        public String infoNodo(Árbol árbol) {
             return null;
         }
     }

@@ -65,7 +65,7 @@ public class Arrendamiento extends Ficha {
         return "Típo de Árbol no definido en Ficha.Arrendamiento.nombreNodo()";
     }
 
-    public String infoNodo() {
+    public String infoNodo(Árbol árbol) {
         return Site.gson.toJson(json);
     }
 }

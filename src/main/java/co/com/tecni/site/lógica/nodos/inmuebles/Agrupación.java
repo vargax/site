@@ -86,17 +86,34 @@ public class Agrupación implements Nodo {
         return hijos;
     }
 
-    public ArrayList<Transacción>[] transaccionesNodo() {
-        ArrayList[] transaccionesNodo = new ArrayList[3];
+    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
+        ArrayList<Transacción> descendientes = new ArrayList<>();
+        ArrayList<Transacción> propias = new ArrayList<>();
+        ArrayList<Transacción> ancestros = new ArrayList<>();
 
+        // DESCENDIENTES
+        for (Agrupación agrupación : agrupaciones)
+            descendientes.addAll(agrupación.transaccionesNodo(árbol)[2]);
 
-        return transaccionesNodo;
+        for (Inmueble inmueble : inmuebles) {
+            ArrayList<Transacción>[] transaccionesInmueble = inmueble.transaccionesNodo(árbol);
+            descendientes.addAll(transaccionesInmueble[1]);
+            descendientes.addAll(transaccionesInmueble[2]);
+            // Un inmueble asociado a una agrupación su ancestro es la agrupación, la cual no tiene transacciones
+        }
+
+        ArrayList[] resultado = new ArrayList[3];
+        resultado[2] = descendientes;
+        resultado[1] = propias;
+        resultado[0] = ancestros;
+        return resultado;
     }
 
-    public String infoNodo() {
-        if (json == null) {
+    public String infoNodo(Árbol árbol) {
+        // El Json sólo se puede generar una vez la agrupación tenga asociados todos sus inmuebles
+        if (json == null)
             json = new Json(this);
-        }
+
         return Site.gson.toJson(json);
     }
 }

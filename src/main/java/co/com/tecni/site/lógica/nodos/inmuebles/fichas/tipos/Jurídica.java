@@ -48,7 +48,7 @@ public class Jurídica extends Ficha {
         return "Matrícula inmobiliaria: "+json.matrículaInmobiliaria;
     }
 
-    public String infoNodo() {
+    public String infoNodo(Árbol árbol) {
         return Site.gson.toJson(json);
     }
 }
