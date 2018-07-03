@@ -164,7 +164,7 @@ public class Secuencia implements Nodo {
     // -----------------------------------------------
     void facturar(Date fechaCorte) {
 
-        if (fechaCorte.before(FIN))
+        if (fechaCorte.after(FIN))
             System.err.println("Secuencia "+json.número+".facturar() / Imposible facturar "
                     +Site.df.format(fechaCorte)+" / Fecha fin es "+Site.df.format(FIN));
 

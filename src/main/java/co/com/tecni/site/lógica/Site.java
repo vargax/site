@@ -11,7 +11,6 @@ import java.lang.reflect.Type;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Site {
     // -----------------------------------------------
@@ -19,7 +18,7 @@ public class Site {
     // -----------------------------------------------
     private final static String MODO_PONDERACIÓN = Inmueble.A_TOTAL;
 
-    private final static Date FECHA_INICIAL_FACTURACIÓN = new Date(2017, 01, 01);
+    private final static String FECHA_INICIAL_FACTURACIÓN = "ene 2017";
     private final static int MESES_FACTURACIÓN = 24;
 
     // -----------------------------------------------
@@ -42,7 +41,7 @@ public class Site {
     // -----------------------------------------------
     private Site() {
         gson = genGson();
-        df = new SimpleDateFormat("MMM yy");
+        df = new SimpleDateFormat("MMM yyyy");
 
         sdf = new DecimalFormat("#.##"); sdf.setRoundingMode(RoundingMode.CEILING);
         bdf = new DecimalFormat("###,###,###");
@@ -92,7 +91,7 @@ public class Site {
         árbolContratos = lector.genÁrbolContratos();
         árbolCartera = lector.genÁrbolCartera();
 
-        árbolCartera.genFacturas(FECHA_INICIAL_FACTURACIÓN, MESES_FACTURACIÓN);
+        árbolCartera.genFacturas(df.parse(FECHA_INICIAL_FACTURACIÓN), MESES_FACTURACIÓN);
     }
 
     public String getModoPonderación() {
