@@ -6,6 +6,7 @@ import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Arrendamiento;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Ficha;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.site.lógica.árboles.Árbol;
+import co.com.tecni.site.lógica.árboles.ÁrbolContratos;
 import co.com.tecni.site.ui.UiÁrbol;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
@@ -125,13 +126,13 @@ public abstract class Inmueble implements Nodo {
      *  [1] Transacciones Propias
      *  [2] Transacciones Descendientes
      */
-    private ArrayList<Transacción>[] recursiónTransacciones(double factorPonderación) {
+    private ArrayList<Transacción>[] recursiónTransacciones(double factorPonderación, Árbol árbol) {
         ArrayList[] resultado = new ArrayList[3];
 
         ArrayList<Transacción> descendientes = new ArrayList<>();
         if (factorPonderación == 1) {
             for (Inmueble hijo : hijos) {
-                ArrayList<Transacción>[] transaccionesHijo = hijo.recursiónTransacciones(factorPonderación);
+                ArrayList<Transacción>[] transaccionesHijo = hijo.recursiónTransacciones(factorPonderación, árbol);
                 descendientes.addAll(transaccionesHijo[1]);
                 descendientes.addAll(transaccionesHijo[2]);
             }
@@ -140,6 +141,9 @@ public abstract class Inmueble implements Nodo {
 
         ArrayList<Transacción> propias = new ArrayList<>();
         for (Ficha ficha : fichas) {
+
+            if (ficha instanceof Arrendamiento && árbol instanceof ÁrbolContratos) continue;
+
             ArrayList<Transacción>[] transaccionesFichas = ficha.recursiónTransacciones(factorPonderación);
             propias.addAll(transaccionesFichas[1]);
             propias.addAll(transaccionesFichas[2]);
@@ -149,7 +153,7 @@ public abstract class Inmueble implements Nodo {
         ArrayList<Transacción> ancestros = new ArrayList<>();
         if (padre != null && 0 < factorPonderación && factorPonderación < 1) {
             factorPonderación = factorPonderación*(this.getM2(site.getModoPonderación())/padre.getM2(site.getModoPonderación()));
-            ArrayList<Transacción>[] transaccionesAncestro = padre.recursiónTransacciones(factorPonderación);
+            ArrayList<Transacción>[] transaccionesAncestro = padre.recursiónTransacciones(factorPonderación, árbol);
 
             ancestros.addAll(transaccionesAncestro[0]);
             ancestros.addAll(transaccionesAncestro[1]);
@@ -208,11 +212,11 @@ public abstract class Inmueble implements Nodo {
 
         if (padre != null) {
             double factorPonderación = this.getM2(site.getModoPonderación())/padre.getM2(site.getModoPonderación());
-            ArrayList<Transacción>[] ancestros = recursiónTransacciones(factorPonderación);
+            ArrayList<Transacción>[] ancestros = recursiónTransacciones(factorPonderación, árbol);
             resultado[0] = ancestros[0];
         } else resultado[0] = new ArrayList();
 
-        ArrayList<Transacción>[] propiasYDescendientes = recursiónTransacciones(1);
+        ArrayList<Transacción>[] propiasYDescendientes = recursiónTransacciones(1, árbol);
         resultado[1] = propiasYDescendientes[1];
         resultado[2] = propiasYDescendientes[2];
 

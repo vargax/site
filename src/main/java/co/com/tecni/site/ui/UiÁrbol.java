@@ -92,7 +92,7 @@ public class UiÁrbol {
         applySelectionListener();
 
         jTree.setShowsRootHandles(true);
-        jTree.setRootVisible(false);
+        jTree.setRootVisible(true);
         jTree.setMinimumSize(new Dimension(MIN_DIMENSIONS[0], MIN_DIMENSIONS[1]));
     }
 

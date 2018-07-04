@@ -9,6 +9,7 @@ import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.lógica.árboles.ÁrbolContratos;
 import co.com.tecni.site.lógica.árboles.ÁrbolInmuebles;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Arrendamiento extends Ficha {
@@ -67,5 +68,19 @@ public class Arrendamiento extends Ficha {
 
     public String infoNodo(Árbol árbol) {
         return Site.gson.toJson(json);
+    }
+
+    @Override
+    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
+        ArrayList[] resultado = super.transaccionesNodo(árbol);
+
+        if (árbol instanceof ÁrbolContratos) {
+            ArrayList<Transacción>[] transaccionesInmueble = inmueble.transaccionesNodo(árbol);
+            resultado[0].addAll(transaccionesInmueble[0]);
+            resultado[1].addAll(transaccionesInmueble[1]);
+            resultado[2].addAll(transaccionesInmueble[2]);
+        }
+
+        return resultado;
     }
 }

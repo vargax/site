@@ -1,6 +1,5 @@
 package co.com.tecni.site.lógica.árboles;
 
-import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.contratos.ClienteComercial;
 
 import java.util.Calendar;
@@ -27,8 +26,6 @@ public class ÁrbolCartera extends ÁrbolClientes {
             c.setTime(fechaInicial);
             c.add(Calendar.MONTH, 1);
             fechaInicial = c.getTime();
-
-            System.out.println(Site.df.format(fechaInicial));
         }
 
 
