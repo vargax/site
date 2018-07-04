@@ -9,6 +9,7 @@ import co.com.tecni.site.ui.UiÁrbol;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class ClienteFacturación extends Tercero implements Nodo {
 
@@ -18,7 +19,7 @@ public class ClienteFacturación extends Tercero implements Nodo {
     // Atributos
     // -----------------------------------------------
     final ClienteComercial clienteComercial;
-    final HashMap<Integer, Factura> facturas;
+    final LinkedHashMap<Integer, Factura> facturas;
 
     private Json json;
     static class Json {
@@ -33,7 +34,7 @@ public class ClienteFacturación extends Tercero implements Nodo {
         super(nit, nombre);
 
         this.clienteComercial = clienteComercial;
-        facturas = new HashMap<>();
+        facturas = new LinkedHashMap<>();
 
         json = new Json();
         json.nit = super.nit;

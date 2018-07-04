@@ -8,7 +8,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class UiTransacciones {
     // -----------------------------------------------
@@ -83,23 +83,22 @@ class ResumenTransacciones extends AbstractTableModel {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    private ArrayList<Transacción>[] transxTipoPariente;
-    private HashMap<String, double[]> resumen;
+    private LinkedHashMap<String, double[]> resumen;
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
     ResumenTransacciones() {
-        transxTipoPariente = new ArrayList[3];
-        resumen = new HashMap<>();
+        resumen = new LinkedHashMap<>();
     }
 
     // -----------------------------------------------
     // Métodos lógica
     // -----------------------------------------------
     void setTransxTipoPariente(ArrayList<Transacción>[] transxTipoPariente) {
-        this.transxTipoPariente = transxTipoPariente;
         resumen.clear();
+
+        double[] totales = new double[4];
 
         for (int i = 0; i < transxTipoPariente.length; i++) {
             for (Transacción transacción : transxTipoPariente[i]) {
@@ -111,13 +110,17 @@ class ResumenTransacciones extends AbstractTableModel {
                     resumen.put(llave, valores);
                 }
 
-                valores[i] = valores[i] + transacción.monto;
+                valores[i] += transacción.monto;
+
+                totales[i] += transacción.monto;
             }
         }
 
         for (double[] valores : resumen.values())
             valores[3] = valores[0] + valores[1] + valores[2];
 
+        totales[3] = totales[0] + totales[1] + totales[2];
+        resumen.put("TOTAL", totales);
     }
 
     // -----------------------------------------------

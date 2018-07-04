@@ -1,5 +1,6 @@
 package co.com.tecni.site.lógica.árboles;
 
+import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.contratos.ClienteComercial;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
@@ -14,6 +15,12 @@ abstract class ÁrbolClientes extends Árbol {
 
     private Raiz raiz;
     private class Raiz implements Nodo {
+
+        private Json json = new Json();
+        class Json {
+            String nombre = "Sistema de Información de Inmuebles de TECNI";
+        }
+
         public String nombreNodo(Árbol árbol) {
             return nombreRaiz;
         }
@@ -29,11 +36,22 @@ abstract class ÁrbolClientes extends Árbol {
         }
 
         public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
-            return new ArrayList[0];
+            ArrayList<Transacción> descendientes = new ArrayList<>();
+            ArrayList<Transacción> propias = new ArrayList<>();
+            ArrayList<Transacción> ancestros = new ArrayList<>();
+
+            for (ClienteComercial cc : clientesComercialesxId.values())
+                descendientes.addAll(cc.transaccionesNodo(árbol)[2]);
+
+            ArrayList[] resultado = new ArrayList[3];
+            resultado[2] = descendientes;
+            resultado[1] = propias;
+            resultado[0] = ancestros;
+            return resultado;
         }
 
         public String infoNodo(Árbol árbol) {
-            return null;
+            return Site.gson.toJson(json);
         }
     }
 
