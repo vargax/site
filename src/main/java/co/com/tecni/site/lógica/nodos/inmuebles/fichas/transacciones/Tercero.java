@@ -8,6 +8,7 @@ public class Tercero {
     public final int nit;
     public final String nombre;
 
+    public final static Tercero indeterminado = new Tercero(0, "Indeterminado");
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------

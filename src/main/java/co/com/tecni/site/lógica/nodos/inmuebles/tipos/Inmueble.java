@@ -151,7 +151,7 @@ public abstract class Inmueble implements Nodo {
         resultado[1] = propias;
 
         ArrayList<Transacción> ancestros = new ArrayList<>();
-        if (padre != null && 0 < factorPonderación && factorPonderación < 1) {
+        if (padre != null) {
             factorPonderación = factorPonderación*(this.getM2(site.getModoPonderación())/padre.getM2(site.getModoPonderación()));
             ArrayList<Transacción>[] transaccionesAncestro = padre.recursiónTransacciones(factorPonderación, árbol);
 
@@ -208,7 +208,7 @@ public abstract class Inmueble implements Nodo {
     // GUI / Detalle
     // -----------------------------------------------
     public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
-        ArrayList[] resultado = new ArrayList[3];
+        /*ArrayList[] resultado = new ArrayList[3];
 
         if (padre != null) {
             double factorPonderación = this.getM2(site.getModoPonderación())/padre.getM2(site.getModoPonderación());
@@ -220,7 +220,9 @@ public abstract class Inmueble implements Nodo {
         resultado[1] = propiasYDescendientes[1];
         resultado[2] = propiasYDescendientes[2];
 
-        return resultado;
+        return resultado;*/
+
+        return recursiónTransacciones(1, árbol);
     }
 
     public String infoNodo(Árbol árbol) {

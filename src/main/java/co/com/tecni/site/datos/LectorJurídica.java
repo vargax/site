@@ -16,34 +16,28 @@ class LectorJurídica {
     // -----------------------------------------------
     private final static String HOJA_NOMBRE = "importar";
 
-    private final static char COL_ID = 'A';
-    private final static char COL_OFICINA_REGISTRO = 'B';
-    private final static char COL_MATRÍCULA_INMOBILIARIA = 'C';
-    private final static char COL_FECHA_REGISTRO_COMPRA = 'D';
-    private final static char COL_COEF_COPROPIEDAD = 'E';
-
-    private int colId = (int)COL_ID - 65;
-    private int colOficinaRegistro = (int) COL_OFICINA_REGISTRO - 65;
-    private int colMatículaInmobiliaria = (int) COL_MATRÍCULA_INMOBILIARIA - 65;
-    private int colFechaRegistroCompra = (int) COL_FECHA_REGISTRO_COMPRA - 65;
-    private int colCoefCopropiedad = (int) COL_COEF_COPROPIEDAD - 65;
+    private final static char ID = 'A';
+    private final static char OFICINA_REGISTRO = 'B';
+    private final static char MATRÍCULA_INMOBILIARIA = 'C';
+    private final static char FECHA_REGISTRO_COMPRA = 'D';
+    private final static char COEF_COPROPIEDAD = 'E';
 
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    HashMap<String, Inmueble> inmueblesxId;
+    private HashMap<String, Inmueble> inmueblesxId;
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public LectorJurídica(HashMap<String, Inmueble> inmueblesxId) {
+    LectorJurídica(HashMap<String, Inmueble> inmueblesxId) {
         this.inmueblesxId = inmueblesxId;
     }
 
     // -----------------------------------------------
     // Métodos
     // -----------------------------------------------
-    public void leer(String nombreInmueble) throws Exception {
+    void leer(String nombreInmueble) throws Exception {
         InputStream inputStream = LectorJurídica.class.getResourceAsStream("/static/archivos/jurídica "+ nombreInmueble + ".xlsx");
         XSSFWorkbook libro = new XSSFWorkbook(inputStream);
 
@@ -53,15 +47,15 @@ class LectorJurídica {
         while(filas.hasNext()) {
             filaActual = filas.next();
 
-            String id = filaActual.getCell(colId).getStringCellValue();
+            String id = Lector.cadena(filaActual, ID);
             Inmueble inmueble = inmueblesxId.get(id);
 
             if (inmueble == null) throw new Exception("Inmueble "+id+" no encontrado");
 
-            String oficinaRegistro = filaActual.getCell(colOficinaRegistro).getStringCellValue();
-            String matrículaInmobiliaria = filaActual.getCell(colMatículaInmobiliaria).getStringCellValue();
-            Date fechaRegistroCompra  = new Date((long)filaActual.getCell(colFechaRegistroCompra).getNumericCellValue());
-            double coefCopropiedad = filaActual.getCell(colCoefCopropiedad).getNumericCellValue();
+            String oficinaRegistro = Lector.cadena(filaActual, OFICINA_REGISTRO);
+            String matrículaInmobiliaria = Lector.cadena(filaActual, MATRÍCULA_INMOBILIARIA);
+            Date fechaRegistroCompra  = Lector.fecha(filaActual, FECHA_REGISTRO_COMPRA);
+            double coefCopropiedad = Lector.doble(filaActual, COEF_COPROPIEDAD);
 
             Jurídica.Json json = new Jurídica.Json(oficinaRegistro,matrículaInmobiliaria,fechaRegistroCompra,coefCopropiedad);
             Jurídica jurídica = new Jurídica(json);

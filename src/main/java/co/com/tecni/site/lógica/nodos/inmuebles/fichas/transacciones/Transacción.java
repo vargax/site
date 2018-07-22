@@ -30,7 +30,11 @@ public class Transacción {
         this.concepto = concepto;
         this.fecha = fecha;
         this.monto = monto;
-        this.tercero = tercero;
+
+        if (tercero == null)
+            this.tercero = Tercero.indeterminado;
+        else
+            this.tercero = tercero;
     }
 
     // -----------------------------------------------

@@ -27,46 +27,50 @@ public class Lector {
     // -----------------------------------------------
     // Soporte parsers
     // -----------------------------------------------
-    static Date fecha(Row fila, int columna) {
+    static int charToInt(char c) {
+        return (int) c - 65;
+    }
+
+    static Date fecha(Row fila, char columna) {
+        int col = columna - 65;
         Date fecha = null;
         try {
-            fecha = DateUtil.getJavaDate(fila.getCell(columna).getNumericCellValue());
+            fecha = DateUtil.getJavaDate(fila.getCell(col).getNumericCellValue());
         } catch (NullPointerException e) {
-            char col = (char) (columna + 65);
-            System.err.println("Columna "+col+" indefinida como fecha para la fila "+ fila.getRowNum());
+            System.err.println("Columna "+columna+" indefinida como fecha para la fila "+ fila.getRowNum());
         }
         return fecha;
     }
 
-    static String cadena(Row fila, int columna) {
+    static String cadena(Row fila, char columna) {
+        int col = columna - 65;
         String cadena = null;
         try {
-            cadena = fila.getCell(columna).getStringCellValue();
+            cadena = fila.getCell(col).getStringCellValue();
         } catch (NullPointerException e) {
-            char col = (char) (columna + 65);
-            System.err.println("Columna "+col+" indefinida como cadena para la fila "+ fila.getRowNum());
+            System.err.println("Columna "+columna+" indefinida como cadena para la fila "+ fila.getRowNum());
         }
         return cadena;
     }
 
-    static Integer entero(Row fila, int columna) {
+    static Integer entero(Row fila, char columna) {
+        int col = columna - 65;
         Integer entero = null;
         try {
-            entero = ((Double) fila.getCell(columna).getNumericCellValue()).intValue();
+            entero = ((Double) fila.getCell(col).getNumericCellValue()).intValue();
         } catch (NullPointerException e) {
-            char col = (char) (columna + 65);
-            System.err.println("Columna "+col+" indefinida como entero para la fila "+ fila.getRowNum());
+            System.err.println("Columna "+columna+" indefinida como entero para la fila "+ fila.getRowNum());
         }
         return entero;
     }
 
-    static Double doble(Row fila, int columna) {
+    static Double doble(Row fila, char columna) {
+        int col = columna - 65;
         Double doble = null;
         try {
-            doble = fila.getCell(columna).getNumericCellValue();
+            doble = fila.getCell(col).getNumericCellValue();
         } catch (NullPointerException e) {
-            char col = (char) (columna + 65);
-            System.err.println("Columna "+col+" indefinida como doble para la fila "+ fila.getRowNum());
+            System.err.println("Columna "+columna+" indefinida como doble para la fila "+ fila.getRowNum());
         }
         return doble;
     }
@@ -92,10 +96,12 @@ public class Lector {
     private void importarFichas() throws Exception {
         LectorCatastral lectorCatastral = new LectorCatastral(inmueblesxId);
         LectorJurídica lectorJurídica = new LectorJurídica(inmueblesxId);
+        LectorObraCivil lectorObraCivil = new LectorObraCivil(inmueblesxId);
 
         for (String nombreInmueble : INMUEBLES_IMPORTAR) {
             lectorCatastral.leer(nombreInmueble);
             lectorJurídica.leer(nombreInmueble);
+            lectorObraCivil.leer(nombreInmueble);
         }
     }
 
