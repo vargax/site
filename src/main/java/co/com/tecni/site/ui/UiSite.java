@@ -6,6 +6,7 @@ import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.lógica.árboles.ÁrbolCartera;
 import co.com.tecni.site.lógica.árboles.ÁrbolContratos;
 import co.com.tecni.site.lógica.árboles.ÁrbolInmuebles;
+import co.com.tecni.site.ui.tablas.UiTablas;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -27,7 +28,7 @@ class UiSite extends JFrame {
     private Árbol árbolActual;
 
     private UiInfo uiInfo;
-    private UiTransacciones uiTransacciones;
+    private UiTablas UiTablas;
 
     // -----------------------------------------------
     // Constructor
@@ -44,11 +45,11 @@ class UiSite extends JFrame {
         cartera = new UiÁrbol(ÁrbolCartera.NOMBRE_RAIZ, Site.árbolCartera);
 
         uiInfo = new UiInfo();
-        uiTransacciones = new UiTransacciones();
+        UiTablas = new UiTablas();
 
         JSplitPane panelSecundario = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         panelSecundario.setRightComponent(new JScrollPane(uiInfo.getComponent()));
-        panelSecundario.setLeftComponent(uiTransacciones.getComponent());
+        panelSecundario.setLeftComponent(UiTablas.componente);
         panelSecundario.setResizeWeight(0.3d);
 
         JTabbedPane pestañasÁrboles = new JTabbedPane();
@@ -65,9 +66,9 @@ class UiSite extends JFrame {
                 }
             }
         });
-        pestañasÁrboles.addTab(inmuebles.getNombre(), new JScrollPane(inmuebles.getComponent()));
-        pestañasÁrboles.addTab(contratos.getNombre(), new JScrollPane(contratos.getComponent()));
-        pestañasÁrboles.addTab(cartera.getNombre(), new JScrollPane(cartera.getComponent()));
+        pestañasÁrboles.addTab(inmuebles.nombre, new JScrollPane(inmuebles.componente));
+        pestañasÁrboles.addTab(contratos.nombre, new JScrollPane(contratos.componente));
+        pestañasÁrboles.addTab(cartera.nombre, new JScrollPane(cartera.componente));
 
         JSplitPane panelPrincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         panelPrincipal.setLeftComponent(pestañasÁrboles);
@@ -89,7 +90,7 @@ class UiSite extends JFrame {
         if (infoNodo != null)
             uiInfo.mostrarDetalle(infoNodo);
 
-        uiTransacciones.mostrarTransacciones(nodo.transaccionesNodo(árbolActual));
+        UiTablas.mostrarTransacciones(nodo.transaccionesNodo(árbolActual));
     }
 
     // -----------------------------------------------

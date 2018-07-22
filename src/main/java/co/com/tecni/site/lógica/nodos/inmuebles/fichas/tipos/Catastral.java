@@ -14,14 +14,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Catastral extends Ficha {
-    // -----------------------------------------------
-    // Constantes
-    // -----------------------------------------------
+
     final static IconCode UI_ÍCONO = GoogleMaterialDesignIcons.ACCOUNT_BALANCE;
 
-    // -----------------------------------------------
-    // Atributos
-    // -----------------------------------------------
     private Json json;
     public static class Json {
         String chip;
@@ -39,6 +34,29 @@ public class Catastral extends Ficha {
         }
     }
 
+    public Catastral(Json json) {
+        super();
+        super.ícono = new UiÁrbol.Ícono(UI_ÍCONO);
+
+        this.json = json;
+    }
+
+    public void registrarPredial(ImpuestoPredial impuestoPredial) {
+        impuestoPredial.padre = this;
+        super.fichas.add(impuestoPredial);
+    }
+
+    public String nombreNodo(Árbol árbol) {
+        return "Cédula catastral: " + json.cedulaCatastral;
+    }
+
+    public String infoNodo(Árbol árbol) {
+        return Site.gson.toJson(json);
+    }
+
+    // -----------------------------------------------
+    // Subclases
+    // -----------------------------------------------
     public static class ImpuestoPredial extends Ficha {
 
         private final static int PRORRATA = 12;
@@ -91,31 +109,5 @@ public class Catastral extends Ficha {
         public String infoNodo(Árbol árbol) {
             return Site.gson.toJson(json);
         }
-    }
-
-    // -----------------------------------------------
-    // Constructor
-    // -----------------------------------------------
-    public Catastral(Json json) {
-        super();
-        super.ícono = new UiÁrbol.Ícono(UI_ÍCONO);
-
-        this.json = json;
-    }
-
-    public void registrarPredial(ImpuestoPredial impuestoPredial) {
-        impuestoPredial.padre = this;
-        super.fichas.add(impuestoPredial);
-    }
-
-    // -----------------------------------------------
-    // GUI / Árbol
-    // -----------------------------------------------
-    public String nombreNodo(Árbol árbol) {
-        return "Cédula catastral: " + json.cedulaCatastral;
-    }
-
-    public String infoNodo(Árbol árbol) {
-        return Site.gson.toJson(json);
     }
 }
