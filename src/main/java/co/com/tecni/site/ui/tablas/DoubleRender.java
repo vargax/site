@@ -1,4 +1,4 @@
-package co.com.tecni.site.ui.table;
+package co.com.tecni.site.ui.tablas;
 
 import co.com.tecni.site.lógica.Site;
 

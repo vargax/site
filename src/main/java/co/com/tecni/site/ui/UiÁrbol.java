@@ -21,38 +21,26 @@ public class UiÁrbol {
     public final static int ÍCONO_TAMAÑO = 25;
     public final static Color ÍCONO_COLOR = Color.GRAY;
 
-    public final static Color NODO_SEL_FONDO = new Color(225, 225, 225);
+    public final static Color FONDO_NODO_SELECCIONADO = new Color(225, 225, 225);
 
     private final static int[] MIN_DIMENSIONS = {100, 50};
 
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    private String nombre;
+    String nombre;
+    JTree componente;
+
     private Árbol árbol;
 
-    private JTree jTree;
     private UiNodoÁrbol uiNodoÁrbol;
     class UiNodoÁrbol implements TreeCellRenderer {
-        // -----------------------------------------------
-        // Constantes
-        // -----------------------------------------------
-
-        // -----------------------------------------------
-        // Atributos
-        // -----------------------------------------------
         private JLabel jLabel;
 
-        // -----------------------------------------------
-        // Constructor
-        // -----------------------------------------------
         UiNodoÁrbol() {
             jLabel = new JLabel();
         }
 
-        // -----------------------------------------------
-        // Métodos
-        // -----------------------------------------------
         public Component getTreeCellRendererComponent(JTree jTree, Object o,
                                                       boolean selected, boolean expanded,
                                                       boolean leaf, int row, boolean hasFocus) {
@@ -70,7 +58,7 @@ public class UiÁrbol {
 
             if (selected) {
                 jLabel.setOpaque(true);
-                jLabel.setBackground(UiÁrbol.NODO_SEL_FONDO);
+                jLabel.setBackground(UiÁrbol.FONDO_NODO_SELECCIONADO);
             }
 
             return jLabel;
@@ -87,23 +75,23 @@ public class UiÁrbol {
 
         uiNodoÁrbol = new UiNodoÁrbol();
 
-        jTree = new JTree(árbol);
-        jTree.setCellRenderer(uiNodoÁrbol);
+        componente = new JTree(árbol);
+        componente.setCellRenderer(uiNodoÁrbol);
         applySelectionListener();
 
-        jTree.setShowsRootHandles(true);
-        jTree.setRootVisible(true);
-        jTree.setMinimumSize(new Dimension(MIN_DIMENSIONS[0], MIN_DIMENSIONS[1]));
+        componente.setShowsRootHandles(true);
+        componente.setRootVisible(true);
+        componente.setMinimumSize(new Dimension(MIN_DIMENSIONS[0], MIN_DIMENSIONS[1]));
     }
 
     // -----------------------------------------------
     // Métodos privados
     // -----------------------------------------------
     private void applySelectionListener() {
-        jTree.getSelectionModel().addTreeSelectionListener(
+        componente.getSelectionModel().addTreeSelectionListener(
                 new TreeSelectionListener() {
                     public void valueChanged(TreeSelectionEvent treeSelectionEvent) {
-                        Nodo nodo = (Nodo) jTree.getLastSelectedPathComponent();
+                        Nodo nodo = (Nodo) componente.getLastSelectedPathComponent();
                         UiSite.instance.actualizarDetalle(nodo);
                     }
                 }
@@ -114,17 +102,9 @@ public class UiÁrbol {
     // Métodos públicos
     // -----------------------------------------------
     void expandAll() {
-        for (int i = 0; i < jTree.getRowCount(); i++) {
-            jTree.expandRow(i);
+        for (int i = 0; i < componente.getRowCount(); i++) {
+            componente.expandRow(i);
         }
-    }
-
-    String getNombre() {
-        return nombre;
-    }
-
-    Component getComponent() {
-        return jTree;
     }
 
     public static class Ícono {
