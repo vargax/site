@@ -35,8 +35,9 @@ public class Agrupación implements Nodo {
 
         Json(Agrupación agrupación) {
             nombre = agrupación.nombre;
-            agrupaciones = agrupación.agrupaciones.size();
-            inmuebles = agrupación.inmuebles.size();
+            int[] resultado = agrupación.contador();
+            agrupaciones = resultado[0];
+            inmuebles = resultado[1];
         }
     }
     // -----------------------------------------------
@@ -115,5 +116,23 @@ public class Agrupación implements Nodo {
             json = new Json(this);
 
         return Site.gson.toJson(json);
+    }
+
+    /**
+     * Calcula recursivamente el total de agrupaciones e inmuebles
+     * @return [0] = #agrupaciones / [1] = #inmuebles
+     */
+    private int[] contador() {
+        int agrupaciones = this.agrupaciones.size();
+        int inmuebles = this.inmuebles.size();
+
+        for (Agrupación agrupación : this.agrupaciones) {
+            int[] resultado = agrupación.contador();
+            agrupaciones += resultado[0];
+            inmuebles += resultado[1];
+        }
+
+        int[] resultado = {agrupaciones, inmuebles};
+        return resultado;
     }
 }
