@@ -14,7 +14,8 @@ class LectorCatastral {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
-    private final static String HOJA_NOMBRE = "importar";
+    private final static String HJ_REAL = "real";
+    private final static String HJ_PRESUPUESTADO = "presupuestado";
 
     private final static char ID = 'A';
     private final static char CHIP = 'B';
@@ -50,13 +51,19 @@ class LectorCatastral {
         InputStream inputStream = LectorCatastral.class.getResourceAsStream("/static/archivos/catastral "+ nombreInmueble + ".xlsx");
         XSSFWorkbook libro = new XSSFWorkbook(inputStream);
 
-        Iterator<Row> filas = libro.getSheet(HOJA_NOMBRE).iterator();
-        Row filaActual = filas.next();
+        iterador(libro.getSheet(HJ_REAL).iterator(), false);
+        iterador(libro.getSheet(HJ_PRESUPUESTADO).iterator(), true);
 
+        inputStream.close();
+    }
+
+    private void iterador(Iterator<Row> filas, boolean presupuestado) throws Exception {
+        Row filaActual = filas.next();
         añoPrimerPredial = Integer.parseInt(Lector.cadena(filaActual, PRIMER_PREDIAL).split(" ")[1]);
 
         while (filas.hasNext()) {
             filaActual = filas.next();
+            if(filaActual.getCell(Lector.charToInt(ID)) == null) break;
 
             String id = Lector.cadena(filaActual, ID);
             Inmueble inmueble = inmueblesxId.get(id);
@@ -70,7 +77,7 @@ class LectorCatastral {
             double m2terreno = Lector.doble(filaActual, M2_TERRENO);
 
             Catastral.Json json = new Catastral.Json(chip, cedulaCatastral, nomenclatura, m2construcción, m2terreno);
-            Catastral catastral = new Catastral(json);
+            Catastral catastral = new Catastral(presupuestado, json);
 
             int año = añoPrimerPredial;
 
@@ -86,12 +93,11 @@ class LectorCatastral {
                 double impuesto = columnaActual.getNumericCellValue();
                 columnaActual = columnas.next();
 
-                Catastral.ImpuestoPredial impuestoPredial = new Catastral.ImpuestoPredial(new Catastral.ImpuestoPredial.Json(año, avaluo, impuesto));
+                Catastral.ImpuestoPredial impuestoPredial = new Catastral.ImpuestoPredial(presupuestado, new Catastral.ImpuestoPredial.Json(año, avaluo, impuesto));
                 catastral.registrarPredial(impuestoPredial);
                 año++;
             }
             inmueble.registrarFicha(catastral);
         }
-        inputStream.close();
     }
 }

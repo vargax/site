@@ -34,8 +34,8 @@ public class Catastral extends Ficha {
         }
     }
 
-    public Catastral(Json json) {
-        super();
+    public Catastral(boolean presupuestado, Json json) {
+        super(presupuestado);
         super.ícono = new UiÁrbol.Ícono(UI_ÍCONO);
 
         this.json = json;
@@ -75,8 +75,8 @@ public class Catastral extends Ficha {
             }
         }
 
-        public ImpuestoPredial(Json json) {
-            super();
+        public ImpuestoPredial(boolean presupuestado, Json json) {
+            super(presupuestado);
             super.ícono = new UiÁrbol.Ícono(UI_ÍCONO);
 
             this.json = json;

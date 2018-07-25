@@ -99,8 +99,8 @@ public class Lector {
         LectorObraCivil lectorObraCivil = new LectorObraCivil(inmueblesxId);
 
         for (String nombreInmueble : INMUEBLES_IMPORTAR) {
-            lectorCatastral.leer(nombreInmueble);
             lectorJurídica.leer(nombreInmueble);
+            lectorCatastral.leer(nombreInmueble);
             lectorObraCivil.leer(nombreInmueble);
         }
     }

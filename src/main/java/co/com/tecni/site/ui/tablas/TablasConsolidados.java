@@ -75,11 +75,11 @@ class TablasConsolidados {
                 for (Transacción transacción : transxTipoPariente[i])
 
                     if (transacción.ficha instanceof Arrendamiento)
-                        if (transacción.ficha.presupuesto)
+                        if (transacción.ficha.presupuestado)
                             ingresosPresupuestados += transacción.monto;
                         else
                             ingresosReales += transacción.monto;
-                    else if (transacción.ficha.presupuesto)
+                    else if (transacción.ficha.presupuestado)
                         gastosPresupuestados += transacción.monto;
                     else
                         gastosReales += transacción.monto;
