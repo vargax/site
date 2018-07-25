@@ -46,8 +46,8 @@ public class ObraCivil extends Ficha {
         }
     }
 
-    public ObraCivil(Json json) {
-        super();
+    public ObraCivil(boolean presupuestado, Json json) {
+        super(presupuestado);
         super.ícono = new UiÁrbol.Ícono(UI_ÍCONO);
         this.json = json;
 

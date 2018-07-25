@@ -19,7 +19,7 @@ public abstract class Ficha implements Nodo {
     // Atributos
     // -----------------------------------------------
     Ficha padre;
-    public boolean presupuesto;
+    public final boolean presupuestado;
 
     ArrayList<Ficha> fichas;
     ArrayList<Transacción> transacciones;
@@ -28,17 +28,8 @@ public abstract class Ficha implements Nodo {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    Ficha() {
-        this.presupuesto = false;
-
-        fichas = new ArrayList<>();
-        transacciones = new ArrayList<>();
-
-        ícono = new UiÁrbol.Ícono(UI_ÍCONO);
-    }
-
-    Ficha(boolean presupuesto) {
-        this.presupuesto = presupuesto;
+    Ficha(boolean presupuestado) {
+        this.presupuestado = presupuestado;
 
         fichas = new ArrayList<>();
         transacciones = new ArrayList<>();

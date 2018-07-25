@@ -15,7 +15,8 @@ class LectorObraCivil {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
-    private final static String HOJA_NOMBRE = "importar";
+    private final static String HJ_REAL = "real";
+    private final static String HJ_PRESUPUESTADO = "presupuestado";
 
     private final static char ID = 'A';
     private final static char FECHA_INICIAL = 'B';
@@ -27,18 +28,26 @@ class LectorObraCivil {
     private final static char OBSERVACIONES = 'H';
 
     private HashMap<String, Inmueble> inmueblesxId;
+    private String nombreInmueble;
 
     LectorObraCivil(HashMap<String, Inmueble> inmueblesxId) {
         this.inmueblesxId = inmueblesxId;
     }
 
     void leer(String nombreInmueble) throws Exception {
+        this.nombreInmueble = nombreInmueble;
+
         InputStream inputStream = LectorObraCivil.class.getResourceAsStream("/static/archivos/obraCivil "+ nombreInmueble + ".xlsx");
         XSSFWorkbook libro = new XSSFWorkbook(inputStream);
 
-        HashMap<String, Integer> contadores = new HashMap<>();
+        iterador(libro.getSheet(HJ_REAL).iterator(), false);
+        iterador(libro.getSheet(HJ_PRESUPUESTADO).iterator(), true);
 
-        Iterator<Row> filas = libro.getSheet(HOJA_NOMBRE).iterator();
+        inputStream.close();
+    }
+
+    private void iterador(Iterator<Row> filas, boolean presupuestado) throws Exception {
+        HashMap<String, Integer> contadores = new HashMap<>();
         Row filaActual = filas.next();
 
         while(filas.hasNext()) {
@@ -66,12 +75,11 @@ class LectorObraCivil {
             String observaciones = Lector.cadena(filaActual, OBSERVACIONES);
 
             ObraCivil.Json json = new ObraCivil.Json(tipo, fechaInicial, fechaFinal, presupuesto, descripción, observaciones);
-            inmueble.registrarFicha(new ObraCivil(json));
+            inmueble.registrarFicha(new ObraCivil(presupuestado, json));
         }
 
         for (Map.Entry<String, Integer> e : contadores.entrySet()) {
             System.out.println("Asociadas "+e.getValue()+" obras civiles de tipo "+e.getKey()+" para "+nombreInmueble);
         }
-        inputStream.close();
     }
 }
