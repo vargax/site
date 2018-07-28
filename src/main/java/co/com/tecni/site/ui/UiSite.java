@@ -78,7 +78,8 @@ class UiSite extends JFrame {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("SITE");
-        this.setSize(1280, 800);
+        this.setSize(1900, 1000);
+        //this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         this.setVisible(true);
     }
 

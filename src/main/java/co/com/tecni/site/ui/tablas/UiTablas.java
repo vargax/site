@@ -4,9 +4,13 @@ import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacci�
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class UiTablas {
+    static final String REAL = "REAL";
+    static final String PRESUPUESTADO = "PRESUPUESTADO";
+
     static final DoubleRender DR = new DoubleRender();
 
     public final JTabbedPane componente;
@@ -21,7 +25,7 @@ public class UiTablas {
 
         componente = new JTabbedPane();
         componente.addTab(TablasConsolidados.NOMBRE, new JScrollPane(tConsolidados.componente));
-        componente.addTab(TablasTransacciones.NOMBRE, new JScrollPane(tTransacciones.componente));
+        componente.addTab(TablasTransacciones.NOMBRE, tTransacciones.componente);
 
     }
 
@@ -30,6 +34,31 @@ public class UiTablas {
         tConsolidados.mostrarTransacciones(transacciones);
         tTransacciones.mostrarTransacciones(transacciones);
 
+    }
+
+    static ArrayList<Transacción>[] generarArreglos() {
+
+        ArrayList[] arreglos = new ArrayList[3];
+
+        for (int i = 0; i < arreglos.length; i++)
+            arreglos[i] = new ArrayList<Transacción>();
+
+        return arreglos;
+    }
+
+    static JSplitPane genJSplitPane(boolean scrollPane, Component superior, Component inferior) {
+        JSplitPane resultado = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+
+        if (scrollPane) {
+            superior = new JScrollPane(superior);
+            inferior = new JScrollPane(inferior);
+        }
+
+        resultado.setLeftComponent(superior);
+        resultado.setRightComponent(inferior);
+        resultado.setResizeWeight(0.5d);
+
+        return resultado;
     }
 
     static abstract class ModeloTabla extends AbstractTableModel {

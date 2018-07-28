@@ -10,17 +10,25 @@ class TablasTransacciones {
     final static String NOMBRE = "Transacciones";
 
     JSplitPane componente;
-    private ResumenTransacciones resumenTransacciones;
-    private DetalleTransacciones detalleTransacciones;
+    private Herencia herenciaReal;
+    private Transacciones transaccionesReales;
+
+    private Herencia herenciaPresupuestada;
+    private Transacciones transaccionesPresupuestadas;
+
 
     TablasTransacciones() {
-        resumenTransacciones = new ResumenTransacciones();
-        detalleTransacciones = new DetalleTransacciones();
+        herenciaReal = new Herencia(UiTablas.REAL);
+        herenciaPresupuestada = new Herencia(UiTablas.PRESUPUESTADO);
 
-        componente = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-        componente.setLeftComponent(new JScrollPane(resumenTransacciones.tabla));
-        componente.setRightComponent(new JScrollPane(detalleTransacciones.tabla));
-        componente.setResizeWeight(0.5d);
+        JSplitPane jspDistribución = UiTablas.genJSplitPane(true, herenciaReal.tabla, herenciaPresupuestada.tabla);
+
+        transaccionesReales = new Transacciones(UiTablas.REAL);
+        transaccionesPresupuestadas = new Transacciones(UiTablas.PRESUPUESTADO);
+
+        JSplitPane jspTransacciones = UiTablas.genJSplitPane(true, transaccionesReales.tabla, transaccionesPresupuestadas.tabla);
+
+        componente = UiTablas.genJSplitPane(false, jspDistribución, jspTransacciones);
     }
 
     /**
@@ -31,14 +39,28 @@ class TablasTransacciones {
      *                      transacciones[2] descendientes
      */
     void mostrarTransacciones(ArrayList<Transacción>[] transacciones) {
-        resumenTransacciones.setTransxTipoPariente(transacciones);
-        detalleTransacciones.setTransxTipoPariente(transacciones);
+
+        ArrayList<Transacción>[] real = UiTablas.generarArreglos();
+        ArrayList<Transacción>[] presupuestado = UiTablas.generarArreglos();
+
+        for (int i = 0; i < transacciones.length; i++)
+            for (Transacción t : transacciones[i])
+                if (t.ficha.presupuestado)
+                    presupuestado[i].add(t);
+                else
+                    real[i].add(t);
+
+        herenciaReal.setTransxTipoPariente(real);
+        transaccionesReales.setTransxTipoPariente(real);
+
+        herenciaPresupuestada.setTransxTipoPariente(presupuestado);
+        transaccionesPresupuestadas.setTransxTipoPariente(presupuestado);
     }
 
     // -----------------------------------------------
     // Subclases
     // -----------------------------------------------
-    class ResumenTransacciones extends UiTablas.ModeloTabla {
+    class Herencia extends UiTablas.ModeloTabla {
         private final String[] COLUMNAS = {"Ficha",
                 "Ancestros",
                 "Propias",
@@ -49,9 +71,11 @@ class TablasTransacciones {
         JTable tabla;
         private LinkedHashMap<String, double[]> resumen;
 
-        ResumenTransacciones() {
+        Herencia(String título) {
             super();
             super.columnas = COLUMNAS;
+            super.columnas[0] = título;
+
             resumen = new LinkedHashMap<>();
 
             tabla = new JTable(this);
@@ -100,7 +124,7 @@ class TablasTransacciones {
         }
     }
 
-    class DetalleTransacciones extends UiTablas.ModeloTabla {
+    class Transacciones extends UiTablas.ModeloTabla {
         private final String[] COLUMNAS = {"Fecha",
                 "Monto",
                 "Concepto",
@@ -109,9 +133,11 @@ class TablasTransacciones {
         JTable tabla;
         private ArrayList<Transacción> transacciones;
 
-        DetalleTransacciones() {
+        Transacciones(String título) {
             super();
             super.columnas = COLUMNAS;
+            super.columnas[0] = título;
+
             transacciones = new ArrayList<>();
 
             tabla = new JTable(this);
@@ -142,4 +168,5 @@ class TablasTransacciones {
             }
         }
     }
+
 }

@@ -12,7 +12,11 @@ public class DoubleRender extends DefaultTableCellRenderer {
         super.getTableCellRendererComponent(jTable, value, isSelected, hasFocus, row, column);
 
         setHorizontalAlignment(RIGHT);
-        setText(Site.bdf.format(value));
+
+        double valor = (double) value;
+        String texto = 0 <= valor && valor <= 1 ? Site.sdf.format(valor) : Site.bdf.format(valor);
+
+        setText(texto);
         if ((Double) value < 0) setForeground(Color.RED);
         else setForeground(Color.BLACK);
 
