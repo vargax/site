@@ -5,6 +5,7 @@ import co.com.tecni.site.l처gica.nodos.inmuebles.fichas.transacciones.Transacci�
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 class TablasConsolidados {
     final static String NOMBRE = "Consolidados";
@@ -34,7 +35,7 @@ class TablasConsolidados {
      */
     void mostrarTransacciones(ArrayList<Transacci처n>[] transacciones) {
         resumenConsolidado.setTransxTipoPariente(transacciones);
-        //detalleConsolidado.setTransxTipoPariente(transacciones);
+        detalleConsolidado.setTransxTipoPariente(transacciones);
     }
 
     // -----------------------------------------------
@@ -87,17 +88,17 @@ class TablasConsolidados {
             totales[0][0] = ingresosReales;
             totales[1][0] = ingresosPresupuestados;
             totales[2][0] = ingresosReales - ingresosPresupuestados;
-            totales[3][0] = totales[2][0] / totales[1][0];
+            totales[3][0] = totales[0][0] / totales[1][0];
 
             totales[0][1] = gastosReales;
             totales[1][1] = gastosPresupuestados;
             totales[2][1] = gastosReales - gastosPresupuestados;
-            totales[3][1] = totales[2][1] / totales[1][1];
+            totales[3][1] = totales[0][1] / totales[1][1];
 
             totales[0][2] = ingresosReales + gastosReales;
             totales[1][2] = ingresosPresupuestados + gastosPresupuestados;
             totales[2][2] = totales[2][0] + totales[2][1];
-            totales[3][2] = totales[2][2] / totales[1][2];
+            totales[3][2] = totales[0][2] / totales[1][2];
 
             tabla.updateUI();
 
@@ -117,28 +118,72 @@ class TablasConsolidados {
     }
 
     class DetalleConsolidado extends UiTablas.ModeloTabla {
-        private final String[] COLUMNAS = {"",
+        private final String[] COLUMNAS = {"Ficha",
                 "Real",
-                "Proyectado",
+                "Presupuestado",
                 "Diferencia",
                 "% Cumplimiento"};
 
         JTable tabla;
+        private LinkedHashMap<String, double[]> resumen;
 
         DetalleConsolidado() {
             super();
             super.columnas = COLUMNAS;
 
+            resumen = new LinkedHashMap<>();
+
             tabla = new JTable(this);
             tabla.setDefaultRenderer(Double.class, UiTablas.DR);
         }
 
+        void setTransxTipoPariente(ArrayList<Transacci처n>[] transxTipoPariente) {
+            resumen.clear();
+
+            for (int i = 0; i < transxTipoPariente.length; i++) {
+                for (Transacci처n transacci처n : transxTipoPariente[i]) {
+                    String llave = transacci처n.ficha.getClass().getSimpleName();
+                    double[] valores = resumen.get(llave);
+
+                    if (valores == null) {
+                        valores = new double[4];
+                        resumen.put(llave, valores);
+                    }
+
+                    if (transacci처n.ficha.presupuestado)
+                        valores[1] += transacci처n.monto;
+                    else
+                        valores[0] += transacci처n.monto;
+
+                }
+            }
+
+            double[] totales = new double[4];
+
+            for (double[] valores : resumen.values()) {
+                valores[2] = valores[0] - valores[1]; // Diferencia
+                valores[3] = valores[0] / valores[1]; // Cumplimiento
+
+                totales[0] += valores[0];
+                totales[1] += valores[1];
+            }
+
+            totales[2] = totales[0] - totales[1]; // Diferencia
+            totales[3] = totales[0] / totales[1]; // Cumplimiento
+            resumen.put("TOTAL", totales);
+
+            tabla.updateUI();
+        }
+
         public int getRowCount() {
-            return 0;
+            return resumen.size();
         }
 
         public Object getValueAt(int row, int col) {
-            return null;
+            String fila = (String) resumen.keySet().toArray()[row];
+            if (col == 0)
+                return fila;
+            return resumen.get(fila)[col-1];
         }
     }
 
