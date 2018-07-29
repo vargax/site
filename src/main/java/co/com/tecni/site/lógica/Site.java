@@ -16,7 +16,7 @@ public class Site {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
-    private final static String MODO_PONDERACIÓN = Inmueble.A_TOTAL;
+    private final static String MODO_PONDERACIÓN = Inmueble.A_PRIV_TOTAL;
 
     private final static String FECHA_INICIAL_FACTURACIÓN = "ene 2017";
     private final static int MESES_FACTURACIÓN = 24;

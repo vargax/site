@@ -208,20 +208,6 @@ public abstract class Inmueble implements Nodo {
     // GUI / Detalle
     // -----------------------------------------------
     public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
-        /*ArrayList[] resultado = new ArrayList[3];
-
-        if (padre != null) {
-            double factorPonderación = this.getM2(site.getModoPonderación())/padre.getM2(site.getModoPonderación());
-            ArrayList<Transacción>[] ancestros = recursiónTransacciones(factorPonderación, árbol);
-            resultado[0] = ancestros[0];
-        } else resultado[0] = new ArrayList();
-
-        ArrayList<Transacción>[] propiasYDescendientes = recursiónTransacciones(1, árbol);
-        resultado[1] = propiasYDescendientes[1];
-        resultado[2] = propiasYDescendientes[2];
-
-        return resultado;*/
-
         return recursiónTransacciones(1, árbol);
     }
 
