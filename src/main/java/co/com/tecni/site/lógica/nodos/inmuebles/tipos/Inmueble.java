@@ -4,6 +4,7 @@ import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Arrendamiento;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Ficha;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Presupuestal;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.lógica.árboles.ÁrbolContratos;
@@ -54,12 +55,14 @@ public abstract class Inmueble implements Nodo {
     String sigla;
     private JSONObject infoNodo;
     private JSONObject características;
+    private HashMap<Integer, Presupuestal> presupuestos;
     // -----------------------------------------------
     // Constructores
     // -----------------------------------------------
     public Inmueble() {
         hijos = new ArrayList<>();
         fichas = new ArrayList<>();
+        presupuestos = new HashMap<>();
 
         ícono = new UiÁrbol.Ícono(UI_ÍCONO);
 
@@ -152,7 +155,7 @@ public abstract class Inmueble implements Nodo {
 
         ArrayList<Transacción> ancestros = new ArrayList<>();
         if (padre != null) {
-            factorPonderación = factorPonderación*(this.getM2(site.getModoPonderación())/padre.getM2(site.getModoPonderación()));
+            factorPonderación = factorPonderación*(this.m2.get(site.getModoPonderación())/padre.m2.get(site.getModoPonderación()));
             ArrayList<Transacción>[] transaccionesAncestro = padre.recursiónTransacciones(factorPonderación, árbol);
 
             ancestros.addAll(transaccionesAncestro[0]);
@@ -183,9 +186,19 @@ public abstract class Inmueble implements Nodo {
             inmueble.recursiónColorÍcono(color);
     }
 
-    public double getM2(String area) {
-        return m2.get(area);
+    public Presupuestal getPresupuesto(int año) {
+        Presupuestal presupuesto = presupuestos.get(año);
+
+        if (presupuesto == null) {
+            presupuesto = new Presupuestal(año);
+            presupuestos.put(año, presupuesto);
+            fichas.add(presupuesto);
+        }
+
+        return presupuesto;
     }
+
+
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------

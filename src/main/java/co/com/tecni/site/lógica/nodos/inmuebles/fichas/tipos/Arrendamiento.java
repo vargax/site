@@ -31,7 +31,6 @@ public class Arrendamiento extends Ficha {
     }
 
     public Arrendamiento(Secuencia secuencia, Inmueble inmueble, Json json) {
-        super(false);
 
         this.secuencia = secuencia;
         this.inmueble = inmueble;

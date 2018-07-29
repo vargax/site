@@ -34,17 +34,20 @@ public class Catastral extends Ficha {
         }
     }
 
-    public Catastral(boolean presupuestado, Json json) {
-        super(presupuestado);
-        super.ícono = new UiÁrbol.Ícono(UI_ÍCONO);
+    public Catastral(Json json) {
+        inicializar(json);
+    }
 
+    public Catastral(Ficha padre, Json json) {
+        super(padre);
+        inicializar(json);
+    }
+
+    private void inicializar(Json json) {
+        super.ícono = new UiÁrbol.Ícono(UI_ÍCONO);
         this.json = json;
     }
 
-    public void registrarPredial(ImpuestoPredial impuestoPredial) {
-        impuestoPredial.padre = this;
-        super.fichas.add(impuestoPredial);
-    }
 
     public String nombreNodo(Árbol árbol) {
         return "Cédula catastral: " + json.cedulaCatastral;
@@ -75,8 +78,8 @@ public class Catastral extends Ficha {
             }
         }
 
-        public ImpuestoPredial(boolean presupuestado, Json json) {
-            super(presupuestado);
+        public ImpuestoPredial(Ficha padre, Json json) {
+            super(padre);
             super.ícono = new UiÁrbol.Ícono(UI_ÍCONO);
 
             this.json = json;
