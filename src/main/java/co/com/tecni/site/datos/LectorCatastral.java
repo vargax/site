@@ -77,7 +77,12 @@ class LectorCatastral {
             double m2terreno = Lector.doble(filaActual, M2_TERRENO);
 
             Catastral.Json json = new Catastral.Json(chip, cedulaCatastral, nomenclatura, m2construcción, m2terreno);
-            Catastral catastral = new Catastral(presupuestado, json);
+
+            Catastral catastral = null;
+            if (!presupuestado) {
+                catastral = new Catastral(json);
+                inmueble.registrarFicha(catastral);
+            }
 
             int año = añoPrimerPredial;
 
@@ -87,17 +92,20 @@ class LectorCatastral {
                 columnaActual = columnas.next();
 
             while (columnaActual.getColumnIndex() <= últimoPredial) {
+
+                if (presupuestado) {
+                    catastral = new Catastral(inmueble.getPresupuesto(año), json);
+                }
+
                 double avaluo = columnaActual.getNumericCellValue();
                 columnaActual = columnas.next();
 
                 double impuesto = columnaActual.getNumericCellValue();
                 columnaActual = columnas.next();
 
-                Catastral.ImpuestoPredial impuestoPredial = new Catastral.ImpuestoPredial(presupuestado, new Catastral.ImpuestoPredial.Json(año, avaluo, impuesto));
-                catastral.registrarPredial(impuestoPredial);
+                new Catastral.ImpuestoPredial(catastral, new Catastral.ImpuestoPredial.Json(año, avaluo, impuesto));
                 año++;
             }
-            inmueble.registrarFicha(catastral);
         }
     }
 }

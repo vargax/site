@@ -26,7 +26,6 @@ public class Jurídica extends Ficha {
     // Constructor
     // -----------------------------------------------
     public Jurídica(Json json) {
-        super(false);
         this.json = json;
     }
 

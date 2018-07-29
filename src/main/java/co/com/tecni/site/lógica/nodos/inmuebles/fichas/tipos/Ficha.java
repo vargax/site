@@ -28,13 +28,24 @@ public abstract class Ficha implements Nodo {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    Ficha(boolean presupuestado) {
+    Ficha() {
+        this(false);
+    }
+
+    Ficha (boolean presupuestado) {
         this.presupuestado = presupuestado;
 
         fichas = new ArrayList<>();
         transacciones = new ArrayList<>();
 
         ícono = new UiÁrbol.Ícono(UI_ÍCONO);
+    }
+
+    Ficha(Ficha padre) {
+        this(padre.presupuestado);
+
+        this.padre = padre;
+        padre.fichas.add(this);
     }
 
     // -----------------------------------------------

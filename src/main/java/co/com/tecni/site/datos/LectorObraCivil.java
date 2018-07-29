@@ -75,7 +75,11 @@ class LectorObraCivil {
             String observaciones = Lector.cadena(filaActual, OBSERVACIONES);
 
             ObraCivil.Json json = new ObraCivil.Json(tipo, fechaInicial, fechaFinal, presupuesto, descripción, observaciones);
-            inmueble.registrarFicha(new ObraCivil(presupuestado, json));
+
+            if (presupuestado)
+                new ObraCivil(inmueble.getPresupuesto(fechaFinal.getYear()), json);
+            else
+                inmueble.registrarFicha(new ObraCivil(json));
         }
 
         for (Map.Entry<String, Integer> e : contadores.entrySet()) {
