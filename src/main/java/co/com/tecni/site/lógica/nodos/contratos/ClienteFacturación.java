@@ -78,7 +78,7 @@ public class ClienteFacturación extends Tercero implements Nodo {
     }
 
     public String infoNodo(Árbol árbol) {
-        return Site.gson.toJson(json);
+        return Site.GSON.toJson(json);
     }
 
 

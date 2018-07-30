@@ -10,8 +10,8 @@ import com.google.gson.*;
 import java.lang.reflect.Type;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Site {
     // -----------------------------------------------
@@ -30,16 +30,16 @@ public class Site {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    public final static Gson gson;
-    public final static DecimalFormat smallDecimal;
-    public final static DecimalFormat bigDecimal;
-    public final static SimpleDateFormat df;
+    public final static Gson GSON;
+    public final static DecimalFormat SMALL_DECIMAL;
+    public final static DecimalFormat BIG_DECIMAL;
+    public final static DateTimeFormatter DTF;
     static {
-        gson = genGson();
-        df = new SimpleDateFormat("MMM yyyy");
+        GSON = genGson();
+        DTF = DateTimeFormatter.ofPattern("MMM yyyy");
 
-        smallDecimal = new DecimalFormat("#.##"); smallDecimal.setRoundingMode(RoundingMode.CEILING);
-        bigDecimal = new DecimalFormat("###,###,###");
+        SMALL_DECIMAL = new DecimalFormat("#.##"); SMALL_DECIMAL.setRoundingMode(RoundingMode.CEILING);
+        BIG_DECIMAL = new DecimalFormat("###,###,###");
     }
 
     private static Site instance;
@@ -75,11 +75,18 @@ public class Site {
             public JsonElement serialize(Double aDouble, Type type, JsonSerializationContext jsonSerializationContext) {
                 DecimalFormat df;
                 if (-10 < aDouble && aDouble < 10)
-                    df = Site.smallDecimal;
+                    df = Site.SMALL_DECIMAL;
                 else
-                    df = Site.bigDecimal;
+                    df = Site.BIG_DECIMAL;
 
                 return new JsonPrimitive(df.format(aDouble));
+            }
+        });
+
+        gsonBuilder.registerTypeAdapter(LocalDate.class, new JsonSerializer<LocalDate>() {
+            @Override
+            public JsonElement serialize(LocalDate localDate, Type type, JsonSerializationContext jsonSerializationContext) {
+                return new JsonPrimitive(Site.DTF.format(localDate));
             }
         });
 

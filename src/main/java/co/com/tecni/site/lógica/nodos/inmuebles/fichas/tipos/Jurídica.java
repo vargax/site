@@ -37,6 +37,6 @@ public class Jurídica extends Ficha {
     }
 
     public String infoNodo(Árbol árbol) {
-        return Site.gson.toJson(json);
+        return Site.GSON.toJson(json);
     }
 }
