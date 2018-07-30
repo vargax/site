@@ -57,7 +57,7 @@ class Factura implements Nodo {
     }
 
     public String nombreNodo(Árbol árbol) {
-        return "Factura "+json.consecutivo + " / "+ Site.df.format(json.fecha);
+        return "Factura "+json.consecutivo + " / "+ Site.DTF.format(json.fecha);
     }
 
     public ArrayList<Object> hijosNodo(Árbol árbol) {
@@ -85,6 +85,6 @@ class Factura implements Nodo {
     }
 
     public String infoNodo(Árbol árbol) {
-        return Site.gson.toJson(json);
+        return Site.GSON.toJson(json);
     }
 }

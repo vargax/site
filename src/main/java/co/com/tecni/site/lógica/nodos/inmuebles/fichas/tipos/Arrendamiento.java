@@ -70,14 +70,14 @@ public class Arrendamiento extends Ficha {
 
     public String nombreNodo(Árbol árbol) {
         if (árbol instanceof ÁrbolInmuebles)
-            return "Arrendamiento: " + json.númeroSecuencia + " / "+Site.smallDecimal.format(json.participación);
+            return "Arrendamiento: " + json.númeroSecuencia + " / "+Site.SMALL_DECIMAL.format(json.participación);
         if (árbol instanceof ÁrbolContratos)
-            return "Inmueble: "+ inmueble.nombreNodo(árbol) + " / "+Site.smallDecimal.format(json.participación);
+            return "Inmueble: "+ inmueble.nombreNodo(árbol) + " / "+Site.SMALL_DECIMAL.format(json.participación);
         return "Típo de Árbol no definido en Ficha.Arrendamiento.nombreNodo()";
     }
 
     public String infoNodo(Árbol árbol) {
-        return Site.gson.toJson(json);
+        return Site.GSON.toJson(json);
     }
 
     @Override

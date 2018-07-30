@@ -115,7 +115,7 @@ public class Agrupación implements Nodo {
         if (json == null)
             json = new Json(this);
 
-        return Site.gson.toJson(json);
+        return Site.GSON.toJson(json);
     }
 
     /**

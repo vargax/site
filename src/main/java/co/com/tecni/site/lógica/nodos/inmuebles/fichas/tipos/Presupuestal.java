@@ -71,6 +71,6 @@ public class Presupuestal extends Ficha {
     public String infoNodo(Árbol árbol) {
         if (json.fichas == -1) json.fichas = super.fichas.size();
 
-        return Site.gson.toJson(json);
+        return Site.GSON.toJson(json);
     }
 }

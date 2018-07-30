@@ -52,7 +52,7 @@ public class Catastral extends Ficha {
     }
 
     public String infoNodo(Árbol árbol) {
-        return Site.gson.toJson(json);
+        return Site.GSON.toJson(json);
     }
 
     // -----------------------------------------------
@@ -102,7 +102,7 @@ public class Catastral extends Ficha {
 
         @Override
         public String infoNodo(Árbol árbol) {
-            return Site.gson.toJson(json);
+            return Site.GSON.toJson(json);
         }
     }
 }

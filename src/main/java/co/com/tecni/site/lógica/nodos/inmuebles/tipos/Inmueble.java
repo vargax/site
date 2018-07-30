@@ -229,7 +229,7 @@ public abstract class Inmueble implements Nodo {
             infoNodo = new JSONObject();
             infoNodo.put(JK[0], genId());
 
-            DecimalFormat df = Site.smallDecimal;
+            DecimalFormat df = Site.SMALL_DECIMAL;
 
             JSONObject áreaDetalle = new JSONObject();
             áreaDetalle.put(JK_ÁREA_DETALLE[0], df.format(m2.get(A_PRIV_CONSTRUIDOS)));

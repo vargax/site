@@ -166,8 +166,8 @@ public class Secuencia implements Nodo {
     void facturar(LocalDate fechaCorte) {
 
         if (fechaCorte.isAfter(FIN))
-            System.err.println("Secuencia "+json.número+".facturar() / Imposible facturar "+fechaCorte+" / Fecha fin es "+FIN);
-                    //+Site.df.format(fechaCorte)+" / Fecha fin es "+Site.df.format(FIN));
+            System.err.println("Secuencia "+json.número+".facturar() / Imposible facturar "
+                    + Site.DTF.format(fechaCorte) + " / Fecha fin es " + Site.DTF.format(FIN));
 
         else {
             for (Map.Entry<Integer, Double> me : participaciónClientesFacturación.entrySet()) {
@@ -223,6 +223,6 @@ public class Secuencia implements Nodo {
 
 
     public String infoNodo(Árbol árbol) {
-        return Site.gson.toJson(json);
+        return Site.GSON.toJson(json);
     }
 }
