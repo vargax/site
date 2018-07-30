@@ -13,7 +13,7 @@ public class UiTablas {
 
     static final DoubleRender DR = new DoubleRender();
 
-    public final JTabbedPane componente;
+    public final JPanel componente;
 
     TablasConsolidados tConsolidados;
     TablasTransacciones tTransacciones;
@@ -23,11 +23,27 @@ public class UiTablas {
         tConsolidados = new TablasConsolidados();
         tTransacciones = new TablasTransacciones();
 
-        componente = new JTabbedPane();
-        componente.addTab(TablasConsolidados.NOMBRE, new JScrollPane(tConsolidados.componente));
-        componente.addTab(TablasTransacciones.NOMBRE, tTransacciones.componente);
+        componente = new JPanel(new BorderLayout());
+        componente.add(panelFechas(), BorderLayout.NORTH);
+
+        JTabbedPane jtp = new JTabbedPane();
+        jtp.addTab(TablasConsolidados.NOMBRE, new JScrollPane(tConsolidados.componente));
+        jtp.addTab(TablasTransacciones.NOMBRE, tTransacciones.componente);
+        componente.add(jtp, BorderLayout.CENTER);
 
     }
+
+    private JPanel panelFechas() {
+
+        JPanel jPanel = new JPanel();
+
+        componente.add(new JLabel("Fecha inicial"));
+        componente.add(new JLabel("Fecha final"));
+
+        return jPanel;
+    }
+
+
 
     public void mostrarTransacciones(ArrayList<Transacción>[] transacciones) {
 
