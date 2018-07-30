@@ -11,6 +11,7 @@ import java.lang.reflect.Type;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 public class Site {
     // -----------------------------------------------
@@ -18,16 +19,23 @@ public class Site {
     // -----------------------------------------------
     private final static String MODO_PONDERACIÓN = Inmueble.A_PRIV_TOTAL;
 
-    private final static String FECHA_INICIAL_FACTURACIÓN = "ene 2017";
+    private final static LocalDate FECHA_INICIAL_FACTURACIÓN = LocalDate.parse("2016-01-01");
     private final static int MESES_FACTURACIÓN = 24;
 
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    public static Gson gson;
-    public static DecimalFormat sdf;
-    public static DecimalFormat bdf;
-    public static SimpleDateFormat df;
+    public final static Gson gson;
+    public final static DecimalFormat smallDecimal;
+    public final static DecimalFormat bigDecimal;
+    public final static SimpleDateFormat df;
+    static {
+        gson = genGson();
+        df = new SimpleDateFormat("MMM yyyy");
+
+        smallDecimal = new DecimalFormat("#.##"); smallDecimal.setRoundingMode(RoundingMode.CEILING);
+        bigDecimal = new DecimalFormat("###,###,###");
+    }
 
     private static Site instance;
     private String modoPonderación;
@@ -40,12 +48,6 @@ public class Site {
     // Constructor
     // -----------------------------------------------
     private Site() {
-        gson = genGson();
-        df = new SimpleDateFormat("MMM yyyy");
-
-        sdf = new DecimalFormat("#.##"); sdf.setRoundingMode(RoundingMode.CEILING);
-        bdf = new DecimalFormat("###,###,###");
-
         modoPonderación = MODO_PONDERACIÓN;
     }
 
@@ -68,9 +70,9 @@ public class Site {
             public JsonElement serialize(Double aDouble, Type type, JsonSerializationContext jsonSerializationContext) {
                 DecimalFormat df;
                 if (-10 < aDouble && aDouble < 10)
-                    df = Site.sdf;
+                    df = Site.smallDecimal;
                 else
-                    df = Site.bdf;
+                    df = Site.bigDecimal;
 
                 return new JsonPrimitive(df.format(aDouble));
             }
@@ -91,7 +93,7 @@ public class Site {
         árbolContratos = lector.genÁrbolContratos();
         árbolCartera = lector.genÁrbolCartera();
 
-        árbolCartera.genFacturas(df.parse(FECHA_INICIAL_FACTURACIÓN), MESES_FACTURACIÓN);
+        árbolCartera.presupuestarIngresosyGenerarFacturas(FECHA_INICIAL_FACTURACIÓN, MESES_FACTURACIÓN);
     }
 
     public String getModoPonderación() {

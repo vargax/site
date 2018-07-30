@@ -94,7 +94,7 @@ class LectorCatastral {
             while (columnaActual.getColumnIndex() <= últimoPredial) {
 
                 if (presupuestado) {
-                    catastral = new Catastral(inmueble.getPresupuesto(año), json);
+                    catastral = new Catastral(inmueble.getPresupuesto(año).gastos(), json);
                 }
 
                 double avaluo = columnaActual.getNumericCellValue();

@@ -8,8 +8,8 @@ import co.com.tecni.site.lógica.árboles.ÁrbolCartera;
 import co.com.tecni.site.lógica.árboles.ÁrbolContratos;
 import co.com.tecni.site.ui.UiÁrbol;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 public class ClienteComercial implements Nodo {
@@ -61,7 +61,7 @@ public class ClienteComercial implements Nodo {
     // -----------------------------------------------
     // Métodos Públicos
     // -----------------------------------------------
-    public void facturar(Date fechaCorte) {
+    public void facturar(LocalDate fechaCorte) {
         for (Contrato contrato : contratos.values()) {
             ArrayList<Secuencia> secuencias = contrato.secuencias;
             (secuencias.get(secuencias.size()-1)).facturar(fechaCorte);

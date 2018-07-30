@@ -6,7 +6,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.InputStream;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -54,7 +54,7 @@ class LectorJurídica {
 
             String oficinaRegistro = Lector.cadena(filaActual, OFICINA_REGISTRO);
             String matrículaInmobiliaria = Lector.cadena(filaActual, MATRÍCULA_INMOBILIARIA);
-            Date fechaRegistroCompra  = Lector.fecha(filaActual, FECHA_REGISTRO_COMPRA);
+            LocalDate fechaRegistroCompra  = Lector.fecha(filaActual, FECHA_REGISTRO_COMPRA);
             double coefCopropiedad = Lector.doble(filaActual, COEF_COPROPIEDAD);
 
             Jurídica.Json json = new Jurídica.Json(oficinaRegistro,matrículaInmobiliaria,fechaRegistroCompra,coefCopropiedad);

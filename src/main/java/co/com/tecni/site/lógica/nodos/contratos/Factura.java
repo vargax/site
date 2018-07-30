@@ -7,8 +7,8 @@ import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacci�
 import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.ui.UiÁrbol;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 class Factura implements Nodo {
@@ -25,14 +25,14 @@ class Factura implements Nodo {
     static class Json {
         int consecutivo;
         String tercero;
-        Date fecha;
+        LocalDate fecha;
 
         double subtotal;
         double iva;
         double retefuente;
         double total;
 
-        Json(Date fecha, Factura factura) {
+        Json(LocalDate fecha, Factura factura) {
             consecutivo = (consecutivoFactura += 1);
             tercero = factura.tercero.nombre;
             this.fecha = fecha;
@@ -47,7 +47,7 @@ class Factura implements Nodo {
         }
     }
 
-    Factura(Tercero tercero, Date fecha, ArrayList<Transacción> transacciones) {
+    Factura(Tercero tercero, LocalDate fecha, ArrayList<Transacción> transacciones) {
         this.tercero = tercero;
         this.transacciones = transacciones;
 

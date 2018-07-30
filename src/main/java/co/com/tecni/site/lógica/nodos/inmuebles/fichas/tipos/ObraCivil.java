@@ -7,8 +7,8 @@ import co.com.tecni.site.ui.UiÁrbol;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
 
+import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashSet;
 
 public class ObraCivil extends Ficha {
@@ -30,13 +30,13 @@ public class ObraCivil extends Ficha {
     private Json json;
     public static class Json {
         String tipo;
-        Date fechaInicial;
-        Date fechaFinal;
+        LocalDate fechaInicial;
+        LocalDate fechaFinal;
         Double presupuesto;
         String descripción;
         String observaciones;
 
-        public Json(String tipo, Date fechaInicial, Date fechaFinal, double presupuesto, String descripción, String observaciones) {
+        public Json(String tipo, LocalDate fechaInicial, LocalDate fechaFinal, double presupuesto, String descripción, String observaciones) {
             this.tipo = tipo;
             this.fechaInicial = fechaInicial;
             this.fechaFinal = fechaFinal;

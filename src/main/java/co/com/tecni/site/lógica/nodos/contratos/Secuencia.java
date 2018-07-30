@@ -8,6 +8,7 @@ import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
 import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.ui.UiÁrbol;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -21,8 +22,8 @@ public class Secuencia implements Nodo {
     // -----------------------------------------------
     final int ID;
     final Contrato CONTRATO;
-    final Date INICIO;
-    final Date FIN;
+    final LocalDate INICIO;
+    final LocalDate FIN;
 
     private ArrayList<Arrendamiento> fichasArrendamiento;
 
@@ -32,16 +33,16 @@ public class Secuencia implements Nodo {
     private Cánon cánon;
     public static class Cánon {
         double cánon;
-        Date primerCobro;
+        LocalDate primerCobro;
 
         Incremento incremento;
         public static class Incremento {
             String base;
             double ptosAdicionales;
             int periodicidad;
-            Date primerIncremento;
+            LocalDate primerIncremento;
 
-            public Incremento(String base, double ptosAdicionales, int periodicidad, Date primerIncremento) {
+            public Incremento(String base, double ptosAdicionales, int periodicidad, LocalDate primerIncremento) {
                 this.base = base;
                 this.ptosAdicionales = ptosAdicionales;
                 this.periodicidad = periodicidad;
@@ -49,7 +50,7 @@ public class Secuencia implements Nodo {
             }
         }
 
-        public Cánon(double cánon, Date primerCobro, Incremento incremento) {
+        public Cánon(double cánon, LocalDate primerCobro, Incremento incremento) {
             this.cánon = cánon;
             this.primerCobro = primerCobro;
             this.incremento = incremento;
@@ -72,8 +73,8 @@ public class Secuencia implements Nodo {
     private Json json;
     static class Json {
         int número;
-        Date fechaInicio;
-        Date fechaFin;
+        LocalDate fechaInicio;
+        LocalDate fechaFin;
         Cánon cánon;
         Map<String, Double> clientesFacturación;
 
@@ -100,7 +101,7 @@ public class Secuencia implements Nodo {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public Secuencia(int ID, Date INICIO, Date FIN, Contrato CONTRATO, Cánon cánon) {
+    public Secuencia(int ID, LocalDate INICIO, LocalDate FIN, Contrato CONTRATO, Cánon cánon) {
         this.ID = ID;
         this.CONTRATO = CONTRATO;
         this.INICIO = INICIO;
@@ -162,11 +163,11 @@ public class Secuencia implements Nodo {
     // -----------------------------------------------
     // Lógica
     // -----------------------------------------------
-    void facturar(Date fechaCorte) {
+    void facturar(LocalDate fechaCorte) {
 
-        if (fechaCorte.after(FIN))
-            System.err.println("Secuencia "+json.número+".facturar() / Imposible facturar "
-                    +Site.df.format(fechaCorte)+" / Fecha fin es "+Site.df.format(FIN));
+        if (fechaCorte.isAfter(FIN))
+            System.err.println("Secuencia "+json.número+".facturar() / Imposible facturar "+fechaCorte+" / Fecha fin es "+FIN);
+                    //+Site.df.format(fechaCorte)+" / Fecha fin es "+Site.df.format(FIN));
 
         else {
             for (Map.Entry<Integer, Double> me : participaciónClientesFacturación.entrySet()) {

@@ -12,7 +12,8 @@ import co.com.tecni.site.lógica.árboles.ÁrbolInmuebles;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.HashMap;
 
 public class Lector {
@@ -31,11 +32,11 @@ public class Lector {
         return (int) c - 65;
     }
 
-    static Date fecha(Row fila, char columna) {
+    static LocalDate fecha(Row fila, char columna) {
         int col = columna - 65;
-        Date fecha = null;
+        LocalDate fecha = null;
         try {
-            fecha = DateUtil.getJavaDate(fila.getCell(col).getNumericCellValue());
+            fecha = (DateUtil.getJavaDate(fila.getCell(col).getNumericCellValue())).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         } catch (NullPointerException e) {
             System.err.println("Columna "+columna+" indefinida como fecha para la fila "+ fila.getRowNum());
         }

@@ -16,7 +16,7 @@ public class ÁrbolInmuebles extends Árbol {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    private HashMap<String, Inmueble> inmueblesxId;
+    HashMap<String, Inmueble> inmueblesxId;
     private Agrupación raiz;
 
     // -----------------------------------------------

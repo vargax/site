@@ -9,7 +9,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.InputStream;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -162,13 +162,13 @@ class LectorContrato {
                 continue;
             }
 
-            Date inicio = Lector.fecha(filaActual, HS_FECHA_INICIO);
-            Date fin = Lector.fecha(filaActual, HS_FECHA_FIN);
+            LocalDate inicio = Lector.fecha(filaActual, HS_FECHA_INICIO);
+            LocalDate fin = Lector.fecha(filaActual, HS_FECHA_FIN);
 
             double cánonMensual = Lector.doble(filaActual, HS_CANON);
-            Date primerCobro = Lector.fecha(filaActual, HS_FECHA_PRIMER_COBRO);
+            LocalDate primerCobro = Lector.fecha(filaActual, HS_FECHA_PRIMER_COBRO);
 
-            Date primerIncremento = Lector.fecha(filaActual, HS_FECHA_PRIMER_INCREMENTO);
+            LocalDate primerIncremento = Lector.fecha(filaActual, HS_FECHA_PRIMER_INCREMENTO);
             int periodicidadIncremento = Lector.entero(filaActual, HS_PERIODICIDAD_INCREMENTOS_POSTERIORES);
             String índiceBaseIncremento = Lector.cadena(filaActual, HS_ÍNDICE_BASE_INCREMENTO);
             double ptosAdicionalesIncremento = Lector.doble(filaActual, HS_PUNTOS_ADICIONALES_INCREMENTO);

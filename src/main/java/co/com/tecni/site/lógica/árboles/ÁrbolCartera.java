@@ -1,10 +1,14 @@
 package co.com.tecni.site.lógica.árboles;
 
+import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.contratos.ClienteComercial;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Arrendamiento;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Presupuestal;
+import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ÁrbolCartera extends ÁrbolClientes {
 
@@ -15,17 +19,30 @@ public class ÁrbolCartera extends ÁrbolClientes {
         super.nombreRaiz = NOMBRE_RAIZ;
     }
 
-    public void genFacturas(Date fechaInicial, int númeroMeses) {
-        Calendar c = Calendar.getInstance();
+    public void presupuestarIngresosyGenerarFacturas(LocalDate fechaInicial, int númeroMeses) {
+
+        HashMap<String, Double> ingresosPresupuestadosxInmueble = new HashMap<>();
+        ingresosPresupuestadosxInmueble.put("EO Ecotower 93", 370000000.00);
+        ingresosPresupuestadosxInmueble.put("CB La Estancia", 750000000.00);
 
         for (int i = 0; i < númeroMeses; i++) {
 
-            for (ClienteComercial cc : super.clientesComercialesxId.values())
-                cc.facturar(fechaInicial);
+            LocalDate fecha = fechaInicial.plusMonths(i);
 
-            c.setTime(fechaInicial);
-            c.add(Calendar.MONTH, 1);
-            fechaInicial = c.getTime();
+            // Presupuestar Ingresos
+            for (Map.Entry<String, Double> e : ingresosPresupuestadosxInmueble.entrySet()) {
+
+                Inmueble inmueble = Site.árbolInmuebles.inmueblesxId.get(e.getKey());
+                Presupuestal presupuesto = inmueble.getPresupuesto(fecha.getYear()).ingresos();
+
+                Arrendamiento arrendamiento = new Arrendamiento(presupuesto, inmueble);
+                arrendamiento.facturar(null, fecha, e.getValue());
+
+            }
+
+            // Generar Facturas
+            for (ClienteComercial cc : super.clientesComercialesxId.values())
+                cc.facturar(fecha);
         }
 
 
