@@ -17,6 +17,11 @@ public class Site {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
+    /* ToDo área_privada_total como modo_ponderación
+        |> Se requiere para que prorratas de Arrendamientos y Prediales funcionen correctamente.
+        |> Debería la ficha definir cómo debe proratearse?
+           |> Puede tener un impacto al incorporar el factor ponderación para los inmuebles hermanos
+    */
     private final static String MODO_PONDERACIÓN = Inmueble.A_PRIV_TOTAL;
 
     private final static LocalDate FECHA_INICIAL_FACTURACIÓN = LocalDate.parse("2016-01-01");
