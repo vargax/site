@@ -21,6 +21,7 @@ public class ÁrbolCartera extends ÁrbolClientes {
 
     public void presupuestarIngresosyGenerarFacturas(LocalDate fechaInicial, int númeroMeses) {
 
+        // ToDo no estoy satisfecho con esta forma de generar los ingresos presupuestados
         HashMap<String, Double> ingresosPresupuestadosxInmueble = new HashMap<>();
         ingresosPresupuestadosxInmueble.put("EO Ecotower 93", 370000000.00);
         ingresosPresupuestadosxInmueble.put("CB La Estancia", 750000000.00);

@@ -63,7 +63,7 @@ public class Presupuestal extends Ficha {
     @Override
     public ArrayList<Object> hijosNodo(Árbol árbol) {
         if (json.tipo.equals(TIPOS[1]))
-            return null; // No muestro como nodos los ingresos por arrendamiento generados
+            return null; // ToDo No muestro como nodos los ingresos por arrendamiento generados?
 
         return super.hijosNodo(árbol);
     }
