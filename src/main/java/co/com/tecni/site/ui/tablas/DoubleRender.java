@@ -14,7 +14,7 @@ public class DoubleRender extends DefaultTableCellRenderer {
         setHorizontalAlignment(RIGHT);
 
         double valor = (double) value;
-        String texto = 0 <= valor && valor <= 1 ? Site.sdf.format(valor) : Site.bdf.format(valor);
+        String texto = (-10 <= valor && valor <= 10) ? Site.smallDecimal.format(valor) : Site.bigDecimal.format(valor);
 
         setText(texto);
         if ((Double) value < 0) setForeground(Color.RED);

@@ -9,8 +9,8 @@ import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.lógica.árboles.ÁrbolContratos;
 import co.com.tecni.site.lógica.árboles.ÁrbolInmuebles;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Arrendamiento extends Ficha {
 
@@ -30,6 +30,15 @@ public class Arrendamiento extends Ficha {
         }
     }
 
+    // Constructor para presupuestos
+    public Arrendamiento(Ficha padre, Inmueble inmueble) {
+        super(padre);
+
+        this.secuencia = null;
+        this.inmueble = inmueble;
+        this.json = new Json(0, "N/A", 1);
+    }
+
     public Arrendamiento(Secuencia secuencia, Inmueble inmueble, Json json) {
 
         this.secuencia = secuencia;
@@ -40,7 +49,7 @@ public class Arrendamiento extends Ficha {
     }
 
     public Transacción facturar(ClienteFacturación clienteFacturación,
-                                Date fechaFactura,
+                                LocalDate fechaFactura,
                                 double cánon) {
 
         Transacción transacción = new Transacción(
@@ -61,9 +70,9 @@ public class Arrendamiento extends Ficha {
 
     public String nombreNodo(Árbol árbol) {
         if (árbol instanceof ÁrbolInmuebles)
-            return "Arrendamiento: " + json.númeroSecuencia + " / "+Site.sdf.format(json.participación);
+            return "Arrendamiento: " + json.númeroSecuencia + " / "+Site.smallDecimal.format(json.participación);
         if (árbol instanceof ÁrbolContratos)
-            return "Inmueble: "+ inmueble.nombreNodo(árbol) + " / "+Site.sdf.format(json.participación);
+            return "Inmueble: "+ inmueble.nombreNodo(árbol) + " / "+Site.smallDecimal.format(json.participación);
         return "Típo de Árbol no definido en Ficha.Arrendamiento.nombreNodo()";
     }
 

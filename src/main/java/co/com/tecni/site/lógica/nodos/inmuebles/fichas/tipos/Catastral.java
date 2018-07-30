@@ -8,10 +8,8 @@ import co.com.tecni.site.ui.UiÁrbol;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Catastral extends Ficha {
 
@@ -88,17 +86,11 @@ public class Catastral extends Ficha {
 
             double monto = -json.impuestoACargo/PRORRATA;
             Tercero tercero = new Tercero(Integer.parseInt(TERCERO[0]), TERCERO[1]);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-d");
 
             for (int i = 1; i <= PRORRATA; i++) {
                 String concepto = "Prorrata predial mes "+i;
 
-                Date fecha = null;
-                try {
-                    fecha = sdf.parse(json.añoFiscal+"-"+i+"-1");
-                } catch (ParseException e) {
-                    System.err.println(this.getClass().getSimpleName()+".Constructor :: Aquí no debería llegar!");
-                }
+                LocalDate fecha = LocalDate.parse(json.añoFiscal+ (i < 10 ? "-0"+i : "-"+i) +"-01");
 
                 transacciones.add(new Transacción(this, concepto, fecha, monto, tercero));
             }

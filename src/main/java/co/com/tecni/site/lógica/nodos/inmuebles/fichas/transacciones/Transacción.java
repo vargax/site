@@ -4,7 +4,7 @@ import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Ficha;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Transacción {
     // -----------------------------------------------
@@ -18,14 +18,14 @@ public class Transacción {
     public final Ficha ficha;
 
     public final String concepto;
-    public final Date fecha;
+    public final LocalDate fecha;
     public final Double monto;
     public final Tercero tercero;
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public Transacción(Ficha ficha, String concepto, Date fecha, Double monto, Tercero tercero) {
+    public Transacción(Ficha ficha, String concepto, LocalDate fecha, Double monto, Tercero tercero) {
         this.ficha = ficha;
         this.concepto = concepto;
         this.fecha = fecha;

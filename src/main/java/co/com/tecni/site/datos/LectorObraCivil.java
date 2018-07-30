@@ -6,7 +6,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.InputStream;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -58,8 +58,8 @@ class LectorObraCivil {
             Inmueble inmueble = inmueblesxId.get(id);
             if (inmueble == null) throw new Exception("Inmueble "+id+" no encontrado");
 
-            Date fechaInicial = Lector.fecha(filaActual, FECHA_INICIAL);
-            Date fechaFinal = Lector.fecha(filaActual, FECHA_FINAL);
+            LocalDate fechaInicial = Lector.fecha(filaActual, FECHA_INICIAL);
+            LocalDate fechaFinal = Lector.fecha(filaActual, FECHA_FINAL);
 
             String tipo = Lector.cadena(filaActual, TIPO);
             if (!ObraCivil.TIPOS.contains(tipo)) throw new Exception("Tipo de ObraCivil "+tipo+" no definido");
@@ -77,7 +77,7 @@ class LectorObraCivil {
             ObraCivil.Json json = new ObraCivil.Json(tipo, fechaInicial, fechaFinal, presupuesto, descripción, observaciones);
 
             if (presupuestado)
-                new ObraCivil(inmueble.getPresupuesto(fechaFinal.getYear()), json);
+                new ObraCivil(inmueble.getPresupuesto(fechaInicial.getYear()).gastos(), json);
             else
                 inmueble.registrarFicha(new ObraCivil(json));
         }
