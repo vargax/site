@@ -210,15 +210,19 @@ public class Secuencia implements Nodo {
         ArrayList<Transacción> propias = new ArrayList<>();
         ArrayList<Transacción> ancestros = new ArrayList<>();
 
-        // DESCENDIENTES
-        for (Arrendamiento arrendamiento : fichasArrendamiento)
-            descendientes.addAll(arrendamiento.transaccionesNodo(árbol)[1]);
+        // Se suman las transacciones asociadas a todos los inmuebles
+        for (Arrendamiento arrendamiento : fichasArrendamiento) {
+            descendientes.addAll(arrendamiento.transaccionesNodo(árbol)[2]);
+            propias.addAll(arrendamiento.transaccionesNodo(árbol)[1]);
+            ancestros.addAll(arrendamiento.transaccionesNodo(árbol)[0]);
+        }
 
         ArrayList[] resultado = new ArrayList[3];
         resultado[2] = descendientes;
         resultado[1] = propias;
         resultado[0] = ancestros;
-        return resultado;    }
+        return resultado;
+    }
 
 
 

@@ -63,9 +63,12 @@ public class Contrato implements Nodo {
         ArrayList<Transacción> propias = new ArrayList<>();
         ArrayList<Transacción> ancestros = new ArrayList<>();
 
-        // DESCENDIENTES
-        for (Secuencia secuencia : secuencias)
+        // Se suman las transacciones asociadas a todas las secuencias
+        for (Secuencia secuencia : secuencias) {
             descendientes.addAll(secuencia.transaccionesNodo(árbol)[2]);
+            propias.addAll(secuencia.transaccionesNodo(árbol)[1]);
+            ancestros.addAll(secuencia.transaccionesNodo(árbol)[0]);
+        }
 
         ArrayList[] resultado = new ArrayList[3];
         resultado[2] = descendientes;

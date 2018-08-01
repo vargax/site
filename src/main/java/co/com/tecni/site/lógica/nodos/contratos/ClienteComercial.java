@@ -97,9 +97,18 @@ public class ClienteComercial implements Nodo {
             for (ClienteFacturación clFact : clientesFacturación.values())
                 descendientes.addAll(clFact.transaccionesNodo(árbol)[2]);
 
+        // Se suman las transacciones asociadas a todos los contratos
+        /* ToDo NO coinciden con los valores presentados en ÁrbolInmuebles
+        *  |> Sólo se incluyen las transacciones de los inmuebles asociados a secuencias
+        *  |> Siempre debería coincidir el valor de los ingresos por arrendamiento reales
+        */
         if (árbol instanceof ÁrbolContratos)
-            for (Contrato contrato : contratos.values())
+            for (Contrato contrato : contratos.values()) {
                 descendientes.addAll(contrato.transaccionesNodo(árbol)[2]);
+                propias.addAll(contrato.transaccionesNodo(árbol)[1]);
+                ancestros.addAll(contrato.transaccionesNodo(árbol)[0]);
+            }
+
 
         ArrayList[] resultado = new ArrayList[3];
         resultado[2] = descendientes;
