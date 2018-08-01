@@ -40,8 +40,11 @@ abstract class ÁrbolClientes extends Árbol {
             ArrayList<Transacción> propias = new ArrayList<>();
             ArrayList<Transacción> ancestros = new ArrayList<>();
 
-            for (ClienteComercial cc : clientesComercialesxId.values())
+            for (ClienteComercial cc : clientesComercialesxId.values()) {
                 descendientes.addAll(cc.transaccionesNodo(árbol)[2]);
+                propias.addAll(cc.transaccionesNodo(árbol)[1]);
+                ancestros.addAll(cc.transaccionesNodo(árbol)[0]);
+            }
 
             ArrayList[] resultado = new ArrayList[3];
             resultado[2] = descendientes;

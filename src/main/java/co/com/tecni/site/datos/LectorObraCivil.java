@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+// ToDo recomiendo en la medida de lo posible utilizar datos reales / Se requiere la información del tercero
 class LectorObraCivil {
     // -----------------------------------------------
     // Constantes
