@@ -11,11 +11,13 @@ class TablasConsolidados {
     final static String NOMBRE = "Consolidados";
 
     JSplitPane componente;
+
     private ResumenConsolidado resumenConsolidado;
     private DetalleConsolidado detalleConsolidado;
 
 
     TablasConsolidados() {
+
         resumenConsolidado = new ResumenConsolidado();
         detalleConsolidado = new DetalleConsolidado();
 
@@ -26,16 +28,10 @@ class TablasConsolidados {
 
     }
 
-    /**
-     * Muestras las transacciones asociadas al nodo seleccionado
-     * @param transacciones arreglo con las transacciones dividas en:
-     *                      transacciones[0] ancestros
-     *                      transacciones[1] propias
-     *                      transacciones[2] descendientes
-     */
-    void mostrarTransacciones(ArrayList<Transacción>[] transacciones) {
-        resumenConsolidado.setTransxTipoPariente(transacciones);
-        detalleConsolidado.setTransxTipoPariente(transacciones);
+
+    void mostrarTransacciones() {
+        resumenConsolidado.setTransxTipoPariente(UiTablas.transacciones);
+        detalleConsolidado.setTransxTipoPariente(UiTablas.transacciones);
     }
 
     // -----------------------------------------------

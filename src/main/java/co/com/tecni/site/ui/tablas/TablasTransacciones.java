@@ -10,14 +10,15 @@ class TablasTransacciones {
     final static String NOMBRE = "Transacciones";
 
     JSplitPane componente;
+
     private Herencia herenciaReal;
     private Transacciones transaccionesReales;
 
     private Herencia herenciaPresupuestada;
     private Transacciones transaccionesPresupuestadas;
 
-
     TablasTransacciones() {
+
         herenciaReal = new Herencia(UiTablas.REAL);
         herenciaPresupuestada = new Herencia(UiTablas.PRESUPUESTADO);
 
@@ -31,14 +32,9 @@ class TablasTransacciones {
         componente = UiTablas.genJSplitPane(false, jspDistribución, jspTransacciones);
     }
 
-    /**
-     * Muestras las transacciones asociadas al nodo seleccionado
-     * @param transacciones arreglo con las transacciones dividas en:
-     *                      transacciones[0] ancestros
-     *                      transacciones[1] propias
-     *                      transacciones[2] descendientes
-     */
-    void mostrarTransacciones(ArrayList<Transacción>[] transacciones) {
+    void mostrarTransacciones() {
+
+        ArrayList<Transacción>[] transacciones = UiTablas.transacciones;
 
         ArrayList<Transacción>[] real = UiTablas.generarArreglos();
         ArrayList<Transacción>[] presupuestado = UiTablas.generarArreglos();

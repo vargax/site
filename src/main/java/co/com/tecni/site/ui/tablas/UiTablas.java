@@ -4,6 +4,7 @@ import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacci�
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -15,10 +16,15 @@ public class UiTablas {
 
     public final JPanel componente;
 
+    static ArrayList<Transacción>[] transacciones = generarArreglos();
+
     TablasConsolidados tConsolidados;
     TablasTransacciones tTransacciones;
 
-    public UiTablas() {
+    private JFormattedTextField fechaInicial;
+    private JFormattedTextField fechaFinal;
+
+    public UiTablas() throws Exception {
 
         tConsolidados = new TablasConsolidados();
         tTransacciones = new TablasTransacciones();
@@ -33,23 +39,48 @@ public class UiTablas {
 
     }
 
-    private JPanel panelFechas() {
+    private JPanel panelFechas() throws Exception {
 
-        JPanel jPanel = new JPanel();
+        MaskFormatter formatoFecha = new MaskFormatter("??? ####");
+        formatoFecha.setAllowsInvalid(false);
 
-        componente.add(new JLabel("Fecha inicial"));
-        componente.add(new JLabel("Fecha final"));
+        fechaInicial = new JFormattedTextField(formatoFecha);
+        fechaFinal = new JFormattedTextField(formatoFecha);
 
-        return jPanel;
+        JPanel panelFechas = new JPanel();
+        panelFechas.setLayout(new GridLayout(1, 0));
+
+        panelFechas.add(new JLabel("Fecha inicial: ", SwingConstants.RIGHT));
+        panelFechas.add(fechaInicial);
+
+        panelFechas.add(new JLabel("Fecha final: ", SwingConstants.RIGHT));
+        panelFechas.add(fechaFinal);
+
+        JButton buscar = new JButton("Buscar");
+        panelFechas.add(new JLabel());
+        panelFechas.add(buscar);
+
+        return panelFechas;
     }
 
+    private void minMaxFechas() {
 
+    }
 
+    /**
+     * Muestras las transacciones asociadas al nodo seleccionado
+     * @param transacciones arreglo con las transacciones dividas en:
+     *                      transacciones[0] ancestros
+     *                      transacciones[1] propias
+     *                      transacciones[2] descendientes
+     */
     public void mostrarTransacciones(ArrayList<Transacción>[] transacciones) {
+        if (transacciones != null)
+            UiTablas.transacciones = transacciones;
+        else UiTablas.transacciones = generarArreglos();
 
-        tConsolidados.mostrarTransacciones(transacciones);
-        tTransacciones.mostrarTransacciones(transacciones);
-
+        tConsolidados.mostrarTransacciones();
+        tTransacciones.mostrarTransacciones();
     }
 
     static ArrayList<Transacción>[] generarArreglos() {
