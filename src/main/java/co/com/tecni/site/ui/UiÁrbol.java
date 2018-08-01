@@ -17,11 +17,11 @@ public class UiÁrbol {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
-    public final static IconCode ÍCONO_DEFAULT = GoogleMaterialDesignIcons.INSERT_DRIVE_FILE;
-    public final static int ÍCONO_TAMAÑO = 25;
-    public final static Color ÍCONO_COLOR = Color.GRAY;
+    private final static IconCode ÍCONO_DEFAULT = GoogleMaterialDesignIcons.INSERT_DRIVE_FILE;
+    private final static int ÍCONO_TAMAÑO = 25;
+    private final static Color ÍCONO_COLOR = Color.GRAY;
 
-    public final static Color FONDO_NODO_SELECCIONADO = new Color(225, 225, 225);
+    private final static Color FONDO_NODO_SELECCIONADO = new Color(225, 225, 225);
 
     private final static int[] MIN_DIMENSIONS = {100, 50};
 
@@ -30,6 +30,8 @@ public class UiÁrbol {
     // -----------------------------------------------
     String nombre;
     JTree componente;
+
+    Nodo nodoActual;
 
     private Árbol árbol;
 
@@ -91,8 +93,8 @@ public class UiÁrbol {
         componente.getSelectionModel().addTreeSelectionListener(
                 new TreeSelectionListener() {
                     public void valueChanged(TreeSelectionEvent treeSelectionEvent) {
-                        Nodo nodo = (Nodo) componente.getLastSelectedPathComponent();
-                        UiSite.instance.actualizarDetalle(nodo);
+                        nodoActual = (Nodo) componente.getLastSelectedPathComponent();
+                        UiSite.instance.actualizarDetalle(nodoActual);
                     }
                 }
         );

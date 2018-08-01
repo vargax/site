@@ -28,7 +28,7 @@ class UiSite extends JFrame {
     private Árbol árbolActual;
 
     private UiInfo uiInfo;
-    private UiTablas UiTablas;
+    private UiTablas uiTablas;
 
     // -----------------------------------------------
     // Constructor
@@ -45,11 +45,11 @@ class UiSite extends JFrame {
         cartera = new UiÁrbol(ÁrbolCartera.NOMBRE_RAIZ, Site.árbolCartera);
 
         uiInfo = new UiInfo();
-        UiTablas = new UiTablas();
+        uiTablas = new UiTablas();
 
         JSplitPane panelSecundario = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         panelSecundario.setRightComponent(new JScrollPane(uiInfo.getComponent()));
-        panelSecundario.setLeftComponent(UiTablas.componente);
+        panelSecundario.setLeftComponent(uiTablas.componente);
         panelSecundario.setResizeWeight(0.3d);
 
         JTabbedPane pestañasÁrboles = new JTabbedPane();
@@ -59,10 +59,13 @@ class UiSite extends JFrame {
                 int tab = pestañasÁrboles.getSelectedIndex();
                 switch (tab) {
                     case 0: árbolActual = Site.árbolInmuebles;
+                            actualizarDetalle(inmuebles.nodoActual);
                             break;
                     case 1: árbolActual = Site.árbolContratos;
+                            actualizarDetalle(contratos.nodoActual);
                             break;
                     case 2: árbolActual = Site.árbolCartera;
+                            actualizarDetalle(cartera.nodoActual);
                 }
             }
         });
@@ -87,11 +90,13 @@ class UiSite extends JFrame {
     // Métodos
     // -----------------------------------------------
     void actualizarDetalle(Nodo nodo) {
-        String infoNodo = nodo.infoNodo(árbolActual);
-        if (infoNodo != null)
-            uiInfo.mostrarDetalle(infoNodo);
-
-        UiTablas.mostrarTransacciones(nodo.transaccionesNodo(árbolActual));
+        if (nodo != null) {
+            uiInfo.mostrarDetalle(nodo.infoNodo(árbolActual));
+            uiTablas.mostrarTransacciones(nodo.transaccionesNodo(árbolActual));
+        } else {
+            uiInfo.mostrarDetalle("");
+            uiTablas.mostrarTransacciones(null);
+        }
     }
 
     // -----------------------------------------------
