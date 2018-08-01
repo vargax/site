@@ -1,11 +1,17 @@
 package co.com.tecni.site.ui.tablas;
 
+import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class UiTablas {
@@ -18,6 +24,7 @@ public class UiTablas {
 
     static ArrayList<Transacción>[] transacciones = generarArreglos();
 
+    Acciones acciones;
     TablasConsolidados tConsolidados;
     TablasTransacciones tTransacciones;
 
@@ -25,7 +32,7 @@ public class UiTablas {
     private JFormattedTextField fechaFinal;
 
     public UiTablas() throws Exception {
-
+        acciones = new Acciones();
         tConsolidados = new TablasConsolidados();
         tTransacciones = new TablasTransacciones();
 
@@ -56,9 +63,8 @@ public class UiTablas {
         panelFechas.add(new JLabel("Fecha final: ", SwingConstants.RIGHT));
         panelFechas.add(fechaFinal);
 
-        JButton buscar = new JButton("Buscar");
         panelFechas.add(new JLabel());
-        panelFechas.add(buscar);
+        panelFechas.add(acciones.generarBotón());
 
         return panelFechas;
     }
@@ -121,6 +127,33 @@ public class UiTablas {
 
         public Class getColumnClass(int col) {
             return getValueAt(0,col).getClass();
+        }
+    }
+
+    class Acciones implements ActionListener {
+
+        final static String BUSCAR = "Buscar";
+
+        JButton generarBotón() {
+            JButton buscar = new JButton(BUSCAR);
+            buscar.setActionCommand(BUSCAR);
+            buscar.addActionListener(this);
+            return buscar;
+        }
+
+        public void actionPerformed(ActionEvent actionEvent) {
+
+            if (BUSCAR.equals(actionEvent.getActionCommand())) {
+                try {
+                    LocalDate fi = LocalDate.from((YearMonth.parse(fechaInicial.getText(), Site.DTF)).atDay(1));
+                    LocalDate ff = LocalDate.from((YearMonth.parse(fechaFinal.getText(), Site.DTF)).atEndOfMonth());
+
+                    System.out.println("Buscando transacciones entre "+Site.DTF.format(fi)+" y "+Site.DTF.format(ff));
+                } catch (DateTimeParseException e){
+                    System.err.println(e.getParsedString()+" no es una fecha válida");
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
