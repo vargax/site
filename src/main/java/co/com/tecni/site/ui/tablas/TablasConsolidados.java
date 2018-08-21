@@ -28,7 +28,6 @@ class TablasConsolidados {
 
     }
 
-
     void mostrarTransacciones() {
         resumenConsolidado.setTransxTipoPariente(UiTablas.transacciones);
         detalleConsolidado.setTransxTipoPariente(UiTablas.transacciones);
@@ -68,7 +67,7 @@ class TablasConsolidados {
             double ingresosReales = 0; double ingresosPresupuestados = 0;
             double gastosReales = 0;   double gastosPresupuestados = 0;
 
-            for (int i = 0; i < transxTipoPariente.length; i++) {
+            for (int i = 0; i < transxTipoPariente.length; i++)
                 for (Transacción transacción : transxTipoPariente[i])
 
                     if (transacción.ficha instanceof Arrendamiento)
@@ -80,7 +79,7 @@ class TablasConsolidados {
                         gastosPresupuestados += transacción.monto;
                     else
                         gastosReales += transacción.monto;
-            }
+
             totales[0][0] = ingresosReales;
             totales[1][0] = ingresosPresupuestados;
             totales[2][0] = ingresosReales - ingresosPresupuestados;

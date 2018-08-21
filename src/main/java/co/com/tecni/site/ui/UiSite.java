@@ -12,7 +12,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-class UiSite extends JFrame {
+public class UiSite extends JFrame {
 
     // -----------------------------------------------
     // Atributos
@@ -25,7 +25,7 @@ class UiSite extends JFrame {
     private UiÁrbol contratos;
     private UiÁrbol cartera;
 
-    private Árbol árbolActual;
+    public static Árbol árbolActual;
 
     private UiInfo uiInfo;
     private UiTablas uiTablas;
