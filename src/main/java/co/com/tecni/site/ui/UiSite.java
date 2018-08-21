@@ -27,6 +27,7 @@ public class UiSite extends JFrame {
 
     public static Árbol árbolActual;
 
+    private UiMenu uiMenu;
     private UiInfo uiInfo;
     private UiTablas uiTablas;
 
@@ -44,8 +45,11 @@ public class UiSite extends JFrame {
         contratos = new UiÁrbol(ÁrbolContratos.NOMBRE_RAIZ, Site.árbolContratos);
         cartera = new UiÁrbol(ÁrbolCartera.NOMBRE_RAIZ, Site.árbolCartera);
 
+        uiMenu = new UiMenu();
         uiInfo = new UiInfo();
         uiTablas = new UiTablas();
+
+        this.setJMenuBar(uiMenu.componente);
 
         JSplitPane panelSecundario = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         panelSecundario.setRightComponent(new JScrollPane(uiInfo.getComponent()));

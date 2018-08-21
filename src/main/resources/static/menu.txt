@@ -1,0 +1,45 @@
+Archivo:
+ Importar
+ Exportar
+ Inmuebles:
+  Nuevo
+  Eliminar
+  Desenglobar
+  Englobar
+  Venta
+ Ficha:
+  Nueva
+  Editar
+  Eliminar
+ Cliente:
+  Nuevo
+  Editar
+  Eliminar
+ Contratos:
+  Nuevo
+  Nueva_Secuencia
+  Editar
+  Facturar
+Contabilidad:
+ Depreciación
+ Cierre_anual
+ Ajuste_a_valor_razonable
+ Impuesto_diferido
+ Impuesto_predial
+Comprobante:
+ Gasto
+ Costo
+ Recaudo
+ Nota_crédito
+ Nota_débito
+Presupuesto:
+ Proyectar
+ Importar
+Informes:
+ Rentabilidad
+ Cartera
+ Precios
+ Mejoras
+ Proyecciones:
+  Ingresos
+  Gastos
