@@ -2,6 +2,8 @@ package co.com.tecni.site.ui.tablas;
 
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.site.lógica.árboles.ÁrbolCartera;
+import co.com.tecni.site.ui.UiSite;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -21,29 +23,34 @@ public class UiTablas {
     static final DoubleRender DR = new DoubleRender();
 
     public final JPanel componente;
+    public final JTabbedPane jTabbedPane;
 
     static ArrayList<Transacción>[] transacciones = generarArreglos();
 
     Acciones acciones;
+
     TablasConsolidados tConsolidados;
     TablasTransacciones tTransacciones;
+    TablasCartera tCartera;
 
     private JFormattedTextField fechaInicial;
     private JFormattedTextField fechaFinal;
 
     public UiTablas() throws Exception {
         acciones = new Acciones();
-        tConsolidados = new TablasConsolidados();
+
         tTransacciones = new TablasTransacciones();
+        tConsolidados = new TablasConsolidados();
+        tCartera = new TablasCartera();
 
         componente = new JPanel(new BorderLayout());
         componente.add(panelFechas(), BorderLayout.NORTH);
 
-        JTabbedPane jtp = new JTabbedPane();
-        jtp.addTab(TablasConsolidados.NOMBRE, new JScrollPane(tConsolidados.componente));
-        jtp.addTab(TablasTransacciones.NOMBRE, tTransacciones.componente);
-        componente.add(jtp, BorderLayout.CENTER);
+        jTabbedPane = new JTabbedPane();
+        jTabbedPane.addTab(TablasConsolidados.NOMBRE, tConsolidados.componente);
+        jTabbedPane.addTab(TablasTransacciones.NOMBRE, tTransacciones.componente);
 
+        componente.add(jTabbedPane, BorderLayout.CENTER);
     }
 
     private JPanel panelFechas() throws Exception {
@@ -85,8 +92,18 @@ public class UiTablas {
             UiTablas.transacciones = transacciones;
         else UiTablas.transacciones = generarArreglos();
 
-        tConsolidados.mostrarTransacciones();
+        jTabbedPane.removeAll();
+
+        if (UiSite.árbolActual instanceof ÁrbolCartera) {
+            tCartera.mostrarTransacciones();
+            jTabbedPane.addTab(TablasCartera.NOMBRE, tCartera.componente);
+
+        } else {
+            tConsolidados.mostrarTransacciones();
+            jTabbedPane.addTab(TablasConsolidados.NOMBRE, tConsolidados.componente);
+        }
         tTransacciones.mostrarTransacciones();
+        jTabbedPane.addTab(TablasTransacciones.NOMBRE, tTransacciones.componente);
     }
 
     static ArrayList<Transacción>[] generarArreglos() {
