@@ -3,7 +3,7 @@ package co.com.tecni.site.lógica.nodos.contratos;
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Arrendamiento;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos.Movimiento;
 import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
 import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.ui.UiÁrbol;
@@ -175,7 +175,7 @@ public class Secuencia implements Nodo {
                 ClienteFacturación cf = clientesFacturación.get(me.getKey());
                 double participación = me.getValue();
 
-                ArrayList<Transacción> transacciones = new ArrayList<>();
+                ArrayList<Movimiento> transacciones = new ArrayList<>();
                 for (Arrendamiento arrendamiento : fichasArrendamiento) {
                     double valor = this.cánon.cánon * participación;
                     transacciones.add(arrendamiento.facturar(cf, fechaCorte, valor));
@@ -205,16 +205,16 @@ public class Secuencia implements Nodo {
         return hijos;
     }
 
-    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
-        ArrayList<Transacción> descendientes = new ArrayList<>();
-        ArrayList<Transacción> propias = new ArrayList<>();
-        ArrayList<Transacción> ancestros = new ArrayList<>();
+    public ArrayList<Movimiento>[] movimientosNodo(Árbol árbol) {
+        ArrayList<Movimiento> descendientes = new ArrayList<>();
+        ArrayList<Movimiento> propias = new ArrayList<>();
+        ArrayList<Movimiento> ancestros = new ArrayList<>();
 
-        // Se suman las transacciones asociadas a todos los inmuebles
+        // Se suman las movimientos asociadas a todos los inmuebles
         for (Arrendamiento arrendamiento : fichasArrendamiento) {
-            descendientes.addAll(arrendamiento.transaccionesNodo(árbol)[2]);
-            propias.addAll(arrendamiento.transaccionesNodo(árbol)[1]);
-            ancestros.addAll(arrendamiento.transaccionesNodo(árbol)[0]);
+            descendientes.addAll(arrendamiento.movimientosNodo(árbol)[2]);
+            propias.addAll(arrendamiento.movimientosNodo(árbol)[1]);
+            ancestros.addAll(arrendamiento.movimientosNodo(árbol)[0]);
         }
 
         ArrayList[] resultado = new ArrayList[3];

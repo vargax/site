@@ -1,56 +1,56 @@
 package co.com.tecni.site.ui.tablas;
 
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos.Movimiento;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-class TablasTransacciones {
-    final static String NOMBRE = "Transacciones";
+class TablasMovimientos {
+    final static String NOMBRE = "Movimientos";
 
     JSplitPane componente;
 
     private Herencia herenciaReal;
-    private Transacciones transaccionesReales;
+    private Movimientos movimientosReales;
 
     private Herencia herenciaPresupuestada;
-    private Transacciones transaccionesPresupuestadas;
+    private Movimientos movimientosPresupuestados;
 
-    TablasTransacciones() {
+    TablasMovimientos() {
 
         herenciaReal = new Herencia(UiTablas.REAL);
         herenciaPresupuestada = new Herencia(UiTablas.PRESUPUESTADO);
 
         JSplitPane jspDistribución = UiTablas.genJSplitPane(true, herenciaReal.tabla, herenciaPresupuestada.tabla);
 
-        transaccionesReales = new Transacciones(UiTablas.REAL);
-        transaccionesPresupuestadas = new Transacciones(UiTablas.PRESUPUESTADO);
+        movimientosReales = new Movimientos(UiTablas.REAL);
+        movimientosPresupuestados = new Movimientos(UiTablas.PRESUPUESTADO);
 
-        JSplitPane jspTransacciones = UiTablas.genJSplitPane(true, transaccionesReales.tabla, transaccionesPresupuestadas.tabla);
+        JSplitPane jspTransacciones = UiTablas.genJSplitPane(true, movimientosReales.tabla, movimientosPresupuestados.tabla);
 
         componente = UiTablas.genJSplitPane(false, jspDistribución, jspTransacciones);
     }
 
-    void mostrarTransacciones() {
+    void mostrarMovimientos() {
 
-        ArrayList<Transacción>[] transacciones = UiTablas.transacciones;
+        ArrayList<Movimiento>[] transacciones = UiTablas.movimientos;
 
-        ArrayList<Transacción>[] real = UiTablas.generarArreglos();
-        ArrayList<Transacción>[] presupuestado = UiTablas.generarArreglos();
+        ArrayList<Movimiento>[] real = UiTablas.generarArreglos();
+        ArrayList<Movimiento>[] presupuestado = UiTablas.generarArreglos();
 
         for (int i = 0; i < transacciones.length; i++)
-            for (Transacción t : transacciones[i])
+            for (Movimiento t : transacciones[i])
                 if (t.ficha.presupuestado)
                     presupuestado[i].add(t);
                 else
                     real[i].add(t);
 
-        herenciaReal.setTransxTipoPariente(real);
-        transaccionesReales.setTransxTipoPariente(real);
+        herenciaReal.setMovxTipoPariente(real);
+        movimientosReales.setMovsxTipoPariente(real);
 
-        herenciaPresupuestada.setTransxTipoPariente(presupuestado);
-        transaccionesPresupuestadas.setTransxTipoPariente(presupuestado);
+        herenciaPresupuestada.setMovxTipoPariente(presupuestado);
+        movimientosPresupuestados.setMovsxTipoPariente(presupuestado);
     }
 
     // -----------------------------------------------
@@ -78,14 +78,14 @@ class TablasTransacciones {
             tabla.setDefaultRenderer(Double.class, UiTablas.DR);
         }
 
-        void setTransxTipoPariente(ArrayList<Transacción>[] transxTipoPariente) {
+        void setMovxTipoPariente(ArrayList<Movimiento>[] movxTipoPariente) {
             resumen.clear();
 
             double[] totales = new double[4];
 
-            for (int i = 0; i < transxTipoPariente.length; i++) {
-                for (Transacción transacción : transxTipoPariente[i]) {
-                    String llave = transacción.ficha.getClass().getSimpleName();
+            for (int i = 0; i < movxTipoPariente.length; i++) {
+                for (Movimiento movimiento : movxTipoPariente[i]) {
+                    String llave = movimiento.ficha.getClass().getSimpleName();
                     double[] valores = resumen.get(llave);
 
                     if (valores == null) {
@@ -93,9 +93,9 @@ class TablasTransacciones {
                         resumen.put(llave, valores);
                     }
 
-                    valores[i] += transacción.monto;
+                    valores[i] += movimiento.monto;
 
-                    totales[i] += transacción.monto;
+                    totales[i] += movimiento.monto;
                 }
             }
 
@@ -120,46 +120,46 @@ class TablasTransacciones {
         }
     }
 
-    class Transacciones extends UiTablas.ModeloTabla {
+    class Movimientos extends UiTablas.ModeloTabla {
         private final String[] COLUMNAS = {"Fecha",
                 "Monto",
                 "Concepto",
                 "Tercero"};
 
         JTable tabla;
-        private ArrayList<Transacción> transacciones;
+        private ArrayList<Movimiento> movimientos;
 
-        Transacciones(String título) {
+        Movimientos(String título) {
             super();
             super.columnas = COLUMNAS;
             super.columnas[0] = título;
 
-            transacciones = new ArrayList<>();
+            movimientos = new ArrayList<>();
 
             tabla = new JTable(this);
             tabla.setDefaultRenderer(Double.class, UiTablas.DR);
         }
 
-        void setTransxTipoPariente(ArrayList<Transacción>[] transxTipoPariente) {
-            transacciones.clear();
+        void setMovsxTipoPariente(ArrayList<Movimiento>[] movsxTipoPariente) {
+            movimientos.clear();
 
-            for (int i = 0; i < transxTipoPariente.length; i++)
-                transacciones.addAll(transxTipoPariente[i]);
+            for (int i = 0; i < movsxTipoPariente.length; i++)
+                movimientos.addAll(movsxTipoPariente[i]);
 
             tabla.updateUI();
         }
 
         public int getRowCount() {
-            return transacciones.size();
+            return movimientos.size();
         }
 
         public Object getValueAt(int row, int col) {
-            Transacción transacción = transacciones.get(row);
+            Movimiento movimiento = movimientos.get(row);
             switch (col) {
-                case 0: return transacción.fecha;
-                case 1: return transacción.monto;
-                case 2: return transacción.concepto;
-                case 3: return transacción.tercero.nombre;
+                case 0: return movimiento.fecha;
+                case 1: return movimiento.monto;
+                case 2: return movimiento.concepto;
+                case 3: return movimiento.tercero.nombre;
                 default: return null;
             }
         }

@@ -96,10 +96,10 @@ public class UiSite extends JFrame {
     void actualizarDetalle(Nodo nodo) {
         if (nodo != null) {
             uiInfo.mostrarDetalle(nodo.infoNodo(árbolActual));
-            uiTablas.mostrarTransacciones(nodo.transaccionesNodo(árbolActual));
+            uiTablas.mostrarMovimientos(nodo.movimientosNodo(árbolActual));
         } else {
             uiInfo.mostrarDetalle("");
-            uiTablas.mostrarTransacciones(null);
+            uiTablas.mostrarMovimientos(null);
         }
     }
 
