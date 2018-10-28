@@ -1,6 +1,6 @@
 package co.com.tecni.site.ui.tablas;
 
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos.Movimiento;
 
 import javax.swing.*;
 import java.time.LocalDate;
@@ -27,9 +27,9 @@ class TablasCartera {
 
     }
 
-    void mostrarTransacciones() {
-        cartera.setTransxTipoPariente(UiTablas.transacciones);
-        estadoCuenta.setTransxTipoPariente(UiTablas.transacciones);
+    void mostrarMovimientos() {
+        cartera.setMovsxTipoPariente(UiTablas.movimientos);
+        estadoCuenta.setMovsxTipoPariente(UiTablas.movimientos);
     }
 
     // -----------------------------------------------
@@ -53,13 +53,13 @@ class TablasCartera {
             tabla.setDefaultRenderer(Double.class, UiTablas.DR);
         }
 
-        void setTransxTipoPariente(ArrayList<Transacción>[] transxTipoPariente) {
+        void setMovsxTipoPariente(ArrayList<Movimiento>[] movsxTipoPariente) {
             carteraxclienteFacturación.clear();
 
-            for (int i = 0; i < transxTipoPariente.length; i++) {
-                for (Transacción transacción : transxTipoPariente[i]) {
+            for (int i = 0; i < movsxTipoPariente.length; i++) {
+                for (Movimiento movimiento : movsxTipoPariente[i]) {
                     double[] mock = new double[6];
-                    carteraxclienteFacturación.put(transacción.tercero.nombre, mock);
+                    carteraxclienteFacturación.put(movimiento.tercero.nombre, mock);
                 }
             }
 
@@ -103,7 +103,7 @@ class TablasCartera {
             tabla.setDefaultRenderer(Double.class, UiTablas.DR);
         }
 
-        void setTransxTipoPariente(ArrayList<Transacción>[] transxTipoPariente) {
+        void setMovsxTipoPariente(ArrayList<Movimiento>[] movsxTipoPariente) {
 
         }
 

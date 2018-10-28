@@ -1,8 +1,8 @@
 package co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos;
 
 import co.com.tecni.site.lógica.Site;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Tercero;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos.Tercero;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos.Movimiento;
 import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.ui.UiÁrbol;
 import jiconfont.IconCode;
@@ -82,7 +82,7 @@ public class Catastral extends Ficha {
 
             this.json = json;
 
-            super.transacciones = new ArrayList<>();
+            super.movimientos = new ArrayList<>();
 
             double monto = -json.impuestoACargo/PRORRATA;
             Tercero tercero = new Tercero(Integer.parseInt(TERCERO[0]), TERCERO[1]);
@@ -92,7 +92,7 @@ public class Catastral extends Ficha {
 
                 LocalDate fecha = LocalDate.parse(json.añoFiscal+ (i < 10 ? "-0"+i : "-"+i) +"-01");
 
-                transacciones.add(new Transacción(this, concepto, fecha, monto, tercero));
+                movimientos.add(new Movimiento(this, concepto, fecha, monto, tercero));
             }
         }
 

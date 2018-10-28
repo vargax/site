@@ -3,7 +3,7 @@ package co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos;
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.contratos.ClienteFacturación;
 import co.com.tecni.site.lógica.nodos.contratos.Secuencia;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos.Movimiento;
 import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
 import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.lógica.árboles.ÁrbolContratos;
@@ -48,11 +48,11 @@ public class Arrendamiento extends Ficha {
         inmueble.registrarFicha(this);
     }
 
-    public Transacción facturar(ClienteFacturación clienteFacturación,
-                                LocalDate fechaFactura,
-                                double cánon) {
+    public Movimiento facturar(ClienteFacturación clienteFacturación,
+                               LocalDate fechaFactura,
+                               double cánon) {
 
-        Transacción transacción = new Transacción(
+        Movimiento movimiento = new Movimiento(
                 this,
                 "Ingreso por arrendamiento",
                 fechaFactura,
@@ -60,8 +60,8 @@ public class Arrendamiento extends Ficha {
                 clienteFacturación
                 );
 
-        transacciones.add(transacción);
-        return transacción;
+        movimientos.add(movimiento);
+        return movimiento;
     }
 
     public double getParticipación() {
@@ -81,11 +81,11 @@ public class Arrendamiento extends Ficha {
     }
 
     @Override
-    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
-        ArrayList[] resultado = super.transaccionesNodo(árbol);
+    public ArrayList<Movimiento>[] movimientosNodo(Árbol árbol) {
+        ArrayList[] resultado = super.movimientosNodo(árbol);
 
         if (árbol instanceof ÁrbolContratos) {
-            ArrayList<Transacción>[] transaccionesInmueble = inmueble.transaccionesNodo(árbol);
+            ArrayList<Movimiento>[] transaccionesInmueble = inmueble.movimientosNodo(árbol);
             resultado[0].addAll(transaccionesInmueble[0]);
             resultado[1].addAll(transaccionesInmueble[1]);
             resultado[2].addAll(transaccionesInmueble[2]);

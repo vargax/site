@@ -2,7 +2,7 @@ package co.com.tecni.site.lógica.nodos.inmuebles;
 
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos.Movimiento;
 import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
 import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.ui.UiÁrbol;
@@ -87,20 +87,20 @@ public class Agrupación implements Nodo {
         return hijos;
     }
 
-    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
-        ArrayList<Transacción> descendientes = new ArrayList<>();
-        ArrayList<Transacción> propias = new ArrayList<>();
-        ArrayList<Transacción> ancestros = new ArrayList<>();
+    public ArrayList<Movimiento>[] movimientosNodo(Árbol árbol) {
+        ArrayList<Movimiento> descendientes = new ArrayList<>();
+        ArrayList<Movimiento> propias = new ArrayList<>();
+        ArrayList<Movimiento> ancestros = new ArrayList<>();
 
         // DESCENDIENTES
         for (Agrupación agrupación : agrupaciones)
-            descendientes.addAll(agrupación.transaccionesNodo(árbol)[2]);
+            descendientes.addAll(agrupación.movimientosNodo(árbol)[2]);
 
         for (Inmueble inmueble : inmuebles) {
-            ArrayList<Transacción>[] transaccionesInmueble = inmueble.transaccionesNodo(árbol);
+            ArrayList<Movimiento>[] transaccionesInmueble = inmueble.movimientosNodo(árbol);
             descendientes.addAll(transaccionesInmueble[1]);
             descendientes.addAll(transaccionesInmueble[2]);
-            // Un inmueble asociado a una agrupación su ancestro es la agrupación, la cual no tiene transacciones
+            // Un inmueble asociado a una agrupación su ancestro es la agrupación, la cual no tiene movimientos
         }
 
         ArrayList[] resultado = new ArrayList[3];

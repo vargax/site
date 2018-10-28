@@ -2,7 +2,7 @@ package co.com.tecni.site.lógica.nodos.contratos;
 
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos.Movimiento;
 import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.ui.UiÁrbol;
 
@@ -58,16 +58,16 @@ public class Contrato implements Nodo {
         return null;
     }
 
-    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
-        ArrayList<Transacción> descendientes = new ArrayList<>();
-        ArrayList<Transacción> propias = new ArrayList<>();
-        ArrayList<Transacción> ancestros = new ArrayList<>();
+    public ArrayList<Movimiento>[] movimientosNodo(Árbol árbol) {
+        ArrayList<Movimiento> descendientes = new ArrayList<>();
+        ArrayList<Movimiento> propias = new ArrayList<>();
+        ArrayList<Movimiento> ancestros = new ArrayList<>();
 
-        // Se suman las transacciones asociadas a todas las secuencias
+        // Se suman las movimientos asociadas a todas las secuencias
         for (Secuencia secuencia : secuencias) {
-            descendientes.addAll(secuencia.transaccionesNodo(árbol)[2]);
-            propias.addAll(secuencia.transaccionesNodo(árbol)[1]);
-            ancestros.addAll(secuencia.transaccionesNodo(árbol)[0]);
+            descendientes.addAll(secuencia.movimientosNodo(árbol)[2]);
+            propias.addAll(secuencia.movimientosNodo(árbol)[1]);
+            ancestros.addAll(secuencia.movimientosNodo(árbol)[0]);
         }
 
         ArrayList[] resultado = new ArrayList[3];

@@ -2,8 +2,8 @@ package co.com.tecni.site.lógica.nodos.contratos;
 
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Tercero;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos.Tercero;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos.Movimiento;
 import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.ui.UiÁrbol;
 
@@ -19,7 +19,7 @@ class Factura implements Nodo {
     static HashMap<Integer, Factura> facturas = new HashMap<>();
 
     private final Tercero tercero;
-    private ArrayList<Transacción> transacciones;
+    private ArrayList<Movimiento> movimientos;
 
     Json json;
     static class Json {
@@ -38,8 +38,8 @@ class Factura implements Nodo {
             this.fecha = fecha;
 
             subtotal = 0;
-            for(Transacción transacción : factura.transacciones) {
-                subtotal += transacción.monto;
+            for(Movimiento movimiento : factura.movimientos) {
+                subtotal += movimiento.monto;
             }
             iva = subtotal*PORCENTAJE_IVA;
             retefuente = subtotal*PORCENTAJE_RETEFUENTE;
@@ -47,9 +47,9 @@ class Factura implements Nodo {
         }
     }
 
-    Factura(Tercero tercero, LocalDate fecha, ArrayList<Transacción> transacciones) {
+    Factura(Tercero tercero, LocalDate fecha, ArrayList<Movimiento> movimientos) {
         this.tercero = tercero;
-        this.transacciones = transacciones;
+        this.movimientos = movimientos;
 
         json = new Json(fecha, this);
 
@@ -68,17 +68,17 @@ class Factura implements Nodo {
         return null;
     }
 
-    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
+    public ArrayList<Movimiento>[] movimientosNodo(Árbol árbol) {
         ArrayList[] resultado = new ArrayList[3];
 
-        ArrayList<Transacción> descendientes = new ArrayList<>();
+        ArrayList<Movimiento> descendientes = new ArrayList<>();
         resultado[2] = descendientes;
 
-        ArrayList<Transacción> propias = new ArrayList<>();
-        propias.addAll(this.transacciones);
+        ArrayList<Movimiento> propias = new ArrayList<>();
+        propias.addAll(this.movimientos);
         resultado[1] = propias;
 
-        ArrayList<Transacción> ancestros = new ArrayList<>();
+        ArrayList<Movimiento> ancestros = new ArrayList<>();
         resultado[0] = ancestros;
 
         return resultado;

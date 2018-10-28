@@ -1,7 +1,7 @@
 package co.com.tecni.site.ui.tablas;
 
 import co.com.tecni.site.lógica.Site;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos.Movimiento;
 import co.com.tecni.site.lógica.árboles.ÁrbolCartera;
 import co.com.tecni.site.ui.UiSite;
 
@@ -25,12 +25,12 @@ public class UiTablas {
     public final JPanel componente;
     public final JTabbedPane jTabbedPane;
 
-    static ArrayList<Transacción>[] transacciones = generarArreglos();
+    static ArrayList<Movimiento>[] movimientos = generarArreglos();
 
     Acciones acciones;
 
     TablasConsolidados tConsolidados;
-    TablasTransacciones tTransacciones;
+    TablasMovimientos tMovimientos;
     TablasCartera tCartera;
 
     private JFormattedTextField fechaInicial;
@@ -39,7 +39,7 @@ public class UiTablas {
     public UiTablas() throws Exception {
         acciones = new Acciones();
 
-        tTransacciones = new TablasTransacciones();
+        tMovimientos = new TablasMovimientos();
         tConsolidados = new TablasConsolidados();
         tCartera = new TablasCartera();
 
@@ -48,7 +48,7 @@ public class UiTablas {
 
         jTabbedPane = new JTabbedPane();
         jTabbedPane.addTab(TablasConsolidados.NOMBRE, tConsolidados.componente);
-        jTabbedPane.addTab(TablasTransacciones.NOMBRE, tTransacciones.componente);
+        jTabbedPane.addTab(TablasMovimientos.NOMBRE, tMovimientos.componente);
 
         componente.add(jTabbedPane, BorderLayout.CENTER);
     }
@@ -81,37 +81,37 @@ public class UiTablas {
     }
 
     /**
-     * Muestras las transacciones asociadas al nodo seleccionado
-     * @param transacciones arreglo con las transacciones dividas en:
-     *                      transacciones[0] ancestros
-     *                      transacciones[1] propias
-     *                      transacciones[2] descendientes
+     * Muestras las movimientos asociadas al nodo seleccionado
+     * @param movimientos arreglo con las movimientos dividas en:
+     *                      movimientos[0] ancestros
+     *                      movimientos[1] propias
+     *                      movimientos[2] descendientes
      */
-    public void mostrarTransacciones(ArrayList<Transacción>[] transacciones) {
-        if (transacciones != null)
-            UiTablas.transacciones = transacciones;
-        else UiTablas.transacciones = generarArreglos();
+    public void mostrarMovimientos(ArrayList<Movimiento>[] movimientos) {
+        if (movimientos != null)
+            UiTablas.movimientos = movimientos;
+        else UiTablas.movimientos = generarArreglos();
 
         jTabbedPane.removeAll();
 
         if (UiSite.árbolActual instanceof ÁrbolCartera) {
-            tCartera.mostrarTransacciones();
+            tCartera.mostrarMovimientos();
             jTabbedPane.addTab(TablasCartera.NOMBRE, tCartera.componente);
 
         } else {
-            tConsolidados.mostrarTransacciones();
+            tConsolidados.mostrarMovimientos();
             jTabbedPane.addTab(TablasConsolidados.NOMBRE, tConsolidados.componente);
         }
-        tTransacciones.mostrarTransacciones();
-        jTabbedPane.addTab(TablasTransacciones.NOMBRE, tTransacciones.componente);
+        tMovimientos.mostrarMovimientos();
+        jTabbedPane.addTab(TablasMovimientos.NOMBRE, tMovimientos.componente);
     }
 
-    static ArrayList<Transacción>[] generarArreglos() {
+    static ArrayList<Movimiento>[] generarArreglos() {
 
         ArrayList[] arreglos = new ArrayList[3];
 
         for (int i = 0; i < arreglos.length; i++)
-            arreglos[i] = new ArrayList<Transacción>();
+            arreglos[i] = new ArrayList<Movimiento>();
 
         return arreglos;
     }
@@ -165,7 +165,7 @@ public class UiTablas {
                     LocalDate fi = LocalDate.from((YearMonth.parse(fechaInicial.getText(), Site.DTF)).atDay(1));
                     LocalDate ff = LocalDate.from((YearMonth.parse(fechaFinal.getText(), Site.DTF)).atEndOfMonth());
 
-                    System.out.println("Buscando transacciones entre "+Site.DTF.format(fi)+" y "+Site.DTF.format(ff));
+                    System.out.println("Buscando movimientos entre "+Site.DTF.format(fi)+" y "+Site.DTF.format(ff));
                 } catch (DateTimeParseException e){
                     System.err.println(e.getParsedString()+" no es una fecha válida");
                     e.printStackTrace();

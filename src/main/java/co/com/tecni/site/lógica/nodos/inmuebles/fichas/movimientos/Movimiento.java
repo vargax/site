@@ -1,4 +1,4 @@
-package co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones;
+package co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos;
 
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Ficha;
 import jiconfont.IconCode;
@@ -6,7 +6,7 @@ import jiconfont.icons.GoogleMaterialDesignIcons;
 
 import java.time.LocalDate;
 
-public class Transacción {
+public class Movimiento {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
@@ -25,7 +25,7 @@ public class Transacción {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public Transacción(Ficha ficha, String concepto, LocalDate fecha, Double monto, Tercero tercero) {
+    public Movimiento(Ficha ficha, String concepto, LocalDate fecha, Double monto, Tercero tercero) {
         this.ficha = ficha;
         this.concepto = concepto;
         this.fecha = fecha;
@@ -40,8 +40,8 @@ public class Transacción {
     // -----------------------------------------------
     // Métodos
     // -----------------------------------------------
-    public Transacción ponderar(double factorPonderación) {
-        return new Transacción(ficha, concepto, fecha, factorPonderación*monto, tercero);
+    public Movimiento ponderar(double factorPonderación) {
+        return new Movimiento(ficha, concepto, fecha, factorPonderación*monto, tercero);
     }
 
 }
