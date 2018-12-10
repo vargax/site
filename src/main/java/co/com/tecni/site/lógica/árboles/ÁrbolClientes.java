@@ -3,7 +3,7 @@ package co.com.tecni.site.lógica.árboles;
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.contratos.ClienteComercial;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos.Movimiento;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.site.ui.UiÁrbol;
 
 import java.util.ArrayList;
@@ -35,15 +35,15 @@ abstract class ÁrbolClientes extends Árbol {
             return null;
         }
 
-        public ArrayList<Movimiento>[] movimientosNodo(Árbol árbol) {
-            ArrayList<Movimiento> descendientes = new ArrayList<>();
-            ArrayList<Movimiento> propias = new ArrayList<>();
-            ArrayList<Movimiento> ancestros = new ArrayList<>();
+        public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
+            ArrayList<Transacción> descendientes = new ArrayList<>();
+            ArrayList<Transacción> propias = new ArrayList<>();
+            ArrayList<Transacción> ancestros = new ArrayList<>();
 
             for (ClienteComercial cc : clientesComercialesxId.values()) {
-                descendientes.addAll(cc.movimientosNodo(árbol)[2]);
-                propias.addAll(cc.movimientosNodo(árbol)[1]);
-                ancestros.addAll(cc.movimientosNodo(árbol)[0]);
+                descendientes.addAll(cc.transaccionesNodo(árbol)[2]);
+                propias.addAll(cc.transaccionesNodo(árbol)[1]);
+                ancestros.addAll(cc.transaccionesNodo(árbol)[0]);
             }
 
             ArrayList[] resultado = new ArrayList[3];

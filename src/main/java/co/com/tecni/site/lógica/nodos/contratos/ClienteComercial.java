@@ -2,7 +2,7 @@ package co.com.tecni.site.lógica.nodos.contratos;
 
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos.Movimiento;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.lógica.árboles.ÁrbolCartera;
 import co.com.tecni.site.lógica.árboles.ÁrbolContratos;
@@ -88,25 +88,25 @@ public class ClienteComercial implements Nodo {
         return null;
     }
 
-    public ArrayList<Movimiento>[] movimientosNodo(Árbol árbol) {
-        ArrayList<Movimiento> descendientes = new ArrayList<>();
-        ArrayList<Movimiento> propias = new ArrayList<>();
-        ArrayList<Movimiento> ancestros = new ArrayList<>();
+    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
+        ArrayList<Transacción> descendientes = new ArrayList<>();
+        ArrayList<Transacción> propias = new ArrayList<>();
+        ArrayList<Transacción> ancestros = new ArrayList<>();
 
         if (árbol instanceof ÁrbolCartera)
             for (ClienteFacturación clFact : clientesFacturación.values())
-                descendientes.addAll(clFact.movimientosNodo(árbol)[2]);
+                descendientes.addAll(clFact.transaccionesNodo(árbol)[2]);
 
-        // Se suman las movimientos asociadas a todos los contratos
+        // Se suman las transacciones asociadas a todos los contratos
         /* ToDo NO coinciden con los valores presentados en ÁrbolInmuebles
-        *  |> Sólo se incluyen las movimientos de los inmuebles asociados a secuencias
+        *  |> Sólo se incluyen las transacciones de los inmuebles asociados a secuencias
         *  |> Siempre debería coincidir el valor de los ingresos por arrendamiento reales
         */
         if (árbol instanceof ÁrbolContratos)
             for (Contrato contrato : contratos.values()) {
-                descendientes.addAll(contrato.movimientosNodo(árbol)[2]);
-                propias.addAll(contrato.movimientosNodo(árbol)[1]);
-                ancestros.addAll(contrato.movimientosNodo(árbol)[0]);
+                descendientes.addAll(contrato.transaccionesNodo(árbol)[2]);
+                propias.addAll(contrato.transaccionesNodo(árbol)[1]);
+                ancestros.addAll(contrato.transaccionesNodo(árbol)[0]);
             }
 
 

@@ -1,6 +1,6 @@
 package co.com.tecni.site.lógica.nodos;
 
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos.Movimiento;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.ui.UiÁrbol;
 
@@ -19,7 +19,7 @@ public interface Nodo {
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
-    ArrayList<Movimiento>[] movimientosNodo(Árbol árbol);
+    ArrayList<Transacción>[] transaccionesNodo(Árbol árbol);
     String infoNodo(Árbol árbol);
 
 }

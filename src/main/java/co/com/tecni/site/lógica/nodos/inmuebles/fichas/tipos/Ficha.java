@@ -1,7 +1,7 @@
 package co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos;
 
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos.Movimiento;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.ui.UiÁrbol;
 import jiconfont.IconCode;
@@ -22,7 +22,7 @@ public abstract class Ficha implements Nodo {
     public final boolean presupuestado;
 
     ArrayList<Ficha> fichas;
-    ArrayList<Movimiento> movimientos;
+    ArrayList<Transacción> transacciones;
 
     UiÁrbol.Ícono ícono;
     // -----------------------------------------------
@@ -36,7 +36,7 @@ public abstract class Ficha implements Nodo {
         this.presupuestado = presupuestado;
 
         fichas = new ArrayList<>();
-        movimientos = new ArrayList<>();
+        transacciones = new ArrayList<>();
 
         ícono = new UiÁrbol.Ícono(UI_ÍCONO);
     }
@@ -51,21 +51,21 @@ public abstract class Ficha implements Nodo {
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
-    public ArrayList<Movimiento>[] recursiónMovimientos(double factorPonderación) {
-        ArrayList<Movimiento> descendientes = new ArrayList<>();
-        ArrayList<Movimiento> propias = new ArrayList<>();
-        ArrayList<Movimiento> ancestros = new ArrayList<>();
+    public ArrayList<Transacción>[] recursiónTransacciones(double factorPonderación) {
+        ArrayList<Transacción> descendientes = new ArrayList<>();
+        ArrayList<Transacción> propias = new ArrayList<>();
+        ArrayList<Transacción> ancestros = new ArrayList<>();
 
         // DESCENDIENTES
         for(Ficha ficha : fichas) {
-            ArrayList<Movimiento>[] movimientosFicha = ficha.recursiónMovimientos(factorPonderación);
-            descendientes.addAll(movimientosFicha[1]);
-            descendientes.addAll(movimientosFicha[2]);
+            ArrayList<Transacción>[] transaccionesFicha = ficha.recursiónTransacciones(factorPonderación);
+            descendientes.addAll(transaccionesFicha[1]);
+            descendientes.addAll(transaccionesFicha[2]);
         }
 
         // PROPIAS
-        for (Movimiento movimiento : this.movimientos)
-            propias.add(movimiento.ponderar(factorPonderación));
+        for (Transacción transacción : this.transacciones)
+            propias.add(transacción.ponderar(factorPonderación));
 
         ArrayList[] resultado = new ArrayList[3];
         resultado[2] = descendientes;
@@ -87,7 +87,7 @@ public abstract class Ficha implements Nodo {
         return hijos;
     }
 
-    public ArrayList<Movimiento>[] movimientosNodo(Árbol árbol) {
-        return recursiónMovimientos(1);
+    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
+        return recursiónTransacciones(1);
     }
 }

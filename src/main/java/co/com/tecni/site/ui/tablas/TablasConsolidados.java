@@ -1,7 +1,7 @@
 package co.com.tecni.site.ui.tablas;
 
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Arrendamiento;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos.Movimiento;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -28,9 +28,9 @@ class TablasConsolidados {
 
     }
 
-    void mostrarMovimientos() {
-        resumenConsolidado.setTransxTipoPariente(UiTablas.movimientos);
-        detalleConsolidado.setTransxTipoPariente(UiTablas.movimientos);
+    void mostrarTransacciones() {
+        resumenConsolidado.setTransxTipoPariente(UiTablas.transacciones);
+        detalleConsolidado.setTransxTipoPariente(UiTablas.transacciones);
     }
 
     // -----------------------------------------------
@@ -63,22 +63,22 @@ class TablasConsolidados {
             totales = new double[COLUMNAS.length][FILAS.length];
         }
 
-        void setTransxTipoPariente(ArrayList<Movimiento>[] transxTipoPariente) {
+        void setTransxTipoPariente(ArrayList<Transacción>[] transxTipoPariente) {
             double ingresosReales = 0; double ingresosPresupuestados = 0;
             double gastosReales = 0;   double gastosPresupuestados = 0;
 
             for (int i = 0; i < transxTipoPariente.length; i++)
-                for (Movimiento movimiento : transxTipoPariente[i])
+                for (Transacción transacción : transxTipoPariente[i])
 
-                    if (movimiento.ficha instanceof Arrendamiento)
-                        if (movimiento.ficha.presupuestado)
-                            ingresosPresupuestados += movimiento.monto;
+                    if (transacción.ficha instanceof Arrendamiento)
+                        if (transacción.ficha.presupuestado)
+                            ingresosPresupuestados += transacción.monto;
                         else
-                            ingresosReales += movimiento.monto;
-                    else if (movimiento.ficha.presupuestado)
-                        gastosPresupuestados += movimiento.monto;
+                            ingresosReales += transacción.monto;
+                    else if (transacción.ficha.presupuestado)
+                        gastosPresupuestados += transacción.monto;
                     else
-                        gastosReales += movimiento.monto;
+                        gastosReales += transacción.monto;
 
             totales[0][0] = ingresosReales;
             totales[1][0] = ingresosPresupuestados;
@@ -132,12 +132,12 @@ class TablasConsolidados {
             tabla.setDefaultRenderer(Double.class, UiTablas.DR);
         }
 
-        void setTransxTipoPariente(ArrayList<Movimiento>[] transxTipoPariente) {
+        void setTransxTipoPariente(ArrayList<Transacción>[] transxTipoPariente) {
             resumen.clear();
 
             for (int i = 0; i < transxTipoPariente.length; i++) {
-                for (Movimiento movimiento : transxTipoPariente[i]) {
-                    String llave = movimiento.ficha.getClass().getSimpleName();
+                for (Transacción transacción : transxTipoPariente[i]) {
+                    String llave = transacción.ficha.getClass().getSimpleName();
                     double[] valores = resumen.get(llave);
 
                     if (valores == null) {
@@ -145,10 +145,10 @@ class TablasConsolidados {
                         resumen.put(llave, valores);
                     }
 
-                    if (movimiento.ficha.presupuestado)
-                        valores[1] += movimiento.monto;
+                    if (transacción.ficha.presupuestado)
+                        valores[1] += transacción.monto;
                     else
-                        valores[0] += movimiento.monto;
+                        valores[0] += transacción.monto;
 
                 }
             }
