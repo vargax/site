@@ -1,4 +1,4 @@
-package co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos;
+package co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones;
 
 public class Tercero {
 

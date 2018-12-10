@@ -5,7 +5,7 @@ import co.com.tecni.site.lógica.nodos.Nodo;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Arrendamiento;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Ficha;
 import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Presupuestal;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos.Movimiento;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.lógica.árboles.ÁrbolContratos;
 import co.com.tecni.site.ui.UiÁrbol;
@@ -120,46 +120,46 @@ public abstract class Inmueble implements Nodo {
     }
 
     /**
-     * Devuelve las movimientos del inmueble ponderadas por el factor especificado.
-     * @param factorPonderación Factor por el cual se ponderarán las movimientos:
-     *                          Si 0 < factor < 1 sólo se incluyen las movimientos propias y de los ancestros
-     *                          Si     factor = 1 sólo se incluyen las movimientos propias y de los descendientes
+     * Devuelve las transacciones del inmueble ponderadas por el factor especificado.
+     * @param factorPonderación Factor por el cual se ponderarán las transacciones:
+     *                          Si 0 < factor < 1 sólo se incluyen las transacciones propias y de los ancestros
+     *                          Si     factor = 1 sólo se incluyen las transacciones propias y de los descendientes
      * @return Arreglo con:
      *  [0] Transacciones Ancestros
      *  [1] Transacciones Propias
      *  [2] Transacciones Descendientes
      */
-    private ArrayList<Movimiento>[] recursiónMovimientos(double factorPonderación, Árbol árbol) {
+    private ArrayList<Transacción>[] recursiónTransacciones(double factorPonderación, Árbol árbol) {
         ArrayList[] resultado = new ArrayList[3];
 
-        ArrayList<Movimiento> descendientes = new ArrayList<>();
+        ArrayList<Transacción> descendientes = new ArrayList<>();
         if (factorPonderación == 1) {
             for (Inmueble hijo : hijos) {
-                ArrayList<Movimiento>[] movimientosHijo = hijo.recursiónMovimientos(factorPonderación, árbol);
-                descendientes.addAll(movimientosHijo[1]);
-                descendientes.addAll(movimientosHijo[2]);
+                ArrayList<Transacción>[] transaccionesHijo = hijo.recursiónTransacciones(factorPonderación, árbol);
+                descendientes.addAll(transaccionesHijo[1]);
+                descendientes.addAll(transaccionesHijo[2]);
             }
         }
         resultado[2] = descendientes;
 
-        ArrayList<Movimiento> propias = new ArrayList<>();
+        ArrayList<Transacción> propias = new ArrayList<>();
         for (Ficha ficha : fichas) {
 
             if (ficha instanceof Arrendamiento && árbol instanceof ÁrbolContratos) continue;
 
-            ArrayList<Movimiento>[] movimientosFichas = ficha.recursiónMovimientos(factorPonderación);
-            propias.addAll(movimientosFichas[1]);
-            propias.addAll(movimientosFichas[2]);
+            ArrayList<Transacción>[] transaccionesFichas = ficha.recursiónTransacciones(factorPonderación);
+            propias.addAll(transaccionesFichas[1]);
+            propias.addAll(transaccionesFichas[2]);
         }
         resultado[1] = propias;
 
-        ArrayList<Movimiento> ancestros = new ArrayList<>();
+        ArrayList<Transacción> ancestros = new ArrayList<>();
         if (padre != null) {
             factorPonderación = factorPonderación*(this.m2.get(site.getModoPonderación())/padre.m2.get(site.getModoPonderación()));
-            ArrayList<Movimiento>[] movimientosAncestro = padre.recursiónMovimientos(factorPonderación, árbol);
+            ArrayList<Transacción>[] transaccionesAncestro = padre.recursiónTransacciones(factorPonderación, árbol);
 
-            ancestros.addAll(movimientosAncestro[0]);
-            ancestros.addAll(movimientosAncestro[1]);
+            ancestros.addAll(transaccionesAncestro[0]);
+            ancestros.addAll(transaccionesAncestro[1]);
         }
         resultado[0] = ancestros;
 
@@ -220,8 +220,8 @@ public abstract class Inmueble implements Nodo {
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
-    public ArrayList<Movimiento>[] movimientosNodo(Árbol árbol) {
-        return recursiónMovimientos(1, árbol);
+    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
+        return recursiónTransacciones(1, árbol);
     }
 
     public String infoNodo(Árbol árbol) {

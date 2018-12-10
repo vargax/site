@@ -2,8 +2,8 @@ package co.com.tecni.site.lógica.nodos.contratos;
 
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos.Tercero;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos.Movimiento;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Tercero;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.ui.UiÁrbol;
 
@@ -62,13 +62,13 @@ public class ClienteFacturación extends Tercero implements Nodo {
         return hijos;
     }
 
-    public ArrayList<Movimiento>[] movimientosNodo(Árbol árbol) {
-        ArrayList<Movimiento> descendientes = new ArrayList<>();
-        ArrayList<Movimiento> propias = new ArrayList<>();
-        ArrayList<Movimiento> ancestros = new ArrayList<>();
+    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
+        ArrayList<Transacción> descendientes = new ArrayList<>();
+        ArrayList<Transacción> propias = new ArrayList<>();
+        ArrayList<Transacción> ancestros = new ArrayList<>();
 
         for (Factura fact : facturas.values())
-            descendientes.addAll(fact.movimientosNodo(árbol)[1]);
+            descendientes.addAll(fact.transaccionesNodo(árbol)[1]);
 
         ArrayList[] resultado = new ArrayList[3];
         resultado[2] = descendientes;

@@ -1,7 +1,7 @@
 package co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos;
 
 import co.com.tecni.site.lógica.Site;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.movimientos.Movimiento;
+import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.ui.UiÁrbol;
 import jiconfont.IconCode;
@@ -59,16 +59,16 @@ public class ObraCivil extends Ficha {
         super.ícono = new UiÁrbol.Ícono(UI_ÍCONO);
         this.json = json;
 
-        Movimiento anticipo = new Movimiento(this,
+        Transacción anticipo = new Transacción(this,
                 "Anticipo "+json.descripción, json.fechaInicial,
                 ANTICIPO*json.presupuesto, null);
 
-        Movimiento saldo = new Movimiento(this,
+        Transacción saldo = new Transacción(this,
                 "Saldo "+json.descripción, json.fechaFinal,
                 (1-ANTICIPO)*json.presupuesto, null);
 
-        super.movimientos.add(anticipo);
-        super.movimientos.add(saldo);
+        super.transacciones.add(anticipo);
+        super.transacciones.add(saldo);
     }
 
     public String nombreNodo(Árbol árbol) {
