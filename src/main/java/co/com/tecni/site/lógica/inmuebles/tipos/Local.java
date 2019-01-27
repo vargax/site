@@ -1,23 +1,23 @@
-package co.com.tecni.site.lógica.nodos.inmuebles.tipos;
+package co.com.tecni.site.lógica.inmuebles.tipos;
 
 import co.com.tecni.site.ui.UiÁrbol;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
 
-public class ConjuntoBodegas extends Inmueble {
-
+public class Local extends Inmueble {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
-    public final static String SIGLA = "CB";
-    private final static IconCode UI_ÍCONO = GoogleMaterialDesignIcons.LOCATION_CITY;
+    public final static String SIGLA = "LC";
+    private final static IconCode UI_ÍCONO = GoogleMaterialDesignIcons.STORE;
 
     // -----------------------------------------------
-    // Constructores
+    // Constructor
     // -----------------------------------------------
-    public ConjuntoBodegas() {
+    public Local() {
         super();
         super.sigla = SIGLA;
         super.ícono = new UiÁrbol.Ícono(UI_ÍCONO);
     }
+
 }

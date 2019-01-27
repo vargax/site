@@ -1,7 +1,7 @@
 package co.com.tecni.site.ui.tablas;
 
 import co.com.tecni.site.lógica.Site;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.site.lógica.transacciones.Transacción;
 import co.com.tecni.site.lógica.árboles.ÁrbolCartera;
 import co.com.tecni.site.ui.UiSite;
 

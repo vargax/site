@@ -1,7 +1,7 @@
 package co.com.tecni.site.ui;
 
 import co.com.tecni.site.lógica.Site;
-import co.com.tecni.site.lógica.nodos.Nodo;
+import co.com.tecni.site.lógica.árboles.Nodo;
 import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.lógica.árboles.ÁrbolCartera;
 import co.com.tecni.site.lógica.árboles.ÁrbolContratos;

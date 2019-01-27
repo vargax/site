@@ -1,6 +1,6 @@
 package co.com.tecni.site.lógica.árboles;
 
-import co.com.tecni.site.lógica.nodos.contratos.ClienteComercial;
+import co.com.tecni.site.lógica.contratos.ClienteComercial;
 
 import java.util.HashMap;
 

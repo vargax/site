@@ -1,8 +1,8 @@
-package co.com.tecni.site.lógica.nodos.contratos;
+package co.com.tecni.site.lógica.contratos;
 
 import co.com.tecni.site.lógica.Site;
-import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.site.lógica.árboles.Nodo;
+import co.com.tecni.site.lógica.transacciones.Transacción;
 import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.lógica.árboles.ÁrbolCartera;
 import co.com.tecni.site.lógica.árboles.ÁrbolContratos;

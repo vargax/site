@@ -1,4 +1,4 @@
-package co.com.tecni.site.lógica.nodos.inmuebles.tipos;
+package co.com.tecni.site.lógica.inmuebles.tipos;
 
 import co.com.tecni.site.ui.UiÁrbol;
 import jiconfont.IconCode;

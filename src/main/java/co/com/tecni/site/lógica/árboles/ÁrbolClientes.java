@@ -1,9 +1,8 @@
 package co.com.tecni.site.lógica.árboles;
 
 import co.com.tecni.site.lógica.Site;
-import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.contratos.ClienteComercial;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.site.lógica.contratos.ClienteComercial;
+import co.com.tecni.site.lógica.transacciones.Transacción;
 import co.com.tecni.site.ui.UiÁrbol;
 
 import java.util.ArrayList;

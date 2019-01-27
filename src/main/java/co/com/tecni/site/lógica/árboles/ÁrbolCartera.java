@@ -1,10 +1,10 @@
 package co.com.tecni.site.lógica.árboles;
 
 import co.com.tecni.site.lógica.Site;
-import co.com.tecni.site.lógica.nodos.contratos.ClienteComercial;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Arrendamiento;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Presupuestal;
-import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
+import co.com.tecni.site.lógica.contratos.ClienteComercial;
+import co.com.tecni.site.lógica.fichas.Arrendamiento;
+import co.com.tecni.site.lógica.fichas.Presupuestal;
+import co.com.tecni.site.lógica.inmuebles.tipos.Inmueble;
 
 import java.time.LocalDate;
 import java.util.HashMap;

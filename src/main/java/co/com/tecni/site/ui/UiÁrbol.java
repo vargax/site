@@ -1,6 +1,13 @@
 package co.com.tecni.site.ui;
 
-import co.com.tecni.site.lógica.nodos.Nodo;
+import co.com.tecni.site.lógica.árboles.Nodo;
+import co.com.tecni.site.lógica.contratos.ClienteComercial;
+import co.com.tecni.site.lógica.contratos.ClienteFacturación;
+import co.com.tecni.site.lógica.contratos.Contrato;
+import co.com.tecni.site.lógica.contratos.Secuencia;
+import co.com.tecni.site.lógica.inmuebles.Agrupación;
+import co.com.tecni.site.lógica.fichas.Ficha;
+import co.com.tecni.site.lógica.inmuebles.tipos.Inmueble;
 import co.com.tecni.site.lógica.árboles.Árbol;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
@@ -20,6 +27,16 @@ public class UiÁrbol {
     private final static IconCode ÍCONO_DEFAULT = GoogleMaterialDesignIcons.INSERT_DRIVE_FILE;
     private final static int ÍCONO_TAMAÑO = 25;
     private final static Color ÍCONO_COLOR = Color.GRAY;
+
+    private final static Color ÍCONO_COLOR_AGRUPACIÓN = Color.RED;
+    private final static Color ÍCONO_COLOR_INMUEBLE = Color.ORANGE;
+    private final static Color ÍCONO_COLOR_FICHA = Color.BLUE;
+
+    private final static Color ÍCONO_COLOR_CLIENTE = new Color(204,204,0);
+    private final static Color ÍCONO_COLOR_CONTRATO = new Color(0,153,51);
+    private final static Color ÍCONO_COLOR_SECUENCIA = new Color(102,255,102);
+
+    private final static Color ÍCONO_COLOR_TERCERO = new Color(204,102,255);
 
     private final static Color FONDO_NODO_SELECCIONADO = new Color(225, 225, 225);
 
@@ -53,6 +70,16 @@ public class UiÁrbol {
                 //System.err.println("Ícono indefinido para "+nodo.getClass().getSimpleName());
                 ícono = new Ícono();
             }
+
+            if (nodo instanceof Agrupación) ícono.color = ÍCONO_COLOR_AGRUPACIÓN;
+            if (nodo instanceof Inmueble) ícono.color = ÍCONO_COLOR_INMUEBLE;
+            if (nodo instanceof Ficha) ícono.color = ÍCONO_COLOR_FICHA;
+
+            if (nodo instanceof ClienteComercial) ícono.color = ÍCONO_COLOR_CLIENTE;
+            if (nodo instanceof Contrato) ícono.color = ÍCONO_COLOR_CONTRATO;
+            if (nodo instanceof Secuencia) ícono.color = ÍCONO_COLOR_SECUENCIA;
+
+            if (nodo instanceof ClienteFacturación) ícono.color = ÍCONO_COLOR_TERCERO;
 
             jLabel.setIcon(IconFontSwing.buildIcon(ícono.código, ÍCONO_TAMAÑO, ícono.color));
             jLabel.setText(nodo.nombreNodo(árbol));
@@ -113,10 +140,10 @@ public class UiÁrbol {
         IconCode código;
         Color color;
 
-        public Ícono(IconCode código, Color color) {
+        /*public Ícono(IconCode código, Color color) {
             this.código = código;
             this.color = color;
-        }
+        }*/
 
         public Ícono(IconCode código) {
             this.código = código;

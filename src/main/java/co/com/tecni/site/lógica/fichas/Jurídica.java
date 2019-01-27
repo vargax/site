@@ -1,4 +1,4 @@
-package co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos;
+package co.com.tecni.site.lógica.fichas;
 
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.árboles.Árbol;

@@ -1,6 +1,6 @@
 package co.com.tecni.site.ui.tablas;
 
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.site.lógica.transacciones.Transacción;
 
 import javax.swing.*;
 import java.util.ArrayList;
