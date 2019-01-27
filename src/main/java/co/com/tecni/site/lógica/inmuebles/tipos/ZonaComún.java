@@ -1,4 +1,4 @@
-package co.com.tecni.site.lógica.nodos.inmuebles.tipos;
+package co.com.tecni.site.lógica.inmuebles.tipos;
 
 public class ZonaComún extends Inmueble {
 

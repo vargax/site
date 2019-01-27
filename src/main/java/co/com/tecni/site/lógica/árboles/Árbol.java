@@ -1,7 +1,5 @@
 package co.com.tecni.site.lógica.árboles;
 
-import co.com.tecni.site.lógica.nodos.Nodo;
-
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;

@@ -1,10 +1,10 @@
-package co.com.tecni.site.lógica.nodos.contratos;
+package co.com.tecni.site.lógica.contratos;
 
 import co.com.tecni.site.lógica.Site;
-import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Arrendamiento;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
-import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
+import co.com.tecni.site.lógica.árboles.Nodo;
+import co.com.tecni.site.lógica.fichas.Arrendamiento;
+import co.com.tecni.site.lógica.transacciones.Transacción;
+import co.com.tecni.site.lógica.inmuebles.tipos.Inmueble;
 import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.ui.UiÁrbol;
 

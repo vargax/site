@@ -1,8 +1,7 @@
 package co.com.tecni.site.lógica.árboles;
 
-import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.inmuebles.Agrupación;
-import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
+import co.com.tecni.site.lógica.inmuebles.Agrupación;
+import co.com.tecni.site.lógica.inmuebles.tipos.Inmueble;
 
 import java.util.HashMap;
 
@@ -32,7 +31,7 @@ public class ÁrbolInmuebles extends Árbol {
     private void recursiónIdentificadores(Nodo nodo) {
         for (Object hijo : nodo.hijosNodo(this)) {
             if (hijo instanceof Inmueble)
-                inmueblesxId.put(((Inmueble) hijo).genId(), (Inmueble) hijo);
+                inmueblesxId.put(((Inmueble) hijo).genNombre(), (Inmueble) hijo);
             recursiónIdentificadores((Nodo) hijo);
         }
     }

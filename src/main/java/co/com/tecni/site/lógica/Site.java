@@ -1,7 +1,7 @@
 package co.com.tecni.site.lógica;
 
 import co.com.tecni.site.datos.Lector;
-import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
+import co.com.tecni.site.lógica.inmuebles.tipos.Inmueble;
 import co.com.tecni.site.lógica.árboles.ÁrbolCartera;
 import co.com.tecni.site.lógica.árboles.ÁrbolContratos;
 import co.com.tecni.site.lógica.árboles.ÁrbolInmuebles;

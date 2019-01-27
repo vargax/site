@@ -1,6 +1,6 @@
 package co.com.tecni.site.ui.tablas;
 
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.site.lógica.transacciones.Transacción;
 
 import javax.swing.*;
 import java.time.LocalDate;
@@ -37,7 +37,7 @@ class TablasCartera {
     // -----------------------------------------------
     class Cartera extends UiTablas.ModeloTabla {
         private final String[] COLUMNAS = {
-                "Cliente", ">90", "60", "30", "<30", "Total", "Días atrazo"
+                "Cliente", ">90", ">60", ">30", "<30", "Total", "Días atrazo"
         };
 
         JTable tabla;

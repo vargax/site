@@ -1,6 +1,6 @@
-package co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones;
+package co.com.tecni.site.lógica.transacciones;
 
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Ficha;
+import co.com.tecni.site.lógica.fichas.Ficha;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
 

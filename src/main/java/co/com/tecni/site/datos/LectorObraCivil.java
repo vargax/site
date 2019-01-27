@@ -1,7 +1,7 @@
 package co.com.tecni.site.datos;
 
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.ObraCivil;
-import co.com.tecni.site.lógica.nodos.inmuebles.tipos.Inmueble;
+import co.com.tecni.site.lógica.fichas.ObraCivil;
+import co.com.tecni.site.lógica.inmuebles.tipos.Inmueble;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 

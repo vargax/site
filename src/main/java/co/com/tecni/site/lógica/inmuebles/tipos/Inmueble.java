@@ -1,11 +1,11 @@
-package co.com.tecni.site.lógica.nodos.inmuebles.tipos;
+package co.com.tecni.site.lógica.inmuebles.tipos;
 
 import co.com.tecni.site.lógica.Site;
-import co.com.tecni.site.lógica.nodos.Nodo;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Arrendamiento;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Ficha;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.tipos.Presupuestal;
-import co.com.tecni.site.lógica.nodos.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.site.lógica.árboles.Nodo;
+import co.com.tecni.site.lógica.fichas.Arrendamiento;
+import co.com.tecni.site.lógica.fichas.Ficha;
+import co.com.tecni.site.lógica.fichas.Presupuestal;
+import co.com.tecni.site.lógica.transacciones.Transacción;
 import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.lógica.árboles.ÁrbolContratos;
 import co.com.tecni.site.ui.UiÁrbol;
@@ -24,6 +24,7 @@ public abstract class Inmueble implements Nodo {
     // Constantes
     // -----------------------------------------------
     private final static IconCode UI_ÍCONO = GoogleMaterialDesignIcons.MAP;
+
     private final static Color UI_ÍCONO_COLOR_ARRENDADO = new Color(0, 255, 128);
 
     public final static String A_PRIV_CONSTRUIDOS = "PC";
@@ -155,9 +156,11 @@ public abstract class Inmueble implements Nodo {
 
         ArrayList<Transacción> ancestros = new ArrayList<>();
         if (padre != null) {
-            factorPonderación = factorPonderación*(this.m2.get(site.getModoPonderación())/padre.m2.get(site.getModoPonderación()));
-            ArrayList<Transacción>[] transaccionesAncestro = padre.recursiónTransacciones(factorPonderación, árbol);
+            String modoPonderación = site.getModoPonderación();
 
+            factorPonderación = factorPonderación*(this.m2.get(modoPonderación)/padre.m2.get(modoPonderación));
+
+            ArrayList<Transacción>[] transaccionesAncestro = padre.recursiónTransacciones(factorPonderación, árbol);
             ancestros.addAll(transaccionesAncestro[0]);
             ancestros.addAll(transaccionesAncestro[1]);
         }
@@ -169,8 +172,8 @@ public abstract class Inmueble implements Nodo {
     // -----------------------------------------------
     // Métodos públicos
     // -----------------------------------------------
-    public String genId() {
-        return padre == null ? sigla + " " + nombre : padre.genId() + " " + sigla + " " + nombre;
+    public String genNombre() {
+        return padre == null ? sigla + " " + nombre : padre.genNombre() + " " + sigla + " " + nombre;
     }
 
     public void registrarFicha(Ficha ficha) {
@@ -203,7 +206,7 @@ public abstract class Inmueble implements Nodo {
     // GUI / Árbol
     // -----------------------------------------------
     public String nombreNodo(Árbol árbol) {
-        return genId();
+        return genNombre();
     }
 
     public ArrayList<Object> hijosNodo(Árbol árbol) {
@@ -227,7 +230,7 @@ public abstract class Inmueble implements Nodo {
     public String infoNodo(Árbol árbol) {
         if (infoNodo == null) {
             infoNodo = new JSONObject();
-            infoNodo.put(JK[0], genId());
+            infoNodo.put(JK[0], genNombre());
 
             DecimalFormat df = Site.SMALL_DECIMAL;
 
