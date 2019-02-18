@@ -41,13 +41,14 @@ class TablasConsolidados {
                 "Real",
                 "Presupuestado",
                 "Diferencia",
-                "% Cumplimiento"};
+                "% Cumplimiento",
+                "Anticipos"};
 
         private final String[] FILAS = {"Ingresos",
                 "Gastos",
                 "Utilidad Operacional",
-                "Ajuste Valor Razonable",
-                "Inversión"};
+                "Inversión",
+                "Ajuste Valor Razonable"};
 
         private double[][] totales;
 
@@ -117,7 +118,8 @@ class TablasConsolidados {
                 "Real",
                 "Presupuestado",
                 "Diferencia",
-                "% Cumplimiento"};
+                "% Cumplimiento",
+                "Anticipos"};
 
         JTable tabla;
         private LinkedHashMap<String, double[]> resumen;
@@ -141,7 +143,7 @@ class TablasConsolidados {
                     double[] valores = resumen.get(llave);
 
                     if (valores == null) {
-                        valores = new double[4];
+                        valores = new double[5];
                         resumen.put(llave, valores);
                     }
 
@@ -153,7 +155,7 @@ class TablasConsolidados {
                 }
             }
 
-            double[] totales = new double[4];
+            double[] totales = new double[5];
 
             for (double[] valores : resumen.values()) {
                 valores[2] = valores[0] - valores[1]; // Diferencia
