@@ -48,7 +48,8 @@ class TablasConsolidados {
                 "Gastos",
                 "Utilidad Operacional",
                 "Inversión",
-                "Ajuste Valor Razonable"};
+                "Ajustes contables",
+                "Ajustes fiscales"};
 
         private double[][] totales;
 
