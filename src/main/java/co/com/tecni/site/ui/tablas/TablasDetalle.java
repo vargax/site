@@ -6,8 +6,8 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-class TablasTransacciones {
-    final static String NOMBRE = "Transacciones";
+class TablasDetalle {
+    final static String NOMBRE = "Detalle";
 
     JSplitPane componente;
 
@@ -17,7 +17,7 @@ class TablasTransacciones {
     private Herencia herenciaPresupuestada;
     private Transacciones transaccionesPresupuestadas;
 
-    TablasTransacciones() {
+    TablasDetalle() {
 
         herenciaReal = new Herencia(UiTablas.REAL);
         herenciaPresupuestada = new Herencia(UiTablas.PRESUPUESTADO);
