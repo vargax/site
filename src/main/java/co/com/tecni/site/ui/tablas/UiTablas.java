@@ -29,9 +29,9 @@ public class UiTablas {
 
     Acciones acciones;
 
-    TablasConsolidados tConsolidados;
-    TablasTransacciones tTransacciones;
-    TablasCartera tCartera;
+    TablasConsolidados tablasConsolidados;
+    TablasDetalle tablasDetalle;
+    TablasCartera tablasCartera;
 
     private JFormattedTextField fechaInicial;
     private JFormattedTextField fechaFinal;
@@ -39,16 +39,16 @@ public class UiTablas {
     public UiTablas() throws Exception {
         acciones = new Acciones();
 
-        tTransacciones = new TablasTransacciones();
-        tConsolidados = new TablasConsolidados();
-        tCartera = new TablasCartera();
+        tablasDetalle = new TablasDetalle();
+        tablasConsolidados = new TablasConsolidados();
+        tablasCartera = new TablasCartera();
 
         componente = new JPanel(new BorderLayout());
         componente.add(panelFechas(), BorderLayout.NORTH);
 
         jTabbedPane = new JTabbedPane();
-        jTabbedPane.addTab(TablasConsolidados.NOMBRE, tConsolidados.componente);
-        jTabbedPane.addTab(TablasTransacciones.NOMBRE, tTransacciones.componente);
+        jTabbedPane.addTab(TablasConsolidados.NOMBRE, tablasConsolidados.componente);
+        jTabbedPane.addTab(TablasDetalle.NOMBRE, tablasDetalle.componente);
 
         componente.add(jTabbedPane, BorderLayout.CENTER);
     }
@@ -95,15 +95,15 @@ public class UiTablas {
         jTabbedPane.removeAll();
 
         if (UiSite.árbolActual instanceof ÁrbolCartera) {
-            tCartera.mostrarTransacciones();
-            jTabbedPane.addTab(TablasCartera.NOMBRE, tCartera.componente);
+            tablasCartera.mostrarTransacciones();
+            jTabbedPane.addTab(TablasCartera.NOMBRE, tablasCartera.componente);
 
         } else {
-            tConsolidados.mostrarTransacciones();
-            jTabbedPane.addTab(TablasConsolidados.NOMBRE, tConsolidados.componente);
+            tablasConsolidados.mostrarTransacciones();
+            jTabbedPane.addTab(TablasConsolidados.NOMBRE, tablasConsolidados.componente);
         }
-        tTransacciones.mostrarTransacciones();
-        jTabbedPane.addTab(TablasTransacciones.NOMBRE, tTransacciones.componente);
+        tablasDetalle.mostrarTransacciones();
+        jTabbedPane.addTab(TablasDetalle.NOMBRE, tablasDetalle.componente);
     }
 
     static ArrayList<Transacción>[] generarArreglos() {

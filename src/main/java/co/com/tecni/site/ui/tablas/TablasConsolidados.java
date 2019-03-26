@@ -4,6 +4,8 @@ import co.com.tecni.site.lógica.fichas.Arrendamiento;
 import co.com.tecni.site.lógica.transacciones.Transacción;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -12,31 +14,51 @@ class TablasConsolidados {
 
     JSplitPane componente;
 
-    private ResumenConsolidado resumenConsolidado;
-    private DetalleConsolidado detalleConsolidado;
+    private TablaTransacciones tablaTransacciones;
+    private TablaFichas tablaFichas;
 
+    private ArrayList<Transacción> transaccionesIngreso = new ArrayList<>();
+    private ArrayList<Transacción> transaccionesGasto = new ArrayList<>();
+    private ArrayList<Transacción> transacciones = new ArrayList<>();
 
     TablasConsolidados() {
 
-        resumenConsolidado = new ResumenConsolidado();
-        detalleConsolidado = new DetalleConsolidado();
+        tablaTransacciones = new TablaTransacciones();
+        tablaFichas = new TablaFichas();
 
         componente = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-        componente.setLeftComponent(new JScrollPane(resumenConsolidado.tabla));
-        componente.setRightComponent(new JScrollPane(detalleConsolidado.tabla));
+        componente.setLeftComponent(new JScrollPane(tablaTransacciones.tabla));
+        componente.setRightComponent(new JScrollPane(tablaFichas.tabla));
         componente.setResizeWeight(0.5d);
 
     }
 
     void mostrarTransacciones() {
-        resumenConsolidado.setTransxTipoPariente(UiTablas.transacciones);
-        detalleConsolidado.setTransxTipoPariente(UiTablas.transacciones);
+        tablaTransacciones.setTransxTipoPariente(UiTablas.transacciones);
+        actualizarTablaFichas(tablaTransacciones.tabla.getSelectedRow());
+    }
+
+    void actualizarTablaFichas(int fila) {
+        switch (fila) {
+            case 0:
+                tablaFichas.setTransacciones(transaccionesIngreso);
+                break;
+            case 1:
+                tablaFichas.setTransacciones(transaccionesGasto);
+                break;
+            case 2:
+                tablaFichas.setTransacciones(transacciones);
+                break;
+            default:
+                tablaFichas.setTransacciones(new ArrayList<>());
+                break;
+        }
     }
 
     // -----------------------------------------------
     // Subclases
     // -----------------------------------------------
-    class ResumenConsolidado extends UiTablas.ModeloTabla {
+    class TablaTransacciones extends UiTablas.ModeloTabla {
         private final String[] COLUMNAS = {"",
                 "Real",
                 "Presupuestado",
@@ -55,12 +77,20 @@ class TablasConsolidados {
 
         JTable tabla;
 
-        ResumenConsolidado() {
+        TablaTransacciones() {
             super();
             super.columnas = COLUMNAS;
 
             tabla = new JTable(this);
             tabla.setDefaultRenderer(Double.class, UiTablas.DR);
+            tabla.getSelectionModel().addListSelectionListener(
+                    new ListSelectionListener() {
+                        @Override
+                        public void valueChanged(ListSelectionEvent listSelectionEvent) {
+                            actualizarTablaFichas(tabla.getSelectedRow());
+                        }
+                    }
+            );
 
             totales = new double[COLUMNAS.length][FILAS.length];
         }
@@ -69,18 +99,30 @@ class TablasConsolidados {
             double ingresosReales = 0; double ingresosPresupuestados = 0;
             double gastosReales = 0;   double gastosPresupuestados = 0;
 
-            for (int i = 0; i < transxTipoPariente.length; i++)
-                for (Transacción transacción : transxTipoPariente[i])
+            transaccionesIngreso = new ArrayList<>();
+            transaccionesGasto = new ArrayList<>();
+            transacciones = new ArrayList<>();
 
-                    if (transacción.ficha instanceof Arrendamiento)
+            for (int i = 0; i < transxTipoPariente.length; i++) {
+                for (Transacción transacción : transxTipoPariente[i]) {
+
+                    if (transacción.ficha instanceof Arrendamiento) {
                         if (transacción.ficha.presupuestado)
                             ingresosPresupuestados += transacción.monto;
-                        else
-                            ingresosReales += transacción.monto;
-                    else if (transacción.ficha.presupuestado)
-                        gastosPresupuestados += transacción.monto;
-                    else
-                        gastosReales += transacción.monto;
+                        else ingresosReales += transacción.monto;
+
+                        transaccionesIngreso.add(transacción);
+                    } else {
+                        if (transacción.ficha.presupuestado)
+                            gastosPresupuestados += transacción.monto;
+                        else gastosReales += transacción.monto;
+
+                        transaccionesGasto.add(transacción);
+                    }
+
+                    transacciones.add(transacción);
+                }
+            }
 
             totales[0][0] = ingresosReales;
             totales[1][0] = ingresosPresupuestados;
@@ -114,7 +156,7 @@ class TablasConsolidados {
         }
     }
 
-    class DetalleConsolidado extends UiTablas.ModeloTabla {
+    class TablaFichas extends UiTablas.ModeloTabla {
         private final String[] COLUMNAS = {"Ficha",
                 "Real",
                 "Presupuestado",
@@ -125,7 +167,7 @@ class TablasConsolidados {
         JTable tabla;
         private LinkedHashMap<String, double[]> resumen;
 
-        DetalleConsolidado() {
+        TablaFichas() {
             super();
             super.columnas = COLUMNAS;
 
@@ -135,25 +177,23 @@ class TablasConsolidados {
             tabla.setDefaultRenderer(Double.class, UiTablas.DR);
         }
 
-        void setTransxTipoPariente(ArrayList<Transacción>[] transxTipoPariente) {
+        void setTransacciones(ArrayList<Transacción> transacciones) {
             resumen.clear();
 
-            for (int i = 0; i < transxTipoPariente.length; i++) {
-                for (Transacción transacción : transxTipoPariente[i]) {
-                    String llave = transacción.ficha.getClass().getSimpleName();
-                    double[] valores = resumen.get(llave);
+            for (Transacción transacción : transacciones) {
+                String llave = transacción.ficha.getClass().getSimpleName();
+                double[] valores = resumen.get(llave);
 
-                    if (valores == null) {
-                        valores = new double[5];
-                        resumen.put(llave, valores);
-                    }
-
-                    if (transacción.ficha.presupuestado)
-                        valores[1] += transacción.monto;
-                    else
-                        valores[0] += transacción.monto;
-
+                if (valores == null) {
+                    valores = new double[5];
+                    resumen.put(llave, valores);
                 }
+
+                if (transacción.ficha.presupuestado)
+                    valores[1] += transacción.monto;
+                else
+                    valores[0] += transacción.monto;
+
             }
 
             double[] totales = new double[5];
