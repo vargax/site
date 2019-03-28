@@ -1,0 +1,32 @@
+[
+  {
+    "Usuario": "Juan Albornoz",
+    "Timestamp": "20190327 1719",
+    "Mensaje": "Comentario de primer nivel",
+    "Adjuntos": null,
+    "Comentarios": [
+      {
+        "Usuario": "Juan Albornoz",
+        "Timestamp": "20190327 1734",
+        "Mensaje": "Comentario anidado 1",
+        "Adjuntos": null,
+        "Comentarios": []
+      },
+      {
+        "Usuario": "Juan Albornoz",
+        "Timestamp": "20190327 1734",
+        "Mensaje": "Comentario anidado 2",
+        "Adjuntos": null,
+        "Comentarios": [
+          {
+            "Usuario": "Juan Albornoz",
+            "Timestamp": "20190327 1741",
+            "Mensaje": "Comentario anidado de tercer nivel",
+            "Adjuntos": null,
+            "Comentarios": []
+          }
+        ]
+      }
+    ]
+  }
+]

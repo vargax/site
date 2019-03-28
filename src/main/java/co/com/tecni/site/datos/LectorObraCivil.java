@@ -1,6 +1,6 @@
 package co.com.tecni.site.datos;
 
-import co.com.tecni.site.lógica.fichas.ObraCivil;
+import co.com.tecni.site.lógica.fichas.Mejora;
 import co.com.tecni.site.lógica.inmuebles.tipos.Inmueble;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -63,7 +63,7 @@ class LectorObraCivil {
             LocalDate fechaFinal = Lector.fecha(filaActual, FECHA_FINAL);
 
             String tipo = Lector.cadena(filaActual, TIPO);
-            if (!ObraCivil.TIPOS.contains(tipo)) throw new Exception("Tipo de ObraCivil "+tipo+" no definido");
+            if (!Mejora.TIPOS.contains(tipo)) throw new Exception("Tipo de Mejora "+tipo+" no definido");
             try {
                 contadores.put(tipo, contadores.get(tipo) + 1);
             } catch (NullPointerException e) {
@@ -75,12 +75,12 @@ class LectorObraCivil {
 
             String observaciones = Lector.cadena(filaActual, OBSERVACIONES);
 
-            ObraCivil.Json json = new ObraCivil.Json(tipo, fechaInicial, fechaFinal, presupuesto, descripción, observaciones);
+            Mejora.Json json = new Mejora.Json(tipo, fechaInicial, fechaFinal, presupuesto, descripción, observaciones);
 
             if (presupuestado)
-                new ObraCivil(inmueble.getPresupuesto(fechaInicial.getYear()).gastos(), json);
+                new Mejora(inmueble.getPresupuesto(fechaInicial.getYear()).gastos(), json);
             else
-                inmueble.registrarFicha(new ObraCivil(json));
+                inmueble.registrarFicha(new Mejora(json));
         }
 
         for (Map.Entry<String, Integer> e : contadores.entrySet()) {

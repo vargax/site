@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashSet;
 
-public class ObraCivil extends Ficha {
+public class Mejora extends Ficha {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
@@ -46,11 +46,11 @@ public class ObraCivil extends Ficha {
         }
     }
 
-    public ObraCivil(Json json) {
+    public Mejora(Json json) {
         inicializar(json);
     }
 
-    public ObraCivil(Ficha padre, Json json) {
+    public Mejora(Ficha padre, Json json) {
         super(padre);
         inicializar(json);
     }

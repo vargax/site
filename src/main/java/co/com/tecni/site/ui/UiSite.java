@@ -28,7 +28,7 @@ public class UiSite extends JFrame {
     public static Árbol árbolActual;
 
     private UiMenu uiMenu;
-    private UiInfo uiInfo;
+    private UiJson uiJson;
     private UiTablas uiTablas;
 
     // -----------------------------------------------
@@ -46,13 +46,13 @@ public class UiSite extends JFrame {
         cartera = new UiÁrbol(ÁrbolCartera.NOMBRE_RAIZ, Site.árbolCartera);
 
         uiMenu = new UiMenu();
-        uiInfo = new UiInfo();
+        uiJson = new UiJson();
         uiTablas = new UiTablas();
 
         this.setJMenuBar(uiMenu.componente);
 
         JSplitPane panelSecundario = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        panelSecundario.setRightComponent(new JScrollPane(uiInfo.getComponent()));
+        panelSecundario.setRightComponent(uiJson.componente);
         panelSecundario.setLeftComponent(uiTablas.componente);
         panelSecundario.setResizeWeight(0.3d);
 
@@ -95,10 +95,10 @@ public class UiSite extends JFrame {
     // -----------------------------------------------
     void actualizarDetalle(Nodo nodo) {
         if (nodo != null) {
-            uiInfo.mostrarDetalle(nodo.infoNodo(árbolActual));
+            uiJson.mostrarDetalle(nodo.infoNodo(árbolActual));
             uiTablas.mostrarTransacciones(nodo.transaccionesNodo(árbolActual));
         } else {
-            uiInfo.mostrarDetalle("");
+            uiJson.mostrarDetalle("");
             uiTablas.mostrarTransacciones(null);
         }
     }
