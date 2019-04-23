@@ -51,6 +51,10 @@ public abstract class Ficha implements Nodo {
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
+    public String darTipo() {
+        return this.getClass().getSimpleName();
+    }
+
     public ArrayList<Transacción>[] recursiónTransacciones(double factorPonderación) {
         ArrayList<Transacción> descendientes = new ArrayList<>();
         ArrayList<Transacción> propias = new ArrayList<>();
