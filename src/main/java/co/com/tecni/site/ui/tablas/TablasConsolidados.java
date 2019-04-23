@@ -181,7 +181,7 @@ class TablasConsolidados {
             resumen.clear();
 
             for (Transacción transacción : transacciones) {
-                String llave = transacción.ficha.getClass().getSimpleName();
+                String llave = transacción.ficha.darTipo();
                 double[] valores = resumen.get(llave);
 
                 if (valores == null) {

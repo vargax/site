@@ -71,6 +71,11 @@ public class Mejora extends Ficha {
         super.transacciones.add(saldo);
     }
 
+    @Override
+    public String darTipo() {
+        return json.tipo;
+    }
+
     public String nombreNodo(Árbol árbol) {
         return json.tipo + " "+json.descripción;
     }
