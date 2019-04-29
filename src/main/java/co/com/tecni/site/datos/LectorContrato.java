@@ -3,7 +3,7 @@ package co.com.tecni.site.datos;
 import co.com.tecni.site.lógica.contratos.ClienteComercial;
 import co.com.tecni.site.lógica.contratos.ClienteFacturación;
 import co.com.tecni.site.lógica.contratos.Contrato;
-import co.com.tecni.site.lógica.contratos.Secuencia;
+import co.com.tecni.site.lógica.contratos.Versión;
 import co.com.tecni.site.lógica.inmuebles.tipos.Inmueble;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -64,7 +64,7 @@ class LectorContrato {
     HashMap<Integer, ClienteComercial> clientesComerciales;
     HashMap<Integer, ClienteFacturación> clientesFacturación;
     HashMap<Integer, Contrato> contratos;
-    HashMap<Integer, Secuencia> secuencias;
+    HashMap<Integer, Versión> secuencias;
 
     // -----------------------------------------------
     // Constructor
@@ -172,13 +172,13 @@ class LectorContrato {
             int periodicidadIncremento = Lector.entero(filaActual, HS_PERIODICIDAD_INCREMENTOS_POSTERIORES);
             String índiceBaseIncremento = Lector.cadena(filaActual, HS_ÍNDICE_BASE_INCREMENTO);
             double ptosAdicionalesIncremento = Lector.doble(filaActual, HS_PUNTOS_ADICIONALES_INCREMENTO);
-            Secuencia.Cánon.Incremento incremento = new Secuencia.Cánon.Incremento(índiceBaseIncremento, ptosAdicionalesIncremento, periodicidadIncremento, primerIncremento);
+            Versión.Cánon.Incremento incremento = new Versión.Cánon.Incremento(índiceBaseIncremento, ptosAdicionalesIncremento, periodicidadIncremento, primerIncremento);
 
-            Secuencia.Cánon cánon = new Secuencia.Cánon(cánonMensual, primerCobro, incremento);
+            Versión.Cánon cánon = new Versión.Cánon(cánonMensual, primerCobro, incremento);
 
-            Secuencia secuencia = new Secuencia(idSecuencia, inicio, fin, contrato, cánon);
+            Versión versión = new Versión(idSecuencia, inicio, fin, contrato, cánon);
 
-            secuencias.put(idSecuencia, secuencia);
+            secuencias.put(idSecuencia, versión);
         }
 
         System.out.println("Recuperadas "+ secuencias.size() + " secuencias");
@@ -194,26 +194,26 @@ class LectorContrato {
             if (filaActual.getCell(Lector.charToInt(HSCF_SC_ID)) == null) break;
 
             int idSecuencia = Lector.entero(filaActual, HSCF_SC_ID);
-            Secuencia secuencia = secuencias.get(idSecuencia);
-            if (secuencia == null) {
-                System.err.println("Secuencia "+ idSecuencia + " no encontrada");
+            Versión versión = secuencias.get(idSecuencia);
+            if (versión == null) {
+                System.err.println("Versión "+ idSecuencia + " no encontrada");
                 continue;
             }
 
             int nitClienteFacturación = Lector.entero(filaActual, HSCF_CF_NIT);
             ClienteFacturación clienteFacturación = clientesFacturación.get(nitClienteFacturación);
             if (clienteFacturación == null) {
-                System.err.println("ClienteFacturación"+ nitClienteFacturación + " no encontrado para secuencia "+idSecuencia);
+                System.err.println("ClienteFacturación"+ nitClienteFacturación + " no encontrado para versión "+idSecuencia);
                 continue;
             }
 
             double participación = Lector.doble(filaActual, HSCF_PARTICIPACIÓN);
-            secuencia.agregarClienteFacturación(clienteFacturación, participación);
+            versión.agregarClienteFacturación(clienteFacturación, participación);
         }
 
-        for (Secuencia secuencia : secuencias.values())
+        for (Versión versión : secuencias.values())
             try {
-                secuencia.verificarParticipaciónClientesFacturación();
+                versión.verificarParticipaciónClientesFacturación();
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
@@ -230,25 +230,25 @@ class LectorContrato {
             if (filaActual.getCell(Lector.charToInt(HSI_SC_ID)) == null) break;
 
             int idSecuencia = Lector.entero(filaActual, HSI_SC_ID);
-            Secuencia secuencia = secuencias.get(idSecuencia);
+            Versión versión = secuencias.get(idSecuencia);
 
             String idInmueble = Lector.cadena(filaActual, HSI_INMUEBLE_ID);
             Inmueble inmueble = inmuebles.get(idInmueble);
 
-            if (secuencia == null || inmueble == null) {
-                System.err.println("Error al recuperar secuencia "+idSecuencia+" o inmueble "+ idInmueble);
+            if (versión == null || inmueble == null) {
+                System.err.println("Error al recuperar versión "+idSecuencia+" o inmueble "+ idInmueble);
                 continue;
             }
 
             Double participación = Lector.doble(filaActual, HSI_PARTICIPACIÓN);
 
-            secuencia.agregarInmueble(inmueble, participación);
+            versión.agregarInmueble(inmueble, participación);
             contador++;
         }
 
-        for (Secuencia secuencia : secuencias.values())
+        for (Versión versión : secuencias.values())
             try {
-                secuencia.verificarParticipaciónInmuebles();
+                versión.verificarParticipaciónInmuebles();
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }

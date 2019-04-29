@@ -19,7 +19,7 @@ public class Contrato implements Nodo {
     final int ID;
     final ClienteComercial CLIENTE_COMERCIAL;
 
-    ArrayList<Secuencia> secuencias;
+    ArrayList<Versión> versións;
 
     private Json json;
     public static class Json {
@@ -41,7 +41,7 @@ public class Contrato implements Nodo {
 
         json.númeroContrato = ID;
 
-        secuencias = new ArrayList<>();
+        versións = new ArrayList<>();
         CLIENTE_COMERCIAL.contratos.put(ID,this);
 
         contratos.put(this.ID, this);
@@ -63,11 +63,11 @@ public class Contrato implements Nodo {
         ArrayList<Transacción> propias = new ArrayList<>();
         ArrayList<Transacción> ancestros = new ArrayList<>();
 
-        // Se suman las transacciones asociadas a todas las secuencias
-        for (Secuencia secuencia : secuencias) {
-            descendientes.addAll(secuencia.transaccionesNodo(árbol)[2]);
-            propias.addAll(secuencia.transaccionesNodo(árbol)[1]);
-            ancestros.addAll(secuencia.transaccionesNodo(árbol)[0]);
+        // Se suman las transacciones asociadas a todas las versións
+        for (Versión versión : versións) {
+            descendientes.addAll(versión.transaccionesNodo(árbol)[2]);
+            propias.addAll(versión.transaccionesNodo(árbol)[1]);
+            ancestros.addAll(versión.transaccionesNodo(árbol)[0]);
         }
 
         ArrayList[] resultado = new ArrayList[3];
@@ -79,7 +79,7 @@ public class Contrato implements Nodo {
 
     public ArrayList<Object> hijosNodo(Árbol árbol) {
         ArrayList<Object> hijos = new ArrayList<>();
-        hijos.addAll(secuencias);
+        hijos.addAll(versións);
         return hijos;
     }
 

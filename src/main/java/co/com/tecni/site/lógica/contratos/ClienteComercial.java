@@ -41,7 +41,7 @@ public class ClienteComercial implements Nodo {
 
 
             for (Contrato contrato : cc.contratos.values())
-                secuencias += contrato.secuencias.size();
+                secuencias += contrato.versións.size();
         }
     }
 
@@ -63,8 +63,8 @@ public class ClienteComercial implements Nodo {
     // -----------------------------------------------
     public void facturar(LocalDate fechaCorte) {
         for (Contrato contrato : contratos.values()) {
-            ArrayList<Secuencia> secuencias = contrato.secuencias;
-            (secuencias.get(secuencias.size()-1)).facturar(fechaCorte);
+            ArrayList<Versión> versións = contrato.versións;
+            (versións.get(versións.size()-1)).facturar(fechaCorte);
         }
     }
 
@@ -99,7 +99,7 @@ public class ClienteComercial implements Nodo {
 
         // Se suman las transacciones asociadas a todos los contratos
         /* ToDo NO coinciden con los valores presentados en ÁrbolInmuebles
-        *  |> Sólo se incluyen las transacciones de los inmuebles asociados a secuencias
+        *  |> Sólo se incluyen las transacciones de los inmuebles asociados a versións
         *  |> Siempre debería coincidir el valor de los ingresos por arrendamiento reales
         */
         if (árbol instanceof ÁrbolContratos)
