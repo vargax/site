@@ -2,7 +2,7 @@ package co.com.tecni.site.lógica.fichas;
 
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.contratos.ClienteFacturación;
-import co.com.tecni.site.lógica.contratos.Secuencia;
+import co.com.tecni.site.lógica.contratos.Versión;
 import co.com.tecni.site.lógica.transacciones.Transacción;
 import co.com.tecni.site.lógica.inmuebles.tipos.Inmueble;
 import co.com.tecni.site.lógica.árboles.Árbol;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class Arrendamiento extends Ficha {
 
-    private final Secuencia secuencia;
+    private final Versión versión;
     private final Inmueble inmueble;
     private Json json;
 
@@ -34,14 +34,14 @@ public class Arrendamiento extends Ficha {
     public Arrendamiento(Ficha padre, Inmueble inmueble) {
         super(padre);
 
-        this.secuencia = null;
+        this.versión = null;
         this.inmueble = inmueble;
         this.json = new Json(0, "N/A", 1);
     }
 
-    public Arrendamiento(Secuencia secuencia, Inmueble inmueble, Json json) {
+    public Arrendamiento(Versión versión, Inmueble inmueble, Json json) {
 
-        this.secuencia = secuencia;
+        this.versión = versión;
         this.inmueble = inmueble;
         this.json = json;
 

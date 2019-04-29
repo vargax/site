@@ -1,10 +1,10 @@
 package co.com.tecni.site.ui;
 
+import co.com.tecni.site.lógica.contratos.Versión;
 import co.com.tecni.site.lógica.árboles.Nodo;
 import co.com.tecni.site.lógica.contratos.ClienteComercial;
 import co.com.tecni.site.lógica.contratos.ClienteFacturación;
 import co.com.tecni.site.lógica.contratos.Contrato;
-import co.com.tecni.site.lógica.contratos.Secuencia;
 import co.com.tecni.site.lógica.inmuebles.Agrupación;
 import co.com.tecni.site.lógica.fichas.Ficha;
 import co.com.tecni.site.lógica.inmuebles.tipos.Inmueble;
@@ -77,7 +77,7 @@ public class UiÁrbol {
 
             if (nodo instanceof ClienteComercial) ícono.color = ÍCONO_COLOR_CLIENTE;
             if (nodo instanceof Contrato) ícono.color = ÍCONO_COLOR_CONTRATO;
-            if (nodo instanceof Secuencia) ícono.color = ÍCONO_COLOR_SECUENCIA;
+            if (nodo instanceof Versión) ícono.color = ÍCONO_COLOR_SECUENCIA;
 
             if (nodo instanceof ClienteFacturación) ícono.color = ÍCONO_COLOR_TERCERO;
 

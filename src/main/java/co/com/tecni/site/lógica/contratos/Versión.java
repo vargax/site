@@ -14,8 +14,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Secuencia implements Nodo {
-    static HashMap<Integer, Secuencia> secuencias = new HashMap<>();
+public class Versión implements Nodo {
+    static HashMap<Integer, Versión> secuencias = new HashMap<>();
 
     // -----------------------------------------------
     // Atributos
@@ -78,19 +78,19 @@ public class Secuencia implements Nodo {
         Cánon cánon;
         Map<String, Double> clientesFacturación;
 
-        Json(Secuencia secuencia) {
-            this.número = secuencia.ID;
-            this.fechaInicio = secuencia.INICIO;
-            this.fechaFin = secuencia.FIN;
-            this.cánon = secuencia.cánon;
+        Json(Versión versión) {
+            this.número = versión.ID;
+            this.fechaInicio = versión.INICIO;
+            this.fechaFin = versión.FIN;
+            this.cánon = versión.cánon;
         }
 
-        void genInfoClientesFacturación(Secuencia secuencia) {
+        void genInfoClientesFacturación(Versión versión) {
             clientesFacturación = new HashMap<>();
-            for (Map.Entry<Integer, Double> me : secuencia.participaciónClientesFacturación.entrySet()) {
+            for (Map.Entry<Integer, Double> me : versión.participaciónClientesFacturación.entrySet()) {
 
                 int nit = me.getKey();
-                String nombre = secuencia.clientesFacturación.get(nit).nombre;
+                String nombre = versión.clientesFacturación.get(nit).nombre;
                 double participación = me.getValue();
 
                 clientesFacturación.put(nombre, participación);
@@ -101,7 +101,7 @@ public class Secuencia implements Nodo {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public Secuencia(int ID, LocalDate INICIO, LocalDate FIN, Contrato CONTRATO, Cánon cánon) {
+    public Versión(int ID, LocalDate INICIO, LocalDate FIN, Contrato CONTRATO, Cánon cánon) {
         this.ID = ID;
         this.CONTRATO = CONTRATO;
         this.INICIO = INICIO;
@@ -115,7 +115,7 @@ public class Secuencia implements Nodo {
         clientesFacturación = new HashMap<>();
         participaciónClientesFacturación = new HashMap<>();
 
-        CONTRATO.secuencias.add(this);
+        CONTRATO.versións.add(this);
 
         json = new Json(this);
 
@@ -166,7 +166,7 @@ public class Secuencia implements Nodo {
     void facturar(LocalDate fechaCorte) {
 
         if (fechaCorte.isAfter(FIN))
-            System.err.println("Secuencia "+json.número+".facturar() / Imposible facturar "
+            System.err.println("Versión "+json.número+".facturar() / Imposible facturar "
                     + Site.DTF.format(fechaCorte) + " / Fecha fin es " + Site.DTF.format(FIN));
 
         else {
@@ -192,7 +192,7 @@ public class Secuencia implements Nodo {
     // Nodo
     // -----------------------------------------------
     public String nombreNodo(Árbol árbol) {
-        return "Secuencia: "+ ID;
+        return "Versión: "+ ID;
     }
 
     public UiÁrbol.Ícono íconoNodo() {

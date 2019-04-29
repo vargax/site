@@ -3,7 +3,7 @@ package co.com.tecni.site.datos;
 import co.com.tecni.site.lógica.contratos.ClienteComercial;
 import co.com.tecni.site.lógica.contratos.ClienteFacturación;
 import co.com.tecni.site.lógica.contratos.Contrato;
-import co.com.tecni.site.lógica.contratos.Secuencia;
+import co.com.tecni.site.lógica.contratos.Versión;
 import co.com.tecni.site.lógica.inmuebles.Agrupación;
 import co.com.tecni.site.lógica.inmuebles.tipos.Inmueble;
 import co.com.tecni.site.lógica.árboles.ÁrbolCartera;
@@ -23,7 +23,7 @@ public class Lector {
     private HashMap<Integer, ClienteComercial> clientesComercialesxId;
     private HashMap<Integer, ClienteFacturación> clientesFacturaciónxId;
     private HashMap<Integer, Contrato> contratosxId;
-    private HashMap<Integer, Secuencia> secuenciasxId;
+    private HashMap<Integer, Versión> secuenciasxId;
 
     // -----------------------------------------------
     // Soporte parsers
