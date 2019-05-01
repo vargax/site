@@ -1,4 +1,4 @@
-package co.com.tecni.site.ui.tablas;
+package co.com.tecni.site.ui.indicadores;
 
 import co.com.tecni.site.lógica.transacciones.Transacción;
 
@@ -7,35 +7,35 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-class TablasCartera {
+class Cartera {
     final static String NOMBRE = "Cartera";
 
     JSplitPane componente;
 
-    private Cartera cartera;
+    private XDias xDias;
     private EstadoCuenta estadoCuenta;
 
-    TablasCartera() {
+    Cartera() {
 
-        cartera = new Cartera();
+        xDias = new XDias();
         estadoCuenta = new EstadoCuenta();
 
         componente = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-        componente.setLeftComponent(new JScrollPane(cartera.tabla));
+        componente.setLeftComponent(new JScrollPane(xDias.tabla));
         componente.setRightComponent(new JScrollPane(estadoCuenta.tabla));
         componente.setResizeWeight(0.5d);
 
     }
 
     void mostrarTransacciones() {
-        cartera.setTransxTipoPariente(UiTablas.transacciones);
-        estadoCuenta.setTransxTipoPariente(UiTablas.transacciones);
+        xDias.setTransxTipoPariente(UiIndicadores.transacciones);
+        estadoCuenta.setTransxTipoPariente(UiIndicadores.transacciones);
     }
 
     // -----------------------------------------------
     // Subclases
     // -----------------------------------------------
-    class Cartera extends UiTablas.ModeloTabla {
+    class XDias extends UiIndicadores.ModeloTabla {
         private final String[] COLUMNAS = {
                 "Cliente", ">90", ">60", ">30", "<30", "Total", "Días atrazo"
         };
@@ -43,14 +43,14 @@ class TablasCartera {
         JTable tabla;
         private LinkedHashMap<String, double[]> carteraxclienteFacturación;
 
-        Cartera() {
+        XDias() {
             super();
             super.columnas = COLUMNAS;
 
             carteraxclienteFacturación = new LinkedHashMap<>();
 
             tabla = new JTable(this);
-            tabla.setDefaultRenderer(Double.class, UiTablas.DR);
+            tabla.setDefaultRenderer(Double.class, UiIndicadores.DR);
         }
 
         void setTransxTipoPariente(ArrayList<Transacción>[] transxTipoPariente) {
@@ -78,7 +78,7 @@ class TablasCartera {
         }
     }
 
-    class EstadoCuenta extends UiTablas.ModeloTabla {
+    class EstadoCuenta extends UiIndicadores.ModeloTabla {
         private final String[] COLUMNAS = {
                 "Fecha", "Documento", "Cliente", "Monto", "Total"
         };
@@ -100,7 +100,7 @@ class TablasCartera {
             filas = new ArrayList<>();
 
             tabla = new JTable(this);
-            tabla.setDefaultRenderer(Double.class, UiTablas.DR);
+            tabla.setDefaultRenderer(Double.class, UiIndicadores.DR);
         }
 
         void setTransxTipoPariente(ArrayList<Transacción>[] transxTipoPariente) {

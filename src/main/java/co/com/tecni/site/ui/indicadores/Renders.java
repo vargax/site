@@ -1,4 +1,4 @@
-package co.com.tecni.site.ui.tablas;
+package co.com.tecni.site.ui.indicadores;
 
 import co.com.tecni.site.lógica.Site;
 
@@ -6,10 +6,12 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 
-public class DoubleRender extends DefaultTableCellRenderer {
+class DoubleRender extends DefaultTableCellRenderer {
 
     public Component getTableCellRendererComponent(JTable jTable, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         super.getTableCellRendererComponent(jTable, value, isSelected, hasFocus, row, column);
+
+        if (value == null) return this;
 
         setHorizontalAlignment(RIGHT);
 
@@ -19,6 +21,20 @@ public class DoubleRender extends DefaultTableCellRenderer {
         setText(texto);
         if ((Double) value < 0) setForeground(Color.RED);
         else setForeground(Color.BLACK);
+
+        return this;
+    }
+}
+
+class StringRender extends DefaultTableCellRenderer {
+    public Component getTableCellRendererComponent(JTable jTable, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        super.getTableCellRendererComponent(jTable, value, isSelected, hasFocus, row, column);
+
+        if (value == null) return this;
+
+        String valor = (String) value;
+        if (valor.toUpperCase().equals(valor))
+            setFont(this.getFont().deriveFont(Font.BOLD));
 
         return this;
     }

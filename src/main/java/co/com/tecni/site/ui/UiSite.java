@@ -6,7 +6,7 @@ import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.lógica.árboles.ÁrbolCartera;
 import co.com.tecni.site.lógica.árboles.ÁrbolContratos;
 import co.com.tecni.site.lógica.árboles.ÁrbolInmuebles;
-import co.com.tecni.site.ui.tablas.UiTablas;
+import co.com.tecni.site.ui.indicadores.UiIndicadores;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -29,7 +29,7 @@ public class UiSite extends JFrame {
 
     private UiMenu uiMenu;
     private UiJson uiJson;
-    private UiTablas uiTablas;
+    private UiIndicadores uiIndicadores;
 
     // -----------------------------------------------
     // Constructor
@@ -47,13 +47,13 @@ public class UiSite extends JFrame {
 
         uiMenu = new UiMenu();
         uiJson = new UiJson();
-        uiTablas = new UiTablas();
+        uiIndicadores = new UiIndicadores();
 
         this.setJMenuBar(uiMenu.componente);
 
         JSplitPane panelSecundario = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         panelSecundario.setRightComponent(uiJson.componente);
-        panelSecundario.setLeftComponent(uiTablas.componente);
+        panelSecundario.setLeftComponent(uiIndicadores.componente);
         panelSecundario.setResizeWeight(0.3d);
 
         JTabbedPane pestañasÁrboles = new JTabbedPane();
@@ -96,10 +96,10 @@ public class UiSite extends JFrame {
     void actualizarDetalle(Nodo nodo) {
         if (nodo != null) {
             uiJson.mostrarDetalle(nodo.infoNodo(árbolActual));
-            uiTablas.mostrarTransacciones(nodo.transaccionesNodo(árbolActual));
+            uiIndicadores.mostrarTransacciones(nodo.transaccionesNodo(árbolActual));
         } else {
             uiJson.mostrarDetalle("");
-            uiTablas.mostrarTransacciones(null);
+            uiIndicadores.mostrarTransacciones(null);
         }
     }
 
