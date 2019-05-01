@@ -1,4 +1,4 @@
-package co.com.tecni.site.ui.tablas;
+package co.com.tecni.site.ui.indicadores;
 
 import co.com.tecni.site.lógica.fichas.Arrendamiento;
 import co.com.tecni.site.lógica.transacciones.Transacción;
@@ -9,7 +9,7 @@ import javax.swing.event.ListSelectionListener;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-class TablasConsolidados {
+class Consolidados {
     final static String NOMBRE = "Consolidados";
 
     JSplitPane componente;
@@ -21,7 +21,7 @@ class TablasConsolidados {
     private ArrayList<Transacción> transaccionesGasto = new ArrayList<>();
     private ArrayList<Transacción> transacciones = new ArrayList<>();
 
-    TablasConsolidados() {
+    Consolidados() {
 
         tablaTransacciones = new TablaTransacciones();
         tablaFichas = new TablaFichas();
@@ -34,7 +34,7 @@ class TablasConsolidados {
     }
 
     void mostrarTransacciones() {
-        tablaTransacciones.setTransxTipoPariente(UiTablas.transacciones);
+        tablaTransacciones.setTransxTipoPariente(UiIndicadores.transacciones);
         actualizarTablaFichas(tablaTransacciones.tabla.getSelectedRow());
     }
 
@@ -58,7 +58,7 @@ class TablasConsolidados {
     // -----------------------------------------------
     // Subclases
     // -----------------------------------------------
-    class TablaTransacciones extends UiTablas.ModeloTabla {
+    class TablaTransacciones extends UiIndicadores.ModeloTabla {
         private final String[] COLUMNAS = {"",
                 "Real",
                 "Presupuestado",
@@ -68,8 +68,10 @@ class TablasConsolidados {
 
         private final String[] FILAS = {"Ingresos",
                 "Gastos",
-                "Utilidad Operacional",
-                "Inversión",
+                "UTILIDAD",
+                "Costo",
+                "Venta",
+                "INVERSIÓN",
                 "Ajustes contables",
                 "Ajustes fiscales"};
 
@@ -82,7 +84,10 @@ class TablasConsolidados {
             super.columnas = COLUMNAS;
 
             tabla = new JTable(this);
-            tabla.setDefaultRenderer(Double.class, UiTablas.DR);
+
+            tabla.setDefaultRenderer(Double.class, UiIndicadores.DR);
+            tabla.setDefaultRenderer(String.class, UiIndicadores.SR);
+
             tabla.getSelectionModel().addListSelectionListener(
                     new ListSelectionListener() {
                         @Override
@@ -156,7 +161,7 @@ class TablasConsolidados {
         }
     }
 
-    class TablaFichas extends UiTablas.ModeloTabla {
+    class TablaFichas extends UiIndicadores.ModeloTabla {
         private final String[] COLUMNAS = {"Ficha",
                 "Real",
                 "Presupuestado",
@@ -174,7 +179,9 @@ class TablasConsolidados {
             resumen = new LinkedHashMap<>();
 
             tabla = new JTable(this);
-            tabla.setDefaultRenderer(Double.class, UiTablas.DR);
+
+            tabla.setDefaultRenderer(Double.class, UiIndicadores.DR);
+            tabla.setDefaultRenderer(String.class, UiIndicadores.SR);
         }
 
         void setTransacciones(ArrayList<Transacción> transacciones) {

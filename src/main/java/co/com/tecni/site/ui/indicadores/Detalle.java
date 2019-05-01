@@ -1,4 +1,4 @@
-package co.com.tecni.site.ui.tablas;
+package co.com.tecni.site.ui.indicadores;
 
 import co.com.tecni.site.lógica.transacciones.Transacción;
 
@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-class TablasDetalle {
+class Detalle {
     final static String NOMBRE = "Detalle";
 
     JSplitPane componente;
@@ -17,27 +17,27 @@ class TablasDetalle {
     private Herencia herenciaPresupuestada;
     private Transacciones transaccionesPresupuestadas;
 
-    TablasDetalle() {
+    Detalle() {
 
-        herenciaReal = new Herencia(UiTablas.REAL);
-        herenciaPresupuestada = new Herencia(UiTablas.PRESUPUESTADO);
+        herenciaReal = new Herencia(UiIndicadores.REAL);
+        herenciaPresupuestada = new Herencia(UiIndicadores.PRESUPUESTADO);
 
-        JSplitPane jspDistribución = UiTablas.genJSplitPane(true, herenciaReal.tabla, herenciaPresupuestada.tabla);
+        JSplitPane jspDistribución = UiIndicadores.genJSplitPane(true, herenciaReal.tabla, herenciaPresupuestada.tabla);
 
-        transaccionesReales = new Transacciones(UiTablas.REAL);
-        transaccionesPresupuestadas = new Transacciones(UiTablas.PRESUPUESTADO);
+        transaccionesReales = new Transacciones(UiIndicadores.REAL);
+        transaccionesPresupuestadas = new Transacciones(UiIndicadores.PRESUPUESTADO);
 
-        JSplitPane jspTransacciones = UiTablas.genJSplitPane(true, transaccionesReales.tabla, transaccionesPresupuestadas.tabla);
+        JSplitPane jspTransacciones = UiIndicadores.genJSplitPane(true, transaccionesReales.tabla, transaccionesPresupuestadas.tabla);
 
-        componente = UiTablas.genJSplitPane(false, jspDistribución, jspTransacciones);
+        componente = UiIndicadores.genJSplitPane(false, jspDistribución, jspTransacciones);
     }
 
     void mostrarTransacciones() {
 
-        ArrayList<Transacción>[] transacciones = UiTablas.transacciones;
+        ArrayList<Transacción>[] transacciones = UiIndicadores.transacciones;
 
-        ArrayList<Transacción>[] real = UiTablas.generarArreglos();
-        ArrayList<Transacción>[] presupuestado = UiTablas.generarArreglos();
+        ArrayList<Transacción>[] real = UiIndicadores.generarArreglos();
+        ArrayList<Transacción>[] presupuestado = UiIndicadores.generarArreglos();
 
         for (int i = 0; i < transacciones.length; i++)
             for (Transacción t : transacciones[i])
@@ -56,7 +56,7 @@ class TablasDetalle {
     // -----------------------------------------------
     // Subclases
     // -----------------------------------------------
-    class Herencia extends UiTablas.ModeloTabla {
+    class Herencia extends UiIndicadores.ModeloTabla {
         private final String[] COLUMNAS = {"Ficha",
                 "Ancestros",
                 "Propias",
@@ -75,7 +75,7 @@ class TablasDetalle {
             resumen = new LinkedHashMap<>();
 
             tabla = new JTable(this);
-            tabla.setDefaultRenderer(Double.class, UiTablas.DR);
+            tabla.setDefaultRenderer(Double.class, UiIndicadores.DR);
         }
 
         void setTransxTipoPariente(ArrayList<Transacción>[] transxTipoPariente) {
@@ -120,7 +120,7 @@ class TablasDetalle {
         }
     }
 
-    class Transacciones extends UiTablas.ModeloTabla {
+    class Transacciones extends UiIndicadores.ModeloTabla {
         private final String[] COLUMNAS = {"Fecha",
                 "Monto",
                 "Concepto",
@@ -137,7 +137,7 @@ class TablasDetalle {
             transacciones = new ArrayList<>();
 
             tabla = new JTable(this);
-            tabla.setDefaultRenderer(Double.class, UiTablas.DR);
+            tabla.setDefaultRenderer(Double.class, UiIndicadores.DR);
         }
 
         void setTransxTipoPariente(ArrayList<Transacción>[] transxTipoPariente) {

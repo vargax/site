@@ -1,4 +1,4 @@
-package co.com.tecni.site.ui.tablas;
+package co.com.tecni.site.ui.indicadores;
 
 import co.com.tecni.site.lógica.Site;
 import co.com.tecni.site.lógica.transacciones.Transacción;
@@ -11,16 +11,18 @@ import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
-public class UiTablas {
+public class UiIndicadores {
     static final String REAL = "REAL";
     static final String PRESUPUESTADO = "PRESUPUESTADO";
 
     static final DoubleRender DR = new DoubleRender();
+    static final StringRender SR = new StringRender();
 
     public final JPanel componente;
     public final JTabbedPane jTabbedPane;
@@ -29,51 +31,53 @@ public class UiTablas {
 
     Acciones acciones;
 
-    TablasConsolidados tablasConsolidados;
-    TablasDetalle tablasDetalle;
-    TablasCartera tablasCartera;
+    Consolidados consolidados;
+    Detalle detalle;
+    Cartera cartera;
 
     private JFormattedTextField fechaInicial;
     private JFormattedTextField fechaFinal;
+    private JFormattedTextField valorInmueble;
 
-    public UiTablas() throws Exception {
+    public UiIndicadores() throws Exception {
         acciones = new Acciones();
 
-        tablasDetalle = new TablasDetalle();
-        tablasConsolidados = new TablasConsolidados();
-        tablasCartera = new TablasCartera();
+        detalle = new Detalle();
+        consolidados = new Consolidados();
+        cartera = new Cartera();
 
         componente = new JPanel(new BorderLayout());
-        componente.add(panelFechas(), BorderLayout.NORTH);
+        componente.add(encabezado(), BorderLayout.NORTH);
 
         jTabbedPane = new JTabbedPane();
-        jTabbedPane.addTab(TablasConsolidados.NOMBRE, tablasConsolidados.componente);
-        jTabbedPane.addTab(TablasDetalle.NOMBRE, tablasDetalle.componente);
+        jTabbedPane.addTab(Consolidados.NOMBRE, consolidados.componente);
+        jTabbedPane.addTab(Detalle.NOMBRE, detalle.componente);
 
         componente.add(jTabbedPane, BorderLayout.CENTER);
     }
 
-    private JPanel panelFechas() throws Exception {
+    private JPanel encabezado() throws Exception {
 
         MaskFormatter formatoFecha = new MaskFormatter("??? ####");
         formatoFecha.setAllowsInvalid(false);
-
         fechaInicial = new JFormattedTextField(formatoFecha);
         fechaFinal = new JFormattedTextField(formatoFecha);
 
-        JPanel panelFechas = new JPanel();
-        panelFechas.setLayout(new GridLayout(1, 0));
+        valorInmueble = new JFormattedTextField(NumberFormat.getCurrencyInstance());
 
-        panelFechas.add(new JLabel("Fecha inicial: ", SwingConstants.RIGHT));
-        panelFechas.add(fechaInicial);
+        JPanel encabezado = new JPanel();
+        encabezado.setLayout(new GridLayout(0, 5));
 
-        panelFechas.add(new JLabel("Fecha final: ", SwingConstants.RIGHT));
-        panelFechas.add(fechaFinal);
+        encabezado.add(new JLabel("Fecha inicial: ", SwingConstants.RIGHT));
+        encabezado.add(fechaInicial);
+        encabezado.add(new JLabel("Fecha final: ", SwingConstants.RIGHT));
+        encabezado.add(fechaFinal);
+        encabezado.add(acciones.generarBotón());
 
-        panelFechas.add(new JLabel());
-        panelFechas.add(acciones.generarBotón());
+        encabezado.add(new JLabel("Valor Inmueble: ", SwingConstants.RIGHT));
+        encabezado.add(valorInmueble);
 
-        return panelFechas;
+        return encabezado;
     }
 
     private void minMaxFechas() {
@@ -89,21 +93,21 @@ public class UiTablas {
      */
     public void mostrarTransacciones(ArrayList<Transacción>[] transacciones) {
         if (transacciones != null)
-            UiTablas.transacciones = transacciones;
-        else UiTablas.transacciones = generarArreglos();
+            UiIndicadores.transacciones = transacciones;
+        else UiIndicadores.transacciones = generarArreglos();
 
         jTabbedPane.removeAll();
 
         if (UiSite.árbolActual instanceof ÁrbolCartera) {
-            tablasCartera.mostrarTransacciones();
-            jTabbedPane.addTab(TablasCartera.NOMBRE, tablasCartera.componente);
+            cartera.mostrarTransacciones();
+            jTabbedPane.addTab(Cartera.NOMBRE, cartera.componente);
 
         } else {
-            tablasConsolidados.mostrarTransacciones();
-            jTabbedPane.addTab(TablasConsolidados.NOMBRE, tablasConsolidados.componente);
+            consolidados.mostrarTransacciones();
+            jTabbedPane.addTab(Consolidados.NOMBRE, consolidados.componente);
         }
-        tablasDetalle.mostrarTransacciones();
-        jTabbedPane.addTab(TablasDetalle.NOMBRE, tablasDetalle.componente);
+        detalle.mostrarTransacciones();
+        jTabbedPane.addTab(Detalle.NOMBRE, detalle.componente);
     }
 
     static ArrayList<Transacción>[] generarArreglos() {
