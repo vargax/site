@@ -3,6 +3,7 @@ package co.com.tecni.site.lógica.árboles;
 import co.com.tecni.site.lógica.inmuebles.Agrupación;
 import co.com.tecni.site.lógica.inmuebles.tipos.Inmueble;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ÁrbolInmuebles extends Árbol {
@@ -15,14 +16,15 @@ public class ÁrbolInmuebles extends Árbol {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    HashMap<String, Inmueble> inmueblesxId;
+    public final static HashMap<String, Inmueble> inmueblesRaiz = new HashMap<>();
+    public final static HashMap<String, Inmueble> inmueblesxId = new HashMap<>();
     private Agrupación raiz;
 
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public ÁrbolInmuebles() {
-        raiz = new Agrupación(NOMBRE_RAIZ);
+    public ÁrbolInmuebles(Agrupación raiz) {
+        this.raiz = raiz;
     }
 
     // -----------------------------------------------
@@ -39,16 +41,8 @@ public class ÁrbolInmuebles extends Árbol {
     // -----------------------------------------------
     // Métodos Públicos
     // -----------------------------------------------
-    public Agrupación registrarAgrupación(String nombre) {
-        Agrupación agrupación = new Agrupación(nombre);
-        raiz.agregarAgrupación(agrupación);
-        return agrupación;
-    }
-
-    public HashMap<String, Inmueble> registrarIdentificadores() {
-        inmueblesxId = new HashMap<>();
+    public void registrarIdentificadores() {
         recursiónIdentificadores(raiz);
-        return inmueblesxId;
     }
 
     // -----------------------------------------------
