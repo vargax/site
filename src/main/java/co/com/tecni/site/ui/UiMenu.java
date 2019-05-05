@@ -10,15 +10,12 @@ class UiMenu {
 
     BufferedReader bufferedReader;
     String líneaActual;
-    int nivelActual;
 
     UiMenu() throws Exception {
 
         componente = new JMenuBar();
 
         bufferedReader = new BufferedReader(new InputStreamReader(UiMenu.class.getResourceAsStream("/static/menu.txt")));
-
-        nivelActual = -1;
 
         líneaActual = bufferedReader.readLine();
         do {

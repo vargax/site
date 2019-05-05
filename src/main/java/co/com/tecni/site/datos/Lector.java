@@ -17,9 +17,7 @@ import java.time.ZoneId;
 import java.util.HashMap;
 
 public class Lector {
-    private final static String[] INMUEBLES_IMPORTAR = {"LaEstancia", "Ecotower93"};
-
-    private HashMap<String, Inmueble> inmueblesxId;
+    private HashMap<String, Inmueble> inmueblesxId = ÁrbolInmuebles.inmueblesxId;
     private HashMap<Integer, ClienteComercial> clientesComercialesxId;
     private HashMap<Integer, ClienteFacturación> clientesFacturaciónxId;
     private HashMap<Integer, Contrato> contratosxId;
@@ -77,20 +75,13 @@ public class Lector {
     }
 
     public ÁrbolInmuebles importarInmuebles() throws Exception {
-        LectorInmueble lectorInmueble = new LectorInmueble();
+        LectorInmueble li = new LectorInmueble();
+        LectorAgrupaciones la = new LectorAgrupaciones(li);
 
-        ÁrbolInmuebles árbolInmuebles = new ÁrbolInmuebles();
-
-        Agrupación bodegas = árbolInmuebles.registrarAgrupación("Bodegas");
-        bodegas.agregarInmueble(lectorInmueble.leer(INMUEBLES_IMPORTAR[0]));
-
-        Agrupación edificiosOficinas = árbolInmuebles.registrarAgrupación("Edificios de oficinas");
-        edificiosOficinas.agregarInmueble(lectorInmueble.leer(INMUEBLES_IMPORTAR[1]));
-
-        inmueblesxId = árbolInmuebles.registrarIdentificadores();
+        ÁrbolInmuebles árbolInmuebles = la.leer();
+        árbolInmuebles.registrarIdentificadores();
 
         importarFichas();
-
         return árbolInmuebles;
     }
 
@@ -99,7 +90,7 @@ public class Lector {
         LectorJurídica lectorJurídica = new LectorJurídica(inmueblesxId);
         LectorObraCivil lectorObraCivil = new LectorObraCivil(inmueblesxId);
 
-        for (String nombreInmueble : INMUEBLES_IMPORTAR) {
+        for (String nombreInmueble : ÁrbolInmuebles.inmueblesRaiz.keySet()) {
             lectorJurídica.leer(nombreInmueble);
             lectorCatastral.leer(nombreInmueble);
             lectorObraCivil.leer(nombreInmueble);

@@ -5,6 +5,7 @@ import co.com.tecni.site.lógica.árboles.Nodo;
 import co.com.tecni.site.lógica.transacciones.Transacción;
 import co.com.tecni.site.lógica.inmuebles.tipos.Inmueble;
 import co.com.tecni.site.lógica.árboles.Árbol;
+import co.com.tecni.site.lógica.árboles.ÁrbolInmuebles;
 import co.com.tecni.site.ui.UiÁrbol;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
