@@ -1,6 +1,6 @@
 package co.com.tecni.site.lógica.árboles;
 
-import co.com.tecni.site.lógica.Site;
+import co.com.tecni.site.lógica.Sari;
 import co.com.tecni.site.lógica.contratos.ClienteComercial;
 import co.com.tecni.site.lógica.fichas.Arrendamiento;
 import co.com.tecni.site.lógica.fichas.Presupuestal;
@@ -33,7 +33,7 @@ public class ÁrbolCartera extends ÁrbolClientes {
             // Presupuestar Ingresos
             for (Map.Entry<String, Double> e : ingresosPresupuestadosxInmueble.entrySet()) {
 
-                Inmueble inmueble = Site.árbolInmuebles.inmueblesxId.get(e.getKey());
+                Inmueble inmueble = Sari.árbolInmuebles.inmueblesxId.get(e.getKey());
                 Presupuestal presupuesto = inmueble.getPresupuesto(fecha.getYear()).ingresos();
 
                 Arrendamiento arrendamiento = new Arrendamiento(presupuesto, inmueble);

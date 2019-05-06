@@ -1,6 +1,6 @@
 package co.com.tecni.site.lógica.fichas;
 
-import co.com.tecni.site.lógica.Site;
+import co.com.tecni.site.lógica.Sari;
 import co.com.tecni.site.lógica.transacciones.Tercero;
 import co.com.tecni.site.lógica.transacciones.Transacción;
 import co.com.tecni.site.lógica.árboles.Árbol;
@@ -51,7 +51,7 @@ public class Catastral extends Ficha {
     }
 
     public String infoNodo(Árbol árbol) {
-        return Site.GSON.toJson(json);
+        return Sari.GSON.toJson(json);
     }
 
     // -----------------------------------------------
@@ -101,7 +101,7 @@ public class Catastral extends Ficha {
 
         @Override
         public String infoNodo(Árbol árbol) {
-            return Site.GSON.toJson(json);
+            return Sari.GSON.toJson(json);
         }
     }
 }

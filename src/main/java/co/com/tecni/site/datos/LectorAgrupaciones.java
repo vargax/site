@@ -2,7 +2,6 @@ package co.com.tecni.site.datos;
 
 import co.com.tecni.site.lógica.inmuebles.Agrupación;
 import co.com.tecni.site.lógica.inmuebles.tipos.Inmueble;
-import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.lógica.árboles.ÁrbolInmuebles;
 
 import java.io.BufferedReader;

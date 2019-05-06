@@ -1,6 +1,6 @@
 package co.com.tecni.site.lógica.contratos;
 
-import co.com.tecni.site.lógica.Site;
+import co.com.tecni.site.lógica.Sari;
 import co.com.tecni.site.lógica.árboles.Nodo;
 import co.com.tecni.site.lógica.fichas.Arrendamiento;
 import co.com.tecni.site.lógica.transacciones.Transacción;
@@ -167,7 +167,7 @@ public class Versión implements Nodo {
 
         if (fechaCorte.isAfter(FIN))
             System.err.println("Versión "+json.número+".facturar() / Imposible facturar "
-                    + Site.DTF.format(fechaCorte) + " / Fecha fin es " + Site.DTF.format(FIN));
+                    + Sari.DTF.format(fechaCorte) + " / Fecha fin es " + Sari.DTF.format(FIN));
 
         else {
             for (Map.Entry<Integer, Double> me : participaciónClientesFacturación.entrySet()) {
@@ -227,6 +227,6 @@ public class Versión implements Nodo {
 
 
     public String infoNodo(Árbol árbol) {
-        return Site.GSON.toJson(json);
+        return Sari.GSON.toJson(json);
     }
 }

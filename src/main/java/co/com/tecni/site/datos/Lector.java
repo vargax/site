@@ -31,7 +31,7 @@ public class Lector {
     }
 
     static LocalDate fecha(Row fila, char columna) {
-        int col = columna - 65;
+        int col = charToInt(columna);
         LocalDate fecha = null;
         try {
             fecha = (DateUtil.getJavaDate(fila.getCell(col).getNumericCellValue())).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -42,8 +42,8 @@ public class Lector {
     }
 
     static String cadena(Row fila, char columna) {
-        int col = columna - 65;
-        String cadena = null;
+        int col = charToInt(columna);
+        String cadena = "";
         try {
             cadena = fila.getCell(col).getStringCellValue();
         } catch (NullPointerException e) {
@@ -53,8 +53,8 @@ public class Lector {
     }
 
     static Integer entero(Row fila, char columna) {
-        int col = columna - 65;
-        Integer entero = null;
+        int col = charToInt(columna);
+        Integer entero = 0;
         try {
             entero = ((Double) fila.getCell(col).getNumericCellValue()).intValue();
         } catch (NullPointerException e) {
@@ -64,8 +64,8 @@ public class Lector {
     }
 
     static Double doble(Row fila, char columna) {
-        int col = columna - 65;
-        Double doble = null;
+        int col = charToInt(columna);
+        Double doble = 0.0;
         try {
             doble = fila.getCell(col).getNumericCellValue();
         } catch (NullPointerException e) {

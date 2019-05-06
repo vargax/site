@@ -23,23 +23,16 @@ class LectorInmueble {
     private final static char COL_COMUNES_CONSTRUIDO = 'N';
     private final static char COL_COMUNES_LIBRES = 'O';
 
+    private final static char COL_VALOR_RAZONABLE = 'S';
+
     private final static int FILA_TIPOS_CARACTERÍSTICAS = 2;
-    private final static char COL_CARACTERÍSTICAS = 'S';
+    private final static char COL_CARACTERÍSTICAS = 'T';
 
     private final static String HIJOS_INICIO = "inicio";
     private final static String HIJOS_FIN = "fin";
     private final static String SALTAR = "saltar";
 
     private final static String[] TIPOS_CARACTERÍSTICAS = {"double", "String", "int"};
-
-    private final static int colHijos = (int)COL_HIJOS - 65;
-    private final static  int colTipo = (int)COL_TIPO - 65;
-    private final static  int colNombre = (int)COL_NOMBRE - 65;
-    private final static  int colPrivadoConstruido = (int)COL_PRIVADO_CONSTRUIDOS - 65;
-    private final static  int colPrivadoLibre = (int)COL_PRIVADO_LIBRES - 65;
-    private final static  int colComunConstruido = (int)COL_COMUNES_CONSTRUIDO - 65;
-    private final static  int colComunLibre = (int)COL_COMUNES_LIBRES - 65;
-    private final static  int colCaracterísticas = (int) COL_CARACTERÍSTICAS - 65;
 
     // -----------------------------------------------
     // Atributos
@@ -82,8 +75,8 @@ class LectorInmueble {
     }
 
     private Inmueble recursión() throws Exception {
-        String tipo = paqueteTipos+filaActual.getCell(colTipo).getStringCellValue();
-        String nombre = filaActual.getCell(colNombre).getStringCellValue();
+        String tipo = paqueteTipos+Lector.cadena(filaActual, COL_TIPO);
+        String nombre = Lector.cadena(filaActual, COL_NOMBRE);
         JSONObject características = leerCaracterísticas();
 
         ArrayList<Inmueble> hijos = new ArrayList<>();
@@ -103,17 +96,18 @@ class LectorInmueble {
     }
 
     private Inmueble hoja() throws Exception {
-        String tipo = paqueteTipos+filaActual.getCell(colTipo).getStringCellValue();
-        String nombre = filaActual.getCell(colNombre).getStringCellValue();
+        String tipo = paqueteTipos+Lector.cadena(filaActual, COL_TIPO);
+        String nombre = Lector.cadena(filaActual, COL_NOMBRE);
+        double valor = Lector.doble(filaActual, COL_VALOR_RAZONABLE);
         JSONObject características = leerCaracterísticas();
 
         HashMap<String, Double> metros = new HashMap<>();
-        metros.put(Inmueble.A_PRIV_CONSTRUIDOS, filaActual.getCell(colPrivadoConstruido).getNumericCellValue());
-        metros.put(Inmueble.A_PRIV_LIBRES, filaActual.getCell(colPrivadoLibre).getNumericCellValue());
-        metros.put(Inmueble.A_COM_CONSTRUIDOS, filaActual.getCell(colComunConstruido).getNumericCellValue());
-        metros.put(Inmueble.A_COM_LIBRES, filaActual.getCell(colComunLibre).getNumericCellValue());
+        metros.put(Inmueble.A_PRIV_CONSTRUIDOS, Lector.doble(filaActual, COL_PRIVADO_CONSTRUIDOS));
+        metros.put(Inmueble.A_PRIV_LIBRES, Lector.doble(filaActual, COL_PRIVADO_LIBRES));
+        metros.put(Inmueble.A_COM_CONSTRUIDOS, Lector.doble(filaActual,COL_COMUNES_CONSTRUIDO));
+        metros.put(Inmueble.A_COM_LIBRES, Lector.doble(filaActual, COL_COMUNES_LIBRES));
 
-        Inmueble inmueble = Inmueble.hoja(tipo, nombre, características, metros);
+        Inmueble inmueble = Inmueble.hoja(tipo, nombre, valor, características, metros);
         System.out.println("h "+inmueble.infoNodo(null));
         return inmueble;
     }
@@ -129,19 +123,23 @@ class LectorInmueble {
 
             try {
                 columnaActual = columnas.next();
+
+                if (característica[0].equals(TIPOS_CARACTERÍSTICAS[0])) {
+                    Double valor = columnaActual.getNumericCellValue();
+                    if (valor != 0) características.put(característica[1], valor);
+                } else if (característica[0].equals(TIPOS_CARACTERÍSTICAS[1])) {
+                    String valor = columnaActual.getStringCellValue();
+                    if (valor.length() != 0) características.put(característica[1], valor);
+                } else if (característica[0].equals(TIPOS_CARACTERÍSTICAS[2])) {
+                    int valor = ((Double) columnaActual.getNumericCellValue()).intValue();
+                    if (valor != 0) características.put(característica[1], valor);
+                }
+
             } catch (NoSuchElementException e) {
                 break;
-            }
-
-            if (característica[0].equals(TIPOS_CARACTERÍSTICAS[0])) {
-                Double valor = columnaActual.getNumericCellValue();
-                if (valor != 0) características.put(característica[1], valor);
-            } else if (característica[0].equals(TIPOS_CARACTERÍSTICAS[1])) {
-                String valor = columnaActual.getStringCellValue();
-                if (valor.length() != 0) características.put(característica[1], valor);
-            } else if (característica[0].equals(TIPOS_CARACTERÍSTICAS[2])) {
-                int valor = ((Double) columnaActual.getNumericCellValue()).intValue();
-                if (valor != 0) características.put(característica[1], valor);
+            } catch (IllegalStateException e) {
+                System.err.println("Característica '"+característica[1]+"' no coincide con su tipo '"+característica[0]+"' en celda "+columnaActual.getAddress().formatAsString());
+                System.err.println(" "+e.getMessage());
             }
         }
 
@@ -171,7 +169,11 @@ class LectorInmueble {
         ArrayList<String> nombres = new ArrayList<>();
         while (columnas.hasNext()) {
             columnaActual = columnas.next();
-            nombres.add(columnaActual.getStringCellValue());
+            String nombreCaracterística = columnaActual.getStringCellValue();
+            if (nombreCaracterística.length() == 0)
+                break;
+
+            nombres.add(nombreCaracterística);
         }
 
         if (tipos.size() != nombres.size()) {
@@ -196,7 +198,7 @@ class LectorInmueble {
     }
 
     private void inicioCaracterísticas() {
-        Cell columnaObjetivo = filaActual.getCell(colCaracterísticas);
+        Cell columnaObjetivo = filaActual.getCell(Lector.charToInt(COL_CARACTERÍSTICAS));
 
         columnas = filaActual.cellIterator();
         while (columnaActual != columnaObjetivo)
@@ -208,14 +210,14 @@ class LectorInmueble {
     }
 
     private boolean inicioInmueble() {
-        return filaActual.getCell(colHijos) != null && HIJOS_INICIO.equals(filaActual.getCell(colHijos).getStringCellValue());
+        return filaActual.getCell(Lector.charToInt(COL_HIJOS)) != null && HIJOS_INICIO.equals(Lector.cadena(filaActual, COL_HIJOS));
     }
 
     private boolean finInmueble() {
-        return filaActual.getCell(colHijos) != null && HIJOS_FIN.equals(filaActual.getCell(colHijos).getStringCellValue());
+        return filaActual.getCell(Lector.charToInt(COL_HIJOS)) != null && HIJOS_FIN.equals(Lector.cadena(filaActual, COL_HIJOS));
     }
 
     private boolean saltar() {
-        return filaActual.getCell(colHijos) != null && SALTAR.equals(filaActual.getCell(colHijos).getStringCellValue());
+        return filaActual.getCell(Lector.charToInt(COL_HIJOS)) != null && SALTAR.equals(Lector.cadena(filaActual, COL_HIJOS));
     }
 }

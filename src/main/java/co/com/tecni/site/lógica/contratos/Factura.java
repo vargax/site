@@ -1,6 +1,6 @@
 package co.com.tecni.site.lógica.contratos;
 
-import co.com.tecni.site.lógica.Site;
+import co.com.tecni.site.lógica.Sari;
 import co.com.tecni.site.lógica.árboles.Nodo;
 import co.com.tecni.site.lógica.transacciones.Tercero;
 import co.com.tecni.site.lógica.transacciones.Transacción;
@@ -57,7 +57,7 @@ class Factura implements Nodo {
     }
 
     public String nombreNodo(Árbol árbol) {
-        return "Factura "+json.consecutivo + " / "+ Site.DTF.format(json.fecha);
+        return "Factura "+json.consecutivo + " / "+ Sari.DTF.format(json.fecha);
     }
 
     public ArrayList<Object> hijosNodo(Árbol árbol) {
@@ -85,6 +85,6 @@ class Factura implements Nodo {
     }
 
     public String infoNodo(Árbol árbol) {
-        return Site.GSON.toJson(json);
+        return Sari.GSON.toJson(json);
     }
 }

@@ -1,6 +1,6 @@
 package co.com.tecni.site.ui.indicadores;
 
-import co.com.tecni.site.lógica.Site;
+import co.com.tecni.site.lógica.Sari;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -16,7 +16,7 @@ class DoubleRender extends DefaultTableCellRenderer {
         setHorizontalAlignment(RIGHT);
 
         double valor = (double) value;
-        String texto = (-10 <= valor && valor <= 10) ? Site.SMALL_DECIMAL.format(valor) : Site.BIG_DECIMAL.format(valor);
+        String texto = (-10 <= valor && valor <= 10) ? Sari.SMALL_DECIMAL.format(valor) : Sari.BIG_DECIMAL.format(valor);
 
         setText(texto);
         if ((Double) value < 0) setForeground(Color.RED);

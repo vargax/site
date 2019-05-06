@@ -1,6 +1,6 @@
 package co.com.tecni.site.lógica.fichas;
 
-import co.com.tecni.site.lógica.Site;
+import co.com.tecni.site.lógica.Sari;
 import co.com.tecni.site.lógica.árboles.Árbol;
 
 import java.time.LocalDate;
@@ -37,6 +37,6 @@ public class Jurídica extends Ficha {
     }
 
     public String infoNodo(Árbol árbol) {
-        return Site.GSON.toJson(json);
+        return Sari.GSON.toJson(json);
     }
 }

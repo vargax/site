@@ -1,6 +1,6 @@
 package co.com.tecni.site.lógica.inmuebles.tipos;
 
-import co.com.tecni.site.lógica.Site;
+import co.com.tecni.site.lógica.Sari;
 import co.com.tecni.site.lógica.árboles.Nodo;
 import co.com.tecni.site.lógica.fichas.Arrendamiento;
 import co.com.tecni.site.lógica.fichas.Ficha;
@@ -42,18 +42,18 @@ public abstract class Inmueble implements Nodo {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    private String nombre;
+    private Sari sari = Sari.instance;
+
+    String sigla;
     UiÁrbol.Ícono ícono;
-
-    private Site site;
-
+    private String nombre;
     private HashMap<String , Double> m2;
-    private ArrayList<Ficha> fichas;
+    private double valor;
 
     private Inmueble padre;
     private ArrayList<Inmueble> hijos;
+    private ArrayList<Ficha> fichas;
 
-    String sigla;
     private JSONObject infoNodo;
     private JSONObject características;
     private HashMap<Integer, Presupuestal> presupuestos;
@@ -66,8 +66,6 @@ public abstract class Inmueble implements Nodo {
         presupuestos = new HashMap<>();
 
         ícono = new UiÁrbol.Ícono(UI_ÍCONO);
-
-        site = Site.getInstance();
     }
 
     public static Inmueble englobar(String tipo, String nombre, JSONObject características, ArrayList<Inmueble> inmuebles) throws Exception {
@@ -84,6 +82,7 @@ public abstract class Inmueble implements Nodo {
         englobe.m2.put(A_COM_LIBRES,0.0);
 
         for (Inmueble inmueble : inmuebles) {
+            englobe.valor += inmueble.valor;
 
             englobe.m2.put(A_PRIV_CONSTRUIDOS,englobe.m2.get(A_PRIV_CONSTRUIDOS)+inmueble.m2.get(A_PRIV_CONSTRUIDOS));
             englobe.m2.put(A_PRIV_LIBRES,englobe.m2.get(A_PRIV_LIBRES)+inmueble.m2.get(A_PRIV_LIBRES));
@@ -97,10 +96,11 @@ public abstract class Inmueble implements Nodo {
         return englobe;
     }
 
-    public static Inmueble hoja(String tipo, String nombre, JSONObject características, HashMap<String, Double> m2) throws Exception {
+    public static Inmueble hoja(String tipo, String nombre, double valor, JSONObject características, HashMap<String, Double> m2) throws Exception {
         Inmueble hoja = (Inmueble) Class.forName(tipo).newInstance();
 
         hoja.nombre = nombre;
+        hoja.valor = valor;
         hoja.m2 = m2;
         hoja.características = características;
 
@@ -156,7 +156,7 @@ public abstract class Inmueble implements Nodo {
 
         ArrayList<Transacción> ancestros = new ArrayList<>();
         if (padre != null) {
-            String modoPonderación = site.getModoPonderación();
+            String modoPonderación = sari.getModoPonderación();
 
             factorPonderación = factorPonderación*(this.m2.get(modoPonderación)/padre.m2.get(modoPonderación));
 
@@ -232,7 +232,7 @@ public abstract class Inmueble implements Nodo {
             infoNodo = new JSONObject();
             infoNodo.put(JK[0], genNombre());
 
-            DecimalFormat df = Site.SMALL_DECIMAL;
+            DecimalFormat df = Sari.SMALL_DECIMAL;
 
             JSONObject áreaDetalle = new JSONObject();
             áreaDetalle.put(JK_ÁREA_DETALLE[0], df.format(m2.get(A_PRIV_CONSTRUIDOS)));
