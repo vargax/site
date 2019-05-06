@@ -177,6 +177,10 @@ public abstract class Inmueble implements Nodo {
         return padre == null ? sigla + " " + nombre : padre.genNombre() + " " + sigla + " " + nombre;
     }
 
+    public double getValor() {
+        return valor;
+    }
+
     public void registrarFicha(Ficha ficha) {
         fichas.add(ficha);
 

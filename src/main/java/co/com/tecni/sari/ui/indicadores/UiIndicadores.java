@@ -11,7 +11,6 @@ import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeParseException;
@@ -32,17 +31,17 @@ public class UiIndicadores {
     Acciones acciones;
 
     Consolidados consolidados;
-    Detalle detalle;
+    Distribución distribución;
     Cartera cartera;
 
     private JFormattedTextField fechaInicial;
     private JFormattedTextField fechaFinal;
-    private JFormattedTextField valorInmueble;
+    private JLabel valor;
 
     public UiIndicadores() throws Exception {
         acciones = new Acciones();
 
-        detalle = new Detalle();
+        distribución = new Distribución();
         consolidados = new Consolidados();
         cartera = new Cartera();
 
@@ -51,7 +50,7 @@ public class UiIndicadores {
 
         jTabbedPane = new JTabbedPane();
         jTabbedPane.addTab(Consolidados.NOMBRE, consolidados.componente);
-        jTabbedPane.addTab(Detalle.NOMBRE, detalle.componente);
+        jTabbedPane.addTab(Distribución.NOMBRE, distribución.componente);
 
         componente.add(jTabbedPane, BorderLayout.CENTER);
     }
@@ -63,7 +62,7 @@ public class UiIndicadores {
         fechaInicial = new JFormattedTextField(formatoFecha);
         fechaFinal = new JFormattedTextField(formatoFecha);
 
-        valorInmueble = new JFormattedTextField(NumberFormat.getCurrencyInstance());
+        valor = new JLabel();
 
         JPanel encabezado = new JPanel();
         encabezado.setLayout(new GridLayout(0, 5));
@@ -74,14 +73,19 @@ public class UiIndicadores {
         encabezado.add(fechaFinal);
         encabezado.add(acciones.generarBotón());
 
-        encabezado.add(new JLabel("Valor Inmueble: ", SwingConstants.RIGHT));
-        encabezado.add(valorInmueble);
+        encabezado.add(new JLabel("Valor: ", SwingConstants.RIGHT));
+        encabezado.add(valor);
 
         return encabezado;
     }
 
     private void minMaxFechas() {
 
+    }
+
+
+    public void mostrarValor(double valor) {
+        this.valor.setText(Sari.BIG_DECIMAL.format(valor));
     }
 
     /**
@@ -106,8 +110,8 @@ public class UiIndicadores {
             consolidados.mostrarTransacciones();
             jTabbedPane.addTab(Consolidados.NOMBRE, consolidados.componente);
         }
-        detalle.mostrarTransacciones();
-        jTabbedPane.addTab(Detalle.NOMBRE, detalle.componente);
+        distribución.mostrarTransacciones();
+        jTabbedPane.addTab(Distribución.NOMBRE, distribución.componente);
     }
 
     static ArrayList<Transacción>[] generarArreglos() {

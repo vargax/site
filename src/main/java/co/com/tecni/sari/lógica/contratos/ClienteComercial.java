@@ -100,7 +100,7 @@ public class ClienteComercial implements Nodo {
         // Se suman las transacciones asociadas a todos los contratos
         /* ToDo NO coinciden con los valores presentados en ÁrbolInmuebles
         *  |> Sólo se incluyen las transacciones de los inmuebles asociados a versións
-        *  |> Siempre debería coincidir el valor de los ingresos por arrendamiento reales
+        *  |> Siempre debería coincidir el getValor de los ingresos por arrendamiento reales
         */
         if (árbol instanceof ÁrbolContratos)
             for (Contrato contrato : contratos.values()) {

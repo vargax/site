@@ -21,6 +21,7 @@ public class Agrupación implements Nodo {
     // Atributos
     // -----------------------------------------------
     private String nombre;
+    private double valor;
     private UiÁrbol.Ícono ícono;
 
     private Agrupación padre;
@@ -45,6 +46,7 @@ public class Agrupación implements Nodo {
     // -----------------------------------------------
     public Agrupación(String nombre) {
         this.nombre = nombre;
+        valor = -1.0;
         ícono = new UiÁrbol.Ícono(UI_ÍCONO);
 
         agrupaciones = new ArrayList<>();
@@ -63,10 +65,16 @@ public class Agrupación implements Nodo {
         agrupaciones.add(agrupación);
     }
 
-    // -----------------------------------------------
-    // Getters and Setters
-    // -----------------------------------------------
-
+    public double getValor() {
+        if (valor < 0) {
+            valor = 0;
+            for (Agrupación a : agrupaciones)
+                valor += a.getValor();
+            for (Inmueble i : inmuebles)
+                valor += i.getValor();
+        }
+        return valor;
+    }
     // -----------------------------------------------
     // Nodo
     // -----------------------------------------------
