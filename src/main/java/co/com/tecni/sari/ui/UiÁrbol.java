@@ -82,7 +82,7 @@ public class UiÁrbol {
             if (nodo instanceof ClienteFacturación) ícono.color = ÍCONO_COLOR_TERCERO;
 
             jLabel.setIcon(IconFontSwing.buildIcon(ícono.código, ÍCONO_TAMAÑO, ícono.color));
-            jLabel.setText(nodo.nombreNodo(árbol));
+            jLabel.setText(nodo.nombreNodo());
             jLabel.setOpaque(false);
 
             if (selected) {

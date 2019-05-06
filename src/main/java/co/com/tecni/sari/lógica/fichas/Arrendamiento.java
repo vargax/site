@@ -8,6 +8,7 @@ import co.com.tecni.sari.lógica.inmuebles.tipos.Inmueble;
 import co.com.tecni.sari.lógica.árboles.Árbol;
 import co.com.tecni.sari.lógica.árboles.ÁrbolContratos;
 import co.com.tecni.sari.lógica.árboles.ÁrbolInmuebles;
+import co.com.tecni.sari.ui.UiSari;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -68,24 +69,24 @@ public class Arrendamiento extends Ficha {
         return json.participación;
     }
 
-    public String nombreNodo(Árbol árbol) {
-        if (árbol instanceof ÁrbolInmuebles)
+    public String nombreNodo() {
+        if (UiSari.árbolActual instanceof ÁrbolInmuebles)
             return "Arrendamiento: " + json.númeroSecuencia + " / "+ Sari.SMALL_DECIMAL.format(json.participación);
-        if (árbol instanceof ÁrbolContratos)
-            return "Inmueble: "+ inmueble.nombreNodo(árbol) + " / "+ Sari.SMALL_DECIMAL.format(json.participación);
+        if (UiSari.árbolActual instanceof ÁrbolContratos)
+            return "Inmueble: "+ inmueble.nombreNodo() + " / "+ Sari.SMALL_DECIMAL.format(json.participación);
         return "Típo de Árbol no definido en Ficha.Arrendamiento.nombreNodo()";
     }
 
-    public String infoNodo(Árbol árbol) {
+    public String infoNodo() {
         return Sari.GSON.toJson(json);
     }
 
     @Override
-    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
-        ArrayList[] resultado = super.transaccionesNodo(árbol);
+    public ArrayList<Transacción>[] transaccionesNodo() {
+        ArrayList[] resultado = super.transaccionesNodo();
 
-        if (árbol instanceof ÁrbolContratos) {
-            ArrayList<Transacción>[] transaccionesInmueble = inmueble.transaccionesNodo(árbol);
+        if (UiSari.árbolActual instanceof ÁrbolContratos) {
+            ArrayList<Transacción>[] transaccionesInmueble = inmueble.transaccionesNodo();
             resultado[0].addAll(transaccionesInmueble[0]);
             resultado[1].addAll(transaccionesInmueble[1]);
             resultado[2].addAll(transaccionesInmueble[2]);

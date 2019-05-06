@@ -21,6 +21,9 @@ class Consolidados {
     private ArrayList<Transacción> transaccionesGasto = new ArrayList<>();
     private ArrayList<Transacción> transacciones = new ArrayList<>();
 
+    double ingresosReales = 0.0; double ingresosPresupuestados = 0.0;
+    double gastosReales   = 0.0; double   gastosPresupuestados = 0.0;
+
     Consolidados() {
 
         tablaTransacciones = new TablaTransacciones();
@@ -101,8 +104,8 @@ class Consolidados {
         }
 
         void setTransxTipoPariente(ArrayList<Transacción>[] transxTipoPariente) {
-            double ingresosReales = 0; double ingresosPresupuestados = 0;
-            double gastosReales = 0;   double gastosPresupuestados = 0;
+            ingresosReales = 0.0; ingresosPresupuestados = 0.0;
+            gastosReales   = 0.0;   gastosPresupuestados = 0.0;
 
             transaccionesIngreso = new ArrayList<>();
             transaccionesGasto = new ArrayList<>();

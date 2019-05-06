@@ -30,7 +30,7 @@ public class ÁrbolInmuebles extends Árbol {
     // Métodos Privados
     // -----------------------------------------------
     private void recursiónIdentificadores(Nodo nodo) {
-        for (Object hijo : nodo.hijosNodo(this)) {
+        for (Object hijo : nodo.hijosNodo()) {
             if (hijo instanceof Inmueble)
                 inmueblesxId.put(((Inmueble) hijo).genNombre(), (Inmueble) hijo);
             recursiónIdentificadores((Nodo) hijo);

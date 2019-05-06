@@ -10,14 +10,14 @@ public interface Nodo {
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
-    String nombreNodo(Árbol árbol);
-    ArrayList<Object> hijosNodo(Árbol árbol);
+    String nombreNodo();
+    ArrayList<Object> hijosNodo();
     UiÁrbol.Ícono íconoNodo();
 
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
-    ArrayList<Transacción>[] transaccionesNodo(Árbol árbol);
-    String infoNodo(Árbol árbol);
+    ArrayList<Transacción>[] transaccionesNodo();
+    String infoNodo();
 
 }

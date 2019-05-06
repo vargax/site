@@ -6,6 +6,7 @@ import co.com.tecni.sari.lógica.transacciones.Transacción;
 import co.com.tecni.sari.lógica.árboles.Árbol;
 import co.com.tecni.sari.lógica.árboles.ÁrbolCartera;
 import co.com.tecni.sari.lógica.árboles.ÁrbolContratos;
+import co.com.tecni.sari.ui.UiSari;
 import co.com.tecni.sari.ui.UiÁrbol;
 
 import java.time.LocalDate;
@@ -71,7 +72,7 @@ public class ClienteComercial implements Nodo {
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
-    public String nombreNodo(Árbol árbol) {
+    public String nombreNodo() {
         return nombre;
     }
 
@@ -79,34 +80,34 @@ public class ClienteComercial implements Nodo {
         return null;
     }
 
-    public ArrayList<Object> hijosNodo(Árbol árbol) {
-        if (árbol instanceof ÁrbolContratos)
+    public ArrayList<Object> hijosNodo() {
+        if (UiSari.árbolActual instanceof ÁrbolContratos)
             return new ArrayList<>(contratos.values());
-        else if (árbol instanceof ÁrbolCartera)
+        else if (UiSari.árbolActual instanceof ÁrbolCartera)
             return new ArrayList<>(clientesFacturación.values());
 
         return null;
     }
 
-    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
+    public ArrayList<Transacción>[] transaccionesNodo() {
         ArrayList<Transacción> descendientes = new ArrayList<>();
         ArrayList<Transacción> propias = new ArrayList<>();
         ArrayList<Transacción> ancestros = new ArrayList<>();
 
-        if (árbol instanceof ÁrbolCartera)
+        if (UiSari.árbolActual instanceof ÁrbolCartera)
             for (ClienteFacturación clFact : clientesFacturación.values())
-                descendientes.addAll(clFact.transaccionesNodo(árbol)[2]);
+                descendientes.addAll(clFact.transaccionesNodo()[2]);
 
         // Se suman las transacciones asociadas a todos los contratos
         /* ToDo NO coinciden con los valores presentados en ÁrbolInmuebles
         *  |> Sólo se incluyen las transacciones de los inmuebles asociados a versións
         *  |> Siempre debería coincidir el getValor de los ingresos por arrendamiento reales
         */
-        if (árbol instanceof ÁrbolContratos)
+        if (UiSari.árbolActual instanceof ÁrbolContratos)
             for (Contrato contrato : contratos.values()) {
-                descendientes.addAll(contrato.transaccionesNodo(árbol)[2]);
-                propias.addAll(contrato.transaccionesNodo(árbol)[1]);
-                ancestros.addAll(contrato.transaccionesNodo(árbol)[0]);
+                descendientes.addAll(contrato.transaccionesNodo()[2]);
+                propias.addAll(contrato.transaccionesNodo()[1]);
+                ancestros.addAll(contrato.transaccionesNodo()[0]);
             }
 
 
@@ -117,7 +118,7 @@ public class ClienteComercial implements Nodo {
         return resultado;
     }
 
-    public String infoNodo(Árbol árbol) {
+    public String infoNodo() {
         if (json == null)
             json = new Json(this);
 

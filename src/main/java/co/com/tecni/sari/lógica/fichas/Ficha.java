@@ -85,13 +85,13 @@ public abstract class Ficha implements Nodo {
         return ícono;
     }
 
-    public ArrayList<Object> hijosNodo(Árbol árbol) {
+    public ArrayList<Object> hijosNodo() {
         ArrayList<Object> hijos = new ArrayList<>();
         hijos.addAll(this.fichas);
         return hijos;
     }
 
-    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
+    public ArrayList<Transacción>[] transaccionesNodo() {
         return recursiónTransacciones(1);
     }
 }

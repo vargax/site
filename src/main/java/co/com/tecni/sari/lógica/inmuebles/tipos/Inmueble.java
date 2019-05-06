@@ -8,6 +8,7 @@ import co.com.tecni.sari.lógica.fichas.Presupuestal;
 import co.com.tecni.sari.lógica.transacciones.Transacción;
 import co.com.tecni.sari.lógica.árboles.Árbol;
 import co.com.tecni.sari.lógica.árboles.ÁrbolContratos;
+import co.com.tecni.sari.ui.UiSari;
 import co.com.tecni.sari.ui.UiÁrbol;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
@@ -131,13 +132,14 @@ public abstract class Inmueble implements Nodo {
      *  [1] Transacciones Propias
      *  [2] Transacciones Descendientes
      */
-    private ArrayList<Transacción>[] recursiónTransacciones(double factorPonderación, Árbol árbol) {
+    private ArrayList<Transacción>[] recursiónTransacciones(double factorPonderación) {
+        Árbol árbol = UiSari.árbolActual;
         ArrayList[] resultado = new ArrayList[3];
 
         ArrayList<Transacción> descendientes = new ArrayList<>();
         if (factorPonderación == 1) {
             for (Inmueble hijo : hijos) {
-                ArrayList<Transacción>[] transaccionesHijo = hijo.recursiónTransacciones(factorPonderación, árbol);
+                ArrayList<Transacción>[] transaccionesHijo = hijo.recursiónTransacciones(factorPonderación);
                 descendientes.addAll(transaccionesHijo[1]);
                 descendientes.addAll(transaccionesHijo[2]);
             }
@@ -161,7 +163,7 @@ public abstract class Inmueble implements Nodo {
 
             factorPonderación = factorPonderación*(this.m2.get(modoPonderación)/padre.m2.get(modoPonderación));
 
-            ArrayList<Transacción>[] transaccionesAncestro = padre.recursiónTransacciones(factorPonderación, árbol);
+            ArrayList<Transacción>[] transaccionesAncestro = padre.recursiónTransacciones(factorPonderación);
             ancestros.addAll(transaccionesAncestro[0]);
             ancestros.addAll(transaccionesAncestro[1]);
         }
@@ -210,11 +212,11 @@ public abstract class Inmueble implements Nodo {
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
-    public String nombreNodo(Árbol árbol) {
+    public String nombreNodo() {
         return genNombre();
     }
 
-    public ArrayList<Object> hijosNodo(Árbol árbol) {
+    public ArrayList<Object> hijosNodo() {
         ArrayList<Object> hijos = new ArrayList<>();
         hijos.addAll(this.hijos);
         hijos.addAll(this.fichas);
@@ -228,11 +230,11 @@ public abstract class Inmueble implements Nodo {
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
-    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
-        return recursiónTransacciones(1, árbol);
+    public ArrayList<Transacción>[] transaccionesNodo() {
+        return recursiónTransacciones(1);
     }
 
-    public String infoNodo(Árbol árbol) {
+    public String infoNodo() {
         if (infoNodo == null) {
             infoNodo = new JSONObject();
             infoNodo.put(JK[0], genNombre());

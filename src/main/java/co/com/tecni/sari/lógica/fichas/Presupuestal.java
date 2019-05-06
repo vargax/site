@@ -56,19 +56,19 @@ public class Presupuestal extends Ficha {
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
-    public String nombreNodo(Árbol árbol) {
+    public String nombreNodo() {
         return "Presupuesto "+json.tipo+" "+json.año;
     }
 
     @Override
-    public ArrayList<Object> hijosNodo(Árbol árbol) {
+    public ArrayList<Object> hijosNodo() {
         if (json.tipo.equals(TIPOS[1]))
             return null; // ToDo No muestro como nodos los ingresos por arrendamiento generados?
 
-        return super.hijosNodo(árbol);
+        return super.hijosNodo();
     }
 
-    public String infoNodo(Árbol árbol) {
+    public String infoNodo() {
         if (json.fichas == -1) json.fichas = super.fichas.size();
 
         return Sari.GSON.toJson(json);

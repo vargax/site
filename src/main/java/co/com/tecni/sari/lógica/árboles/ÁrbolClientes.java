@@ -20,11 +20,11 @@ abstract class ÁrbolClientes extends Árbol {
             String nombre = "Sistema de Información de Inmuebles de TECNI";
         }
 
-        public String nombreNodo(Árbol árbol) {
+        public String nombreNodo() {
             return nombreRaiz;
         }
 
-        public ArrayList<Object> hijosNodo(Árbol árbol) {
+        public ArrayList<Object> hijosNodo() {
             ArrayList<Object> hijos = new ArrayList<>();
             hijos.addAll(clientesComercialesxId.values());
             return hijos;
@@ -34,15 +34,15 @@ abstract class ÁrbolClientes extends Árbol {
             return null;
         }
 
-        public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
+        public ArrayList<Transacción>[] transaccionesNodo() {
             ArrayList<Transacción> descendientes = new ArrayList<>();
             ArrayList<Transacción> propias = new ArrayList<>();
             ArrayList<Transacción> ancestros = new ArrayList<>();
 
             for (ClienteComercial cc : clientesComercialesxId.values()) {
-                descendientes.addAll(cc.transaccionesNodo(árbol)[2]);
-                propias.addAll(cc.transaccionesNodo(árbol)[1]);
-                ancestros.addAll(cc.transaccionesNodo(árbol)[0]);
+                descendientes.addAll(cc.transaccionesNodo()[2]);
+                propias.addAll(cc.transaccionesNodo()[1]);
+                ancestros.addAll(cc.transaccionesNodo()[0]);
             }
 
             ArrayList[] resultado = new ArrayList[3];
@@ -52,7 +52,7 @@ abstract class ÁrbolClientes extends Árbol {
             return resultado;
         }
 
-        public String infoNodo(Árbol árbol) {
+        public String infoNodo() {
             return Sari.GSON.toJson(json);
         }
     }

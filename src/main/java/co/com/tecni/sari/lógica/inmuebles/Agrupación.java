@@ -78,7 +78,7 @@ public class Agrupación implements Nodo {
     // -----------------------------------------------
     // Nodo
     // -----------------------------------------------
-    public String nombreNodo(Árbol árbol) {
+    public String nombreNodo() {
         return nombre;
     }
 
@@ -86,7 +86,7 @@ public class Agrupación implements Nodo {
         return ícono;
     }
 
-    public ArrayList<Object> hijosNodo(Árbol árbol) {
+    public ArrayList<Object> hijosNodo() {
         ArrayList<Object> hijos = new ArrayList<>();
 
         hijos.addAll(agrupaciones);
@@ -95,17 +95,17 @@ public class Agrupación implements Nodo {
         return hijos;
     }
 
-    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
+    public ArrayList<Transacción>[] transaccionesNodo() {
         ArrayList<Transacción> descendientes = new ArrayList<>();
         ArrayList<Transacción> propias = new ArrayList<>();
         ArrayList<Transacción> ancestros = new ArrayList<>();
 
         // DESCENDIENTES
         for (Agrupación agrupación : agrupaciones)
-            descendientes.addAll(agrupación.transaccionesNodo(árbol)[2]);
+            descendientes.addAll(agrupación.transaccionesNodo()[2]);
 
         for (Inmueble inmueble : inmuebles) {
-            ArrayList<Transacción>[] transaccionesInmueble = inmueble.transaccionesNodo(árbol);
+            ArrayList<Transacción>[] transaccionesInmueble = inmueble.transaccionesNodo();
             descendientes.addAll(transaccionesInmueble[1]);
             descendientes.addAll(transaccionesInmueble[2]);
             // Un inmueble asociado a una agrupación su ancestro es la agrupación, la cual no tiene transacciones
@@ -118,7 +118,7 @@ public class Agrupación implements Nodo {
         return resultado;
     }
 
-    public String infoNodo(Árbol árbol) {
+    public String infoNodo() {
         // El Json sólo se puede generar una vez la agrupación tenga asociados todos sus inmuebles
         if (json == null)
             json = new Json(this);
