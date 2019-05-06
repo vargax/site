@@ -121,7 +121,7 @@ public class UiÁrbol {
                 new TreeSelectionListener() {
                     public void valueChanged(TreeSelectionEvent treeSelectionEvent) {
                         nodoActual = (Nodo) componente.getLastSelectedPathComponent();
-                        UiSari.instance.actualizarDetalle(nodoActual);
+                        UiSari.instance.cambioNodo(nodoActual);
                     }
                 }
         );

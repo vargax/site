@@ -6,8 +6,8 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-class Detalle {
-    final static String NOMBRE = "Detalle";
+class Distribución {
+    final static String NOMBRE = "Distribución";
 
     JSplitPane componente;
 
@@ -17,7 +17,7 @@ class Detalle {
     private Herencia herenciaPresupuestada;
     private Transacciones transaccionesPresupuestadas;
 
-    Detalle() {
+    Distribución() {
 
         herenciaReal = new Herencia(UiIndicadores.REAL);
         herenciaPresupuestada = new Herencia(UiIndicadores.PRESUPUESTADO);

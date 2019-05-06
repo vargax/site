@@ -1,6 +1,8 @@
 package co.com.tecni.sari.ui;
 
 import co.com.tecni.sari.lógica.Sari;
+import co.com.tecni.sari.lógica.inmuebles.Agrupación;
+import co.com.tecni.sari.lógica.inmuebles.tipos.Inmueble;
 import co.com.tecni.sari.lógica.árboles.Nodo;
 import co.com.tecni.sari.lógica.árboles.Árbol;
 import co.com.tecni.sari.lógica.árboles.ÁrbolCartera;
@@ -17,7 +19,7 @@ public class UiSari extends JFrame {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
-    private final static String NOMBRE = "Sistema de Administración de Recursos Inmobiliarios SARI";
+    private final static String NOMBRE = "SARI Sistema de Administración de Recursos Inmobiliarios";
 
     // -----------------------------------------------
     // Atributos
@@ -68,13 +70,13 @@ public class UiSari extends JFrame {
                 int tab = pestañasÁrboles.getSelectedIndex();
                 switch (tab) {
                     case 0: árbolActual = Sari.árbolInmuebles;
-                            actualizarDetalle(inmuebles.nodoActual);
+                            cambioNodo(inmuebles.nodoActual);
                             break;
                     case 1: árbolActual = Sari.árbolContratos;
-                            actualizarDetalle(contratos.nodoActual);
+                            cambioNodo(contratos.nodoActual);
                             break;
                     case 2: árbolActual = Sari.árbolCartera;
-                            actualizarDetalle(cartera.nodoActual);
+                            cambioNodo(cartera.nodoActual);
                 }
             }
         });
@@ -91,20 +93,30 @@ public class UiSari extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle(NOMBRE);
         this.setSize(1900, 1000);
-        //this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         this.setVisible(true);
     }
 
     // -----------------------------------------------
     // Métodos
     // -----------------------------------------------
-    void actualizarDetalle(Nodo nodo) {
+    void cambioNodo(Nodo nodo) {
         if (nodo != null) {
-            uiJson.mostrarDetalle(nodo.infoNodo(árbolActual));
+
+            if (nodo instanceof Agrupación)
+                uiIndicadores.mostrarValor(((Agrupación) nodo).getValor());
+            else if (nodo instanceof Inmueble)
+                uiIndicadores.mostrarValor(((Inmueble) nodo).getValor());
+            else
+                uiIndicadores.mostrarValor(0.0);
+
             uiIndicadores.mostrarTransacciones(nodo.transaccionesNodo(árbolActual));
+            uiJson.mostrarDetalle(nodo.infoNodo(árbolActual));
+
         } else {
-            uiJson.mostrarDetalle("");
+
+            uiIndicadores.mostrarValor(0.0);
             uiIndicadores.mostrarTransacciones(null);
+            uiJson.mostrarDetalle("");
         }
     }
 
