@@ -1,6 +1,6 @@
 package co.com.tecni.site.lógica.fichas;
 
-import co.com.tecni.site.lógica.Site;
+import co.com.tecni.site.lógica.Sari;
 import co.com.tecni.site.lógica.árboles.Árbol;
 
 import java.util.ArrayList;
@@ -71,6 +71,6 @@ public class Presupuestal extends Ficha {
     public String infoNodo(Árbol árbol) {
         if (json.fichas == -1) json.fichas = super.fichas.size();
 
-        return Site.GSON.toJson(json);
+        return Sari.GSON.toJson(json);
     }
 }

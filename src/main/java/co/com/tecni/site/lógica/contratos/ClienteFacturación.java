@@ -1,6 +1,6 @@
 package co.com.tecni.site.lógica.contratos;
 
-import co.com.tecni.site.lógica.Site;
+import co.com.tecni.site.lógica.Sari;
 import co.com.tecni.site.lógica.árboles.Nodo;
 import co.com.tecni.site.lógica.transacciones.Tercero;
 import co.com.tecni.site.lógica.transacciones.Transacción;
@@ -78,7 +78,7 @@ public class ClienteFacturación extends Tercero implements Nodo {
     }
 
     public String infoNodo(Árbol árbol) {
-        return Site.GSON.toJson(json);
+        return Sari.GSON.toJson(json);
     }
 
 

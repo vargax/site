@@ -1,6 +1,6 @@
 package co.com.tecni.site.ui;
 
-import co.com.tecni.site.lógica.Site;
+import co.com.tecni.site.lógica.Sari;
 import co.com.tecni.site.lógica.árboles.Nodo;
 import co.com.tecni.site.lógica.árboles.Árbol;
 import co.com.tecni.site.lógica.árboles.ÁrbolCartera;
@@ -12,14 +12,19 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class UiSite extends JFrame {
+public class UiSari extends JFrame {
+
+    // -----------------------------------------------
+    // Constantes
+    // -----------------------------------------------
+    private final static String NOMBRE = "Sistema de Administración de Recursos Inmobiliarios SARI";
 
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
-    static UiSite instance;
+    static UiSari instance;
 
-    private Site site;
+    private Sari sari;
 
     private UiÁrbol inmuebles;
     private UiÁrbol contratos;
@@ -34,16 +39,16 @@ public class UiSite extends JFrame {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    UiSite() throws Exception {
+    UiSari() throws Exception {
 
         instance = this;
 
-        site = Site.getInstance();
-        site.generarÁrboles();
+        sari = Sari.instance;
+        sari.generarÁrboles();
 
-        inmuebles = new UiÁrbol(ÁrbolInmuebles.NOMBRE_RAIZ, Site.árbolInmuebles);
-        contratos = new UiÁrbol(ÁrbolContratos.NOMBRE_RAIZ, Site.árbolContratos);
-        cartera = new UiÁrbol(ÁrbolCartera.NOMBRE_RAIZ, Site.árbolCartera);
+        inmuebles = new UiÁrbol(ÁrbolInmuebles.NOMBRE_RAIZ, Sari.árbolInmuebles);
+        contratos = new UiÁrbol(ÁrbolContratos.NOMBRE_RAIZ, Sari.árbolContratos);
+        cartera = new UiÁrbol(ÁrbolCartera.NOMBRE_RAIZ, Sari.árbolCartera);
 
         uiMenu = new UiMenu();
         uiJson = new UiJson();
@@ -62,13 +67,13 @@ public class UiSite extends JFrame {
             public void stateChanged(ChangeEvent changeEvent) {
                 int tab = pestañasÁrboles.getSelectedIndex();
                 switch (tab) {
-                    case 0: árbolActual = Site.árbolInmuebles;
+                    case 0: árbolActual = Sari.árbolInmuebles;
                             actualizarDetalle(inmuebles.nodoActual);
                             break;
-                    case 1: árbolActual = Site.árbolContratos;
+                    case 1: árbolActual = Sari.árbolContratos;
                             actualizarDetalle(contratos.nodoActual);
                             break;
-                    case 2: árbolActual = Site.árbolCartera;
+                    case 2: árbolActual = Sari.árbolCartera;
                             actualizarDetalle(cartera.nodoActual);
                 }
             }
@@ -84,7 +89,7 @@ public class UiSite extends JFrame {
         add(panelPrincipal);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setTitle("SITE");
+        this.setTitle(NOMBRE);
         this.setSize(1900, 1000);
         //this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         this.setVisible(true);
@@ -110,7 +115,7 @@ public class UiSite extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new UiSite();
+                    new UiSari();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

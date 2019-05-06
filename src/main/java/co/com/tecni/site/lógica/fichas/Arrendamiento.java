@@ -1,6 +1,6 @@
 package co.com.tecni.site.lógica.fichas;
 
-import co.com.tecni.site.lógica.Site;
+import co.com.tecni.site.lógica.Sari;
 import co.com.tecni.site.lógica.contratos.ClienteFacturación;
 import co.com.tecni.site.lógica.contratos.Versión;
 import co.com.tecni.site.lógica.transacciones.Transacción;
@@ -70,14 +70,14 @@ public class Arrendamiento extends Ficha {
 
     public String nombreNodo(Árbol árbol) {
         if (árbol instanceof ÁrbolInmuebles)
-            return "Arrendamiento: " + json.númeroSecuencia + " / "+Site.SMALL_DECIMAL.format(json.participación);
+            return "Arrendamiento: " + json.númeroSecuencia + " / "+ Sari.SMALL_DECIMAL.format(json.participación);
         if (árbol instanceof ÁrbolContratos)
-            return "Inmueble: "+ inmueble.nombreNodo(árbol) + " / "+Site.SMALL_DECIMAL.format(json.participación);
+            return "Inmueble: "+ inmueble.nombreNodo(árbol) + " / "+ Sari.SMALL_DECIMAL.format(json.participación);
         return "Típo de Árbol no definido en Ficha.Arrendamiento.nombreNodo()";
     }
 
     public String infoNodo(Árbol árbol) {
-        return Site.GSON.toJson(json);
+        return Sari.GSON.toJson(json);
     }
 
     @Override

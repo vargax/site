@@ -1,6 +1,6 @@
 package co.com.tecni.site.lógica.contratos;
 
-import co.com.tecni.site.lógica.Site;
+import co.com.tecni.site.lógica.Sari;
 import co.com.tecni.site.lógica.árboles.Nodo;
 import co.com.tecni.site.lógica.transacciones.Transacción;
 import co.com.tecni.site.lógica.árboles.Árbol;
@@ -121,6 +121,6 @@ public class ClienteComercial implements Nodo {
         if (json == null)
             json = new Json(this);
 
-        return Site.GSON.toJson(json);
+        return Sari.GSON.toJson(json);
     }
 }

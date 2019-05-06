@@ -1,9 +1,9 @@
 package co.com.tecni.site.ui.indicadores;
 
-import co.com.tecni.site.lógica.Site;
+import co.com.tecni.site.lógica.Sari;
 import co.com.tecni.site.lógica.transacciones.Transacción;
 import co.com.tecni.site.lógica.árboles.ÁrbolCartera;
-import co.com.tecni.site.ui.UiSite;
+import co.com.tecni.site.ui.UiSari;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -98,7 +98,7 @@ public class UiIndicadores {
 
         jTabbedPane.removeAll();
 
-        if (UiSite.árbolActual instanceof ÁrbolCartera) {
+        if (UiSari.árbolActual instanceof ÁrbolCartera) {
             cartera.mostrarTransacciones();
             jTabbedPane.addTab(Cartera.NOMBRE, cartera.componente);
 
@@ -166,10 +166,10 @@ public class UiIndicadores {
 
             if (BUSCAR.equals(actionEvent.getActionCommand())) {
                 try {
-                    LocalDate fi = LocalDate.from((YearMonth.parse(fechaInicial.getText(), Site.DTF)).atDay(1));
-                    LocalDate ff = LocalDate.from((YearMonth.parse(fechaFinal.getText(), Site.DTF)).atEndOfMonth());
+                    LocalDate fi = LocalDate.from((YearMonth.parse(fechaInicial.getText(), Sari.DTF)).atDay(1));
+                    LocalDate ff = LocalDate.from((YearMonth.parse(fechaFinal.getText(), Sari.DTF)).atEndOfMonth());
 
-                    System.out.println("Buscando transacciones entre "+Site.DTF.format(fi)+" y "+Site.DTF.format(ff));
+                    System.out.println("Buscando transacciones entre "+ Sari.DTF.format(fi)+" y "+ Sari.DTF.format(ff));
                 } catch (DateTimeParseException e){
                     System.err.println(e.getParsedString()+" no es una fecha válida");
                     e.printStackTrace();

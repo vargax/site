@@ -13,7 +13,7 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Site {
+public class Sari {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
@@ -30,19 +30,23 @@ public class Site {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
+    public final static Sari instance;
+
     public final static Gson GSON;
     public final static DecimalFormat SMALL_DECIMAL;
     public final static DecimalFormat BIG_DECIMAL;
     public final static DateTimeFormatter DTF;
+
     static {
         GSON = genGson();
         DTF = DateTimeFormatter.ofPattern("MMM yyyy");
 
         SMALL_DECIMAL = new DecimalFormat("#.##"); SMALL_DECIMAL.setRoundingMode(RoundingMode.CEILING);
         BIG_DECIMAL = new DecimalFormat("###,###,###");
+
+        instance = new Sari();
     }
 
-    private static Site instance;
     private String modoPonderación;
 
     public static ÁrbolInmuebles árbolInmuebles;
@@ -52,14 +56,8 @@ public class Site {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    private Site() {
+    private Sari() {
         modoPonderación = MODO_PONDERACIÓN;
-    }
-
-    public static Site getInstance() {
-        if (instance == null)
-            instance = new Site();
-        return instance;
     }
 
     // -----------------------------------------------
@@ -75,9 +73,9 @@ public class Site {
             public JsonElement serialize(Double aDouble, Type type, JsonSerializationContext jsonSerializationContext) {
                 DecimalFormat df;
                 if (-10 < aDouble && aDouble < 10)
-                    df = Site.SMALL_DECIMAL;
+                    df = Sari.SMALL_DECIMAL;
                 else
-                    df = Site.BIG_DECIMAL;
+                    df = Sari.BIG_DECIMAL;
 
                 return new JsonPrimitive(df.format(aDouble));
             }
@@ -86,7 +84,7 @@ public class Site {
         gsonBuilder.registerTypeAdapter(LocalDate.class, new JsonSerializer<LocalDate>() {
             @Override
             public JsonElement serialize(LocalDate localDate, Type type, JsonSerializationContext jsonSerializationContext) {
-                return new JsonPrimitive(Site.DTF.format(localDate));
+                return new JsonPrimitive(Sari.DTF.format(localDate));
             }
         });
 
@@ -96,12 +94,16 @@ public class Site {
     // -----------------------------------------------
     // Métodos Públicos
     // -----------------------------------------------
-    public void generarÁrboles() throws Exception {
+    public void generarÁrboles() {
         Lector lector = new Lector();
 
-        árbolInmuebles = lector.importarInmuebles();
+        try {
+            árbolInmuebles = lector.importarInmuebles();
+            lector.importarContratos();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        lector.importarContratos();
         árbolContratos = lector.genÁrbolContratos();
         árbolCartera = lector.genÁrbolCartera();
 
