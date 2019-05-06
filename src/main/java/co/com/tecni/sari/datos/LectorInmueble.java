@@ -91,7 +91,7 @@ class LectorInmueble {
         }
 
         Inmueble inmueble = Inmueble.englobar(tipo, nombre, características, hijos);
-        System.out.println("r "+inmueble.infoNodo(null));
+        System.out.println("r "+inmueble.infoNodo());
         return inmueble;
     }
 
@@ -108,7 +108,7 @@ class LectorInmueble {
         metros.put(Inmueble.A_COM_LIBRES, Lector.doble(filaActual, COL_COMUNES_LIBRES));
 
         Inmueble inmueble = Inmueble.hoja(tipo, nombre, valor, características, metros);
-        System.out.println("h "+inmueble.infoNodo(null));
+        System.out.println("h "+inmueble.infoNodo());
         return inmueble;
     }
 

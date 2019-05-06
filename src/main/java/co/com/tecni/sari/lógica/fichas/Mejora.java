@@ -76,11 +76,11 @@ public class Mejora extends Ficha {
         return json.tipo;
     }
 
-    public String nombreNodo(Árbol árbol) {
+    public String nombreNodo() {
         return json.tipo + " "+json.descripción;
     }
 
-    public String infoNodo(Árbol árbol) {
+    public String infoNodo() {
         return Sari.GSON.toJson(json);
     }
 }

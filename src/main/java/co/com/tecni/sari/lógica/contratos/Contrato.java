@@ -50,7 +50,7 @@ public class Contrato implements Nodo {
     // -----------------------------------------------
     // Nodo
     // -----------------------------------------------
-    public String nombreNodo(Árbol árbol) {
+    public String nombreNodo() {
         return "Contrato: "+json.númeroContrato;
     }
 
@@ -58,16 +58,16 @@ public class Contrato implements Nodo {
         return null;
     }
 
-    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
+    public ArrayList<Transacción>[] transaccionesNodo() {
         ArrayList<Transacción> descendientes = new ArrayList<>();
         ArrayList<Transacción> propias = new ArrayList<>();
         ArrayList<Transacción> ancestros = new ArrayList<>();
 
         // Se suman las transacciones asociadas a todas las versións
         for (Versión versión : versións) {
-            descendientes.addAll(versión.transaccionesNodo(árbol)[2]);
-            propias.addAll(versión.transaccionesNodo(árbol)[1]);
-            ancestros.addAll(versión.transaccionesNodo(árbol)[0]);
+            descendientes.addAll(versión.transaccionesNodo()[2]);
+            propias.addAll(versión.transaccionesNodo()[1]);
+            ancestros.addAll(versión.transaccionesNodo()[0]);
         }
 
         ArrayList[] resultado = new ArrayList[3];
@@ -77,13 +77,13 @@ public class Contrato implements Nodo {
         return resultado;
     }
 
-    public ArrayList<Object> hijosNodo(Árbol árbol) {
+    public ArrayList<Object> hijosNodo() {
         ArrayList<Object> hijos = new ArrayList<>();
         hijos.addAll(versións);
         return hijos;
     }
 
-    public String infoNodo(Árbol árbol) {
+    public String infoNodo() {
         return Sari.GSON.toJson(json);
     }
 

@@ -48,7 +48,7 @@ public class ClienteFacturación extends Tercero implements Nodo {
     // -----------------------------------------------
     // GUI / Árbol
     // -----------------------------------------------
-    public String nombreNodo(Árbol árbol) {
+    public String nombreNodo() {
         return nombre;
     }
 
@@ -56,19 +56,19 @@ public class ClienteFacturación extends Tercero implements Nodo {
         return null;
     }
 
-    public ArrayList<Object> hijosNodo(Árbol árbol) {
+    public ArrayList<Object> hijosNodo() {
         ArrayList<Object> hijos = new ArrayList<>();
         hijos.addAll(facturas.values());
         return hijos;
     }
 
-    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
+    public ArrayList<Transacción>[] transaccionesNodo() {
         ArrayList<Transacción> descendientes = new ArrayList<>();
         ArrayList<Transacción> propias = new ArrayList<>();
         ArrayList<Transacción> ancestros = new ArrayList<>();
 
         for (Factura fact : facturas.values())
-            descendientes.addAll(fact.transaccionesNodo(árbol)[1]);
+            descendientes.addAll(fact.transaccionesNodo()[1]);
 
         ArrayList[] resultado = new ArrayList[3];
         resultado[2] = descendientes;
@@ -77,7 +77,7 @@ public class ClienteFacturación extends Tercero implements Nodo {
         return resultado;
     }
 
-    public String infoNodo(Árbol árbol) {
+    public String infoNodo() {
         return Sari.GSON.toJson(json);
     }
 

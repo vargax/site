@@ -1,7 +1,10 @@
 package co.com.tecni.sari.ui.indicadores;
 
 import co.com.tecni.sari.lógica.Sari;
+import co.com.tecni.sari.lógica.inmuebles.Agrupación;
+import co.com.tecni.sari.lógica.inmuebles.tipos.Inmueble;
 import co.com.tecni.sari.lógica.transacciones.Transacción;
+import co.com.tecni.sari.lógica.árboles.Nodo;
 import co.com.tecni.sari.lógica.árboles.ÁrbolCartera;
 import co.com.tecni.sari.ui.UiSari;
 
@@ -26,17 +29,17 @@ public class UiIndicadores {
     public final JPanel componente;
     public final JTabbedPane jTabbedPane;
 
-    static ArrayList<Transacción>[] transacciones = generarArreglos();
-
     Acciones acciones;
 
     Consolidados consolidados;
     Distribución distribución;
     Cartera cartera;
+    static ArrayList<Transacción>[] transacciones = generarArreglos();
 
     private JFormattedTextField fechaInicial;
     private JFormattedTextField fechaFinal;
-    private JLabel valor;
+    private JLabel valorLabel;
+    private JLabel rentabilidadLabel;
 
     public UiIndicadores() throws Exception {
         acciones = new Acciones();
@@ -62,7 +65,8 @@ public class UiIndicadores {
         fechaInicial = new JFormattedTextField(formatoFecha);
         fechaFinal = new JFormattedTextField(formatoFecha);
 
-        valor = new JLabel();
+        valorLabel = new JLabel();
+        rentabilidadLabel = new JLabel();
 
         JPanel encabezado = new JPanel();
         encabezado.setLayout(new GridLayout(0, 5));
@@ -74,7 +78,9 @@ public class UiIndicadores {
         encabezado.add(acciones.generarBotón());
 
         encabezado.add(new JLabel("Valor: ", SwingConstants.RIGHT));
-        encabezado.add(valor);
+        encabezado.add(valorLabel);
+        encabezado.add(new JLabel("Rentabilidad: ", SwingConstants.RIGHT));
+        encabezado.add(rentabilidadLabel);
 
         return encabezado;
     }
@@ -83,19 +89,37 @@ public class UiIndicadores {
 
     }
 
-
-    public void mostrarValor(double valor) {
-        this.valor.setText(Sari.BIG_DECIMAL.format(valor));
+    public void cambioNodo() {
+        mostrarTransacciones();
+        valoryRentabilidad();
     }
 
     /**
-     * Muestras las transacciones asociadas al nodo seleccionado
-     * @param transacciones arreglo con las transacciones dividas en:
-     *                      transacciones[0] ancestros
-     *                      transacciones[1] propias
-     *                      transacciones[2] descendientes
+     * Valor y cálculo de rentabilidadLabel para el nodo seleccionado
      */
-    public void mostrarTransacciones(ArrayList<Transacción>[] transacciones) {
+    private void valoryRentabilidad() {
+        Nodo nodo = UiSari.nodoActual;
+        double valor = 0.0;
+
+        if (nodo instanceof Agrupación)
+            valor = ((Agrupación) nodo).getValor();
+        else if (UiSari.nodoActual instanceof Inmueble)
+            valor = ((Inmueble) nodo).getValor();
+
+        this.valorLabel.setText(Sari.BIG_DECIMAL.format(valor));
+
+    }
+
+    /**
+     * Muestra las transacciones asociadas al nodo seleccionado
+     * Se esperan las transacciones divididas en:
+     *  transacciones[0] ancestros
+     *  transacciones[1] propias
+     *  transacciones[2] descendientes
+     */
+    private void mostrarTransacciones() {
+        ArrayList<Transacción>[] transacciones = UiSari.nodoActual.transaccionesNodo();
+
         if (transacciones != null)
             UiIndicadores.transacciones = transacciones;
         else UiIndicadores.transacciones = generarArreglos();

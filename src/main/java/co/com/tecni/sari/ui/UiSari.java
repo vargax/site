@@ -33,6 +33,7 @@ public class UiSari extends JFrame {
     private UiÁrbol cartera;
 
     public static Árbol árbolActual;
+    public static Nodo nodoActual;
 
     private UiMenu uiMenu;
     private UiJson uiJson;
@@ -100,23 +101,10 @@ public class UiSari extends JFrame {
     // Métodos
     // -----------------------------------------------
     void cambioNodo(Nodo nodo) {
-        if (nodo != null) {
-
-            if (nodo instanceof Agrupación)
-                uiIndicadores.mostrarValor(((Agrupación) nodo).getValor());
-            else if (nodo instanceof Inmueble)
-                uiIndicadores.mostrarValor(((Inmueble) nodo).getValor());
-            else
-                uiIndicadores.mostrarValor(0.0);
-
-            uiIndicadores.mostrarTransacciones(nodo.transaccionesNodo(árbolActual));
-            uiJson.mostrarDetalle(nodo.infoNodo(árbolActual));
-
-        } else {
-
-            uiIndicadores.mostrarValor(0.0);
-            uiIndicadores.mostrarTransacciones(null);
-            uiJson.mostrarDetalle("");
+        nodoActual = nodo;
+        if (nodoActual != null) {
+            uiIndicadores.cambioNodo();
+            uiJson.cambioNodo();
         }
     }
 

@@ -46,11 +46,11 @@ public class Catastral extends Ficha {
         this.json = json;
     }
 
-    public String nombreNodo(Árbol árbol) {
+    public String nombreNodo() {
         return "Cédula catastral: " + json.cedulaCatastral;
     }
 
-    public String infoNodo(Árbol árbol) {
+    public String infoNodo() {
         return Sari.GSON.toJson(json);
     }
 
@@ -95,12 +95,12 @@ public class Catastral extends Ficha {
             }
         }
 
-        public String nombreNodo(Árbol árbol) {
+        public String nombreNodo() {
             return "Predial "+json.añoFiscal;
         }
 
         @Override
-        public String infoNodo(Árbol árbol) {
+        public String infoNodo() {
             return Sari.GSON.toJson(json);
         }
     }

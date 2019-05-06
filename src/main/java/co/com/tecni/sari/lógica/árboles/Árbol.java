@@ -11,15 +11,15 @@ public abstract class Árbol implements TreeModel {
 
     public Object getChild(Object o, int i) {
 
-        return ((Nodo) o).hijosNodo(this).get(i);
+        return ((Nodo) o).hijosNodo().get(i);
     }
 
     public int getChildCount(Object o) {
-        return ((Nodo) o).hijosNodo(this).size();
+        return ((Nodo) o).hijosNodo().size();
     }
 
     public boolean isLeaf(Object o) {
-        ArrayList<Object> hijos = ((Nodo) o).hijosNodo(this);
+        ArrayList<Object> hijos = ((Nodo) o).hijosNodo();
         return hijos == null || hijos.size() == 0;
     }
 
@@ -28,7 +28,7 @@ public abstract class Árbol implements TreeModel {
     }
 
     public int getIndexOfChild(Object o, Object o1) {
-        ArrayList<Object> hijos = ((Nodo) o).hijosNodo(this);
+        ArrayList<Object> hijos = ((Nodo) o).hijosNodo();
 
         for (int i = 0; i < hijos.size(); i++)
             if (hijos.get(i) == o1) return i;

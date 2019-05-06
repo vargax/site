@@ -56,11 +56,11 @@ class Factura implements Nodo {
         facturas.put(json.consecutivo, this);
     }
 
-    public String nombreNodo(Árbol árbol) {
+    public String nombreNodo() {
         return "Factura "+json.consecutivo + " / "+ Sari.DTF.format(json.fecha);
     }
 
-    public ArrayList<Object> hijosNodo(Árbol árbol) {
+    public ArrayList<Object> hijosNodo() {
         return null;
     }
 
@@ -68,7 +68,7 @@ class Factura implements Nodo {
         return null;
     }
 
-    public ArrayList<Transacción>[] transaccionesNodo(Árbol árbol) {
+    public ArrayList<Transacción>[] transaccionesNodo() {
         ArrayList[] resultado = new ArrayList[3];
 
         ArrayList<Transacción> descendientes = new ArrayList<>();
@@ -84,7 +84,7 @@ class Factura implements Nodo {
         return resultado;
     }
 
-    public String infoNodo(Árbol árbol) {
+    public String infoNodo() {
         return Sari.GSON.toJson(json);
     }
 }

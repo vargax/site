@@ -34,8 +34,11 @@ class UiJson {
     // -----------------------------------------------
     // Métodos
     // -----------------------------------------------
-    void mostrarDetalle(String json) {
-        info.setJson(json, JSONEditPanel.UpdateType.REPLACE);
+    void cambioNodo() {
+        if (UiSari.nodoActual != null)
+            info.setJson(UiSari.nodoActual.infoNodo(), JSONEditPanel.UpdateType.REPLACE);
+        else
+            info.setJson("", JSONEditPanel.UpdateType.REPLACE);
     }
 
     private void cargarComentarios() {
