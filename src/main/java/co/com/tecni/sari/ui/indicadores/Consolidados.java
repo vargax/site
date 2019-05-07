@@ -64,6 +64,7 @@ class Consolidados {
     class TablaTransacciones extends UiIndicadores.ModeloTabla {
         private final String[] COLUMNAS = {"",
                 "Real",
+                "Rentabilidad",
                 "Presupuestado",
                 "Diferencia",
                 "% Cumplimiento",
@@ -133,19 +134,22 @@ class Consolidados {
             }
 
             totales[0][0] = ingresosReales;
-            totales[1][0] = ingresosPresupuestados;
-            totales[2][0] = ingresosReales - ingresosPresupuestados;
-            totales[3][0] = totales[0][0] / totales[1][0];
+            totales[1][0] = ingresosReales / UiIndicadores.valor;
+            totales[2][0] = ingresosPresupuestados;
+            totales[3][0] = ingresosReales - ingresosPresupuestados;
+            totales[4][0] = totales[0][0] / totales[2][0];
 
             totales[0][1] = gastosReales;
-            totales[1][1] = gastosPresupuestados;
-            totales[2][1] = gastosReales - gastosPresupuestados;
-            totales[3][1] = totales[0][1] / totales[1][1];
+            totales[1][1] = gastosReales / UiIndicadores.valor;
+            totales[2][1] = gastosPresupuestados;
+            totales[3][1] = gastosReales - gastosPresupuestados;
+            totales[4][1] = totales[0][1] / totales[2][1];
 
             totales[0][2] = ingresosReales + gastosReales;
-            totales[1][2] = ingresosPresupuestados + gastosPresupuestados;
-            totales[2][2] = totales[2][0] + totales[2][1];
-            totales[3][2] = totales[0][2] / totales[1][2];
+            totales[1][2] = totales[0][2] / UiIndicadores.valor;
+            totales[2][2] = ingresosPresupuestados + gastosPresupuestados;
+            totales[3][2] = totales[2][0] + totales[2][1];
+            totales[4][2] = totales[0][2] / totales[2][2];
 
             tabla.updateUI();
 
@@ -167,6 +171,7 @@ class Consolidados {
     class TablaFichas extends UiIndicadores.ModeloTabla {
         private final String[] COLUMNAS = {"Ficha",
                 "Real",
+                "Rentabilidad",
                 "Presupuestado",
                 "Diferencia",
                 "% Cumplimiento",
@@ -195,29 +200,31 @@ class Consolidados {
                 double[] valores = resumen.get(llave);
 
                 if (valores == null) {
-                    valores = new double[5];
+                    valores = new double[6];
                     resumen.put(llave, valores);
                 }
 
                 if (transacción.ficha.presupuestado)
-                    valores[1] += transacción.monto;
+                    valores[2] += transacción.monto;
                 else
                     valores[0] += transacción.monto;
 
             }
 
-            double[] totales = new double[5];
+            double[] totales = new double[6];
 
             for (double[] valores : resumen.values()) {
-                valores[2] = valores[0] - valores[1]; // Diferencia
-                valores[3] = valores[0] / valores[1]; // Cumplimiento
+                valores[1] = valores[0] / UiIndicadores.valor; // Rentabilidad
+                valores[3] = valores[0] - valores[2];          // Diferencia
+                valores[4] = valores[0] / valores[2];          // Cumplimiento
 
                 totales[0] += valores[0];
-                totales[1] += valores[1];
+                totales[2] += valores[2];
             }
 
-            totales[2] = totales[0] - totales[1]; // Diferencia
-            totales[3] = totales[0] / totales[1]; // Cumplimiento
+            totales[1] = totales[0] / UiIndicadores.valor; // Rentabilidad
+            totales[3] = totales[0] - totales[2];          // Diferencia
+            totales[4] = totales[0] / totales[2];          // Cumplimiento
             resumen.put("TOTAL", totales);
 
             tabla.updateUI();

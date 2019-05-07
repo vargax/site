@@ -41,7 +41,7 @@ public class Sari {
         GSON = genGson();
         DTF = DateTimeFormatter.ofPattern("MMM yyyy");
 
-        SMALL_DECIMAL = new DecimalFormat("#.##"); SMALL_DECIMAL.setRoundingMode(RoundingMode.CEILING);
+        SMALL_DECIMAL = new DecimalFormat("#.###"); SMALL_DECIMAL.setRoundingMode(RoundingMode.CEILING);
         BIG_DECIMAL = new DecimalFormat("###,###,###");
 
         instance = new Sari();

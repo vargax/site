@@ -34,12 +34,15 @@ public class UiIndicadores {
     Consolidados consolidados;
     Distribución distribución;
     Cartera cartera;
+
+    static boolean xM2;
+    static double valor;
     static ArrayList<Transacción>[] transacciones = generarArreglos();
 
     private JFormattedTextField fechaInicial;
     private JFormattedTextField fechaFinal;
     private JLabel valorLabel;
-    private JLabel rentabilidadLabel;
+
 
     public UiIndicadores() throws Exception {
         acciones = new Acciones();
@@ -66,7 +69,6 @@ public class UiIndicadores {
         fechaFinal = new JFormattedTextField(formatoFecha);
 
         valorLabel = new JLabel();
-        rentabilidadLabel = new JLabel();
 
         JPanel encabezado = new JPanel();
         encabezado.setLayout(new GridLayout(0, 5));
@@ -75,12 +77,14 @@ public class UiIndicadores {
         encabezado.add(fechaInicial);
         encabezado.add(new JLabel("Fecha final: ", SwingConstants.RIGHT));
         encabezado.add(fechaFinal);
-        encabezado.add(acciones.generarBotón());
+        encabezado.add(acciones.botónBuscar());
+
+        encabezado.add(new JLabel("Rentabilidad: ", SwingConstants.RIGHT));
+        for (JRadioButton rb : acciones.botonesTotaloM2())
+            encabezado.add(rb);
 
         encabezado.add(new JLabel("Valor: ", SwingConstants.RIGHT));
         encabezado.add(valorLabel);
-        encabezado.add(new JLabel("Rentabilidad: ", SwingConstants.RIGHT));
-        encabezado.add(rentabilidadLabel);
 
         return encabezado;
     }
@@ -90,24 +94,23 @@ public class UiIndicadores {
     }
 
     public void cambioNodo() {
-        mostrarTransacciones();
-        valoryRentabilidad();
+        valor();
+        transacciones();
     }
 
     /**
      * Valor y cálculo de rentabilidadLabel para el nodo seleccionado
      */
-    private void valoryRentabilidad() {
+    private void valor() {
         Nodo nodo = UiSari.nodoActual;
-        double valor = 0.0;
+        valor = 0.0;
 
         if (nodo instanceof Agrupación)
             valor = ((Agrupación) nodo).getValor();
         else if (UiSari.nodoActual instanceof Inmueble)
             valor = ((Inmueble) nodo).getValor();
 
-        this.valorLabel.setText(Sari.BIG_DECIMAL.format(valor));
-
+        valorLabel.setText(Sari.BIG_DECIMAL.format(valor));
     }
 
     /**
@@ -117,7 +120,7 @@ public class UiIndicadores {
      *  transacciones[1] propias
      *  transacciones[2] descendientes
      */
-    private void mostrarTransacciones() {
+    private void transacciones() {
         ArrayList<Transacción>[] transacciones = UiSari.nodoActual.transaccionesNodo();
 
         if (transacciones != null)
@@ -181,28 +184,56 @@ public class UiIndicadores {
 
     class Acciones implements ActionListener {
 
-        final static String BUSCAR = "Buscar";
+        final String BUSCAR = "Buscar";
+        final String[] RB = new String[]{"xM2", "Total"};
+        final int DEFAULT_RB = 1;
 
-        JButton generarBotón() {
+
+        JButton botónBuscar() {
             JButton buscar = new JButton(BUSCAR);
             buscar.setActionCommand(BUSCAR);
             buscar.addActionListener(this);
             return buscar;
         }
 
-        public void actionPerformed(ActionEvent actionEvent) {
+        void buscar() {
+            try {
+                LocalDate fi = LocalDate.from((YearMonth.parse(fechaInicial.getText(), Sari.DTF)).atDay(1));
+                LocalDate ff = LocalDate.from((YearMonth.parse(fechaFinal.getText(), Sari.DTF)).atEndOfMonth());
 
-            if (BUSCAR.equals(actionEvent.getActionCommand())) {
-                try {
-                    LocalDate fi = LocalDate.from((YearMonth.parse(fechaInicial.getText(), Sari.DTF)).atDay(1));
-                    LocalDate ff = LocalDate.from((YearMonth.parse(fechaFinal.getText(), Sari.DTF)).atEndOfMonth());
-
-                    System.out.println("Buscando transacciones entre "+ Sari.DTF.format(fi)+" y "+ Sari.DTF.format(ff));
-                } catch (DateTimeParseException e){
-                    System.err.println(e.getParsedString()+" no es una fecha válida");
-                    e.printStackTrace();
-                }
+                System.out.println("Buscando transacciones entre "+ Sari.DTF.format(fi)+" y "+ Sari.DTF.format(ff));
+            } catch (DateTimeParseException e){
+                System.err.println(e.getParsedString()+" no es una fecha válida");
+                e.printStackTrace();
             }
+        }
+
+        ArrayList<JRadioButton> botonesTotaloM2() {
+            ArrayList<JRadioButton> botones = new ArrayList<>();
+            ButtonGroup bg = new ButtonGroup();
+
+            for (String s : RB) {
+                JRadioButton rb = new JRadioButton(s);
+                rb.addActionListener(this);
+                bg.add(rb);
+                botones.add(rb);
+            }
+
+            (botones.get(DEFAULT_RB)).setSelected(true);
+            totaloM2(RB[DEFAULT_RB]);
+
+            return botones;
+        }
+
+        void totaloM2(String command) {
+            xM2 = RB[0].equals(command);
+        }
+
+        public void actionPerformed(ActionEvent actionEvent) {
+            String command = actionEvent.getActionCommand();
+
+            if (command.equals(BUSCAR)) buscar();
+            else totaloM2(command);
         }
     }
 

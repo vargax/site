@@ -41,6 +41,7 @@ public class Agrupación implements Nodo {
             inmuebles = resultado[1];
         }
     }
+
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
@@ -75,6 +76,7 @@ public class Agrupación implements Nodo {
         }
         return valor;
     }
+
     // -----------------------------------------------
     // Nodo
     // -----------------------------------------------
