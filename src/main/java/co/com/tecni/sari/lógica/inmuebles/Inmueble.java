@@ -1,14 +1,13 @@
-package co.com.tecni.sari.lógica.inmuebles.tipos;
+package co.com.tecni.sari.lógica.inmuebles;
 
 import co.com.tecni.sari.lógica.Sari;
-import co.com.tecni.sari.lógica.árboles.Heredable;
-import co.com.tecni.sari.lógica.árboles.Nodo;
 import co.com.tecni.sari.lógica.fichas.Arrendamiento;
 import co.com.tecni.sari.lógica.fichas.Ficha;
 import co.com.tecni.sari.lógica.fichas.Presupuestal;
 import co.com.tecni.sari.lógica.transacciones.Transacción;
+import co.com.tecni.sari.lógica.árboles.Nodo;
 import co.com.tecni.sari.lógica.árboles.Árbol;
-import co.com.tecni.sari.lógica.árboles.ÁrbolContratos;
+import co.com.tecni.sari.lógica.árboles.PerspectivaClientes;
 import co.com.tecni.sari.ui.UiSari;
 import co.com.tecni.sari.ui.UiÁrbol;
 import jiconfont.IconCode;
@@ -20,7 +19,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class Inmueble implements Heredable {
+public abstract class Inmueble implements Nodo {
 
     // -----------------------------------------------
     // Constantes
@@ -150,7 +149,7 @@ public abstract class Inmueble implements Heredable {
         ArrayList<Transacción> propias = new ArrayList<>();
         for (Ficha ficha : fichas) {
 
-            if (ficha instanceof Arrendamiento && árbol instanceof ÁrbolContratos) continue;
+            if (ficha instanceof Arrendamiento && árbol instanceof PerspectivaClientes) continue;
 
             ArrayList<Transacción>[] transaccionesFichas = ficha.recursiónTransacciones(factorPonderación);
             propias.addAll(transaccionesFichas[1]);
@@ -180,12 +179,11 @@ public abstract class Inmueble implements Heredable {
         return padre == null ? sigla + " " + nombre : padre.genNombre() + " " + sigla + " " + nombre;
     }
 
-    public double getValor() {
-        return valor;
-    }
-
-    public double getM2() {
-        return m2.get(sari.getModoPonderación());
+    public double[] getM2yValor() {
+        double[] resp = new double[2];
+        resp[0] = m2.get(sari.getModoPonderación());
+        resp[1] = valor;
+        return resp;
     }
 
     public void registrarFicha(Ficha ficha) {
@@ -205,7 +203,7 @@ public abstract class Inmueble implements Heredable {
         Presupuestal presupuesto = presupuestos.get(año);
 
         if (presupuesto == null) {
-            presupuesto = new Presupuestal(año);
+            presupuesto = new Presupuestal(this, año);
             presupuestos.put(año, presupuesto);
             fichas.add(presupuesto);
         }

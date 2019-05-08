@@ -62,6 +62,10 @@ public class ClienteFacturación extends Tercero implements Nodo {
         return hijos;
     }
 
+    public double[] getM2yValor() {
+        return new double[2];
+    }
+
     public ArrayList<Transacción>[] transaccionesNodo() {
         ArrayList<Transacción> descendientes = new ArrayList<>();
         ArrayList<Transacción> propias = new ArrayList<>();

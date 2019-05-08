@@ -3,7 +3,6 @@ package co.com.tecni.sari.lógica.contratos;
 import co.com.tecni.sari.lógica.Sari;
 import co.com.tecni.sari.lógica.árboles.Nodo;
 import co.com.tecni.sari.lógica.transacciones.Transacción;
-import co.com.tecni.sari.lógica.árboles.Árbol;
 import co.com.tecni.sari.ui.UiÁrbol;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class Contrato implements Nodo {
     final int ID;
     final ClienteComercial CLIENTE_COMERCIAL;
 
-    ArrayList<Versión> versións;
+    ArrayList<Versión> versiones;
 
     private Json json;
     public static class Json {
@@ -41,7 +40,7 @@ public class Contrato implements Nodo {
 
         json.númeroContrato = ID;
 
-        versións = new ArrayList<>();
+        versiones = new ArrayList<>();
         CLIENTE_COMERCIAL.contratos.put(ID,this);
 
         contratos.put(this.ID, this);
@@ -63,8 +62,8 @@ public class Contrato implements Nodo {
         ArrayList<Transacción> propias = new ArrayList<>();
         ArrayList<Transacción> ancestros = new ArrayList<>();
 
-        // Se suman las transacciones asociadas a todas las versións
-        for (Versión versión : versións) {
+        // Se suman las transacciones asociadas a todas las versiones
+        for (Versión versión : versiones) {
             descendientes.addAll(versión.transaccionesNodo()[2]);
             propias.addAll(versión.transaccionesNodo()[1]);
             ancestros.addAll(versión.transaccionesNodo()[0]);
@@ -77,9 +76,16 @@ public class Contrato implements Nodo {
         return resultado;
     }
 
+    /**
+     * Los M2 y valor de un Contrato son los de su última versión
+     */
+    public double[] getM2yValor() {
+        return (versiones.get(versiones.size()-1)).getM2yValor();
+    }
+
     public ArrayList<Object> hijosNodo() {
         ArrayList<Object> hijos = new ArrayList<>();
-        hijos.addAll(versións);
+        hijos.addAll(versiones);
         return hijos;
     }
 

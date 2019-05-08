@@ -4,8 +4,7 @@ import co.com.tecni.sari.lógica.Sari;
 import co.com.tecni.sari.lógica.árboles.Nodo;
 import co.com.tecni.sari.lógica.fichas.Arrendamiento;
 import co.com.tecni.sari.lógica.transacciones.Transacción;
-import co.com.tecni.sari.lógica.inmuebles.tipos.Inmueble;
-import co.com.tecni.sari.lógica.árboles.Árbol;
+import co.com.tecni.sari.lógica.inmuebles.Inmueble;
 import co.com.tecni.sari.ui.UiÁrbol;
 
 import java.time.LocalDate;
@@ -25,6 +24,7 @@ public class Versión implements Nodo {
     final LocalDate INICIO;
     final LocalDate FIN;
 
+    private double[] m2yValor = {-1.0, -1.0};
     private ArrayList<Arrendamiento> fichasArrendamiento;
 
     private HashMap<Integer, ClienteFacturación> clientesFacturación;
@@ -115,7 +115,7 @@ public class Versión implements Nodo {
         clientesFacturación = new HashMap<>();
         participaciónClientesFacturación = new HashMap<>();
 
-        CONTRATO.versións.add(this);
+        CONTRATO.versiones.add(this);
 
         json = new Json(this);
 
@@ -163,6 +163,18 @@ public class Versión implements Nodo {
     // -----------------------------------------------
     // Lógica
     // -----------------------------------------------
+    private void calcularValoryM2() {
+        this.m2yValor[0] = 0.0;
+        this.m2yValor[1] = 0.0;
+
+        for (Object o : hijosNodo()) {
+            Nodo n = (Nodo) o;
+            double[] m2yValor = n.getM2yValor();
+            this.m2yValor[0] += m2yValor[0];
+            this.m2yValor[1] += m2yValor[1];
+        }
+    }
+
     void facturar(LocalDate fechaCorte) {
 
         if (fechaCorte.isAfter(FIN))
@@ -205,6 +217,11 @@ public class Versión implements Nodo {
         return hijos;
     }
 
+    public double[] getM2yValor() {
+        if (this.m2yValor[0] < 0 && this.m2yValor[1] < 0) calcularValoryM2();
+        return m2yValor;
+    }
+
     public ArrayList<Transacción>[] transaccionesNodo() {
         ArrayList<Transacción> descendientes = new ArrayList<>();
         ArrayList<Transacción> propias = new ArrayList<>();
@@ -223,8 +240,6 @@ public class Versión implements Nodo {
         resultado[0] = ancestros;
         return resultado;
     }
-
-
 
     public String infoNodo() {
         return Sari.GSON.toJson(json);

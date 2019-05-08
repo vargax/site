@@ -1,6 +1,7 @@
 package co.com.tecni.sari.lógica.fichas;
 
 import co.com.tecni.sari.lógica.Sari;
+import co.com.tecni.sari.lógica.árboles.Nodo;
 import co.com.tecni.sari.lógica.árboles.Árbol;
 
 import java.time.LocalDate;
@@ -25,7 +26,8 @@ public class Jurídica extends Ficha {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public Jurídica(Json json) {
+    public Jurídica(Nodo padre, Json json) {
+        super(padre);
         this.json = json;
     }
 

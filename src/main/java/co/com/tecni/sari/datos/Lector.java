@@ -4,10 +4,10 @@ import co.com.tecni.sari.lógica.contratos.ClienteComercial;
 import co.com.tecni.sari.lógica.contratos.ClienteFacturación;
 import co.com.tecni.sari.lógica.contratos.Contrato;
 import co.com.tecni.sari.lógica.contratos.Versión;
-import co.com.tecni.sari.lógica.inmuebles.tipos.Inmueble;
-import co.com.tecni.sari.lógica.árboles.ÁrbolCartera;
-import co.com.tecni.sari.lógica.árboles.ÁrbolContratos;
-import co.com.tecni.sari.lógica.árboles.ÁrbolInmuebles;
+import co.com.tecni.sari.lógica.inmuebles.Inmueble;
+import co.com.tecni.sari.lógica.árboles.PerspectivaInmuebles;
+import co.com.tecni.sari.lógica.árboles.PerspectivaCartera;
+import co.com.tecni.sari.lógica.árboles.PerspectivaClientes;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 
@@ -16,7 +16,7 @@ import java.time.ZoneId;
 import java.util.HashMap;
 
 public class Lector {
-    private HashMap<String, Inmueble> inmueblesxId = ÁrbolInmuebles.inmueblesxId;
+    private HashMap<String, Inmueble> inmueblesxId = PerspectivaInmuebles.inmueblesxId;
     private HashMap<Integer, ClienteComercial> clientesComercialesxId;
     private HashMap<Integer, ClienteFacturación> clientesFacturaciónxId;
     private HashMap<Integer, Contrato> contratosxId;
@@ -73,15 +73,15 @@ public class Lector {
         return doble;
     }
 
-    public ÁrbolInmuebles importarInmuebles() throws Exception {
+    public PerspectivaInmuebles importarInmuebles() throws Exception {
         LectorInmueble li = new LectorInmueble();
         LectorAgrupaciones la = new LectorAgrupaciones(li);
 
-        ÁrbolInmuebles árbolInmuebles = la.leer();
-        árbolInmuebles.registrarIdentificadores();
+        PerspectivaInmuebles perspectivaInmuebles = la.leer();
+        perspectivaInmuebles.registrarIdentificadores();
 
         importarFichas();
-        return árbolInmuebles;
+        return perspectivaInmuebles;
     }
 
     private void importarFichas() throws Exception {
@@ -89,7 +89,7 @@ public class Lector {
         LectorJurídica lectorJurídica = new LectorJurídica(inmueblesxId);
         LectorObraCivil lectorObraCivil = new LectorObraCivil(inmueblesxId);
 
-        for (String nombreInmueble : ÁrbolInmuebles.inmueblesRaiz.keySet()) {
+        for (String nombreInmueble : PerspectivaInmuebles.inmueblesRaiz.keySet()) {
             lectorJurídica.leer(nombreInmueble);
             lectorCatastral.leer(nombreInmueble);
             lectorObraCivil.leer(nombreInmueble);
@@ -107,12 +107,12 @@ public class Lector {
         secuenciasxId = lectorContrato.secuencias;
     }
 
-    public ÁrbolContratos genÁrbolContratos() {
-        return new ÁrbolContratos(clientesComercialesxId);
+    public PerspectivaClientes genÁrbolContratos() {
+        return new PerspectivaClientes(clientesComercialesxId);
     }
 
-    public ÁrbolCartera genÁrbolCartera() {
-        return new ÁrbolCartera(clientesComercialesxId);
+    public PerspectivaCartera genÁrbolCartera() {
+        return new PerspectivaCartera(clientesComercialesxId);
     }
 
 }

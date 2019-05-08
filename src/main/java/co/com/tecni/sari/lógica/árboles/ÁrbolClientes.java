@@ -15,9 +15,23 @@ abstract class ÁrbolClientes extends Árbol {
     private Raiz raiz;
     private class Raiz implements Nodo {
 
+        private double[] m2yValor = {-1.0, -1.0};
+
         private Json json = new Json();
         class Json {
-            String nombre = "Sistema de Información de Inmuebles de TECNI";
+            String nombre = "Sistema de Administración de Recursos Inmobiliarios SARI";
+        }
+
+        private void calcularValoryM2() {
+            this.m2yValor[0] = 0.0;
+            this.m2yValor[1] = 0.0;
+
+            for (Object o : hijosNodo()) {
+                Nodo n = (Nodo) o;
+                double[] m2yValor = n.getM2yValor();
+                this.m2yValor[0] += m2yValor[0];
+                this.m2yValor[1] += m2yValor[1];
+            }
         }
 
         public String nombreNodo() {
@@ -32,6 +46,11 @@ abstract class ÁrbolClientes extends Árbol {
 
         public UiÁrbol.Ícono íconoNodo() {
             return null;
+        }
+
+        public double[] getM2yValor() {
+            if (this.m2yValor[0] < 0 && this.m2yValor[1] < 0) calcularValoryM2();
+            return m2yValor;
         }
 
         public ArrayList<Transacción>[] transaccionesNodo() {

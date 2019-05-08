@@ -1,4 +1,4 @@
-package co.com.tecni.sari.lógica.inmuebles.tipos;
+package co.com.tecni.sari.lógica.inmuebles;
 
 public class Deposito extends Inmueble {
 

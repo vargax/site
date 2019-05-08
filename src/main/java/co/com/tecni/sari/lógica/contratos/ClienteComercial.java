@@ -3,9 +3,8 @@ package co.com.tecni.sari.lógica.contratos;
 import co.com.tecni.sari.lógica.Sari;
 import co.com.tecni.sari.lógica.árboles.Nodo;
 import co.com.tecni.sari.lógica.transacciones.Transacción;
-import co.com.tecni.sari.lógica.árboles.Árbol;
-import co.com.tecni.sari.lógica.árboles.ÁrbolCartera;
-import co.com.tecni.sari.lógica.árboles.ÁrbolContratos;
+import co.com.tecni.sari.lógica.árboles.PerspectivaCartera;
+import co.com.tecni.sari.lógica.árboles.PerspectivaClientes;
 import co.com.tecni.sari.ui.UiSari;
 import co.com.tecni.sari.ui.UiÁrbol;
 
@@ -26,6 +25,8 @@ public class ClienteComercial implements Nodo {
     final HashMap<Integer, ClienteFacturación> clientesFacturación;
     final HashMap<Integer, Contrato> contratos;
 
+    private double[] m2yValor = {-1.0, -1.0};
+
     private Json json;
     static class Json {
         int id;
@@ -42,7 +43,7 @@ public class ClienteComercial implements Nodo {
 
 
             for (Contrato contrato : cc.contratos.values())
-                secuencias += contrato.versións.size();
+                secuencias += contrato.versiones.size();
         }
     }
 
@@ -64,8 +65,20 @@ public class ClienteComercial implements Nodo {
     // -----------------------------------------------
     public void facturar(LocalDate fechaCorte) {
         for (Contrato contrato : contratos.values()) {
-            ArrayList<Versión> versións = contrato.versións;
+            ArrayList<Versión> versións = contrato.versiones;
             (versións.get(versións.size()-1)).facturar(fechaCorte);
+        }
+    }
+
+    private void calcularValoryM2() {
+        this.m2yValor[0] = 0.0;
+        this.m2yValor[1] = 0.0;
+
+        for (Object o : hijosNodo()) {
+            Nodo n = (Nodo) o;
+            double[] m2yValor = n.getM2yValor();
+            this.m2yValor[0] += m2yValor[0];
+            this.m2yValor[1] += m2yValor[1];
         }
     }
 
@@ -80,10 +93,15 @@ public class ClienteComercial implements Nodo {
         return null;
     }
 
+    public double[] getM2yValor() {
+        calcularValoryM2();
+        return m2yValor;
+    }
+
     public ArrayList<Object> hijosNodo() {
-        if (UiSari.árbolActual instanceof ÁrbolContratos)
+        if (UiSari.árbolActual instanceof PerspectivaClientes)
             return new ArrayList<>(contratos.values());
-        else if (UiSari.árbolActual instanceof ÁrbolCartera)
+        else if (UiSari.árbolActual instanceof PerspectivaCartera)
             return new ArrayList<>(clientesFacturación.values());
 
         return null;
@@ -94,16 +112,16 @@ public class ClienteComercial implements Nodo {
         ArrayList<Transacción> propias = new ArrayList<>();
         ArrayList<Transacción> ancestros = new ArrayList<>();
 
-        if (UiSari.árbolActual instanceof ÁrbolCartera)
+        if (UiSari.árbolActual instanceof PerspectivaCartera)
             for (ClienteFacturación clFact : clientesFacturación.values())
                 descendientes.addAll(clFact.transaccionesNodo()[2]);
 
         // Se suman las transacciones asociadas a todos los contratos
-        /* ToDo NO coinciden con los valores presentados en ÁrbolInmuebles
-        *  |> Sólo se incluyen las transacciones de los inmuebles asociados a versións
+        /* ToDo NO coinciden con los valores presentados en PerspectivaInmuebles
+        *  |> Sólo se incluyen las transacciones de los inmuebles asociados a versiones
         *  |> Siempre debería coincidir el getValor de los ingresos por arrendamiento reales
         */
-        if (UiSari.árbolActual instanceof ÁrbolContratos)
+        if (UiSari.árbolActual instanceof PerspectivaClientes)
             for (Contrato contrato : contratos.values()) {
                 descendientes.addAll(contrato.transaccionesNodo()[2]);
                 propias.addAll(contrato.transaccionesNodo()[1]);

@@ -4,17 +4,17 @@ import co.com.tecni.sari.lógica.Sari;
 import co.com.tecni.sari.lógica.contratos.ClienteComercial;
 import co.com.tecni.sari.lógica.fichas.Arrendamiento;
 import co.com.tecni.sari.lógica.fichas.Presupuestal;
-import co.com.tecni.sari.lógica.inmuebles.tipos.Inmueble;
+import co.com.tecni.sari.lógica.inmuebles.Inmueble;
 
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ÁrbolCartera extends ÁrbolClientes {
+public class PerspectivaCartera extends ÁrbolClientes {
 
     public final static String NOMBRE_RAIZ = "CARTERA";
 
-    public ÁrbolCartera(HashMap<Integer, ClienteComercial> clientesComercialesxId) {
+    public PerspectivaCartera(HashMap<Integer, ClienteComercial> clientesComercialesxId) {
         super(clientesComercialesxId);
         super.nombreRaiz = NOMBRE_RAIZ;
     }
@@ -33,7 +33,7 @@ public class ÁrbolCartera extends ÁrbolClientes {
             // Presupuestar Ingresos
             for (Map.Entry<String, Double> e : ingresosPresupuestadosxInmueble.entrySet()) {
 
-                Inmueble inmueble = Sari.árbolInmuebles.inmueblesxId.get(e.getKey());
+                Inmueble inmueble = Sari.perspectivaInmuebles.inmueblesxId.get(e.getKey());
                 Presupuestal presupuesto = inmueble.getPresupuesto(fecha.getYear()).ingresos();
 
                 Arrendamiento arrendamiento = new Arrendamiento(presupuesto, inmueble);

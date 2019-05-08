@@ -1,8 +1,8 @@
 package co.com.tecni.sari.datos;
 
 import co.com.tecni.sari.lógica.inmuebles.Agrupación;
-import co.com.tecni.sari.lógica.inmuebles.tipos.Inmueble;
-import co.com.tecni.sari.lógica.árboles.ÁrbolInmuebles;
+import co.com.tecni.sari.lógica.inmuebles.Inmueble;
+import co.com.tecni.sari.lógica.árboles.PerspectivaInmuebles;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -22,11 +22,11 @@ class LectorAgrupaciones {
         this.lectorInmueble = lectorInmueble;
     }
 
-    ÁrbolInmuebles leer() throws Exception {
+    PerspectivaInmuebles leer() throws Exception {
         bufferedReader = new BufferedReader(new InputStreamReader(LectorAgrupaciones.class.getResourceAsStream("/static/agrupaciones.txt")));
         líneaActual = bufferedReader.readLine();
 
-        return new ÁrbolInmuebles(recursión());
+        return new PerspectivaInmuebles(recursión());
     }
 
     Agrupación recursión() throws Exception {
@@ -46,7 +46,7 @@ class LectorAgrupaciones {
 
                 for (Inmueble i : inmuebles) {
                     agrupación.agregarInmueble(i);
-                    ÁrbolInmuebles.inmueblesRaiz.put(nombre, i);
+                    PerspectivaInmuebles.inmueblesRaiz.put(nombre, i);
                 }
 
                 líneaActual = bufferedReader.readLine();

@@ -1,11 +1,8 @@
 package co.com.tecni.sari.ui;
 
 import co.com.tecni.sari.lógica.Sari;
-import co.com.tecni.sari.lógica.árboles.Nodo;
-import co.com.tecni.sari.lógica.árboles.Árbol;
-import co.com.tecni.sari.lógica.árboles.ÁrbolCartera;
-import co.com.tecni.sari.lógica.árboles.ÁrbolContratos;
-import co.com.tecni.sari.lógica.árboles.ÁrbolInmuebles;
+import co.com.tecni.sari.lógica.árboles.*;
+import co.com.tecni.sari.lógica.árboles.PerspectivaInmuebles;
 import co.com.tecni.sari.ui.indicadores.UiIndicadores;
 
 import javax.swing.*;
@@ -47,9 +44,9 @@ public class UiSari extends JFrame {
         sari = Sari.instance;
         sari.generarÁrboles();
 
-        inmuebles = new UiÁrbol(ÁrbolInmuebles.NOMBRE_RAIZ, Sari.árbolInmuebles);
-        contratos = new UiÁrbol(ÁrbolContratos.NOMBRE_RAIZ, Sari.árbolContratos);
-        cartera = new UiÁrbol(ÁrbolCartera.NOMBRE_RAIZ, Sari.árbolCartera);
+        inmuebles = new UiÁrbol(PerspectivaInmuebles.NOMBRE_RAIZ, Sari.perspectivaInmuebles);
+        contratos = new UiÁrbol(PerspectivaClientes.NOMBRE_RAIZ, Sari.perspectivaClientes);
+        cartera = new UiÁrbol(PerspectivaCartera.NOMBRE_RAIZ, Sari.perspectivaCartera);
 
         uiMenu = new UiMenu();
         uiJson = new UiJson();
@@ -68,13 +65,13 @@ public class UiSari extends JFrame {
             public void stateChanged(ChangeEvent changeEvent) {
                 int tab = pestañasÁrboles.getSelectedIndex();
                 switch (tab) {
-                    case 0: árbolActual = Sari.árbolInmuebles;
+                    case 0: árbolActual = Sari.perspectivaInmuebles;
                             cambioNodo(inmuebles.nodoActual);
                             break;
-                    case 1: árbolActual = Sari.árbolContratos;
+                    case 1: árbolActual = Sari.perspectivaClientes;
                             cambioNodo(contratos.nodoActual);
                             break;
-                    case 2: árbolActual = Sari.árbolCartera;
+                    case 2: árbolActual = Sari.perspectivaCartera;
                             cambioNodo(cartera.nodoActual);
                 }
             }

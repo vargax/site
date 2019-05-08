@@ -1,7 +1,7 @@
 package co.com.tecni.sari.datos;
 
 import co.com.tecni.sari.lógica.fichas.Mejora;
-import co.com.tecni.sari.lógica.inmuebles.tipos.Inmueble;
+import co.com.tecni.sari.lógica.inmuebles.Inmueble;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -85,7 +85,7 @@ class LectorObraCivil {
             if (presupuestado)
                 new Mejora(inmueble.getPresupuesto(fechaInicial.getYear()).gastos(), json);
             else
-                inmueble.registrarFicha(new Mejora(json));
+                new Mejora(inmueble, json);
         }
 
         for (Map.Entry<String, Integer> e : contadores.entrySet()) {

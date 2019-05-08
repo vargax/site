@@ -1,11 +1,11 @@
 package co.com.tecni.sari.lógica.árboles;
 
 import co.com.tecni.sari.lógica.inmuebles.Agrupación;
-import co.com.tecni.sari.lógica.inmuebles.tipos.Inmueble;
+import co.com.tecni.sari.lógica.inmuebles.Inmueble;
 
 import java.util.HashMap;
 
-public class ÁrbolInmuebles extends Árbol {
+public class PerspectivaInmuebles extends Árbol {
 
     // -----------------------------------------------
     // Constantes
@@ -22,7 +22,7 @@ public class ÁrbolInmuebles extends Árbol {
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    public ÁrbolInmuebles(Agrupación raiz) {
+    public PerspectivaInmuebles(Agrupación raiz) {
         this.raiz = raiz;
     }
 

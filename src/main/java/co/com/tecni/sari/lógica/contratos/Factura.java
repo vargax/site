@@ -64,6 +64,10 @@ class Factura implements Nodo {
         return null;
     }
 
+    public double[] getM2yValor() {
+        return new double[0];
+    }
+
     public UiÁrbol.Ícono íconoNodo() {
         return null;
     }

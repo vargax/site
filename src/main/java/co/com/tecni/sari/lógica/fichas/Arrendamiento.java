@@ -4,10 +4,9 @@ import co.com.tecni.sari.lógica.Sari;
 import co.com.tecni.sari.lógica.contratos.ClienteFacturación;
 import co.com.tecni.sari.lógica.contratos.Versión;
 import co.com.tecni.sari.lógica.transacciones.Transacción;
-import co.com.tecni.sari.lógica.inmuebles.tipos.Inmueble;
-import co.com.tecni.sari.lógica.árboles.Árbol;
-import co.com.tecni.sari.lógica.árboles.ÁrbolContratos;
-import co.com.tecni.sari.lógica.árboles.ÁrbolInmuebles;
+import co.com.tecni.sari.lógica.inmuebles.Inmueble;
+import co.com.tecni.sari.lógica.árboles.PerspectivaClientes;
+import co.com.tecni.sari.lógica.árboles.PerspectivaInmuebles;
 import co.com.tecni.sari.ui.UiSari;
 
 import java.time.LocalDate;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 public class Arrendamiento extends Ficha {
 
     private final Versión versión;
-    private final Inmueble inmueble;
     private Json json;
 
     public static class Json {
@@ -34,19 +32,17 @@ public class Arrendamiento extends Ficha {
     // Constructor para presupuestos
     public Arrendamiento(Ficha padre, Inmueble inmueble) {
         super(padre);
+        super.inmueble = inmueble;
 
         this.versión = null;
-        this.inmueble = inmueble;
         this.json = new Json(0, "N/A", 1);
     }
 
     public Arrendamiento(Versión versión, Inmueble inmueble, Json json) {
+        super(inmueble);
 
         this.versión = versión;
-        this.inmueble = inmueble;
         this.json = json;
-
-        inmueble.registrarFicha(this);
     }
 
     public Transacción facturar(ClienteFacturación clienteFacturación,
@@ -70,9 +66,9 @@ public class Arrendamiento extends Ficha {
     }
 
     public String nombreNodo() {
-        if (UiSari.árbolActual instanceof ÁrbolInmuebles)
+        if (UiSari.árbolActual instanceof PerspectivaInmuebles)
             return "Arrendamiento: " + json.númeroSecuencia + " / "+ Sari.SMALL_DECIMAL.format(json.participación);
-        if (UiSari.árbolActual instanceof ÁrbolContratos)
+        if (UiSari.árbolActual instanceof PerspectivaClientes)
             return "Inmueble: "+ inmueble.nombreNodo() + " / "+ Sari.SMALL_DECIMAL.format(json.participación);
         return "Típo de Árbol no definido en Ficha.Arrendamiento.nombreNodo()";
     }
@@ -85,7 +81,7 @@ public class Arrendamiento extends Ficha {
     public ArrayList<Transacción>[] transaccionesNodo() {
         ArrayList[] resultado = super.transaccionesNodo();
 
-        if (UiSari.árbolActual instanceof ÁrbolContratos) {
+        if (UiSari.árbolActual instanceof PerspectivaClientes) {
             ArrayList<Transacción>[] transaccionesInmueble = inmueble.transaccionesNodo();
             resultado[0].addAll(transaccionesInmueble[0]);
             resultado[1].addAll(transaccionesInmueble[1]);

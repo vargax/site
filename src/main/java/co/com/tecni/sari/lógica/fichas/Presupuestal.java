@@ -1,6 +1,7 @@
 package co.com.tecni.sari.lógica.fichas;
 
 import co.com.tecni.sari.lógica.Sari;
+import co.com.tecni.sari.lógica.árboles.Nodo;
 import co.com.tecni.sari.lógica.árboles.Árbol;
 
 import java.util.ArrayList;
@@ -16,17 +17,18 @@ public class Presupuestal extends Ficha {
         int año;
         int fichas;
 
-        public Json(String tipo, int año) {
+        Json(String tipo, int año) {
             this.tipo = tipo;
             this.año = año;
             this.fichas = -1;
         }
     }
 
-    public final HashMap<String, Presupuestal> presupuestos;
+    final HashMap<String, Presupuestal> presupuestos;
 
-    public Presupuestal(int año) {
-        super(true);
+    public Presupuestal(Nodo padre, int año) {
+        super(padre);
+        super.presupuestado = true;
 
         this.json = new Json(TIPOS[0], año);
         presupuestos = new HashMap<>();
@@ -38,7 +40,7 @@ public class Presupuestal extends Ficha {
 
     }
 
-    private Presupuestal(Ficha padre, String tipo, int año) {
+    private Presupuestal(Nodo padre, String tipo, int año) {
         super(padre);
 
         this.json = new Json(tipo, año);

@@ -7,7 +7,7 @@ import co.com.tecni.sari.lógica.contratos.ClienteFacturación;
 import co.com.tecni.sari.lógica.contratos.Contrato;
 import co.com.tecni.sari.lógica.inmuebles.Agrupación;
 import co.com.tecni.sari.lógica.fichas.Ficha;
-import co.com.tecni.sari.lógica.inmuebles.tipos.Inmueble;
+import co.com.tecni.sari.lógica.inmuebles.Inmueble;
 import co.com.tecni.sari.lógica.árboles.Árbol;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;

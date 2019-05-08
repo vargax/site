@@ -1,6 +1,6 @@
 package co.com.tecni.sari.pruebas;
 
-import co.com.tecni.sari.lógica.inmuebles.tipos.Inmueble;
+import co.com.tecni.sari.lógica.inmuebles.Inmueble;
 
 import java.util.ArrayList;
 

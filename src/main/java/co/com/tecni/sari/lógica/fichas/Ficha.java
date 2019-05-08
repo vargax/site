@@ -1,5 +1,6 @@
 package co.com.tecni.sari.lógica.fichas;
 
+import co.com.tecni.sari.lógica.inmuebles.Inmueble;
 import co.com.tecni.sari.lógica.árboles.Nodo;
 import co.com.tecni.sari.lógica.transacciones.Transacción;
 import co.com.tecni.sari.lógica.árboles.Árbol;
@@ -18,34 +19,31 @@ public abstract class Ficha implements Nodo {
     // -----------------------------------------------
     // Atributos
     // -----------------------------------------------
+    Inmueble inmueble;
     Ficha padre;
-    public final boolean presupuestado;
+    public boolean presupuestado;
 
-    ArrayList<Ficha> fichas;
-    ArrayList<Transacción> transacciones;
+    ArrayList<Ficha> fichas = new ArrayList<>();
+    ArrayList<Transacción> transacciones = new ArrayList<>();
 
-    UiÁrbol.Ícono ícono;
+    UiÁrbol.Ícono ícono = new UiÁrbol.Ícono(UI_ÍCONO);
     // -----------------------------------------------
     // Constructor
     // -----------------------------------------------
-    Ficha() {
-        this(false);
-    }
+    Ficha(Nodo padre) {
+        if (padre instanceof Ficha) {
+            this.inmueble = null;
+            this.padre = (Ficha) padre;
+            this.padre.fichas.add(this);
 
-    Ficha (boolean presupuestado) {
-        this.presupuestado = presupuestado;
+            this.presupuestado = this.padre.presupuestado;
+        } else {
+            this.padre = null;
+            this.inmueble = (Inmueble) padre;
+            this.inmueble.registrarFicha(this);
 
-        fichas = new ArrayList<>();
-        transacciones = new ArrayList<>();
-
-        ícono = new UiÁrbol.Ícono(UI_ÍCONO);
-    }
-
-    Ficha(Ficha padre) {
-        this(padre.presupuestado);
-
-        this.padre = padre;
-        padre.fichas.add(this);
+            this.presupuestado = false;
+        }
     }
 
     // -----------------------------------------------
@@ -76,6 +74,17 @@ public abstract class Ficha implements Nodo {
         resultado[1] = propias;
         resultado[0] = ancestros;
         return resultado;
+    }
+
+    /**
+     * Los M2 y Valor de una ficha son los del padre
+     */
+    public double[] getM2yValor() {
+        try {
+            return padre.getM2yValor();
+        } catch (NullPointerException e) {
+            return inmueble.getM2yValor();
+        }
     }
 
     // -----------------------------------------------
