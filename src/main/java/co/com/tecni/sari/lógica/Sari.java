@@ -1,10 +1,10 @@
 package co.com.tecni.sari.lógica;
 
 import co.com.tecni.sari.datos.Lector;
-import co.com.tecni.sari.lógica.inmuebles.tipos.Inmueble;
-import co.com.tecni.sari.lógica.árboles.ÁrbolCartera;
-import co.com.tecni.sari.lógica.árboles.ÁrbolContratos;
-import co.com.tecni.sari.lógica.árboles.ÁrbolInmuebles;
+import co.com.tecni.sari.lógica.inmuebles.Inmueble;
+import co.com.tecni.sari.lógica.árboles.PerspectivaInmuebles;
+import co.com.tecni.sari.lógica.árboles.PerspectivaCartera;
+import co.com.tecni.sari.lógica.árboles.PerspectivaClientes;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
@@ -49,9 +49,9 @@ public class Sari {
 
     private String modoPonderación;
 
-    public static ÁrbolInmuebles árbolInmuebles;
-    public static ÁrbolContratos árbolContratos;
-    public static ÁrbolCartera árbolCartera;
+    public static PerspectivaInmuebles perspectivaInmuebles;
+    public static PerspectivaClientes perspectivaClientes;
+    public static PerspectivaCartera perspectivaCartera;
 
     // -----------------------------------------------
     // Constructor
@@ -98,16 +98,16 @@ public class Sari {
         Lector lector = new Lector();
 
         try {
-            árbolInmuebles = lector.importarInmuebles();
+            perspectivaInmuebles = lector.importarInmuebles();
             lector.importarContratos();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        árbolContratos = lector.genÁrbolContratos();
-        árbolCartera = lector.genÁrbolCartera();
+        perspectivaClientes = lector.genÁrbolContratos();
+        perspectivaCartera = lector.genÁrbolCartera();
 
-        árbolCartera.presupuestarIngresosyGenerarFacturas(FECHA_INICIAL_FACTURACIÓN, MESES_FACTURACIÓN);
+        perspectivaCartera.presupuestarIngresosyGenerarFacturas(FECHA_INICIAL_FACTURACIÓN, MESES_FACTURACIÓN);
     }
 
     public String getModoPonderación() {

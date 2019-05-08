@@ -1,18 +1,15 @@
 package co.com.tecni.sari.lógica.inmuebles;
 
 import co.com.tecni.sari.lógica.Sari;
-import co.com.tecni.sari.lógica.árboles.Heredable;
 import co.com.tecni.sari.lógica.árboles.Nodo;
 import co.com.tecni.sari.lógica.transacciones.Transacción;
-import co.com.tecni.sari.lógica.inmuebles.tipos.Inmueble;
-import co.com.tecni.sari.lógica.árboles.Árbol;
 import co.com.tecni.sari.ui.UiÁrbol;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
 
 import java.util.ArrayList;
 
-public class Agrupación implements Heredable {
+public class Agrupación implements Nodo {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
@@ -22,8 +19,7 @@ public class Agrupación implements Heredable {
     // Atributos
     // -----------------------------------------------
     private String nombre;
-    private double valor;
-    private double m2;
+    private double[] m2yValor = {-1.0, -1.0};
     private UiÁrbol.Ícono ícono;
 
     private Agrupación padre;
@@ -49,12 +45,22 @@ public class Agrupación implements Heredable {
     // -----------------------------------------------
     public Agrupación(String nombre) {
         this.nombre = nombre;
-        valor = -1.0;
-        m2 = -1.0;
         ícono = new UiÁrbol.Ícono(UI_ÍCONO);
 
         agrupaciones = new ArrayList<>();
         inmuebles = new ArrayList<>();
+    }
+
+    private void calcularValoryM2() {
+        this.m2yValor[0] = 0.0;
+        this.m2yValor[1] = 0.0;
+
+        for (Object o : hijosNodo()) {
+            Nodo n = (Nodo) o;
+            double[] m2yValor = n.getM2yValor();
+            this.m2yValor[0] += m2yValor[0];
+            this.m2yValor[1] += m2yValor[1];
+        }
     }
 
     // -----------------------------------------------
@@ -69,28 +75,6 @@ public class Agrupación implements Heredable {
         agrupaciones.add(agrupación);
     }
 
-    public double getValor() {
-        if (valor < 0) {
-            valor = 0;
-            for (Agrupación a : agrupaciones)
-                valor += a.getValor();
-            for (Inmueble i : inmuebles)
-                valor += i.getValor();
-        }
-        return valor;
-    }
-
-    public double getM2() {
-        if (m2 < 0) {
-            m2 = 0;
-            for (Agrupación a : agrupaciones)
-                m2 += a.getM2();
-            for (Inmueble i : inmuebles)
-                m2 += i.getM2();
-        }
-        return m2;
-    }
-
     // -----------------------------------------------
     // Nodo
     // -----------------------------------------------
@@ -100,6 +84,11 @@ public class Agrupación implements Heredable {
 
     public UiÁrbol.Ícono íconoNodo() {
         return ícono;
+    }
+
+    public double[] getM2yValor() {
+        if (this.m2yValor[0] < 0 && this.m2yValor[1] < 0) calcularValoryM2();
+        return m2yValor;
     }
 
     public ArrayList<Object> hijosNodo() {

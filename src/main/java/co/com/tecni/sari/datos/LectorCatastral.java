@@ -1,7 +1,7 @@
 package co.com.tecni.sari.datos;
 
 import co.com.tecni.sari.lógica.fichas.Catastral;
-import co.com.tecni.sari.lógica.inmuebles.tipos.Inmueble;
+import co.com.tecni.sari.lógica.inmuebles.Inmueble;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -86,8 +86,7 @@ class LectorCatastral {
 
             Catastral catastral = null;
             if (!presupuestado) {
-                catastral = new Catastral(json);
-                inmueble.registrarFicha(catastral);
+                catastral = new Catastral(inmueble, json);
             }
 
             int año = añoPrimerPredial;

@@ -2,8 +2,8 @@ package co.com.tecni.sari.ui.indicadores;
 
 import co.com.tecni.sari.lógica.Sari;
 import co.com.tecni.sari.lógica.transacciones.Transacción;
-import co.com.tecni.sari.lógica.árboles.Heredable;
-import co.com.tecni.sari.lógica.árboles.ÁrbolCartera;
+import co.com.tecni.sari.lógica.árboles.Nodo;
+import co.com.tecni.sari.lógica.árboles.PerspectivaCartera;
 import co.com.tecni.sari.ui.UiSari;
 
 import javax.swing.*;
@@ -107,14 +107,12 @@ public class UiIndicadores {
         m2 = 0.0;
         valor = 0.0;
 
-        if (UiSari.nodoActual != null)
-            try {
-                Heredable nodo = (Heredable) UiSari.nodoActual;
-                m2 = nodo.getM2();
-                valor = xM2 ? nodo.getValor()/m2 : nodo.getValor();
-            } catch (ClassCastException e) {
-                System.err.println("El nodo seleccionado no implementa la interface 'Heredable'");
-            }
+        if (UiSari.nodoActual != null) {
+            double[] m2yValor = UiSari.nodoActual.getM2yValor();
+
+            m2 = m2yValor[0];
+            valor = xM2 ? m2yValor[1] / m2 : m2yValor[1];
+        }
 
         m2Label.setText("M2: "+Sari.BIG_DECIMAL.format(m2));
         valorLabel.setText((xM2 ? "Valor/M2: " : "Valor: ")+Sari.BIG_DECIMAL.format(valor));
@@ -134,7 +132,7 @@ public class UiIndicadores {
 
         jTabbedPane.removeAll();
 
-        if (UiSari.árbolActual instanceof ÁrbolCartera) {
+        if (UiSari.árbolActual instanceof PerspectivaCartera) {
             cartera.mostrarTransacciones();
             jTabbedPane.addTab(Cartera.NOMBRE, cartera.componente);
 

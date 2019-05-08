@@ -1,6 +1,6 @@
 package co.com.tecni.sari.datos;
 
-import co.com.tecni.sari.lógica.inmuebles.tipos.Inmueble;
+import co.com.tecni.sari.lógica.inmuebles.Inmueble;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;

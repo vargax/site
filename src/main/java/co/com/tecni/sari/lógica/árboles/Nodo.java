@@ -17,6 +17,8 @@ public interface Nodo {
     // -----------------------------------------------
     // GUI / Detalle
     // -----------------------------------------------
+    double[] getM2yValor();
+
     ArrayList<Transacción>[] transaccionesNodo();
     String infoNodo();
 

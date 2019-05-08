@@ -4,7 +4,7 @@ import co.com.tecni.sari.lógica.contratos.ClienteComercial;
 import co.com.tecni.sari.lógica.contratos.ClienteFacturación;
 import co.com.tecni.sari.lógica.contratos.Contrato;
 import co.com.tecni.sari.lógica.contratos.Versión;
-import co.com.tecni.sari.lógica.inmuebles.tipos.Inmueble;
+import co.com.tecni.sari.lógica.inmuebles.Inmueble;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -21,10 +21,10 @@ class LectorContrato {
 
     // CLIENTES
     private final static String HC = "Clientes";
-    private final static char HC_CC_ID = 'A';       // Cliente comercial
-    private final static char HC_CC_NOMBRE = 'B';
-    private final static char HC_CF_NIT = 'C';      // Cliente Facturación
-    private final static char HC_CF_RS = 'D';
+    private final static char HC_CC_ID = 'C';       // Cliente comercial
+    private final static char HC_CC_NOMBRE = 'D';
+    private final static char HC_CF_NIT = 'E';      // Cliente Facturación
+    private final static char HC_CF_RS = 'F';
     // CONTRATOS
     private final static String HCT = "Contratos";
     private final static char HCT_CT_ID = 'A';

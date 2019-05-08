@@ -1,20 +1,21 @@
-package co.com.tecni.sari.lógica.inmuebles.tipos;
+package co.com.tecni.sari.lógica.inmuebles;
 
 import co.com.tecni.sari.ui.UiÁrbol;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;
 
-public class Piso extends Inmueble {
+public class ConjuntoBodegas extends Inmueble {
+
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
-    public final static String SIGLA = "PI";
-    private final static IconCode UI_ÍCONO = GoogleMaterialDesignIcons.LAYERS;
+    public final static String SIGLA = "CB";
+    private final static IconCode UI_ÍCONO = GoogleMaterialDesignIcons.LOCATION_CITY;
 
     // -----------------------------------------------
     // Constructores
     // -----------------------------------------------
-    public Piso() {
+    public ConjuntoBodegas() {
         super();
         super.sigla = SIGLA;
         super.ícono = new UiÁrbol.Ícono(UI_ÍCONO);
