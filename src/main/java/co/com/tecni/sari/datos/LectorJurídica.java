@@ -38,30 +38,37 @@ class LectorJurídica {
     // Métodos
     // -----------------------------------------------
     void leer(String nombreInmueble) throws Exception {
-        InputStream inputStream = LectorJurídica.class.getResourceAsStream("/static/archivos/jurídica "+ nombreInmueble + ".xlsx");
+        String resource = "/static/archivos/jurídica "+ nombreInmueble + ".xlsx";
+        InputStream inputStream = LectorJurídica.class.getResourceAsStream(resource);
+        if (inputStream == null) {
+            System.err.println("Archivo '" + resource + "' no encontrado");
+            return;
+        }
+
         XSSFWorkbook libro = new XSSFWorkbook(inputStream);
 
         Iterator<Row> filas = libro.getSheet(HOJA_NOMBRE).iterator();
         Row filaActual = filas.next();
 
-        while(filas.hasNext()) {
+        while (filas.hasNext()) {
             filaActual = filas.next();
 
             String id = Lector.cadena(filaActual, ID);
             Inmueble inmueble = inmueblesxId.get(id);
 
-            if (inmueble == null) throw new Exception("Inmueble "+id+" no encontrado");
+            if (inmueble == null) throw new Exception("Inmueble " + id + " no encontrado");
 
             String oficinaRegistro = Lector.cadena(filaActual, OFICINA_REGISTRO);
             String matrículaInmobiliaria = Lector.cadena(filaActual, MATRÍCULA_INMOBILIARIA);
-            LocalDate fechaRegistroCompra  = Lector.fecha(filaActual, FECHA_REGISTRO_COMPRA);
+            LocalDate fechaRegistroCompra = Lector.fecha(filaActual, FECHA_REGISTRO_COMPRA);
             double coefCopropiedad = Lector.doble(filaActual, COEF_COPROPIEDAD);
 
-            Jurídica.Json json = new Jurídica.Json(oficinaRegistro,matrículaInmobiliaria,fechaRegistroCompra,coefCopropiedad);
+            Jurídica.Json json = new Jurídica.Json(oficinaRegistro, matrículaInmobiliaria, fechaRegistroCompra, coefCopropiedad);
             Jurídica jurídica = new Jurídica(json);
 
             inmueble.registrarFicha(jurídica);
+
+            inputStream.close();
         }
-        inputStream.close();
     }
 }

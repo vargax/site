@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
+import java.util.ArrayList;
 
 class LectorAgrupaciones {
 
@@ -41,10 +42,12 @@ class LectorAgrupaciones {
                 agrupación.agregarAgrupación(recursión());
             else {
                 String nombre = formatear(líneaActual);
-                Inmueble inm = lectorInmueble.leer(nombre);
+                ArrayList<Inmueble> inmuebles = lectorInmueble.leer(nombre);
 
-                agrupación.agregarInmueble(inm);
-                ÁrbolInmuebles.inmueblesRaiz.put(nombre, inm);
+                for (Inmueble i : inmuebles) {
+                    agrupación.agregarInmueble(i);
+                    ÁrbolInmuebles.inmueblesRaiz.put(nombre, i);
+                }
 
                 líneaActual = bufferedReader.readLine();
             }

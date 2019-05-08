@@ -1,6 +1,7 @@
 package co.com.tecni.sari.lógica.inmuebles;
 
 import co.com.tecni.sari.lógica.Sari;
+import co.com.tecni.sari.lógica.árboles.Heredable;
 import co.com.tecni.sari.lógica.árboles.Nodo;
 import co.com.tecni.sari.lógica.transacciones.Transacción;
 import co.com.tecni.sari.lógica.inmuebles.tipos.Inmueble;
@@ -11,7 +12,7 @@ import jiconfont.icons.GoogleMaterialDesignIcons;
 
 import java.util.ArrayList;
 
-public class Agrupación implements Nodo {
+public class Agrupación implements Heredable {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
@@ -22,6 +23,7 @@ public class Agrupación implements Nodo {
     // -----------------------------------------------
     private String nombre;
     private double valor;
+    private double m2;
     private UiÁrbol.Ícono ícono;
 
     private Agrupación padre;
@@ -48,6 +50,7 @@ public class Agrupación implements Nodo {
     public Agrupación(String nombre) {
         this.nombre = nombre;
         valor = -1.0;
+        m2 = -1.0;
         ícono = new UiÁrbol.Ícono(UI_ÍCONO);
 
         agrupaciones = new ArrayList<>();
@@ -77,6 +80,17 @@ public class Agrupación implements Nodo {
         return valor;
     }
 
+    public double getM2() {
+        if (m2 < 0) {
+            m2 = 0;
+            for (Agrupación a : agrupaciones)
+                m2 += a.getM2();
+            for (Inmueble i : inmuebles)
+                m2 += i.getM2();
+        }
+        return m2;
+    }
+
     // -----------------------------------------------
     // Nodo
     // -----------------------------------------------
@@ -91,8 +105,8 @@ public class Agrupación implements Nodo {
     public ArrayList<Object> hijosNodo() {
         ArrayList<Object> hijos = new ArrayList<>();
 
-        hijos.addAll(agrupaciones);
         hijos.addAll(inmuebles);
+        hijos.addAll(agrupaciones);
 
         return hijos;
     }

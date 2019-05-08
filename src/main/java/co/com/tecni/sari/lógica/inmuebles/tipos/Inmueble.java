@@ -1,6 +1,7 @@
 package co.com.tecni.sari.lógica.inmuebles.tipos;
 
 import co.com.tecni.sari.lógica.Sari;
+import co.com.tecni.sari.lógica.árboles.Heredable;
 import co.com.tecni.sari.lógica.árboles.Nodo;
 import co.com.tecni.sari.lógica.fichas.Arrendamiento;
 import co.com.tecni.sari.lógica.fichas.Ficha;
@@ -19,7 +20,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class Inmueble implements Nodo {
+public abstract class Inmueble implements Heredable {
 
     // -----------------------------------------------
     // Constantes
@@ -181,6 +182,10 @@ public abstract class Inmueble implements Nodo {
 
     public double getValor() {
         return valor;
+    }
+
+    public double getM2() {
+        return m2.get(sari.getModoPonderación());
     }
 
     public void registrarFicha(Ficha ficha) {
