@@ -36,10 +36,15 @@ class LectorObraCivil {
     }
 
     void leer(String nombreInmueble) throws Exception {
-        this.nombreInmueble = nombreInmueble;
+        String resource = "/static/archivos/obraCivil "+ nombreInmueble + ".xlsx";
+        InputStream inputStream = LectorObraCivil.class.getResourceAsStream(resource);
+        if (inputStream == null) {
+            System.err.println("Archivo '" + resource + "' no encontrado");
+            return;
+        }
 
-        InputStream inputStream = LectorObraCivil.class.getResourceAsStream("/static/archivos/obraCivil "+ nombreInmueble + ".xlsx");
         XSSFWorkbook libro = new XSSFWorkbook(inputStream);
+        this.nombreInmueble = nombreInmueble;
 
         iterador(libro.getSheet(HJ_REAL).iterator(), false);
         iterador(libro.getSheet(HJ_PRESUPUESTADO).iterator(), true);

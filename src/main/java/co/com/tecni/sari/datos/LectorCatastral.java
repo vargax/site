@@ -48,7 +48,13 @@ class LectorCatastral {
     // Métodos
     // -----------------------------------------------
     public void leer(String nombreInmueble) throws Exception {
-        InputStream inputStream = LectorCatastral.class.getResourceAsStream("/static/archivos/catastral "+ nombreInmueble + ".xlsx");
+        String resource = "/static/archivos/catastral "+ nombreInmueble + ".xlsx";
+        InputStream inputStream = LectorCatastral.class.getResourceAsStream(resource);
+        if (inputStream == null) {
+            System.err.println("Archivo '" + resource + "' no encontrado");
+            return;
+        }
+
         XSSFWorkbook libro = new XSSFWorkbook(inputStream);
 
         iterador(libro.getSheet(HJ_REAL).iterator(), false);

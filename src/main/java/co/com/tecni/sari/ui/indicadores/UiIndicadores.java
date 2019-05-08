@@ -188,7 +188,6 @@ public class UiIndicadores {
         final String[] RB = new String[]{"xM2", "Total"};
         final int DEFAULT_RB = 1;
 
-
         JButton botónBuscar() {
             JButton buscar = new JButton(BUSCAR);
             buscar.setActionCommand(BUSCAR);

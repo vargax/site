@@ -31,6 +31,7 @@ class LectorInmueble {
     private final static String HIJOS_INICIO = "inicio";
     private final static String HIJOS_FIN = "fin";
     private final static String SALTAR = "saltar";
+    private final static String SIN_HIJOS = "sh";
 
     private final static String[] TIPOS_CARACTERÍSTICAS = {"double", "String", "int"};
 
@@ -57,21 +58,29 @@ class LectorInmueble {
     // -----------------------------------------------
     // Métodos principales
     // -----------------------------------------------
-    Inmueble leer(String nombreInmueble) throws Exception {
+    ArrayList<Inmueble> leer(String nombreInmueble) throws Exception {
+        ArrayList<Inmueble> inmuebles = new ArrayList<>();
+
         InputStream inputStream = LectorInmueble.class.getResourceAsStream("/static/archivos/inmueble " + nombreInmueble + ".xlsx");
         XSSFWorkbook libro = new XSSFWorkbook(inputStream);
 
         filas = libro.getSheet(HOJA_NOMBRE).iterator();
-
         cargarCaracterísticas();
 
-        while (!inicioInmueble())
+        while (!inicioInmueble() && !sinHijos())
             filaActual = filas.next();
 
-        Inmueble inmueble = recursión();
+        if (inicioInmueble())
+            inmuebles.add(recursión());
+
+        while (sinHijos()) {
+            inmuebles.add(hoja());
+            if (!filas.hasNext()) break;
+            filaActual = filas.next();
+        }
 
         inputStream.close();
-        return inmueble;
+        return inmuebles;
     }
 
     private Inmueble recursión() throws Exception {
@@ -207,6 +216,12 @@ class LectorInmueble {
             } catch (NoSuchElementException e) {
                 break;
             }
+    }
+
+    private boolean sinHijos() {
+        boolean rnull = filaActual.getCell(Lector.charToInt(COL_HIJOS)) != null;
+        boolean rhijos = SIN_HIJOS.equals(Lector.cadena(filaActual, COL_HIJOS));
+        return rnull && rhijos;
     }
 
     private boolean inicioInmueble() {
