@@ -142,7 +142,7 @@ class Consolidados {
 
             // Gastos
             totales[0][1] = gastosReales  / (UiIndicadores.xM2 ? UiIndicadores.m2 : 1);
-            totales[1][1] = totales[1][1] / UiIndicadores.valor;
+            totales[1][1] = totales[0][1] / UiIndicadores.valor;
             totales[2][1] = gastosPresupuestados / (UiIndicadores.xM2 ? UiIndicadores.m2 : 1);
             totales[3][1] = totales[0][1] - totales[2][1];
             totales[4][1] = totales[0][1] / totales[2][1];
@@ -151,7 +151,7 @@ class Consolidados {
             totales[0][2] = totales[0][0] + totales[0][1];
             totales[1][2] = totales[0][2] / UiIndicadores.valor;
             totales[2][2] = totales[2][0] + totales[2][1];
-            totales[3][2] = totales[2][0] + totales[2][1];
+            totales[3][2] = totales[0][2] - totales[2][2];
             totales[4][2] = totales[0][2] / totales[2][2];
 
             tabla.updateUI();
