@@ -133,21 +133,24 @@ class Consolidados {
                 }
             }
 
-            totales[0][0] = ingresosReales;
-            totales[1][0] = ingresosReales / UiIndicadores.valor;
-            totales[2][0] = ingresosPresupuestados;
-            totales[3][0] = ingresosReales - ingresosPresupuestados;
+            // Ingresos
+            totales[0][0] = ingresosReales / (UiIndicadores.xM2 ? UiIndicadores.m2 : 1);
+            totales[1][0] = totales[0][0]  / UiIndicadores.valor;
+            totales[2][0] = ingresosPresupuestados / (UiIndicadores.xM2 ? UiIndicadores.m2 : 1);
+            totales[3][0] = totales[0][0] - totales[2][0];
             totales[4][0] = totales[0][0] / totales[2][0];
 
-            totales[0][1] = gastosReales;
-            totales[1][1] = gastosReales / UiIndicadores.valor;
-            totales[2][1] = gastosPresupuestados;
-            totales[3][1] = gastosReales - gastosPresupuestados;
+            // Gastos
+            totales[0][1] = gastosReales  / (UiIndicadores.xM2 ? UiIndicadores.m2 : 1);
+            totales[1][1] = totales[1][1] / UiIndicadores.valor;
+            totales[2][1] = gastosPresupuestados / (UiIndicadores.xM2 ? UiIndicadores.m2 : 1);
+            totales[3][1] = totales[0][1] - totales[2][1];
             totales[4][1] = totales[0][1] / totales[2][1];
 
-            totales[0][2] = ingresosReales + gastosReales;
+            // Utilidad
+            totales[0][2] = totales[0][0] + totales[0][1];
             totales[1][2] = totales[0][2] / UiIndicadores.valor;
-            totales[2][2] = ingresosPresupuestados + gastosPresupuestados;
+            totales[2][2] = totales[2][0] + totales[2][1];
             totales[3][2] = totales[2][0] + totales[2][1];
             totales[4][2] = totales[0][2] / totales[2][2];
 
@@ -178,13 +181,13 @@ class Consolidados {
                 "Anticipos"};
 
         JTable tabla;
-        private LinkedHashMap<String, double[]> resumen;
+        private LinkedHashMap<String, double[]> discriminado;
 
         TablaFichas() {
             super();
             super.columnas = COLUMNAS;
 
-            resumen = new LinkedHashMap<>();
+            discriminado = new LinkedHashMap<>();
 
             tabla = new JTable(this);
 
@@ -193,15 +196,15 @@ class Consolidados {
         }
 
         void setTransacciones(ArrayList<Transacción> transacciones) {
-            resumen.clear();
+            discriminado.clear();
 
             for (Transacción transacción : transacciones) {
                 String llave = transacción.ficha.darTipo();
-                double[] valores = resumen.get(llave);
+                double[] valores = discriminado.get(llave);
 
                 if (valores == null) {
                     valores = new double[6];
-                    resumen.put(llave, valores);
+                    discriminado.put(llave, valores);
                 }
 
                 if (transacción.ficha.presupuestado)
@@ -213,8 +216,10 @@ class Consolidados {
 
             double[] totales = new double[6];
 
-            for (double[] valores : resumen.values()) {
+            for (double[] valores : discriminado.values()) {
+                valores[0] = valores[0] / (UiIndicadores.xM2 ? UiIndicadores.m2 : 1); // Real
                 valores[1] = valores[0] / UiIndicadores.valor; // Rentabilidad
+                valores[2] = valores[2] / (UiIndicadores.xM2 ? UiIndicadores.m2 : 1); // Presupuestado
                 valores[3] = valores[0] - valores[2];          // Diferencia
                 valores[4] = valores[0] / valores[2];          // Cumplimiento
 
@@ -225,20 +230,20 @@ class Consolidados {
             totales[1] = totales[0] / UiIndicadores.valor; // Rentabilidad
             totales[3] = totales[0] - totales[2];          // Diferencia
             totales[4] = totales[0] / totales[2];          // Cumplimiento
-            resumen.put("TOTAL", totales);
+            discriminado.put("TOTAL", totales);
 
             tabla.updateUI();
         }
 
         public int getRowCount() {
-            return resumen.size();
+            return discriminado.size();
         }
 
         public Object getValueAt(int row, int col) {
-            String fila = (String) resumen.keySet().toArray()[row];
+            String fila = (String) discriminado.keySet().toArray()[row];
             if (col == 0)
                 return fila;
-            return resumen.get(fila)[col-1];
+            return discriminado.get(fila)[col-1];
         }
     }
 

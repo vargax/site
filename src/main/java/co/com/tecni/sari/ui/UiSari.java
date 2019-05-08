@@ -1,8 +1,6 @@
 package co.com.tecni.sari.ui;
 
 import co.com.tecni.sari.lógica.Sari;
-import co.com.tecni.sari.lógica.inmuebles.Agrupación;
-import co.com.tecni.sari.lógica.inmuebles.tipos.Inmueble;
 import co.com.tecni.sari.lógica.árboles.Nodo;
 import co.com.tecni.sari.lógica.árboles.Árbol;
 import co.com.tecni.sari.lógica.árboles.ÁrbolCartera;
@@ -103,7 +101,7 @@ public class UiSari extends JFrame {
     void cambioNodo(Nodo nodo) {
         nodoActual = nodo;
         if (nodoActual != null) {
-            uiIndicadores.cambioNodo();
+            uiIndicadores.actualizar();
             uiJson.cambioNodo();
         }
     }
