@@ -88,6 +88,8 @@ public class UiIndicadores {
         encabezado.add(new JLabel("Rentabilidad: ", SwingConstants.RIGHT));
         encabezado.add( acciones.selectorTotaloM2());
 
+        encabezado.add(new JLabel("Vacancia: "));
+
         return encabezado;
     }
 

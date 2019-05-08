@@ -37,7 +37,7 @@ class Cartera {
     // -----------------------------------------------
     class XDias extends UiIndicadores.ModeloTabla {
         private final String[] COLUMNAS = {
-                "Cliente", ">90", ">60", ">30", "<30", "Total", "Días atrazo"
+                "Cliente", ">90", ">60", ">30", "<30", "Total", "Días atraso"
         };
 
         JTable tabla;

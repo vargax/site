@@ -205,7 +205,6 @@ public abstract class Inmueble implements Nodo {
         if (presupuesto == null) {
             presupuesto = new Presupuestal(this, año);
             presupuestos.put(año, presupuesto);
-            fichas.add(presupuesto);
         }
 
         return presupuesto;
