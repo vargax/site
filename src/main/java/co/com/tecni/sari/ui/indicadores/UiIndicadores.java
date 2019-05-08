@@ -1,10 +1,8 @@
 package co.com.tecni.sari.ui.indicadores;
 
 import co.com.tecni.sari.lógica.Sari;
-import co.com.tecni.sari.lógica.inmuebles.Agrupación;
-import co.com.tecni.sari.lógica.inmuebles.tipos.Inmueble;
 import co.com.tecni.sari.lógica.transacciones.Transacción;
-import co.com.tecni.sari.lógica.árboles.Nodo;
+import co.com.tecni.sari.lógica.árboles.Heredable;
 import co.com.tecni.sari.lógica.árboles.ÁrbolCartera;
 import co.com.tecni.sari.ui.UiSari;
 
@@ -36,27 +34,31 @@ public class UiIndicadores {
     Cartera cartera;
 
     static boolean xM2;
+
+    static double m2;
     static double valor;
+
     static ArrayList<Transacción>[] transacciones = generarArreglos();
 
     private JFormattedTextField fechaInicial;
     private JFormattedTextField fechaFinal;
     private JLabel valorLabel;
+    private JLabel m2Label;
 
 
     public UiIndicadores() throws Exception {
         acciones = new Acciones();
 
+        jTabbedPane = new JTabbedPane();
         distribución = new Distribución();
+        jTabbedPane.addTab(Distribución.NOMBRE, distribución.componente);
         consolidados = new Consolidados();
+        jTabbedPane.addTab(Consolidados.NOMBRE, consolidados.componente);
         cartera = new Cartera();
 
         componente = new JPanel(new BorderLayout());
         componente.add(encabezado(), BorderLayout.NORTH);
 
-        jTabbedPane = new JTabbedPane();
-        jTabbedPane.addTab(Consolidados.NOMBRE, consolidados.componente);
-        jTabbedPane.addTab(Distribución.NOMBRE, distribución.componente);
 
         componente.add(jTabbedPane, BorderLayout.CENTER);
     }
@@ -69,6 +71,7 @@ public class UiIndicadores {
         fechaFinal = new JFormattedTextField(formatoFecha);
 
         valorLabel = new JLabel();
+        m2Label = new JLabel();
 
         JPanel encabezado = new JPanel();
         encabezado.setLayout(new GridLayout(0, 5));
@@ -79,12 +82,11 @@ public class UiIndicadores {
         encabezado.add(fechaFinal);
         encabezado.add(acciones.botónBuscar());
 
-        encabezado.add(new JLabel("Rentabilidad: ", SwingConstants.RIGHT));
-        for (JRadioButton rb : acciones.botonesTotaloM2())
-            encabezado.add(rb);
-
-        encabezado.add(new JLabel("Valor: ", SwingConstants.RIGHT));
+        encabezado.add(m2Label);
         encabezado.add(valorLabel);
+
+        encabezado.add(new JLabel("Rentabilidad: ", SwingConstants.RIGHT));
+        encabezado.add( acciones.selectorTotaloM2());
 
         return encabezado;
     }
@@ -93,24 +95,29 @@ public class UiIndicadores {
 
     }
 
-    public void cambioNodo() {
+    public void actualizar() {
         valor();
         transacciones();
     }
 
     /**
-     * Valor y cálculo de rentabilidadLabel para el nodo seleccionado
+     * Valor y m2 para el nodo seleccionado
      */
     private void valor() {
-        Nodo nodo = UiSari.nodoActual;
+        m2 = 0.0;
         valor = 0.0;
 
-        if (nodo instanceof Agrupación)
-            valor = ((Agrupación) nodo).getValor();
-        else if (UiSari.nodoActual instanceof Inmueble)
-            valor = ((Inmueble) nodo).getValor();
+        if (UiSari.nodoActual != null)
+            try {
+                Heredable nodo = (Heredable) UiSari.nodoActual;
+                m2 = nodo.getM2();
+                valor = xM2 ? nodo.getValor()/m2 : nodo.getValor();
+            } catch (ClassCastException e) {
+                System.err.println("El nodo seleccionado no implementa la interface 'Heredable'");
+            }
 
-        valorLabel.setText(Sari.BIG_DECIMAL.format(valor));
+        m2Label.setText("M2: "+Sari.BIG_DECIMAL.format(m2));
+        valorLabel.setText((xM2 ? "Valor/M2: " : "Valor: ")+Sari.BIG_DECIMAL.format(valor));
     }
 
     /**
@@ -121,10 +128,8 @@ public class UiIndicadores {
      *  transacciones[2] descendientes
      */
     private void transacciones() {
-        ArrayList<Transacción>[] transacciones = UiSari.nodoActual.transaccionesNodo();
-
-        if (transacciones != null)
-            UiIndicadores.transacciones = transacciones;
+        if (UiSari.nodoActual != null)
+            UiIndicadores.transacciones = UiSari.nodoActual.transaccionesNodo();
         else UiIndicadores.transacciones = generarArreglos();
 
         jTabbedPane.removeAll();
@@ -207,25 +212,28 @@ public class UiIndicadores {
             }
         }
 
-        ArrayList<JRadioButton> botonesTotaloM2() {
+        JPanel selectorTotaloM2() {
             ArrayList<JRadioButton> botones = new ArrayList<>();
             ButtonGroup bg = new ButtonGroup();
+            JPanel panel = new JPanel();
 
             for (String s : RB) {
                 JRadioButton rb = new JRadioButton(s);
                 rb.addActionListener(this);
                 bg.add(rb);
+                panel.add(rb);
                 botones.add(rb);
             }
 
             (botones.get(DEFAULT_RB)).setSelected(true);
             totaloM2(RB[DEFAULT_RB]);
 
-            return botones;
+            return panel;
         }
 
         void totaloM2(String command) {
             xM2 = RB[0].equals(command);
+            actualizar();
         }
 
         public void actionPerformed(ActionEvent actionEvent) {
