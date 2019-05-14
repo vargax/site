@@ -1,13 +1,13 @@
 package co.com.tecni.sari.datos;
 
-import co.com.tecni.sari.lógica.contratos.ClienteComercial;
-import co.com.tecni.sari.lógica.contratos.ClienteFacturación;
-import co.com.tecni.sari.lógica.contratos.Contrato;
-import co.com.tecni.sari.lógica.contratos.Versión;
+import co.com.tecni.sari.lógica.clientes.ClienteComercial;
+import co.com.tecni.sari.lógica.clientes.ClienteFacturación;
+import co.com.tecni.sari.lógica.clientes.Contrato;
+import co.com.tecni.sari.lógica.clientes.Versión;
 import co.com.tecni.sari.lógica.inmuebles.Inmueble;
-import co.com.tecni.sari.lógica.árboles.PerspectivaInmuebles;
-import co.com.tecni.sari.lógica.árboles.PerspectivaCartera;
-import co.com.tecni.sari.lógica.árboles.PerspectivaClientes;
+import co.com.tecni.sari.lógica.inmuebles.PerspectivaInmuebles;
+import co.com.tecni.sari.lógica.clientes.PerspectivaCartera;
+import co.com.tecni.sari.lógica.clientes.PerspectivaContratos;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 
@@ -107,8 +107,8 @@ public class Lector {
         secuenciasxId = lectorContrato.secuencias;
     }
 
-    public PerspectivaClientes genÁrbolContratos() {
-        return new PerspectivaClientes(clientesComercialesxId);
+    public PerspectivaContratos genÁrbolContratos() {
+        return new PerspectivaContratos(clientesComercialesxId);
     }
 
     public PerspectivaCartera genÁrbolCartera() {

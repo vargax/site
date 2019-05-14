@@ -1,9 +1,9 @@
-package co.com.tecni.sari.lógica.árboles;
+package co.com.tecni.sari.lógica.clientes;
 
 import co.com.tecni.sari.lógica.Sari;
-import co.com.tecni.sari.lógica.contratos.ClienteComercial;
-import co.com.tecni.sari.lógica.fichas.Arrendamiento;
-import co.com.tecni.sari.lógica.fichas.Presupuestal;
+import co.com.tecni.sari.lógica.inmuebles.PerspectivaInmuebles;
+import co.com.tecni.sari.lógica.inmuebles.fichas.Arrendamiento;
+import co.com.tecni.sari.lógica.inmuebles.fichas.Presupuestal;
 import co.com.tecni.sari.lógica.inmuebles.Inmueble;
 
 import java.time.LocalDate;
@@ -12,11 +12,11 @@ import java.util.Map;
 
 public class PerspectivaCartera extends ÁrbolClientes {
 
-    public final static String NOMBRE_RAIZ = "CARTERA";
+    public final static String NOMBRE = "CARTERA";
 
     public PerspectivaCartera(HashMap<Integer, ClienteComercial> clientesComercialesxId) {
         super(clientesComercialesxId);
-        super.nombreRaiz = NOMBRE_RAIZ;
+        super.nombreRaiz = NOMBRE;
     }
 
     public void presupuestarIngresosyGenerarFacturas(LocalDate fechaInicial, int númeroMeses) {
@@ -33,7 +33,7 @@ public class PerspectivaCartera extends ÁrbolClientes {
             // Presupuestar Ingresos
             for (Map.Entry<String, Double> e : ingresosPresupuestadosxInmueble.entrySet()) {
 
-                Inmueble inmueble = Sari.perspectivaInmuebles.inmueblesxId.get(e.getKey());
+                Inmueble inmueble = PerspectivaInmuebles.inmueblesxId.get(e.getKey());
                 Presupuestal presupuesto = inmueble.getPresupuesto(fecha.getYear()).ingresos();
 
                 Arrendamiento arrendamiento = new Arrendamiento(presupuesto, inmueble);

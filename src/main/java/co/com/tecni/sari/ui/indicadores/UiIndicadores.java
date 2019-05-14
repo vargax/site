@@ -1,9 +1,8 @@
 package co.com.tecni.sari.ui.indicadores;
 
 import co.com.tecni.sari.lógica.Sari;
-import co.com.tecni.sari.lógica.transacciones.Transacción;
-import co.com.tecni.sari.lógica.árboles.Nodo;
-import co.com.tecni.sari.lógica.árboles.PerspectivaCartera;
+import co.com.tecni.sari.lógica.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.sari.lógica.clientes.PerspectivaCartera;
 import co.com.tecni.sari.ui.UiSari;
 
 import javax.swing.*;

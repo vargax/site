@@ -1,10 +1,8 @@
-package co.com.tecni.sari.lógica.contratos;
+package co.com.tecni.sari.lógica.clientes;
 
 import co.com.tecni.sari.lógica.Sari;
 import co.com.tecni.sari.lógica.árboles.Nodo;
-import co.com.tecni.sari.lógica.transacciones.Transacción;
-import co.com.tecni.sari.lógica.árboles.PerspectivaCartera;
-import co.com.tecni.sari.lógica.árboles.PerspectivaClientes;
+import co.com.tecni.sari.lógica.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.sari.ui.UiSari;
 import co.com.tecni.sari.ui.UiÁrbol;
 
@@ -99,7 +97,7 @@ public class ClienteComercial implements Nodo {
     }
 
     public ArrayList<Object> hijosNodo() {
-        if (UiSari.árbolActual instanceof PerspectivaClientes)
+        if (UiSari.árbolActual instanceof PerspectivaContratos)
             return new ArrayList<>(contratos.values());
         else if (UiSari.árbolActual instanceof PerspectivaCartera)
             return new ArrayList<>(clientesFacturación.values());
@@ -116,12 +114,12 @@ public class ClienteComercial implements Nodo {
             for (ClienteFacturación clFact : clientesFacturación.values())
                 descendientes.addAll(clFact.transaccionesNodo()[2]);
 
-        // Se suman las transacciones asociadas a todos los contratos
+        // Se suman las transacciones asociadas a todos los clientes
         /* ToDo NO coinciden con los valores presentados en PerspectivaInmuebles
         *  |> Sólo se incluyen las transacciones de los inmuebles asociados a versiones
         *  |> Siempre debería coincidir el getValor de los ingresos por arrendamiento reales
         */
-        if (UiSari.árbolActual instanceof PerspectivaClientes)
+        if (UiSari.árbolActual instanceof PerspectivaContratos)
             for (Contrato contrato : contratos.values()) {
                 descendientes.addAll(contrato.transaccionesNodo()[2]);
                 propias.addAll(contrato.transaccionesNodo()[1]);

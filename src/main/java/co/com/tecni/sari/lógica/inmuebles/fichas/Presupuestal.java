@@ -1,8 +1,7 @@
-package co.com.tecni.sari.lógica.fichas;
+package co.com.tecni.sari.lógica.inmuebles.fichas;
 
 import co.com.tecni.sari.lógica.Sari;
 import co.com.tecni.sari.lógica.árboles.Nodo;
-import co.com.tecni.sari.lógica.árboles.Árbol;
 
 import java.util.ArrayList;
 import java.util.HashMap;

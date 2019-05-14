@@ -1,8 +1,10 @@
 package co.com.tecni.sari.ui;
 
 import co.com.tecni.sari.lógica.Sari;
+import co.com.tecni.sari.lógica.clientes.PerspectivaCartera;
+import co.com.tecni.sari.lógica.clientes.PerspectivaContratos;
 import co.com.tecni.sari.lógica.árboles.*;
-import co.com.tecni.sari.lógica.árboles.PerspectivaInmuebles;
+import co.com.tecni.sari.lógica.inmuebles.PerspectivaInmuebles;
 import co.com.tecni.sari.ui.indicadores.UiIndicadores;
 
 import javax.swing.*;
@@ -44,9 +46,9 @@ public class UiSari extends JFrame {
         sari = Sari.instance;
         sari.generarÁrboles();
 
-        inmuebles = new UiÁrbol(PerspectivaInmuebles.NOMBRE_RAIZ, Sari.perspectivaInmuebles);
-        contratos = new UiÁrbol(PerspectivaClientes.NOMBRE_RAIZ, Sari.perspectivaClientes);
-        cartera = new UiÁrbol(PerspectivaCartera.NOMBRE_RAIZ, Sari.perspectivaCartera);
+        inmuebles = new UiÁrbol(PerspectivaInmuebles.NOMBRE, Sari.perspectivaInmuebles);
+        contratos = new UiÁrbol(PerspectivaContratos.NOMBRE, Sari.perspectivaContratos);
+        cartera = new UiÁrbol(PerspectivaCartera.NOMBRE, Sari.perspectivaCartera);
 
         uiMenu = new UiMenu();
         uiJson = new UiJson();
@@ -68,7 +70,7 @@ public class UiSari extends JFrame {
                     case 0: árbolActual = Sari.perspectivaInmuebles;
                             cambioNodo(inmuebles.nodoActual);
                             break;
-                    case 1: árbolActual = Sari.perspectivaClientes;
+                    case 1: árbolActual = Sari.perspectivaContratos;
                             cambioNodo(contratos.nodoActual);
                             break;
                     case 2: árbolActual = Sari.perspectivaCartera;

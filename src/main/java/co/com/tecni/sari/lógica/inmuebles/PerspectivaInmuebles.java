@@ -1,7 +1,9 @@
-package co.com.tecni.sari.lógica.árboles;
+package co.com.tecni.sari.lógica.inmuebles;
 
 import co.com.tecni.sari.lógica.inmuebles.Agrupación;
 import co.com.tecni.sari.lógica.inmuebles.Inmueble;
+import co.com.tecni.sari.lógica.árboles.Nodo;
+import co.com.tecni.sari.lógica.árboles.Árbol;
 
 import java.util.HashMap;
 
@@ -10,7 +12,7 @@ public class PerspectivaInmuebles extends Árbol {
     // -----------------------------------------------
     // Constantes
     // -----------------------------------------------
-    public final static String NOMBRE_RAIZ = "INMUEBLES";
+    public final static String NOMBRE = "INMUEBLES";
 
     // -----------------------------------------------
     // Atributos

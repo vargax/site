@@ -1,9 +1,9 @@
 package co.com.tecni.sari.datos;
 
-import co.com.tecni.sari.lógica.contratos.ClienteComercial;
-import co.com.tecni.sari.lógica.contratos.ClienteFacturación;
-import co.com.tecni.sari.lógica.contratos.Contrato;
-import co.com.tecni.sari.lógica.contratos.Versión;
+import co.com.tecni.sari.lógica.clientes.ClienteComercial;
+import co.com.tecni.sari.lógica.clientes.ClienteFacturación;
+import co.com.tecni.sari.lógica.clientes.Contrato;
+import co.com.tecni.sari.lógica.clientes.Versión;
 import co.com.tecni.sari.lógica.inmuebles.Inmueble;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -140,7 +140,7 @@ class LectorContrato {
             contratos.put(idContrato, contrato);
         }
 
-        System.out.println("Recuperados " + contratos.size() + " contratos");
+        System.out.println("Recuperados " + contratos.size() + " clientes");
     }
 
     private void leerSecuencias() {
@@ -253,6 +253,6 @@ class LectorContrato {
                 System.err.println(e.getMessage());
             }
 
-        System.out.println("Asociados "+contador+ " inmuebles a "+secuencias.size()+" secuencias en "+contratos.size() +" contratos");
+        System.out.println("Asociados "+contador+ " inmuebles a "+secuencias.size()+" secuencias en "+contratos.size() +" clientes");
     }
 }

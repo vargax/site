@@ -1,6 +1,6 @@
 package co.com.tecni.sari.datos;
 
-import co.com.tecni.sari.lógica.fichas.Catastral;
+import co.com.tecni.sari.lógica.inmuebles.fichas.Catastral;
 import co.com.tecni.sari.lógica.inmuebles.Inmueble;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;

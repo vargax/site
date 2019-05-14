@@ -1,4 +1,4 @@
-package co.com.tecni.sari.lógica.transacciones;
+package co.com.tecni.sari.lógica.inmuebles.fichas.transacciones;
 
 public class Tercero {
 

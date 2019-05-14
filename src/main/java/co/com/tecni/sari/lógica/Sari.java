@@ -2,9 +2,9 @@ package co.com.tecni.sari.lógica;
 
 import co.com.tecni.sari.datos.Lector;
 import co.com.tecni.sari.lógica.inmuebles.Inmueble;
-import co.com.tecni.sari.lógica.árboles.PerspectivaInmuebles;
-import co.com.tecni.sari.lógica.árboles.PerspectivaCartera;
-import co.com.tecni.sari.lógica.árboles.PerspectivaClientes;
+import co.com.tecni.sari.lógica.inmuebles.PerspectivaInmuebles;
+import co.com.tecni.sari.lógica.clientes.PerspectivaCartera;
+import co.com.tecni.sari.lógica.clientes.PerspectivaContratos;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
@@ -50,7 +50,7 @@ public class Sari {
     private String modoPonderación;
 
     public static PerspectivaInmuebles perspectivaInmuebles;
-    public static PerspectivaClientes perspectivaClientes;
+    public static PerspectivaContratos perspectivaContratos;
     public static PerspectivaCartera perspectivaCartera;
 
     // -----------------------------------------------
@@ -104,7 +104,7 @@ public class Sari {
             e.printStackTrace();
         }
 
-        perspectivaClientes = lector.genÁrbolContratos();
+        perspectivaContratos = lector.genÁrbolContratos();
         perspectivaCartera = lector.genÁrbolCartera();
 
         perspectivaCartera.presupuestarIngresosyGenerarFacturas(FECHA_INICIAL_FACTURACIÓN, MESES_FACTURACIÓN);
