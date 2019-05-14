@@ -1,9 +1,8 @@
-package co.com.tecni.sari.lógica.fichas;
+package co.com.tecni.sari.lógica.inmuebles.fichas;
 
 import co.com.tecni.sari.lógica.Sari;
-import co.com.tecni.sari.lógica.transacciones.Transacción;
+import co.com.tecni.sari.lógica.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.sari.lógica.árboles.Nodo;
-import co.com.tecni.sari.lógica.árboles.Árbol;
 import co.com.tecni.sari.ui.UiÁrbol;
 import jiconfont.IconCode;
 import jiconfont.icons.GoogleMaterialDesignIcons;

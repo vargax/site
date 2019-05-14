@@ -1,6 +1,6 @@
 package co.com.tecni.sari.ui.indicadores;
 
-import co.com.tecni.sari.lógica.transacciones.Transacción;
+import co.com.tecni.sari.lógica.inmuebles.fichas.transacciones.Transacción;
 
 import javax.swing.*;
 import java.util.ArrayList;

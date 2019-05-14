@@ -2,7 +2,7 @@ package co.com.tecni.sari.datos;
 
 import co.com.tecni.sari.lógica.inmuebles.Agrupación;
 import co.com.tecni.sari.lógica.inmuebles.Inmueble;
-import co.com.tecni.sari.lógica.árboles.PerspectivaInmuebles;
+import co.com.tecni.sari.lógica.inmuebles.PerspectivaInmuebles;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

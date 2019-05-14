@@ -1,12 +1,12 @@
 package co.com.tecni.sari.ui;
 
-import co.com.tecni.sari.lógica.contratos.Versión;
+import co.com.tecni.sari.lógica.clientes.Versión;
 import co.com.tecni.sari.lógica.árboles.Nodo;
-import co.com.tecni.sari.lógica.contratos.ClienteComercial;
-import co.com.tecni.sari.lógica.contratos.ClienteFacturación;
-import co.com.tecni.sari.lógica.contratos.Contrato;
+import co.com.tecni.sari.lógica.clientes.ClienteComercial;
+import co.com.tecni.sari.lógica.clientes.ClienteFacturación;
+import co.com.tecni.sari.lógica.clientes.Contrato;
 import co.com.tecni.sari.lógica.inmuebles.Agrupación;
-import co.com.tecni.sari.lógica.fichas.Ficha;
+import co.com.tecni.sari.lógica.inmuebles.fichas.Ficha;
 import co.com.tecni.sari.lógica.inmuebles.Inmueble;
 import co.com.tecni.sari.lógica.árboles.Árbol;
 import jiconfont.IconCode;

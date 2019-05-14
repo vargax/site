@@ -1,13 +1,13 @@
 package co.com.tecni.sari.lógica.inmuebles;
 
 import co.com.tecni.sari.lógica.Sari;
-import co.com.tecni.sari.lógica.fichas.Arrendamiento;
-import co.com.tecni.sari.lógica.fichas.Ficha;
-import co.com.tecni.sari.lógica.fichas.Presupuestal;
-import co.com.tecni.sari.lógica.transacciones.Transacción;
+import co.com.tecni.sari.lógica.inmuebles.fichas.Arrendamiento;
+import co.com.tecni.sari.lógica.inmuebles.fichas.Ficha;
+import co.com.tecni.sari.lógica.inmuebles.fichas.Presupuestal;
+import co.com.tecni.sari.lógica.inmuebles.fichas.transacciones.Transacción;
 import co.com.tecni.sari.lógica.árboles.Nodo;
 import co.com.tecni.sari.lógica.árboles.Árbol;
-import co.com.tecni.sari.lógica.árboles.PerspectivaClientes;
+import co.com.tecni.sari.lógica.clientes.PerspectivaContratos;
 import co.com.tecni.sari.ui.UiSari;
 import co.com.tecni.sari.ui.UiÁrbol;
 import jiconfont.IconCode;
@@ -149,7 +149,7 @@ public abstract class Inmueble implements Nodo {
         ArrayList<Transacción> propias = new ArrayList<>();
         for (Ficha ficha : fichas) {
 
-            if (ficha instanceof Arrendamiento && árbol instanceof PerspectivaClientes) continue;
+            if (ficha instanceof Arrendamiento && árbol instanceof PerspectivaContratos) continue;
 
             ArrayList<Transacción>[] transaccionesFichas = ficha.recursiónTransacciones(factorPonderación);
             propias.addAll(transaccionesFichas[1]);
@@ -262,5 +262,187 @@ public abstract class Inmueble implements Nodo {
         }
 
         return infoNodo.toJSONString();
+    }
+
+    public static class Bodega extends Inmueble {
+        // -----------------------------------------------
+        // Constantes
+        // -----------------------------------------------
+        final static String SIGLA = "BG";
+        private final static IconCode UI_ÍCONO = GoogleMaterialDesignIcons.STORAGE;
+
+        // -----------------------------------------------
+        // Constructores
+        // -----------------------------------------------
+        public Bodega() {
+            super();
+            super.sigla = SIGLA;
+            super.ícono = new UiÁrbol.Ícono(UI_ÍCONO);
+        }
+
+    }
+
+    public static class ConjuntoBodegas extends Inmueble {
+
+        // -----------------------------------------------
+        // Constantes
+        // -----------------------------------------------
+        final static String SIGLA = "CB";
+        private final static IconCode UI_ÍCONO = GoogleMaterialDesignIcons.LOCATION_CITY;
+
+        // -----------------------------------------------
+        // Constructores
+        // -----------------------------------------------
+        public ConjuntoBodegas() {
+            super();
+            super.sigla = SIGLA;
+            super.ícono = new UiÁrbol.Ícono(UI_ÍCONO);
+        }
+    }
+
+    public static class Deposito extends Inmueble {
+
+        final static String SIGLA = "DP";
+
+        public Deposito() {
+            super();
+            super.sigla = SIGLA;
+        }
+    }
+
+    public static class EdificioApartamentos extends Inmueble {
+        // -----------------------------------------------
+        // Constantes
+        // -----------------------------------------------
+        final static String SIGLA = "EA";
+        private final static IconCode UI_ÍCONO = GoogleMaterialDesignIcons.HOME;
+
+        // -----------------------------------------------
+        // Constructores
+        // -----------------------------------------------
+        public EdificioApartamentos() {
+            super();
+            super.sigla = SIGLA;
+            super.ícono = new UiÁrbol.Ícono(UI_ÍCONO);
+        }
+
+    }
+
+    public static class EdificioOficinas extends Inmueble {
+        // -----------------------------------------------
+        // Constantes
+        // -----------------------------------------------
+        final static String SIGLA = "EO";
+        private final static IconCode UI_ÍCONO = GoogleMaterialDesignIcons.DOMAIN;
+
+        // -----------------------------------------------
+        // Constructor
+        // -----------------------------------------------
+        public EdificioOficinas() {
+            super();
+            super.sigla = SIGLA;
+            super.ícono = new UiÁrbol.Ícono(UI_ÍCONO);
+        }
+
+    }
+
+    public static class Garaje extends Inmueble {
+        // -----------------------------------------------
+        // Constantes
+        // -----------------------------------------------
+        final static String SIGLA = "GR";
+        private final static IconCode UI_ÍCONO = GoogleMaterialDesignIcons.DIRECTIONS_CAR;
+
+        // -----------------------------------------------
+        // Constructor
+        // -----------------------------------------------
+        public Garaje() {
+            super();
+            super.sigla = SIGLA;
+            super.ícono = new UiÁrbol.Ícono(UI_ÍCONO);
+        }
+    }
+
+    public static class Hotel extends Inmueble {
+        // -----------------------------------------------
+        // Constantes
+        // -----------------------------------------------
+        final static String SIGLA = "HT";
+        private final static IconCode UI_ÍCONO = GoogleMaterialDesignIcons.HOTEL;
+
+        // -----------------------------------------------
+        // Constructores
+        // -----------------------------------------------
+        public Hotel() {
+            super();
+            super.sigla = SIGLA;
+            super.ícono = new UiÁrbol.Ícono(UI_ÍCONO);
+        }
+
+    }
+
+    public static class Local extends Inmueble {
+        // -----------------------------------------------
+        // Constantes
+        // -----------------------------------------------
+        final static String SIGLA = "LC";
+        private final static IconCode UI_ÍCONO = GoogleMaterialDesignIcons.STORE;
+
+        // -----------------------------------------------
+        // Constructor
+        // -----------------------------------------------
+        public Local() {
+            super();
+            super.sigla = SIGLA;
+            super.ícono = new UiÁrbol.Ícono(UI_ÍCONO);
+        }
+
+    }
+
+    public static class Oficina extends Inmueble {
+
+        // -----------------------------------------------
+        // Constantes
+        // -----------------------------------------------
+        final static String SIGLA = "OF";
+        private final static IconCode UI_ÍCONO = GoogleMaterialDesignIcons.BUSINESS_CENTER;
+
+        // -----------------------------------------------
+        // Constructores
+        // -----------------------------------------------
+        public Oficina() {
+            super();
+            super.sigla = SIGLA;
+            super.ícono = new UiÁrbol.Ícono(UI_ÍCONO);
+        }
+
+    }
+
+    public static class Piso extends Inmueble {
+        // -----------------------------------------------
+        // Constantes
+        // -----------------------------------------------
+        final static String SIGLA = "PI";
+        private final static IconCode UI_ÍCONO = GoogleMaterialDesignIcons.LAYERS;
+
+        // -----------------------------------------------
+        // Constructores
+        // -----------------------------------------------
+        public Piso() {
+            super();
+            super.sigla = SIGLA;
+            super.ícono = new UiÁrbol.Ícono(UI_ÍCONO);
+        }
+    }
+
+    public static class ZonaComún extends Inmueble {
+
+        final static String SIGLA = "ZC";
+
+        public ZonaComún() {
+            super();
+            super.sigla = SIGLA;
+        }
+
     }
 }

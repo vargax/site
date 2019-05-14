@@ -52,7 +52,7 @@ class LectorInmueble {
     // Constructor
     // -----------------------------------------------
     LectorInmueble() {
-        paqueteTipos = Inmueble.class.getPackage().toString().substring(8)+'.';
+        paqueteTipos = Inmueble.class.getName()+'$';
     }
 
     // -----------------------------------------------

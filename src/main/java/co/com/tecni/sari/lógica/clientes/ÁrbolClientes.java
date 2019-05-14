@@ -1,8 +1,9 @@
-package co.com.tecni.sari.lógica.árboles;
+package co.com.tecni.sari.lógica.clientes;
 
 import co.com.tecni.sari.lógica.Sari;
-import co.com.tecni.sari.lógica.contratos.ClienteComercial;
-import co.com.tecni.sari.lógica.transacciones.Transacción;
+import co.com.tecni.sari.lógica.inmuebles.fichas.transacciones.Transacción;
+import co.com.tecni.sari.lógica.árboles.Nodo;
+import co.com.tecni.sari.lógica.árboles.Árbol;
 import co.com.tecni.sari.ui.UiÁrbol;
 
 import java.util.ArrayList;
